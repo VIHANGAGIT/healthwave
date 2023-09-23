@@ -25,7 +25,7 @@
                     // If exists, set as current controller
                     $this->currentController = ucwords($url[0]);
 
-                    // Unset 0th index
+                    // Unset controller from URL
                     unset($url[0]);
                 }
             }
@@ -35,7 +35,23 @@
 
             // Instantiate controller class
             $this->currentController = new $this->currentController;
+            
+            // Look in methods for second value
+            if(isset($url[1])){
+                // Check if method exist in controller
+                if(method_exists($this->currentController, $url[1])){
+                    $this->currentMethod = $url[1];
 
+                    //unset method from URL
+                    unset($url[1]);
+                }
+            }
+
+            // Get remaining params in the URL
+            $this->params = $url ? array_values($url) : [];
+            
+            // Call a callback with array of param
+            call_user_func_array([$this->currentController, $this-> currentMethod], $this->params);
 
         }
 
