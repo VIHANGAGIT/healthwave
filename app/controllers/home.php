@@ -1,3 +1,3 @@
 <?php
-    echo "This is home file";
+    echo "This is home file :D";
 ?>
