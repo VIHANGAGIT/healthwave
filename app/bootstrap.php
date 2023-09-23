@@ -1,1 +1,6 @@
-Hey It's not the Bootstrap framework ;D 
+<?php
+    //load libraries
+    require_once 'libraries/Core.php';
+    require_once 'libraries/Controller.php';
+    require_once 'libraries/Database.php';
+
