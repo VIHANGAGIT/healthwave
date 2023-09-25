@@ -1,4 +1,11 @@
 <?php
+    // Database params
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'root');
+    define('DB_PASS', 'GrpProject00');
+    define('DB_NAME', 'hwtest');
+
+
     // App root
 
     // __FILE__ gives the path to this file, but we need app root
