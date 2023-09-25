@@ -1,15 +1,15 @@
 <?php
     class Home extends Controller{
         public function __construct(){
-            $this->userModel = $this->model('user');
+            //$this->userModel = $this->model('user');
         }
 
         public function index(){
             
-            $users = $this->userModel->getUsers();
+            //$users = $this->userModel->getUsers();
             $data = [
-                'title' => 'Welcome',
-                'user' => $users
+                'title' => 'Welcome'
+                //'user' => $users
             ];
 
             
