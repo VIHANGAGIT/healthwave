@@ -84,7 +84,7 @@ body{
     position: relative;
     height: 50px;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .container-login .input-field input{
@@ -144,7 +144,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .container-login .checkbox-text .checkbox-content{
@@ -288,10 +288,19 @@ a:hover{
     height: 42px;
     margin: 8px 0;
 }
+
+.container-signup .input-field input.error{
+    border: 2px solid #ff0e0e;
+}
+
 .container-signup .input-field input:is(:focus),
 .container-signup .input-field select:focus{
     border-color: #4070f4;
 }
+.container-signup .input-field input.error:is(:focus){
+    border-color: #ff0e0e;
+}
+
 .container-signup .input-field select,
 .container-signup .input-field input[type="date"]{
     color: #707070;

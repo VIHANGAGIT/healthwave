@@ -19,18 +19,21 @@
     <div class="container-login">
         <div class="forms">
             <div class="form login">
-                <span class="title">User Login</span>
+                <span class="title">User Login</span><br><br>
 
                 <form action="<?php echo URLROOT; ?>/users/login" method="POST">
                     <div class="input-field">
                         <input type="text" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>" placeholder="Enter your email" name="email">
+                        
                     </div>
-                    <span class="err-msg"><?php echo $data['Uname_err']; ?></span>
+                    <span class="err-msg"><?php echo $data['Uname_err'] . "\u{200B}"; ?></span>
+                    
                     <div class="input-field">
                         <input type="password" class="password <?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" placeholder="Enter your password" name="pass">
                         <i class="uil uil-eye-slash showHidePw"></i>
                     </div>
-                    <span class="err-msg"><?php echo $data['Pass_err']; ?></span>
+                    <span class="err-msg"><?php echo $data['Pass_err'] . "\u{200B}"; ?></span>
+                    
 
                     <div class="checkbox-text">
                         <!--<div class="checkbox-content">

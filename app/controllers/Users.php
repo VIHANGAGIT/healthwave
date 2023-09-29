@@ -33,7 +33,7 @@
 
                 // Validate Email
                 if(empty($data['Uname'])){
-                    $data['Uname_err'] = 'Please enter valid email';
+                    $data['Uname_err'] = 'Please enter your email';
                 }
 
                 // Validate Password
@@ -44,7 +44,7 @@
                 $spec = preg_match('@[^\w]@', $data['Pass']);
 
                 if(empty($data['Pass'])){
-                    $data['Pass_err'] = 'Please enter valid password';
+                    $data['Pass_err'] = 'Please enter a password';
                 } else{
                     if($length < 8){
                         $data['Pass_err'] = 'Password must be atleast 8 characters';
@@ -59,7 +59,7 @@
                         $data['Pass_err'] = 'Password must include atleast 1 number';
                     }
                     if(!$spec){
-                        $data['Pass_err'] = 'Password must not include special characters';
+                        $data['Pass_err'] = 'Password must include atleast 1 special character';
                     }
 
                 } 
@@ -87,7 +87,7 @@
                 $data = [
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'Cpass_err' => ''
+                    'C_pass_err' => ''
                 ];
 
                 // Load view

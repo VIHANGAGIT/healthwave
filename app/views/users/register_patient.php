@@ -92,7 +92,8 @@
                             <input type="text" placeholder="Enter allergies if you have" name="allergies">
                         </div>
                     </div>
-                    <button class="nextBtn">
+                    <!-- The preventDefault function allows to contiune to second page without submitting the form  -->
+                    <button class="nextBtn" onclick="event.preventDefault();">
                         <span class="btnText">Next</span>
                     </button>
                     <div class="login-signup" style="margin-top: -20px; font-size: 14px;" ">
@@ -137,18 +138,25 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Email*</label>
-                            <input type="email" placeholder="Enter your email" name="email">
+                            <input type="email" placeholder="Enter your email" name="email" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>">
+                            <span class="err-msg"><?php echo $data['Uname_err'] . "\u{200B}"; ?></span>
                         </div>
+                        
+
 
                         <div class="input-field">
                             <label>Password*</label>
-                            <input type="password" placeholder="Enter a password" name="pass">
+                            <input type="password" placeholder="Enter a password" name="pass" class="<?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" >
+                            <span class="err-msg"><?php echo $data['Pass_err'] . "\u{200B}"; ?></span>
                         </div>
+                        
 
-                        <div class="input-field">
+                        <div class="input-field" style="margin-bottom: 0;" >
                             <label>Confirm Password*</label>
-                            <input type="password" placeholder="Enter your password again" name="cpass">
+                            <input type="password" placeholder="Enter your password again" name="cpass" class="<?php echo (!empty($data['C_pass_err'])) ? 'error' : '' ?>" >
+                            <span class="err-msg"><?php echo $data['C_pass_err'] . "\u{200B}"; ?></span>
                         </div>
+                        
                     </div>
                     <div class="buttons">
                         <div class="backBtn">
