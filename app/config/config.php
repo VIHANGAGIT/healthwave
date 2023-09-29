@@ -3,7 +3,7 @@
     define('DB_HOST', 'localhost');
     define('DB_USER', 'root');
     define('DB_PASS', 'GrpProject00');
-    define('DB_NAME', 'hwtest');
+    define('DB_NAME', 'healthwave');
 
 
     // App root
@@ -18,3 +18,6 @@
 
     // Site name
     define('SITENAME', 'HealthWave');
+
+    // App version
+    define('VERSION', '1.0.0');
