@@ -98,6 +98,7 @@
         public function login(){
             // Check for POST request
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
                 // Login user
 
                 // Sanitize data

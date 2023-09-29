@@ -23,12 +23,14 @@
 
                 <form action="<?php echo URLROOT; ?>/users/login" method="POST">
                     <div class="input-field">
-                        <input type="text" placeholder="Enter your email" name="email" required>
+                        <input type="text" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>" placeholder="Enter your email" name="email">
                     </div>
+                    <span class="err-msg"><?php echo $data['Uname_err']; ?></span>
                     <div class="input-field">
-                        <input type="password" class="password" placeholder="Enter your password" name="pass" required>
+                        <input type="password" class="password <?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" placeholder="Enter your password" name="pass">
                         <i class="uil uil-eye-slash showHidePw"></i>
                     </div>
+                    <span class="err-msg"><?php echo $data['Pass_err']; ?></span>
 
                     <div class="checkbox-text">
                         <!--<div class="checkbox-content">
@@ -40,7 +42,7 @@
                     </div>
 
                     <div class="input-field button">
-                        <input type="button" value="Login">
+                        <input type="submit" value="Login">
                     </div>
                 </form>
 

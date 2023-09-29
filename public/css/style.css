@@ -99,8 +99,15 @@ body{
     transition: all 0.2s ease;
 }
 
-.container-login .input-field input:is(:focus, :valid){
+.container-login .input-field input.error{
+    border: 2px solid #ff0e0e;
+}
+
+.container-login .input-field input:is(:focus){
     border-color: #4070f4;
+}
+.container-login .input-field input.error:is(:focus){
+    border-color: #ff0e0e;
 }
 
 .container-login .input-field i{
@@ -112,8 +119,16 @@ body{
     transition: all 0.2s ease;
 }
 
-.container-login .input-field input:is(:focus, :valid) ~ i{
+.container-login .input-field input:is(:focus) ~ i{
     color: #4070f4;
+}
+.container-login .input-field input.error:is(:focus) ~ i{
+    color: #ff0e0e;
+}
+
+.err-msg{
+    color: #ff0e0e;
+    font-size: 12px;
 }
 
 .container-login .input-field i.icon{
