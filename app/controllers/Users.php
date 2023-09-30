@@ -1,7 +1,7 @@
 <?php
     class Users extends Controller{ 
         public function __construct(){
-
+            $this->userModel = $this->model('user');
         }
 
         public function register_patient(){
@@ -34,6 +34,11 @@
                 // Validate Email
                 if(empty($data['Uname'])){
                     $data['Uname_err'] = 'Please enter your email';
+                } else{
+                    // Check for duplicates
+                    if($this->userModel->findUserByUname($data['Uname'])){
+                        $data['Uname_err'] = 'Another account already has this email';
+                    }
                 }
 
                 // Validate Password
@@ -85,6 +90,19 @@
             }else{
                 // Get data
                 $data = [
+                    'F_name' => '',
+                    'L_name' => '',
+                    'Gender' => '',
+                    'DOB' => '',
+                    'NIC' => '',
+                    'C_num' => '',
+                    'Height' => '',
+                    'Weight' => '',
+                    'B_group' => '',
+                    'Allergies' => '',
+                    'Uname' => '',
+                    'Pass' => '',
+                    'C_pass' => '',
                     'Uname_err' => '',
                     'Pass_err' => '',
                     'C_pass_err' => ''

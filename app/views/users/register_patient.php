@@ -26,18 +26,18 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>First Name*</label>
-                            <input type="text" placeholder="Enter your first name" name="fname" >
+                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['F_name'] ?>">
                         </div>
 
                         <div class="input-field">
                             <label>Last Name*</label>
-                            <input type="text" placeholder="Enter your last name" name="lname">
+                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['L_name'] ?>">
                         </div>
 
                         <div class="input-field">
                             <label>Gender*</label>
-                            <select required name="gender">
-                                <option  selected value=""> Select gender</option>
+                            <select name="gender">
+                            <option selected value="<?php echo $data['Gender'] ?>" > <?php echo ($data['Gender'] == '') ? 'Select gender' : $data['Gender'] ?></option>
                                 <option>Male</option>
                                 <option>Female</option>
                             </select>
@@ -45,16 +45,16 @@
 
                         <div class="input-field">
                             <label>Date of Birth*</label>
-                            <input type="date" placeholder="Enter birth date" name="dob">
+                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>">
                         </div>
 
                         <div class="input-field">
                             <label>NIC (not required if age < 18)</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic">
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>">
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
-                            <input type="number" placeholder="Enter your mobile number" name="cnum">
+                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>">
                         </div>
                     </div>
                 </div>
@@ -65,17 +65,17 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Height (in cm)</label>
-                            <input type="number" placeholder="Enter your height" name="height">
+                            <input type="number" placeholder="Enter your height" name="height" value="<?php echo $data['Height'] ?>">
                         </div>
 
                         <div class="input-field">
                             <label>Weight (in kg)</label>
-                            <input type="number" placeholder="Enter your weight" name="weight">
+                            <input type="number" placeholder="Enter your weight" name="weight" value="<?php echo $data['Weight'] ?>">
                         </div>
                         <div class="input-field">
                             <label>Blood Group</label>
                             <select name="bgroup">
-                                <option selected value="">Select blood group</option>
+                                <option selected value="<?php echo $data['B_group'] ?>" > <?php echo ($data['B_group'] == '') ? 'Select blood group' : $data['B_group'] ?></option>
                                 <option value="A+">A Positive (A+)</option>
                                 <option value="A-">A Negative (A-)</option>
                                 <option value="B+">B Positive (B+)</option>
@@ -89,7 +89,7 @@
 
                         <div class="input-field">
                             <label>Allergies</label>
-                            <input type="text" placeholder="Enter allergies if you have" name="allergies">
+                            <input type="text" placeholder="Enter allergies if you have" name="allergies" value="<?php echo $data['Allergies'] ?>">
                         </div>
                     </div>
                     <!-- The preventDefault function allows to contiune to second page without submitting the form  -->
@@ -106,39 +106,13 @@
             </div>
 
             <div class="form second" style="width: 100%;" >
-                <div class="details emergency">
-                    <span class="title">Emergency Contact Details</span>
-
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Contact Name</label>
-                            <input type="email" placeholder="Enter contact's name">
-                        </div>
-
-                        <div class="input-field">
-                            <label>Contact Mobile Number</label>
-                            <input type="number" placeholder="Enter contact's number">
-                        </div>
-
-                        <div class="input-field">
-                            <label>Relation</label>
-                            <select>
-                                <option disabled selected>Select relation</option>
-                                <option>Parent</option>
-                                <option>Spouse</option>
-                                <option>Child</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>    
                 <div class="details account">
                     <span class="title">Account Details</span>
 
                     <div class="fields">
                         <div class="input-field">
                             <label>Email*</label>
-                            <input type="email" placeholder="Enter your email" name="email" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>">
+                            <input type="email" placeholder="Enter your email" name="email" value="<?php echo $data['Uname'] ?>" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>">
                             <span class="err-msg"><?php echo $data['Uname_err'] . "\u{200B}"; ?></span>
                         </div>
                         
@@ -146,14 +120,14 @@
 
                         <div class="input-field">
                             <label>Password*</label>
-                            <input type="password" placeholder="Enter a password" name="pass" class="<?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" >
+                            <input type="password" placeholder="Enter a password" name="pass" value="<?php echo $data['Pass'] ?>" class="<?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" >
                             <span class="err-msg"><?php echo $data['Pass_err'] . "\u{200B}"; ?></span>
                         </div>
                         
 
                         <div class="input-field" style="margin-bottom: 0;" >
                             <label>Confirm Password*</label>
-                            <input type="password" placeholder="Enter your password again" name="cpass" class="<?php echo (!empty($data['C_pass_err'])) ? 'error' : '' ?>" >
+                            <input type="password" placeholder="Enter your password again" name="cpass" value="<?php echo $data['C_pass'] ?>" class="<?php echo (!empty($data['C_pass_err'])) ? 'error' : '' ?>" >
                             <span class="err-msg"><?php echo $data['C_pass_err'] . "\u{200B}"; ?></span>
                         </div>
                         
