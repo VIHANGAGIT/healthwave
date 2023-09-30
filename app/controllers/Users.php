@@ -16,9 +16,10 @@
                     'F_name' => trim($_POST['fname']),
                     'L_name' => trim($_POST['lname']),
                     'Gender' => trim($_POST['gender']),
-                    'DOB' => trim($_POST['dob']),
                     'NIC' => trim($_POST['nic']),
                     'C_num' => $_POST['cnum'],
+                    'DOB' => $_POST['dob'],
+                    'Age' => '',
                     'Height' => $_POST['height'],
                     'Weight' => $_POST['weight'],
                     'B_group' => $_POST['bgroup'],
@@ -30,6 +31,13 @@
                     'Pass_err' => '',
                     'C_pass_err' => ''
                 ];
+
+
+                // Calculate age
+                $currentDate = new DateTime();
+                $birthDate = new DateTime($data['DOB']);
+                $data['Age'] = $currentDate->diff($birthDate)->y;
+
 
                 // Validate Email
                 if(empty($data['Uname'])){
@@ -80,7 +88,15 @@
 
                 // Check whether errors are empty
                 if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
-                    die('SUCCESS');
+                    // Hashing password
+                    $data['Pass'] = hash('sha256',$data['Pass']);
+
+                    // Register user
+                    if($this->userModel->register_patient($data)){
+                        redirect('users/login');
+                    } else{
+                        die("Couldn't register the patient! ");
+                    }
                 } else {
                     // Load view
                     $this->view('users/register_patient', $data);
