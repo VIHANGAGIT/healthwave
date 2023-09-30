@@ -23,13 +23,13 @@
 
                 <form action="<?php echo URLROOT; ?>/users/login" method="POST">
                     <div class="input-field">
-                        <input type="text" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>" placeholder="Enter your email" name="email">
+                        <input type="text" value="<?php echo $data['Uname'] ?>" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>" placeholder="Enter your email" name="email">
                         
                     </div>
                     <span class="err-msg"><?php echo $data['Uname_err'] . "\u{200B}"; ?></span>
                     
                     <div class="input-field">
-                        <input type="password" class="password <?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" placeholder="Enter your password" name="pass">
+                        <input type="password" value="<?php echo $data['Pass'] ?>" class="password <?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" placeholder="Enter your password" name="pass">
                         <i class="uil uil-eye-slash showHidePw"></i>
                     </div>
                     <span class="err-msg"><?php echo $data['Pass_err'] . "\u{200B}"; ?></span>
