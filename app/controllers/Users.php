@@ -167,6 +167,8 @@
             }else{
                 // Get data
                 $data = [
+                    'Uname' => '',
+                    'Pass' => '',
                     'Uname_err' => '',
                     'Pass_err' => ''
                 ];
