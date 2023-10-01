@@ -38,8 +38,15 @@
         public function login($uname, $pass){
             $this->db->query('SELECT * FROM patient WHERE Username = :uname');
             $this->db->bind(':uname', $uname);
-
+            
             $userRow = $this->db->singleRow();
+            $role = 'Patient';
+
+            // Create another array to include both user data and role
+            $result = [
+                'userRow' => $userRow,
+                'role' => $role,
+            ];
             
             // Get password from db
             $db_pass = $userRow->Password;
@@ -49,7 +56,7 @@
 
             // Check whether db and hashed passwords match
             if($db_pass == $hashed_pass){
-                return $userRow;
+                return $result;
             } else {
                 return false;
             }

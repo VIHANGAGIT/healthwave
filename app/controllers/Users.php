@@ -166,11 +166,11 @@
                 // Check whether errors are empty
                 if(empty($data['Uname_err']) && empty($data['Pass_err'])){
                     // Login the user and check password
-                    $userLogged = $this->userModel->login($data['Uname'], $data['Pass']);
+                    $loginData = $this->userModel->login($data['Uname'], $data['Pass']);
 
-                    if($userLogged){
+                    if($loginData){
                         // Session for login
-                        die('SUCCESS');
+                        $this->createUserSession($loginData);
                     } else{
                         $data['Pass_err'] = 'Username and Password does not match';
                         $this->view('users/login', $data);
@@ -192,5 +192,31 @@
                 // Load view
                 $this->view('users/login', $data);
             }
+        }
+
+        public function createUserSession($loginData){
+            $userData = $loginData['userRow'];
+            $role = $loginData['role'];
+
+            $_SESSION['userName'] = $userData->First_Name . ' ' . $userData->Last_Name;
+            $_SESSION['userEmail'] = $userData->Username;
+            $_SESSION['userType'] = $role;
+            switch($role){
+                case 'Patient':
+                    $_SESSION['userID'] = $userData->Patient_ID;
+                    break;
+                case 'Doctor':
+                    $_SESSION['userID'] = $userData->Doctor_ID;
+                    break;
+                case 'Hospital_Staff':
+                    $_SESSION['userID'] = $userData->HS_ID;
+                    $_SESSION['userType'] = $userData->Role;
+                    break;
+                case 'Admin':
+                    $_SESSION['userID'] = $userData->Admin_ID;
+                    break;
+            }
+            redirect('pages/index');
+            
         }
     }
