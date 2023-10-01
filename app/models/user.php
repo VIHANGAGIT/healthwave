@@ -34,12 +34,33 @@
             }
         }
 
+        // Login user
+        public function login($uname, $pass){
+            $this->db->query('SELECT * FROM patient WHERE Username = :uname');
+            $this->db->bind(':uname', $uname);
+
+            $userRow = $this->db->singleRow();
+            
+            // Get password from db
+            $db_pass = $userRow->Password;
+
+            // Get password from login and hash it
+            $hashed_pass = hash('sha256',$pass);
+
+            // Check whether db and hashed passwords match
+            if($db_pass == $hashed_pass){
+                return $userRow;
+            } else {
+                return false;
+            }
+        }   
+
         // Check for duplicate Username entries
         public function findUserByUname($uname){
-            $this->db->query('SELECT Username FROM patient WHERE Username = :Uname UNION SELECT Username FROM doctor WHERE Username = :Uname');
+            $this->db->query('SELECT Username FROM patient WHERE Username = :uname UNION SELECT Username FROM doctor WHERE Username = :uname');
             
              // Binding parameters for the prepaired statement
-            $this->db->bind(':Uname', $uname);
+            $this->db->bind(':uname', $uname);
 
             $row = $this->db->singleRow();
 

@@ -156,11 +156,27 @@
                     $data['Pass_err'] = 'Please enter your password';
                 }
 
+                // Look for Email
+                if($this->userModel->findUserByUname($data['Uname'])){
+                    // Email found and can proceed to next function
+                } else{
+                    $data['Uname_err'] = 'No user found for this email';
+                }
+
                 // Check whether errors are empty
                 if(empty($data['Uname_err']) && empty($data['Pass_err'])){
-                    die('SUCCESS');
-                } else {
-                    // Load view
+                    // Login the user and check password
+                    $userLogged = $this->userModel->login($data['Uname'], $data['Pass']);
+
+                    if($userLogged){
+                        // Session for login
+                        die('SUCCESS');
+                    } else{
+                        $data['Pass_err'] = 'Username and Password does not match';
+                        $this->view('users/login', $data);
+                    }
+                } else{
+                    // Load view with errors
                     $this->view('users/login', $data);
                 }
 
