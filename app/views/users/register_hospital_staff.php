@@ -11,13 +11,13 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Doctor Regisration</title>
+   <title>Hospital Staff Regisration</title>
 </head>
 <body>
     <div class="container-signup" style="height: 720px;" >
-        <header>Doctor Registration</header>
+        <header>Hospital Staff Registration</header>
 
-        <form action="<?php echo URLROOT; ?>/users/register_doctor" method="POST" style="height: 600px;">
+        <form action="<?php echo URLROOT; ?>/users/register_hospital_staff" method="POST" style="height: 600px;">
             <div class="form first" >
                 <div class="details personal">
                     <span class="title">Personal Details</span>
@@ -59,31 +59,34 @@
                 </div>
 
                 <div class="details Medical">
-                    <span class="title">Registration Details</span>
+                    <span class="title">Employment Details</span>
 
                     <div class="fields">
                         <div class="input-field">
-                            <label>Specialization*</label>
-                            <select name="spec" required>
-                                <option selected value="<?php echo $data['Spec'] ?>" > <?php echo ($data['Spec'] == '') ? 'Select specialization' : $data['Spec'] ?></option>
-                                <option value="Neurologist">Neurologist</option>
-                                <option value="Gastroenterologist">Gastroenterologist</option>
-                                <option value="Psychiatrist">Psychiatrist</option>
-                                <option value="Radiologist">Radiologist</option>
-                                <option value="General practitioner">General practitioner</option>
+                            <label>Hospital*</label>
+                            <select name="hospital" required>
+                                <option selected value="<?php echo $data['Hospital'] ?>" > <?php echo ($data['Hospital'] == '') ? 'Select hospital' : $data['Hospital'] ?></option>
+                                <option value="Asiri Hospitals - Kirula Rd">Asiri Hospitals - Kirula Rd.</option>
+                                <option value="Lanka Hospitals - Nugegoda">Lanka Hospitals - Nugegoda</option>
                             </select>
                         </div>
-
                         <div class="input-field">
-                            <label>SLMC Regisration Number*</label>
-                            <input type="number" placeholder="Enter SLMC Regisration Number" name="slmc" value="<?php echo $data['SLMC'] ?>" required>
+                            <label>Role*</label>
+                            <select name="role" required>
+                                <option selected value="<?php echo $data['Role'] ?>" > <?php echo ($data['Role'] == '') ? 'Select role' : $data['Role'] ?></option>
+                                <option value="Manager">Hospital Manager</option>
+                                <option value="Lab Assistant">Lab Assistant</option>
+                                <option value="Pharmacist">Pharmacist</option>
+                            </select>
                         </div>
-                        <div class="input-field" style="opacity: 0;">
+                        <div class="input-field" style="opacity: 0;" >
                             <label></label>
                             <input type="text">
                         </div>
                     </div>
-                    <div class="details account">
+                </div>
+
+                <div class="details account">
                     <span class="title">Account Details</span>
 
                     <div class="fields">
@@ -110,9 +113,9 @@
                         
                     </div>
                     <div class="buttons">
-                        <div class="backBtn">
-                            <span class="btnText">Back</span>
-                        </div>
+                        <button>
+                            <span class="btnText">Clear</span>
+                        </button>
                         
                         <button class="sumbit">
                             <span class="btnText">Submit</span>

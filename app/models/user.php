@@ -57,6 +57,28 @@
             }
         }
 
+        public function register_hospital_staff($data){
+            $this->db->query('INSERT INTO hospital_staff (First_Name, Last_Name, Gender, NIC, Contact_No, Hospital, Role, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :Hospital, :Role, :Uname, :Pass)');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':F_name', $data['F_name']);
+            $this->db->bind(':L_name', $data['L_name']);
+            $this->db->bind(':Gender', $data['Gender']);
+            $this->db->bind(':NIC', $data['NIC']);
+            $this->db->bind(':C_num', $data['C_num']);
+            $this->db->bind(':Hospital', $data['Hospital']);
+            $this->db->bind(':Role', $data['Role']);
+            $this->db->bind(':Uname', $data['Uname']);
+            $this->db->bind(':Pass', $data['Pass']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
         // Login user
         public function login($uname, $pass){
             $this->db->query('SELECT * FROM patient WHERE Username = :uname');
@@ -80,7 +102,7 @@
                         $this->db->query('SELECT * FROM hospital_staff WHERE Username = :uname');
                         $this->db->bind(':uname', $uname);
                         $userRow = $this->db->singleRow();
-                        $role = 'Admin';
+                        $role = $userRow->Role;
                     }
                 }
             }
@@ -107,7 +129,7 @@
 
         // Check for duplicate Username entries
         public function findUserByUname($uname){
-            $this->db->query('SELECT Username FROM patient WHERE Username = :uname UNION SELECT Username FROM doctor WHERE Username = :uname');
+            $this->db->query('SELECT Username FROM patient WHERE Username = :uname UNION SELECT Username FROM doctor WHERE Username = :uname UNION SELECT Username FROM admin WHERE Username = :uname UNION SELECT Username FROM hospital_staff WHERE Username = :uname');
             
              // Binding parameters for the prepaired statement
             $this->db->bind(':uname', $uname);

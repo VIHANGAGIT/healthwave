@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="input-field">
-                            <label>NIC (not required if age < 18)</label>
+                            <label>NIC Number</label>
                             <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>">
                         </div>
                         <div class="input-field">
