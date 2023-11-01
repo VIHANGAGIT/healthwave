@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +11,7 @@
     <!-- ===== CSS ===== -->
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style.css">
          
-    <title>Login & Registration Form</title> 
+    <title>User Login</title> 
 </head>
 <body>
     
@@ -29,7 +28,7 @@
                     <span class="err-msg"><?php echo $data['Uname_err'] . "\u{200B}"; ?></span>
                     
                     <div class="input-field">
-                        <input type="password" value="<?php echo $data['Pass'] ?>" class="password <?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" placeholder="Enter your password" name="pass">
+                        <input type="password" value="" class="password <?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" placeholder="Enter your password" name="pass">
                         <i class="uil uil-eye-slash showHidePw"></i>
                     </div>
                     <span class="err-msg"><?php echo $data['Pass_err'] . "\u{200B}"; ?></span>
