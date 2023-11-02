@@ -448,9 +448,19 @@
                     $_SESSION['userID'] = $userData->Admin_ID;
                     break;
             }
-            if($_SESSION['userID'] == 9){
+            if($_SESSION['userType'] == 'Patient'){
                 redirect('patient/doc_booking');
-            } else{
+            }elseif($_SESSION['userType'] == 'Doctor'){
+                redirect('doctor/reservations');
+            }elseif($_SESSION['userType'] == 'Admin'){
+                redirect('admin/dashboard');
+            }elseif($_SESSION['userType'] == 'Manager'){
+                redirect('manager/dashboard');
+            }elseif($_SESSION['userType'] == 'Lab Assistant'){
+                redirect('lab/test_appt_management');
+            }elseif($_SESSION['userType'] == 'Pharmacist'){
+                redirect('pharmacist/prescription_view');
+            }else{
                 redirect('pages/index');
             }
             
