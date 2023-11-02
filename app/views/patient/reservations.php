@@ -1,3 +1,10 @@
+<?php 
+  session_start();
+  if(($_SESSION['userType']) != 'Patient'){
+    redirect("users/login");
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -45,31 +52,31 @@
               </a>
             </li>
           </ul>
-
+          
           <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="patient/doc_booking" class="link flex">
+              <a href="doc_booking.php" class="link flex">
                 <i class="uil uil-stethoscope"></i>
                 <span>Doctor Booking</span>
               </a>
             </li>
             <li class="item">
-              <a href="patient/test_booking" class="link flex">
+              <a href="test_booking.php" class="link flex">
                 <i class="uil uil-heart-rate"></i>
                 <span>Lab Test Booking</span>
               </a>
             </li>
             <li class="item active">
-              <a href="patient/reservations" class="link flex">
+              <a href="reservations.php" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
                 <span>Reservations</span>
               </a>
             </li>
             <li class="item">
-              <a href="patient/medical_records" class="link flex">
+              <a href="medical_records.php" class="link flex">
                 <i class="uil uil-file-alt"></i>
                 <span>Medical Records</span>
               </a>
@@ -81,7 +88,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="profile.php" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -101,8 +108,8 @@
             <img src="<?php echo URLROOT;?>/img/profile.png" alt="logo_img" />
           </span>
           <div class="data_text">
-            <span class="name">K.H. Gunawardhana</span><br>
-            <span class="role">Patient</span>
+            <span class="name"><?php echo $_SESSION['userName'] ?></span><br>
+            <span class="role"><?php echo $_SESSION['userType'] ?></span>
           </div>
         </div>
       </div>

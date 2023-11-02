@@ -108,7 +108,7 @@ if(!isset($_SESSION['userType'])){
           </span>
           <div class="data_text">
             <span class="name"><?php echo $_SESSION['userName'] ?></span><br>
-            <span class="role">Patient</span>
+            <span class="role"><?php echo $_SESSION['userType'] ?></span>
           </div>
         </div>
       </div>

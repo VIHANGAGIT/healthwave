@@ -1,5 +1,8 @@
-<?php
-    session_start();
+<?php 
+  session_start();
+  if(($_SESSION['userType']) != 'Patient'){
+    redirect("users/login");
+  }
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +88,7 @@
               <span class="line"></span>
             </div>
             <li class="item active">
-              <a href="#" class="link flex">
+              <a href="profile.php" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -106,7 +109,7 @@
           </span>
           <div class="data_text">
             <span class="name"><?php echo $_SESSION['userName'] ?></span><br>
-            <span class="role">Patient</span>
+            <span class="role"><?php echo $_SESSION['userType'] ?></span>
           </div>
         </div>
       </div>

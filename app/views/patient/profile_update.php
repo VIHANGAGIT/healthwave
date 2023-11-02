@@ -1,3 +1,9 @@
+<?php 
+  session_start();
+  if(($_SESSION['userType']) != 'Patient'){
+    redirect("users/login");
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
