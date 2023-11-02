@@ -1,11 +1,11 @@
 <?php 
   session_start();
-  if(($_SESSION['userType']) != 'Patient'){
+  if(($_SESSION['userType']) != 'Manager'){
     redirect("users/login");
   }
 ?>
-
 <!DOCTYPE html>
+<!-- Coding by CodingNepal || www.codingnepalweb.com -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -32,7 +32,7 @@
    
 
    <!--sidebar-->
-    <nav class="sidebar">
+   <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
         <ul class="menu_item">
@@ -52,33 +52,39 @@
               </a>
             </li>
           </ul>
-          
+
           <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="doc_booking.php" class="link flex">
-                <i class="uil uil-stethoscope"></i>
-                <span>Doctor Booking</span>
+              <a href="dashboard.php" class="link flex">
+                <i class="uil uil-chart-line"></i>
+                <span>Dashboard</span>
               </a>
             </li>
             <li class="item">
-              <a href="test_booking.php" class="link flex">
-                <i class="uil uil-heart-rate"></i>
-                <span>Lab Test Booking</span>
+              <a href="approvals.php" class="link flex">
+                <i class="uil uil-check-circle"></i>
+                <span>Approvals</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="doc_management.php" class="link flex">
+                <i class="uil uil-stethoscope"></i>
+                <span>Doctor Management</span>
               </a>
             </li>
             <li class="item active">
-              <a href="reservations.php" class="link flex">
-                <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+              <a href="test_management.php" class="link flex">
+                <i class="uil uil-heart-rate"></i>
+                <span>Test Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="medical_records.php" class="link flex">
-                <i class="uil uil-file-alt"></i>
-                <span>Medical Records</span>
+              <a href="reservations.php" class="link flex">
+                <i class="uil uil-calendar-alt"></i>
+                <span>Reservations</span>
               </a>
             </li>
           </ul>
@@ -88,7 +94,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="profile.php" class="link flex">
+              <a href="#" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -118,86 +124,82 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Doctor Reservations</h1>
+                <h1>Lab Test Management</h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Doctor</th>
-                            <th>Location</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <br>
-        <section class="table-wrap" >
-            <div class="table-container">
-                <h1>Lab Tests Reservations</h1>
-                <table class="table">
-                    <thead>
-                        <tr>
+                            <th>Test ID</th>
                             <th>Test Name</th>
-                            <th>Location</th>
-                            <th>Date</th>
-                            <th>Time</th>
+                            <th>Type</th>
+                            <th>Price</th>
                             <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
+                            <td>T112</td>
+                            <td>Complete Blood Count (CBC)</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
                             <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
+                            <td>T112</td>
+                            <td>Complete Blood Count (CBC)</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
                             <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
+                            <td>T112</td>
+                            <td>Complete Blood Count (CBC)</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
                             <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>T112</td>
+                            <td>Complete Blood Count (CBC)</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>T112</td>
+                            <td>Complete Blood Count (CBC)</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>T112</td>
+                            <td>Complete Blood Count (CBC)</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>T112</td>
+                            <td>Complete Blood Count (CBC)</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>T112</td>
+                            <td>Complete Blood Count (CBC)</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                     </tbody>
                 </table>

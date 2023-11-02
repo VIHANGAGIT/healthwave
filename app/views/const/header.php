@@ -25,7 +25,7 @@ if(!isset($_SESSION['userType'])){
       </div>
       <div class="navbar_content">
         <i class='uil uil-sun' id="darkLight"></i>
-        <button class='button'>Logout</button>
+        <a href='../users/logout'><button class='button'>Logout</button></a>
       </div>
     </nav>
 

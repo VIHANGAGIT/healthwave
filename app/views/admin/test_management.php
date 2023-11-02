@@ -1,6 +1,6 @@
 <?php 
   session_start();
-  if(($_SESSION['userType']) != 'Lab Assistant'){
+  if(($_SESSION['userType']) != 'Admin'){
     redirect("users/login");
   }
 ?>
@@ -24,14 +24,14 @@
       </div>
       <div class="navbar_content">
         <i class='uil uil-sun' id="darkLight"></i>
-        <a href='../users/logout'><button class='button'>Logout</button></a>
+        <a><a href='../users/logout'><button class='button'>Logout</button></a></a>
       </div>
     </nav>
 
    
 
    <!--sidebar-->
-    <nav class="sidebar">
+   <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
           <ul class="menu_item">
@@ -39,7 +39,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="" class="link flex">
+              <a href="../home.php" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
               </a>
@@ -50,36 +50,42 @@
                 <span>About Us</span>
               </a>
             </li>
-          </ul>
-
-          <ul class="menu_item">
-            <div class="menu_title flex">
-              <span class="line"></span>
-            </div>
-            <li class="item active">
-              <a href="test_appt_management.php" class="link flex">
-                <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+            <li class="item">
+              <a href="dashboard.php" class="link flex">
+                <i class="uil uil-chart-line"></i>
+                <span>Dashboard</span>
               </a>
             </li>
             <li class="item">
+              <a href="approvals.php" class="link flex">
+                <i class="uil uil-check-circle"></i>
+                <span>Approvals</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="doc_management.php" class="link flex">
+                <i class="uil uil-stethoscope"></i>
+                <span>Doctor Management</span>
+              </a>
+            </li>
+            <li class="item active">
               <a href="test_management.php" class="link flex">
                 <i class="uil uil-heart-rate"></i>
                 <span>Test Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="test_result_upload.php" class="link flex">
-                <i class="uil uil-upload"></i>
-                <span>Results Upload</span>
+              <a href="hospital_management.php" class="link flex">
+                <i class="uil uil-stethoscope"></i>
+                <span>Hospital Management</span>
               </a>
             </li>
-          </ul>
-
-          <ul class="menu_item">
-            <div class="menu_title flex">
-              <span class="line"></span>
-            </div>
+            <li class="item">
+              <a href="reservations.php" class="link flex">
+                <i class="uil uil-calendar-alt"></i>
+                <span>Reservations</span>
+              </a>
+            </li>
             <li class="item">
               <a href="#" class="link flex">
                 <i class="uil uil-user"></i>
@@ -92,7 +98,6 @@
                 <span>Notifications</span>
               </a>
             </li>
-           
           </ul>
         </div>
 
@@ -111,82 +116,74 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Test Appointments Management</h1>
+                <h1>Lab Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href=''><button class='button'>Add Test</button></a></span></h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Patient Name</th>
+                            <th>Test ID</th>
                             <th>Test Name</th>
-                            <th>Date</th>
-                            <th>Time</th>
+                            <th>Type</th>
+                            <th>Price</th>
                             <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>L.A. Peter Parker</td>
+                            <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
                             <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
-                            <td>L.A. Peter Parker</td>
+                            <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
                             <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
-                            <td>L.A. Peter Parker</td>
+                            <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
                             <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
-                            <td>L.A. Peter Parker</td>
+                            <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
                             <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
-                            <td>L.A. Peter Parker</td>
+                            <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
                             <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
-                            <td>L.A. Peter Parker</td>
+                            <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
                             <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
-                            <td>L.A. Peter Parker</td>
+                            <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
+                            <td>Blood Test</td>
+                            <td>Rs. 1500.00</td>
                             <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                     </tbody>
                 </table>

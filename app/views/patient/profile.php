@@ -1,5 +1,7 @@
 <?php 
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
   if(($_SESSION['userType']) != 'Patient'){
     redirect("users/login");
   }
@@ -25,7 +27,7 @@
       </div>
       <div class="navbar_content">
         <i class='uil uil-sun' id="darkLight"></i>
-        <button class='button'>Logout</button>
+        <a href='../users/logout'><button class='button'>Logout</button></a>
       </div>
     </nav>
 
@@ -40,7 +42,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="../home.php" class="link flex">
+              <a href="" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
               </a>

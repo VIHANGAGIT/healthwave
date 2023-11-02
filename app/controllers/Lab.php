@@ -1,7 +1,7 @@
 <?php
     class Lab extends Controller{
         public function __construct(){
-            $this->labModel = $this->model('user');
+            //$this->labModel = $this->model('user');
         }
         public function index(){
             

@@ -61,7 +61,9 @@
 
         public function profile_update(){
 
-            session_start();
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
 
             // Get user data from session
             $data = [
@@ -205,7 +207,7 @@
             ];
 
             if($this->patientModel->patient_profile_delete($data['ID'])){
-                redirect('users/login');
+                redirect('users/logout');
             } else{
                 die("Couldn't delete the patient! ");
             }

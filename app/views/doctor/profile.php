@@ -1,6 +1,8 @@
 <?php 
-  session_start();
-  if(($_SESSION['userType']) != 'Patient'){
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+  if(($_SESSION['userType']) != 'Doctor'){
     redirect("users/login");
   }
 ?>
@@ -35,12 +37,12 @@
     <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
-        <ul class="menu_item">
+          <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
               </a>
@@ -58,27 +60,15 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="doc_booking.php" class="link flex">
-                <i class="uil uil-stethoscope"></i>
-                <span>Doctor Booking</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="test_booking.php" class="link flex">
-                <i class="uil uil-heart-rate"></i>
-                <span>Lab Test Booking</span>
-              </a>
-            </li>
-            <li class="item active">
               <a href="reservations.php" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
                 <span>Reservations</span>
               </a>
             </li>
-            <li class="item">
-              <a href="medical_records.php" class="link flex">
-                <i class="uil uil-file-alt"></i>
-                <span>Medical Records</span>
+            <li class="item active">
+              <a href="consultations.php" class="link flex">
+                <i class="uil uil-stethoscope"></i>
+                <span>Consultations</span>
               </a>
             </li>
           </ul>
@@ -87,7 +77,7 @@
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
-            <li class="item">
+            <li class="item active">
               <a href="profile.php" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
@@ -116,6 +106,48 @@
     </nav>
 
     <div class="content">
+        
+        <section class="table-wrap" >
+            <div class="table-container">
+                <h1>Account Details
+                    <span class="dashboard-stat" style="font-size: 25px; justify-content: right;" >
+                        <a href='profile_update'><button class='button' style="width: auto;">Update Details</button></a>
+                    </span>
+                    <span class="dashboard-stat" style="font-size: 25px; justify-content: right;" >
+                        <a href='profile_delete'><button class='button red' style="width: auto;">Delete Account</button></a>
+                    </span>
+                </h1>
+                <table class="table-dashboard">
+                    <tr>
+                        <td class="profile-img">
+                            <img src="<?php echo URLROOT;?>/img/profile.png" alt="profile_img" />
+                        </td>
+                        <td>
+                            <table class="table-dashboard">
+                                <tbody class="profile" >
+                                    <tr>
+                                        <td>Name: <?php echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
+                                        <td>Gender: <?php echo $data['Gender'] ?></td>
+                                        <td>NIC: <?php echo $data['NIC'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contact Number: <?php echo $data['C_Num'] ?></td>
+                                        <td>Email: <?php echo $data['Email'] ?></td>
+                                        <td></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>SLMC Reg No: <?php echo $data['SLMC'] ?></td>
+                                        <td>Specialization: <?php echo $data['Spec'] ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        <br>
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Doctor Reservations</h1>
@@ -131,22 +163,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
                         <tr>
                             <td>Dr. M.S. Perera</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
@@ -175,22 +191,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
                         <tr>
                             <td>Lipid Profile</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>

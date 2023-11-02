@@ -1,5 +1,7 @@
 <?php 
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
   if(($_SESSION['userType']) != 'Patient'){
     redirect("users/login");
   }
@@ -41,8 +43,8 @@
 
                         <div class="input-field">
                             <label>Gender*</label>
-                            <select name="gender">
-                            <option selected value="<?php echo $data['Gender'] ?>" > <?php echo ($data['Gender'] == '') ? 'Select gender' : $data['Gender'] ?></option>
+                            <select name="gender" disabled>
+                            <option selected value="<?php echo $data['Gender'] ?>"> <?php echo ($data['Gender'] == '') ? 'Select gender' : $data['Gender'] ?></option>
                                 <option>Male</option>
                                 <option>Female</option>
                             </select>
@@ -50,12 +52,12 @@
 
                         <div class="input-field">
                             <label>Date of Birth*</label>
-                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>">
+                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>" disabled>
                         </div>
 
                         <div class="input-field">
                             <label>NIC Number</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>">
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" disabled>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
@@ -79,7 +81,7 @@
                         </div>
                         <div class="input-field">
                             <label>Blood Group</label>
-                            <select name="bgroup">
+                            <select name="bgroup" disabled>
                                 <option selected value="<?php echo $data['Blood_Group'] ?>" > <?php echo ($data['Blood_Group'] == '') ? 'Select blood group' : $data['Blood_Group'] ?></option>
                                 <option value="A+">A Positive (A+)</option>
                                 <option value="A-">A Negative (A-)</option>

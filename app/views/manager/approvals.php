@@ -1,10 +1,11 @@
 <?php 
   session_start();
-  if(($_SESSION['userType']) != 'Lab Assistant'){
+  if(($_SESSION['userType']) != 'Manager'){
     redirect("users/login");
   }
 ?>
 <!DOCTYPE html>
+<!-- Coding by CodingNepal || www.codingnepalweb.com -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -39,7 +40,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="" class="link flex">
+              <a href="#" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
               </a>
@@ -56,10 +57,22 @@
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
+            <li class="item">
+              <a href="dashboard.php" class="link flex">
+                <i class="uil uil-chart-line"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
             <li class="item active">
-              <a href="test_appt_management.php" class="link flex">
-                <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+              <a href="approvals.php" class="link flex">
+                <i class="uil uil-check-circle"></i>
+                <span>Approvals</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="doc_management.php" class="link flex">
+                <i class="uil uil-stethoscope"></i>
+                <span>Doctor Management</span>
               </a>
             </li>
             <li class="item">
@@ -69,9 +82,9 @@
               </a>
             </li>
             <li class="item">
-              <a href="test_result_upload.php" class="link flex">
-                <i class="uil uil-upload"></i>
-                <span>Results Upload</span>
+              <a href="reservations.php" class="link flex">
+                <i class="uil uil-calendar-alt"></i>
+                <span>Reservations</span>
               </a>
             </li>
           </ul>
@@ -111,82 +124,82 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Test Appointments Management</h1>
+                <h1>Hospital Staff Approvals</h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Patient Name</th>
-                            <th>Test Name</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>NIC</th>
+                            <th>Address</th>
+                            <th>Approve</th>
+                            <th>Decline</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>Pharmacist</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
                             <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>Pharmacist</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
                             <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>Lab Assistant</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
                             <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>Pharmacist</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
                             <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>Pharmacist</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
                             <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>Lab Assistant</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
                             <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>Pharmacist</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
                             <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>Lab Assistant</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                     </tbody>
                 </table>

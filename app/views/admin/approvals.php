@@ -1,6 +1,6 @@
 <?php 
   session_start();
-  if(($_SESSION['userType']) != 'Patient'){
+  if(($_SESSION['userType']) != 'Admin'){
     redirect("users/login");
   }
 ?>
@@ -31,15 +31,15 @@
    
 
    <!--sidebar-->
-    <nav class="sidebar">
+   <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
-        <ul class="menu_item">
+          <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../home.php" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
               </a>
@@ -50,22 +50,34 @@
                 <span>About Us</span>
               </a>
             </li>
-          </ul>
-
-          <ul class="menu_item">
-            <div class="menu_title flex">
-              <span class="line"></span>
-            </div>
             <li class="item">
-              <a href="doc_booking.php" class="link flex">
-                <i class="uil uil-stethoscope"></i>
-                <span>Doctor Booking</span>
+              <a href="dashboard.php" class="link flex">
+                <i class="uil uil-chart-line"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="item active">
+              <a href="approvals.php" class="link flex">
+                <i class="uil uil-check-circle"></i>
+                <span>Approvals</span>
               </a>
             </li>
             <li class="item">
-              <a href="test_booking.php" class="link flex">
+              <a href="doc_management.php" class="link flex">
+                <i class="uil uil-stethoscope"></i>
+                <span>Doctor Management</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="test_management.php" class="link flex">
                 <i class="uil uil-heart-rate"></i>
-                <span>Lab Test Booking</span>
+                <span>Test Management</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="hospital_management.php" class="link flex">
+                <i class="uil uil-stethoscope"></i>
+                <span>Hospital Management</span>
               </a>
             </li>
             <li class="item">
@@ -74,20 +86,8 @@
                 <span>Reservations</span>
               </a>
             </li>
-            <li class="item active">
-              <a href="medical_records.php" class="link flex">
-                <i class="uil uil-file-alt"></i>
-                <span>Medical Records</span>
-              </a>
-            </li>
-          </ul>
-
-          <ul class="menu_item">
-            <div class="menu_title flex">
-              <span class="line"></span>
-            </div>
             <li class="item">
-              <a href="profile.php" class="link flex">
+              <a href="#" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -98,7 +98,6 @@
                 <span>Notifications</span>
               </a>
             </li>
-           
           </ul>
         </div>
 
@@ -117,42 +116,42 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Medical Records: Past Consultancies</h1>
+                <h1>Doctor Approvals</h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Doctor</th>
-                            <th>Location</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Details</th>
-                            <th>Prescription</th>
+                            <th>Name</th>
+                            <th>Specialization</th>
+                            <th>NIC</th>
+                            <th>SLMC Reg No</th>
+                            <th>Approve</th>
+                            <th>Decline</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
+                            <td>Gastroenterologist</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
                             <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
+                            <td>Gastroenterologist</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
                             <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
+                            <td>Gastroenterologist</td>
+                            <td>892382331v</td>
+                            <td>No.12/2, Jaya Rd., Colombo</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -161,42 +160,42 @@
         <br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Medical Records: Lab Tests Results</h1>
+                <h1>Hospital Approvals</h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Test Name</th>
-                            <th>Location</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Details</th>
-                            <th>Results</th>
+                            <th>Name</th>
+                            <th>Registration No</th>
+                            <th>Address</th>
+                            <th>Region</th>
+                            <th>Approve</th>
+                            <th>Decline</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Results</button></a></td>
+                            <td>Asiri Hospitals - Panadura</td>
+                            <td>AS0832</td>
+                            <td>No.12/2, Jaya Rd., Panadura</td>
+                            <td>Kalutara</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Results</button></a></td>
+                            <td>Asiri Hospitals - Panadura</td>
+                            <td>AS0832</td>
+                            <td>No.12/2, Jaya Rd., Panadura</td>
+                            <td>Kalutara</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                         <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Results</button></a></td>
+                            <td>Asiri Hospitals - Panadura</td>
+                            <td>AS0832</td>
+                            <td>No.12/2, Jaya Rd., Panadura</td>
+                            <td>Kalutara</td>
+                            <td><a href=''><button class='button'>Approve</button></a></td>
+                            <td><a href=''><button class='button red'>Decline</button></a></td>
                         </tr>
                     </tbody>
                 </table>

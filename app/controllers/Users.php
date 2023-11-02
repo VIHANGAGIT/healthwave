@@ -465,4 +465,15 @@
             }
             
         }
+
+        public function logout(){
+            session_start();
+            // Remove session variables
+            session_unset();
+            // Destroy session
+            session_destroy();
+            // Redirect to login page
+            redirect('users/login');
+        }
+
     }

@@ -24,7 +24,7 @@
       </div>
       <div class="navbar_content">
         <i class='uil uil-sun' id="darkLight"></i>
-        <button class='button'>Logout</button>
+        <a href='../users/logout'><button class='button'>Logout</button></a>
       </div>
     </nav>
 
@@ -75,7 +75,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="profile.php" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
