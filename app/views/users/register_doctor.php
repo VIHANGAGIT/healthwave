@@ -110,9 +110,9 @@
                         
                     </div>
                     <div class="buttons">
-                        <div class="backBtn">
-                            <span class="btnText">Back</span>
-                        </div>
+                        <button>
+                            <span class="btnText">Clear</span>
+                        </button>
                         
                         <button class="sumbit">
                             <span class="btnText">Submit</span>

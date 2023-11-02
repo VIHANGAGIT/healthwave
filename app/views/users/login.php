@@ -64,16 +64,10 @@
                         <a  href="<?php echo URLROOT; ?>/users/register_patient"><input type="button" value="Signup as a Patient"></a>
                     </div>
                     <div class="input-field button">
-                        <input type="button" value="Signup as a Doctor">
+                        <a  href="<?php echo URLROOT; ?>/users/register_doctor"><input type="button" value="Signup as a Doctor"></a>
                     </div>
                     <div class="input-field button">
-                        <input type="button" value="Signup as a Hospital Manager">
-                    </div>
-                    <div class="input-field button">
-                        <input type="button" value="Signup as a Pharmacist">
-                    </div>
-                    <div class="input-field button">
-                        <input type="button" value="Signup as a Lab Assistant">
+                        <a  href="<?php echo URLROOT; ?>/users/register_hospital_staff"><input type="button" value="Signup as Hospital Staff"></a>
                     </div>
                 </form>
                 <div class="login-signup">

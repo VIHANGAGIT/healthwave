@@ -143,6 +143,21 @@
             }
         }
 
+        public function patient_data_fetch($uname){
+            $this->db->query('SELECT * FROM patient WHERE Username = :uname');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':uname', $uname);
+            $patientRow = $this->db->singleRow();
+
+            // Execute query
+            if($this->db->execute()){
+                return $patientRow;
+            } else{
+                return false;
+            }
+        }
+
         /*public function getUsers(){
             $this->db->query("SELECT * FROM user");
 

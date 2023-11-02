@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -93,13 +97,15 @@
            
           </ul>
         </div>
+        <?php var_dump($_SESSION); ?>
+
 
         <div class="sidebar_profile flex">
           <span class="nav_image">
             <img src="<?php echo URLROOT;?>/img/profile.png" alt="logo_img" />
           </span>
           <div class="data_text">
-            <span class="name">K.H. Gunawardhana</span><br>
+            <span class="name"><?php echo $_SESSION['userName'] ?></span><br>
             <span class="role">Patient</span>
           </div>
         </div>

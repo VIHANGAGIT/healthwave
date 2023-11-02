@@ -362,6 +362,7 @@
         public function login(){
             // Check for POST request
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                session_start();
 
                 // Login user
 
@@ -447,7 +448,11 @@
                     $_SESSION['userID'] = $userData->Admin_ID;
                     break;
             }
-            redirect('pages/index');
+            if($_SESSION['userID'] == 9){
+                redirect('patient/doc_booking');
+            } else{
+                redirect('pages/index');
+            }
             
         }
     }

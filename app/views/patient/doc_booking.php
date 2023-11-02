@@ -1,3 +1,10 @@
+<?php 
+  session_start();
+  if(($_SESSION['userType']) != 'Patient'){
+    redirect("users/login");
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -79,7 +86,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="patient/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -99,7 +106,7 @@
             <img src="<?php echo URLROOT;?>/img/profile.png" alt="logo_img" />
           </span>
           <div class="data_text">
-            <span class="name">K.H. Gunawardhana</span><br>
+            <span class="name"><?php echo $_SESSION['userName'] ?></span><br>
             <span class="role">Patient</span>
           </div>
         </div>
