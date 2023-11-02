@@ -11,13 +11,13 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Patient Regisration</title>
+   <title>Patient Profile Update</title>
 </head>
 <body>
     <div class="container-signup">
-        <header>Patient Registration</header>
+        <header>Patient Profile Update</header>
 
-        <form action="<?php echo URLROOT; ?>/users/register_patient" method="POST">
+        <form action="<?php echo URLROOT; ?>/patient/profile_update" method="POST">
             <div class="form first">
                 <div class="details personal">
                     <span class="title">Personal Details</span>
@@ -25,12 +25,12 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>First Name*</label>
-                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['F_name'] ?>">
+                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['First_Name'] ?>">
                         </div>
 
                         <div class="input-field">
                             <label>Last Name*</label>
-                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['L_name'] ?>">
+                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['Last_Name'] ?>">
                         </div>
 
                         <div class="input-field">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
-                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>">
+                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_Num'] ?>">
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                         <div class="input-field">
                             <label>Blood Group</label>
                             <select name="bgroup">
-                                <option selected value="<?php echo $data['B_group'] ?>" > <?php echo ($data['B_group'] == '') ? 'Select blood group' : $data['B_group'] ?></option>
+                                <option selected value="<?php echo $data['Blood_Group'] ?>" > <?php echo ($data['Blood_Group'] == '') ? 'Select blood group' : $data['Blood_Group'] ?></option>
                                 <option value="A+">A Positive (A+)</option>
                                 <option value="A-">A Negative (A-)</option>
                                 <option value="B+">B Positive (B+)</option>
@@ -95,11 +95,6 @@
                     <button class="nextBtn" onclick="event.preventDefault();">
                         <span class="btnText">Next</span>
                     </button>
-                    <div class="login-signup" style="margin-top: -20px; font-size: 14px;" ">
-                        <span class="text">Already have an account?
-                            <a href="<?php echo URLROOT; ?>/users/login" class="text login-link">Login Now</a>
-                        </span>
-                    </div>
                 </div>
                 
             </div>
@@ -119,14 +114,14 @@
 
                         <div class="input-field">
                             <label>Password*</label>
-                            <input type="password" placeholder="Enter a password" name="pass" value="<?php echo $data['Pass'] ?>" class="<?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" >
+                            <input type="password" placeholder="Enter a password" name="pass" value="" class="<?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" >
                             <span class="err-msg"><?php echo $data['Pass_err'] . "\u{200B}"; ?></span>
                         </div>
                         
 
                         <div class="input-field" style="margin-bottom: 0;" >
                             <label>Confirm Password*</label>
-                            <input type="password" placeholder="Enter your password again" name="cpass" value="<?php echo $data['C_pass'] ?>" class="<?php echo (!empty($data['C_pass_err'])) ? 'error' : '' ?>" >
+                            <input type="password" placeholder="Enter your password again" name="cpass" value="" class="<?php echo (!empty($data['C_pass_err'])) ? 'error' : '' ?>" >
                             <span class="err-msg"><?php echo $data['C_pass_err'] . "\u{200B}"; ?></span>
                         </div>
                         
@@ -140,12 +135,6 @@
                             <span class="btnText">Submit</span>
                         </button>
                     </div>
-                </div>
-                <br>
-                <div class="login-signup">
-                    <span class="text" style="font-size: 14px;" >Already have an account?
-                        <a href="<?php echo URLROOT; ?>/users/login" class="text login-link">Login Now</a>
-                    </span>
                 </div>
             </div>
             

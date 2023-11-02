@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION['userType'])){
+  redirect("users/login");
+}
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +86,7 @@ session_start();
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="patient/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -97,7 +100,6 @@ session_start();
            
           </ul>
         </div>
-        <?php var_dump($_SESSION); ?>
 
 
         <div class="sidebar_profile flex">

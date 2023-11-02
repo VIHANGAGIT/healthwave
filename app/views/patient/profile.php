@@ -118,10 +118,10 @@
             <div class="table-container">
                 <h1>Account Details
                     <span class="dashboard-stat" style="font-size: 25px; justify-content: right;" >
-                        <a href=''><button class='button' style="width: auto;">Update Details</button></a>
+                        <a href='profile_update'><button class='button' style="width: auto;">Update Details</button></a>
                     </span>
                     <span class="dashboard-stat" style="font-size: 25px; justify-content: right;" >
-                        <a href=''><button class='button red' style="width: auto;">Delete Account</button></a>
+                        <a href='profile_delete'><button class='button red' style="width: auto;">Delete Account</button></a>
                     </span>
                 </h1>
                 <table class="table-dashboard">
@@ -133,7 +133,7 @@
                             <table class="table-dashboard">
                                 <tbody class="profile" >
                                     <tr>
-                                        <td>Name: <?php echo $data['Name'] ?></td>
+                                        <td>Name: <?php echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
                                         <td>Gender: <?php echo $data['Gender'] ?></td>
                                         <td>NIC: <?php echo $data['NIC'] ?></td>
                                     </tr>
