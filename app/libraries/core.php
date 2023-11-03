@@ -40,9 +40,9 @@
             // Look in methods for second value
             if(isset($url[1])){
 
-                if (strpos($url[1], '.php') !== false) {
-                    $url[1] = str_replace('.php', '', $url[1]);
-                }
+                //if (strpos($url[1], '.php') !== false) {
+                    //$url[1] = str_replace('.php', '', $url[1]);
+                //}
                 // Check if method exist in controller
                 if(method_exists($this->currentController, $url[1])){
                     $this->currentMethod = $url[1];

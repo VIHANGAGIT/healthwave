@@ -57,19 +57,19 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="test_appt_management.php" class="link flex">
+              <a href="../lab/test_appt_management" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
                 <span>Reservations</span>
               </a>
             </li>
             <li class="item active">
-              <a href="test_management.php" class="link flex">
+              <a href="../lab/test_management" class="link flex">
                 <i class="uil uil-heart-rate"></i>
                 <span>Test Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="test_result_upload.php" class="link flex">
+              <a href="../lab/test_result_upload" class="link flex">
                 <i class="uil uil-upload"></i>
                 <span>Results Upload</span>
               </a>

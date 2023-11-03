@@ -57,13 +57,13 @@
               <span class="line"></span>
             </div>
             <li class="item active">
-              <a href="reservations.php" class="link flex">
+              <a href="../doctor/reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
                 <span>Reservations</span>
               </a>
             </li>
             <li class="item">
-              <a href="consultations.php" class="link flex">
+              <a href="../doctor/consultations" class="link flex">
                 <i class="uil uil-stethoscope"></i>
                 <span>Consultations</span>
               </a>
@@ -75,7 +75,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../doctor/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>

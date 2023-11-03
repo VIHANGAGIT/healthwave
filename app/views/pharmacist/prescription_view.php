@@ -57,7 +57,7 @@
               <span class="line"></span>
             </div>
             <li class="item active">
-              <a href="prescription_view.php" class="link flex">
+              <a href="../pharmacist/prescription_view" class="link flex">
                 <i class="uil uil-file-medical"></i>
                 <span>Prescription</span>
               </a>

@@ -34,12 +34,12 @@
    <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
-          <ul class="menu_item">
+        <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="../home.php" class="link flex">
+              <a href="#" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
               </a>
@@ -51,37 +51,37 @@
               </a>
             </li>
             <li class="item">
-              <a href="dashboard.php" class="link flex">
+              <a href="../admin/dashboard" class="link flex">
                 <i class="uil uil-chart-line"></i>
                 <span>Dashboard</span>
               </a>
             </li>
             <li class="item">
-              <a href="approvals.php" class="link flex">
+              <a href="../admin/approvals" class="link flex">
                 <i class="uil uil-check-circle"></i>
                 <span>Approvals</span>
               </a>
             </li>
             <li class="item">
-              <a href="doc_management.php" class="link flex">
+              <a href="../admin/doc_management" class="link flex">
                 <i class="uil uil-stethoscope"></i>
                 <span>Doctor Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="test_management.php" class="link flex">
+              <a href="../admin/test_management" class="link flex">
                 <i class="uil uil-heart-rate"></i>
                 <span>Test Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="hospital_management.php" class="link flex">
+              <a href="../admin/hospital_management" class="link flex">
                 <i class="uil uil-stethoscope"></i>
                 <span>Hospital Management</span>
               </a>
             </li>
             <li class="item active">
-              <a href="reservations.php" class="link flex">
+              <a href="../admin/reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
                 <span>Reservations</span>
               </a>

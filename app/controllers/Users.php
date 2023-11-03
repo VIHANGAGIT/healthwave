@@ -88,6 +88,7 @@
 
                 // Check whether errors are empty
                 if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
+                    
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 

@@ -43,7 +43,7 @@
 
                         <div class="input-field">
                             <label>Gender*</label>
-                            <select name="gender" required>
+                            <select name="gender" disabled>
                             <option selected value="<?php echo $data['Gender'] ?>" > <?php echo ($data['Gender'] == '') ? 'Select gender' : $data['Gender'] ?></option>
                                 <option>Male</option>
                                 <option>Female</option>
@@ -70,7 +70,7 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Specialization*</label>
-                            <select name="spec" required>
+                            <select name="spec" disabled>
                                 <option selected value="<?php echo $data['Spec'] ?>" > <?php echo ($data['Spec'] == '') ? 'Select specialization' : $data['Spec'] ?></option>
                                 <option value="Neurologist">Neurologist</option>
                                 <option value="Gastroenterologist">Gastroenterologist</option>
@@ -82,7 +82,7 @@
 
                         <div class="input-field">
                             <label>SLMC Regisration Number*</label>
-                            <input type="number" placeholder="Enter SLMC Regisration Number" name="slmc" value="<?php echo $data['SLMC'] ?>" required>
+                            <input type="number" placeholder="Enter SLMC Regisration Number" name="slmc" value="<?php echo $data['SLMC'] ?>" disabled>
                         </div>
                         <div class="input-field" style="opacity: 0;">
                             <label></label>

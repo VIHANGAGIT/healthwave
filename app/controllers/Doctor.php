@@ -71,15 +71,15 @@
                 // Register user
                 $data = [
                     'ID'=> $_SESSION['userID'],
-                    'F_name' => trim($_POST['fname']),
-                    'L_name' => trim($_POST['lname']),
-                    'Gender' => trim($_POST['gender']),
+                    'First_Name' => trim($_POST['fname']),
+                    'Last_Name' => trim($_POST['lname']),
+                    'Gender' => $doctor_data->Gender,
                     'NIC' => trim($_POST['nic']),
-                    'C_num' => $_POST['cnum'],
-                    'Spec' => $_POST['spec'],
-                    'SLMC' => $_POST['slmc'],
+                    'C_Num' => $_POST['cnum'],
                     'Avail' => 1,
-                    'Uname' => trim($_POST['email']),
+                    'SLMC' => $doctor_data->SLMC_Reg_No,
+                    'Spec' => $doctor_data->Specialization,
+                    'Email' => trim($_POST['email']),
                     'Pass' => trim($_POST['pass']),
                     'C_pass' => trim($_POST['cpass']),
                     'Uname_err' => '',
@@ -87,7 +87,7 @@
                     'C_pass_err' => ''
                 ];
                 // Validate Email
-                if(empty($data['Uname'])){
+                if(empty($data['Email'])){
                     $data['Uname_err'] = 'Please enter your email';
                 }
 
@@ -137,7 +137,7 @@
                     if($this->doctorModel->doctor_profile_update($data)){
                         redirect('doctor/profile');
                     } else{
-                        die("Couldn't register the patient! ");
+                        die("Couldn't register the doctor! ");
                     }
                 } else {
                     // Load view

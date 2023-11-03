@@ -58,31 +58,31 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="dashboard.php" class="link flex">
+              <a href="../manager/dashboard" class="link flex">
                 <i class="uil uil-chart-line"></i>
                 <span>Dashboard</span>
               </a>
             </li>
             <li class="item">
-              <a href="approvals.php" class="link flex">
+              <a href="../manager/approvals" class="link flex">
                 <i class="uil uil-check-circle"></i>
                 <span>Approvals</span>
               </a>
             </li>
             <li class="item">
-              <a href="doc_management.php" class="link flex">
+              <a href="../manager/doc_management" class="link flex">
                 <i class="uil uil-stethoscope"></i>
                 <span>Doctor Management</span>
               </a>
             </li>
             <li class="item active">
-              <a href="test_management.php" class="link flex">
+              <a href="../manager/test_management" class="link flex">
                 <i class="uil uil-heart-rate"></i>
                 <span>Test Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="reservations.php" class="link flex">
+              <a href="../manager/reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
                 <span>Reservations</span>
               </a>

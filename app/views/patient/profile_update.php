@@ -33,12 +33,12 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>First Name*</label>
-                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['First_Name'] ?>">
+                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['First_Name'] ?>" required>
                         </div>
 
                         <div class="input-field">
                             <label>Last Name*</label>
-                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['Last_Name'] ?>">
+                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['Last_Name'] ?>" required>
                         </div>
 
                         <div class="input-field">
@@ -57,11 +57,11 @@
 
                         <div class="input-field">
                             <label>NIC Number</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" disabled>
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
-                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_Num'] ?>">
+                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_Num'] ?>" required>
                         </div>
                     </div>
                 </div>
@@ -111,10 +111,12 @@
                 <div class="details account">
                     <span class="title">Account Details</span>
 
+
+                    <!--These fileds are not required since they are verified in the back end-->
                     <div class="fields">
                         <div class="input-field">
                             <label>Email*</label>
-                            <input type="email" placeholder="Enter your email" name="email" value="<?php echo $data['Uname'] ?>" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>">
+                            <input type="email" placeholder="Enter your email" name="email" value="<?php echo $data['Uname'] ?>" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>" >
                             <span class="err-msg"><?php echo $data['Uname_err'] . "\u{200B}"; ?></span>
                         </div>
                         

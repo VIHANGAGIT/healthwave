@@ -35,7 +35,7 @@
     <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
-        <ul class="menu_item">
+          <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
@@ -52,31 +52,31 @@
               </a>
             </li>
           </ul>
-          
+
           <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="doc_booking.php" class="link flex">
+              <a href="../patient/doc_booking" class="link flex">
                 <i class="uil uil-stethoscope"></i>
                 <span>Doctor Booking</span>
               </a>
             </li>
             <li class="item">
-              <a href="test_booking.php" class="link flex">
+              <a href="../patient/test_booking" class="link flex">
                 <i class="uil uil-heart-rate"></i>
                 <span>Lab Test Booking</span>
               </a>
             </li>
             <li class="item active">
-              <a href="reservations.php" class="link flex">
+              <a href="../patient/reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
                 <span>Reservations</span>
               </a>
             </li>
             <li class="item">
-              <a href="medical_records.php" class="link flex">
+              <a href="../patient/medical_records" class="link flex">
                 <i class="uil uil-file-alt"></i>
                 <span>Medical Records</span>
               </a>
@@ -88,7 +88,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="profile.php" class="link flex">
+              <a href="../patient/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
