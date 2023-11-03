@@ -118,7 +118,7 @@
 
       <div class="content-search">
           <div class="search">
-            <h2 style="color: black;">Find Lab Tests</h2>
+            <h2>Find Lab Tests</h2>
               <form style="width: 100%;" method="POST">
                 <div class="fields">
                   <table style="width: 95%;" >

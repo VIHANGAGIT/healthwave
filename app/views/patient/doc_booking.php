@@ -117,10 +117,10 @@
 
       <div class="content-search">
           <div class="search">
-            <h2 style="color: black;">Find Your Doctor</h2>
+            <h2>Find Your Doctor</h2>
               <form style="width: 100%;" method="POST">
                 <div class="fields">
-                  <table style="width: 95%;" >
+                  <table style="width: 95%;">
                     <tr>
                       <td>
                         <div class="input-field">

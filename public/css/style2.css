@@ -10,6 +10,7 @@
   --blue-color: #4070f4;
   --grey-color: #616161;
   --grey-color-dark: #505050;
+  --blue-color-very-light: #c9d8ff;
 }
 body {
   background-color: #e7f2fd;
@@ -23,6 +24,7 @@ body.dark {
   --blue-color: #4070f4;
   --grey-color: #f0f0f0;
   --grey-color-dark: #fff;
+  --blue-color-very-light: #103080;
 }
 /* Pre css */
 .flex {
@@ -182,9 +184,9 @@ body.dark {
   width: 91%;
   margin-left: 5%;
   padding-top: 1%;
-  background-color: #fff;
+  background-color: var(--white-color);
   border-radius: 10px;
-  color: #fff;
+  color: var(--white-color);
   font-size: 18px;
   transition: all 0.5s;
 }
@@ -264,6 +266,13 @@ body.dark {
   padding: 0 15px;
   height: 42px;
   margin: 8px 0;
+}
+
+.search h2{
+  color: var(--grey-color-dark);
+}
+.search .input-field label{
+  color: var(--grey-color-dark);
 }
 
 
@@ -386,7 +395,7 @@ body.dark {
   width: 91%;
   margin-left: 5%;
   padding: 15px;
-  background: #fff;
+  background: var(--white-color);
   border-radius: 10px;
 
 }
@@ -413,7 +422,7 @@ table thead tr{
 }
 
 .table td{
-  color: #222;
+  color: var(--grey-color-dark);
 }
 
 .table th, .table td{
@@ -422,18 +431,18 @@ table thead tr{
 }
 
 .table tbody tr{
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid var(--grey-color-dark);
 }
 .table tbody tr:nth-last-of-type(even){
-  background: #c9d8ff;
+  background: var(--blue-color-very-light);
 }
 .table tbody tr.active{
   font-weight: 600;
-  color: #0e0136;
+  color: var(--grey-color-dark);
   background-color: #222
 }
 .table tbody tr:last-of-type{
-  border-bottom: 2px solid #222
+  border-bottom: 2px solid var(--grey-color-dark)
 }
 .table-container .button{
   width: 130px;
@@ -443,6 +452,10 @@ table thead tr{
 
 .table-container .button:hover{
   background-color: #1b52e8;
+}
+
+.table-container h1{
+  color: var(--grey-color-dark);
 }
 
 
@@ -459,7 +472,7 @@ table thead tr{
 }
 
 .table-dashboard td{
-  color: #222;
+  color: var(--grey-color-dark);
   text-align: center;
 }
 
