@@ -7,7 +7,9 @@
         }
 
 
-        // Register User
+        //------------------------------ Register Functions ------------------------------------//
+
+
         public function register_patient($data){
             $this->db->query('INSERT INTO patient (First_Name, Last_Name, Gender, NIC, Contact_No, DOB, Age, Height, Weight, Blood_Group, Allergies, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :DOB, :Age, :Height, :Weight, :B_group, :Allergies, :Uname, :Pass)');
 
@@ -143,6 +145,8 @@
             }
         }
 
+        //------------------------------ Patient Functions ------------------------------------//
+
         public function patient_data_fetch($id){
             $this->db->query('SELECT * FROM patient WHERE Patient_ID = :id');
 
@@ -196,6 +200,8 @@
             }
         }
 
+        //------------------------------ Doctor Functions ------------------------------------//
+
         public function doctor_data_fetch($id){
             $this->db->query('SELECT * FROM doctor WHERE Doctor_ID = :id');
 
@@ -244,6 +250,27 @@
                 return false;
             }
         }
+
+        //------------------------------ Hospital Functions ------------------------------------//
+
+        public function getHospitalNames() {
+            $this->db->query('SELECT Hospital_Name FROM hospital');
+        
+            // Execute query
+            $this->db->execute();
+        
+            // Fetch all rows as associative array
+            $hospitalNames = $this->db->resultSet(PDO::FETCH_ASSOC);
+        
+            // Check if there are results
+            if ($hospitalNames) {
+                return $hospitalNames;
+            } else {
+                return false;
+            }
+        }
+        
+        
 
         /*public function getUsers(){
             $this->db->query("SELECT * FROM user");

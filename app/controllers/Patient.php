@@ -21,6 +21,11 @@
             $this->view('patient/reservations', $data);
         }
 
+        public function doc_booking_details(){
+            $data = [];
+            $this->view('patient/doc_booking_details', $data);
+        }
+
         public function medical_records(){
             $data = [];
             $this->view('patient/medical_records', $data);

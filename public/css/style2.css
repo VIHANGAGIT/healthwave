@@ -544,7 +544,7 @@ table thead tr{
 .container-edit .forms{
   display: flex;
   align-items: center;
-  height: 550px;
+  height: 520px;
   width: 200%;
   transition: height 0.2s ease;
 }
@@ -662,3 +662,23 @@ table thead tr{
   margin: 10px 0;
 }
 
+/*Table*/
+.table-edit{
+  border-collapse: collapse;
+  margin: -20px 0;
+  font-size: 16px;
+  font-weight: 500;
+  min-width: 100%;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.table-edit .edit-btn{
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-edit .edit-btn button{
+  width: 180px;
+
+}

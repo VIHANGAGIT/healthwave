@@ -247,6 +247,7 @@
         }
 
         public function register_hospital_staff(){
+
             // Check for POST request
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -352,12 +353,14 @@
                     'C_pass' => '',
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'hospitalNames' => $this->userModel->getHospitalNames()
                 ];
-
-                // Load view
+                
+                // Load the view with the fetched data
                 $this->view('users/register_hospital_staff', $data);
             }
+            
         }
 
         public function login(){
@@ -471,9 +474,7 @@
             session_start();
             // Remove session variables
             session_unset();
-            // Destroy session
             session_destroy();
-            // Redirect to login page
             redirect('users/login');
         }
 
