@@ -30,8 +30,10 @@
 
             // Execute query
             if($this->db->execute()){
+                $this->closeDatabaseConnection();
                 return true;
             } else{
+                $this->closeDatabaseConnection();
                 return false;
             }
         }
@@ -53,8 +55,10 @@
 
             // Execute query
             if($this->db->execute()){
+                $this->closeDatabaseConnection();
                 return true;
             } else{
+                $this->closeDatabaseConnection();
                 return false;
             }
         }
@@ -75,8 +79,10 @@
 
             // Execute query
             if($this->db->execute()){
+                $this->closeDatabaseConnection();
                 return true;
             } else{
+                $this->closeDatabaseConnection();
                 return false;
             }
         }
@@ -109,6 +115,8 @@
                 }
             }
 
+            
+
             // Create another array to include both user data and role
             $result = [
                 'userRow' => $userRow,
@@ -127,6 +135,8 @@
             } else {
                 return false;
             }
+
+            
         }   
 
         // Check for duplicate Username entries
@@ -194,8 +204,10 @@
 
             // Execute query
             if($this->db->execute()){
+                $this->closeDatabaseConnection();
                 return true;
             } else{
+                $this->closeDatabaseConnection();
                 return false;
             }
         }
@@ -245,8 +257,10 @@
 
             // Execute query
             if($this->db->execute()){
+                $this->closeDatabaseConnection();
                 return true;
             } else{
+                $this->closeDatabaseConnection();
                 return false;
             }
         }
@@ -263,15 +277,18 @@
             $hospitalNames = $this->db->resultSet(PDO::FETCH_ASSOC);
         
             // Check if there are results
-            if ($hospitalNames) {
+            if($this->db->execute()){
                 return $hospitalNames;
-            } else {
+            } else{
                 return false;
             }
         }
         
         
-
+        private function closeDatabaseConnection()
+        {
+            $this->db->closeConnection();
+        }
         /*public function getUsers(){
             $this->db->query("SELECT * FROM user");
 

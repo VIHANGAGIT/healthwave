@@ -89,5 +89,10 @@
         public function rowCount(){
             return $this->statement->rowCount();
         }
+
+        public function closeConnection() {
+            $this->dbhandler = null;
+        }
+        
     }
 
