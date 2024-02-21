@@ -8,11 +8,22 @@ class Patient extends Controller
         }
 
         $this->patientModel = $this->model('patients');
+        $this->doctorModel = $this->model('doctors');
     }
 
-    public function index()
+    /*public function index()
     {
         $data = [];
+        $this->view('patient/doc_booking', $data);
+    }*/
+
+    public function doc_booking()
+    {
+        $data = [];
+        $doctors = $this->doctorModel->getAllDoctors();
+        $data = [
+            'doctors' => $doctors
+        ];
         $this->view('patient/doc_booking', $data);
     }
 

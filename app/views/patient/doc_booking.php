@@ -167,79 +167,25 @@
           </div>
         </div>
         <div class="detail-wrapper">
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Dr. W.P. Krishan Weerasinghe</p>
-                <p class='detail-comp'>Cardiologist</p>
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
-              <button class='button detail-btn' >Book Now</button>
-            </div>
-          </div>
-
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Dr. W.P. Krishan Weerasinghe</p>
-                <p class='detail-comp'>Cardiologist</p>
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
-              <button class='button detail-btn' >Book Now</button>
-            </div>
-          </div>
-
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Dr. W.P. Krishan Weerasinghe</p>
-                <p class='detail-comp'>Cardiologist</p>
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
-              <button class='button detail-btn' >Book Now</button>
-            </div>
-          </div>
-
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Dr. W.P. Krishan Weerasinghe</p>
-                <p class='detail-comp'>Cardiologist</p>
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
-              <button class='button detail-btn' >Book Now</button>
-            </div>
-          </div>
-        </div>
-        
+          <?php foreach ($data['doctors'] as $doctor): ?>
+              <div class='detail-card'>
+                  <div class='detail-card-content'>
+                      <p class="detail-title"><?php echo $doctor->First_Name . " " .  $doctor->Last_Name; ?></p> 
+                      <p class='detail-comp'><?php echo $doctor->Specialization; ?></p>
+                  </div>
+                  <div class='detail-card-sub'>
+                      <hr class="vertical-line">
+                      <div class='detail-card-info'>
+                          <p>Available at :</p>
+                          <p class="detail-location" >4 locations</p>
+                      </div>
+                  </div>
+                  <div class='detail-view'>
+                      <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
+                      <button class='button detail-btn' >Book Now</button>
+                  </div>
+              </div>
+          <?php endforeach; ?>
     </div>
   </body>
 </html>
