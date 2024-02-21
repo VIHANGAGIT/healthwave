@@ -125,18 +125,23 @@
                       <td>
                         <div class="input-field">
                             <label>Doctor Name</label>
-                            <input type="text" name="search_text" placeholder="Doctor Name">
+                            <select>
+                                <option disabled selected>Select Doctor Name</option>
+                                <?php foreach ($data['doctors'] as $doctor_name): ?>
+                                    <option><?php echo $doctor_name->First_Name . " " .  $doctor_name->Last_Name;?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
-                          <label>Hospital Name</label>
-                          <select required>
-                              <option disabled selected>Select Hospital</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                          </select>
+                            <label>Hospital Name</label>
+                            <select>
+                                <option disabled selected>Select Hospital</option>
+                                <?php foreach ($data['hospitals'] as $hospital): ?>
+                                    <option><?php echo $hospital->Hospital_Name; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                       </td>
                       <td>
@@ -147,7 +152,12 @@
                       <td>
                         <div class="input-field">
                             <label>Specialization</label>
-                            <input type="text" name="search_text" placeholder="Specialization">
+                            <select>
+                                <option disabled selected>Select Specialization</option>
+                                <?php foreach ($data['specializations'] as $specialization): ?>
+                                    <option><?php echo $specialization; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                       </td>
                       <td>

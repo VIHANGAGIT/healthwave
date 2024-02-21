@@ -9,20 +9,32 @@ class Patient extends Controller
 
         $this->patientModel = $this->model('patients');
         $this->doctorModel = $this->model('doctors');
+        $this->hospitalModel = $this->model('hospitals');
     }
 
-    /*public function index()
+    public function index()
     {
         $data = [];
         $this->view('patient/doc_booking', $data);
-    }*/
+    }
 
     public function doc_booking()
     {
         $data = [];
         $doctors = $this->doctorModel->getAllDoctors();
+        $hospitals = $this->hospitalModel->getAllHospitals();
+
+        // Getting disticnt specializations
+        $specializations = [];
+        foreach ($doctors as $doctor) {
+            if (!in_array($doctor->Specialization, $specializations)) {
+                $specializations[] = $doctor->Specialization;
+            }
+        }
         $data = [
-            'doctors' => $doctors
+            'doctors' => $doctors,
+            'hospitals' => $hospitals,
+            'specializations' => $specializations
         ];
         $this->view('patient/doc_booking', $data);
     }
