@@ -1,13 +1,18 @@
 <?php
     class Doctor extends Controller{
+
         public function __construct(){
             $this->doctorModel = $this->model('user');
+            $this->reservationModel = $this->model('reservation');
         }
         public function index(){
+           
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start(); 
+            }
             
-            //$users = $this->userModel->getUsers();
-            $data = [];
-            
+            $data = $this->reservationModel->getReservations($_SESSION['userID']);
+           
             $this->view('doctor/reservations', $data);
         }
 
@@ -140,7 +145,7 @@
                         die("Couldn't register the doctor! ");
                     }
                 } else {
-                    // Load view
+                    // Load view with errors
                     $this->view('doctor/profile_update', $data);
                 }
 

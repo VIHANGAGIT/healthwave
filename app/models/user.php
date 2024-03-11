@@ -7,9 +7,7 @@
         }
 
 
-        //------------------------------ Register Functions ------------------------------------//
-
-
+        // Register User
         public function register_patient($data){
             $this->db->query('INSERT INTO patient (First_Name, Last_Name, Gender, NIC, Contact_No, DOB, Age, Height, Weight, Blood_Group, Allergies, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :DOB, :Age, :Height, :Weight, :B_group, :Allergies, :Uname, :Pass)');
 
@@ -30,10 +28,8 @@
 
             // Execute query
             if($this->db->execute()){
-                $this->closeDatabaseConnection();
                 return true;
             } else{
-                $this->closeDatabaseConnection();
                 return false;
             }
         }
@@ -55,16 +51,14 @@
 
             // Execute query
             if($this->db->execute()){
-                $this->closeDatabaseConnection();
                 return true;
             } else{
-                $this->closeDatabaseConnection();
                 return false;
             }
         }
 
         public function register_hospital_staff($data){
-            $this->db->query('INSERT INTO hospital_staff (First_Name, Last_Name, Gender, NIC, Contact_No, Hospital, Role, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :Hospital, :Role, :Uname, :Pass)');
+            $this->db->query('INSERT INTO hospital_staff (First_Name, Last_Name, Gender, NIC, Contact_No, Hospital, Role, Username, Password, Employed_Date, Staff_ID) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :Hospital, :Role, :Uname, :Pass, :employeddate, :staffid)');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':F_name', $data['F_name']);
@@ -76,13 +70,14 @@
             $this->db->bind(':Role', $data['Role']);
             $this->db->bind(':Uname', $data['Uname']);
             $this->db->bind(':Pass', $data['Pass']);
+            $this->db->bind(':employeddate', $data['Employment_Date']);
+            $this->db->bind(':staffid', $data['Staff_ID']);
+            
 
             // Execute query
             if($this->db->execute()){
-                $this->closeDatabaseConnection();
                 return true;
             } else{
-                $this->closeDatabaseConnection();
                 return false;
             }
         }
@@ -115,8 +110,6 @@
                 }
             }
 
-            
-
             // Create another array to include both user data and role
             $result = [
                 'userRow' => $userRow,
@@ -135,8 +128,6 @@
             } else {
                 return false;
             }
-
-            
         }   
 
         // Check for duplicate Username entries
@@ -154,8 +145,6 @@
                 return false;
             }
         }
-
-        //------------------------------ Patient Functions ------------------------------------//
 
         public function patient_data_fetch($id){
             $this->db->query('SELECT * FROM patient WHERE Patient_ID = :id');
@@ -204,15 +193,11 @@
 
             // Execute query
             if($this->db->execute()){
-                $this->closeDatabaseConnection();
                 return true;
             } else{
-                $this->closeDatabaseConnection();
                 return false;
             }
         }
-
-        //------------------------------ Doctor Functions ------------------------------------//
 
         public function doctor_data_fetch($id){
             $this->db->query('SELECT * FROM doctor WHERE Doctor_ID = :id');
@@ -229,6 +214,24 @@
             }
         }
 
+        public function staff_data_fetch($id){
+            $this->db->query('SELECT * FROM hospital_staff WHERE HS_ID = :id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':id', $id);
+            $managerRow = $this->db->singleRow();
+
+            // Execute query
+            if($this->db->execute()){
+                return $managerRow;
+            } else{
+                return false;
+            }
+        }
+
+
+
+        //update doctor profile query 
         public function doctor_profile_update($data){
             $this->db->query('UPDATE doctor SET First_Name = :F_name, Last_Name = :L_name, NIC = :NIC, Contact_No = :C_num, Username = :Uname, Password = :Pass WHERE Doctor_ID = :Doctor_ID');
 
@@ -257,38 +260,36 @@
 
             // Execute query
             if($this->db->execute()){
-                $this->closeDatabaseConnection();
                 return true;
             } else{
-                $this->closeDatabaseConnection();
                 return false;
             }
         }
 
-        //------------------------------ Hospital Functions ------------------------------------//
+        //update hospital manager profile query 
+        public function manager_profile_update($data){
+            
+            $this->db->query('UPDATE hospital_staff SET First_Name = :F_name, Last_Name = :L_name, NIC = :NIC, Contact_No = :C_num, Username = :Uname, Password = :Pass WHERE HS_ID = :HS_ID');
 
-        public function getHospitalNames() {
-            $this->db->query('SELECT Hospital_Name FROM hospital');
-        
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':F_name', $data['First_Name']);
+            $this->db->bind(':L_name', $data['Last_Name']);
+            $this->db->bind(':NIC', $data['NIC']);
+            $this->db->bind(':C_num', $data['Contact_No']);
+            $this->db->bind(':Uname', $data['Username']);
+            $this->db->bind(':Pass', $data['Pass']);
+            $this->db->bind(':HS_ID', $data['HS_ID']);
+
             // Execute query
-            $this->db->execute();
-        
-            // Fetch all rows as associative array
-            $hospitalNames = $this->db->resultSet(PDO::FETCH_ASSOC);
-        
-            // Check if there are results
             if($this->db->execute()){
-                return $hospitalNames;
+                return true;
             } else{
                 return false;
             }
+            
+            
         }
-        
-        
-        private function closeDatabaseConnection()
-        {
-            $this->db->closeConnection();
-        }
+
         /*public function getUsers(){
             $this->db->query("SELECT * FROM user");
 

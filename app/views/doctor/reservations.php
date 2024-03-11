@@ -1,5 +1,9 @@
 <?php 
-  session_start();
+  if (session_status() === PHP_SESSION_NONE) {
+    // Session has not been started yet
+    session_start(); // Start the session
+}
+
   if(($_SESSION['userType']) != 'Doctor'){
     redirect("users/login");
   }
@@ -109,23 +113,21 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Hospital Name</th>
+                            <th>Reservation ID</th>
+                            <th>Location</th>
                             <th>Date</th>
-                            <th>Session Time</th>
-                            <th># of Appointments</th>
-                            <th>View</th>
+                            <th>Time</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td>8</td>
-                            <td><a href=''><button class='button'>View</button></a></td>
-                        </tr>
+                        <? 
+                          var_dump($data);
+                          ?>
                     </tbody>
                 </table>
+                        
             </div>
         </section>
     </div>
