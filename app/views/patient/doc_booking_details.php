@@ -21,15 +21,13 @@
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
-        <img src="../images/logo.png" alt=""> HealthWave
+        <img src="<?php echo URLROOT;?>/img/logo.png" alt=""> HealthWave
       </div>
       <div class="navbar_content">
         <i class='uil uil-sun' id="darkLight"></i>
-        <button class='button'>Logout</button>
+        <a href='../users/logout'><button class='button'>Logout</button></a>
       </div>
     </nav>
-
-   
 
    <!--sidebar-->
     <nav class="sidebar">
@@ -40,7 +38,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="../home.php" class="link flex">
+              <a href="#" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
               </a>
@@ -52,31 +50,31 @@
               </a>
             </li>
           </ul>
-          
+
           <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
             <li class="item active">
-              <a href="doc_booking.php" class="link flex">
+              <a href="../patient/doc_booking" class="link flex">
                 <i class="uil uil-stethoscope"></i>
                 <span>Doctor Booking</span>
               </a>
             </li>
             <li class="item">
-              <a href="test_booking.php" class="link flex">
+              <a href="../patient/test_booking" class="link flex">
                 <i class="uil uil-heart-rate"></i>
                 <span>Lab Test Booking</span>
               </a>
             </li>
             <li class="item">
-              <a href="reservations.php" class="link flex">
+              <a href="../patient/reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
                 <span>Reservations</span>
               </a>
             </li>
             <li class="item">
-              <a href="medical_records.php" class="link flex">
+              <a href="../patient/medical_records" class="link flex">
                 <i class="uil uil-file-alt"></i>
                 <span>Medical Records</span>
               </a>
@@ -88,7 +86,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../patient/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -105,70 +103,171 @@
 
         <div class="sidebar_profile flex">
           <span class="nav_image">
-            <img src="../images/profile.png" alt="logo_img" />
+            <img src="<?php echo URLROOT;?>/img/profile.png" alt="logo_img" />
           </span>
           <div class="data_text">
-            <span class="name">K.H. Gunawardhana</span><br>
-            <span class="role">Patient</span>
+            <span class="name"><?php echo $_SESSION['userName'] ?></span><br>
+            <span class="role"><?php echo $_SESSION['userType'] ?></span>
           </div>
         </div>
       </div>
     </nav>
 
-    <div class="content" style="padding-top: 4%;">
-        <div class="container-edit">
-            <div class="forms">
-                <div class="form login">
-                    <span class="title">Make Appointment</span>
 
-                    <form action="#">
+
+    <div class="content">
+      <div class="content-appointment">
+          <div class="appointment">
+              <form style="width: 100%;" method="POST">
+                <div class="fields">
+                  <h2>Enter Appointment Details</h2>
+                  <table style="width: 95%;">
+                    <tr>
+                      <td>
                         <div class="input-field">
-                            <label>Patient Name</label><br>
-                            <input type="text" name="name" value="K.H. Gunawardhana" disabled required>
+                            <label>Patient ID</label>
+                            <input type="text" name="patient_id" value="<?php echo $_SESSION['userID'] ?>" disabled>
                         </div>
+                      </td>
+                      <td rowspan="6">
+                        <div class="profile-card">
+                          <div class="profile-photo">
+                            <img src="<?php echo URLROOT;?>/img/profile.png" alt="Doctor Photo">
+                          </div>
+                          <div class="profile-name">Dr. John Doe</div>
+                          <div class="profile-specialization">Cardiologist</div>
+                          <button class="button" style="background-color: #4070f4;" >View Profile</button>
+                        </div>
+                        <div class="price-card">
+                          <div class="price-item">
+                            <span class="price-label">Hospital Charges:</span>
+                            <span class="price-value">LKR 2400.00</span>
+                          </div>
+                          <div class="price-item">
+                            <span class="price-label">Service Charges:</span>
+                            <span class="price-value">LKR 200.00</span>
+                          </div>
+                          <div class="price-item">
+                            <span class="price-label">Taxes:</span>
+                            <span class="price-value">LKR 30.00</span>
+                          </div>
+                          <hr>
+                          <div class="price-item">
+                            <span class="price-label">Total Price:</span>
+                            <span class="price-value-total">LKR 2730.00</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
                         <div class="input-field">
-                            <label>Location</label><br>
-                            <select name="hospital" required>
-                                <option selected value="Select hospital"</option>
-                                <option value="Asiri Hospitals - Kirula Rd">Asiri Hospitals - Kirula Rd.</option>
-                                <option value="Lanka Hospitals - Nugegoda">Lanka Hospitals - Nugegoda</option>
+                            <label>Mobile Number</label>
+                            <input type="text" name="patient_mobile">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Email Address</label>
+                            <input type="text" name="patient_age">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Select Hospital</label>
+                            <select>
+                                <option disabled selected>Select Hospital</option>
+                                <?php foreach ($data['hospitals'] as $hospital): ?>
+                                    <option><?php echo $hospital->Hospital_Name; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <br>
                         <div class="input-field">
-                            <label>Date</label><br>
-                            <input type="date" required>
+                        <label>Select Date</label>
+                          <div class="container-radio">
+                              <label>
+                                <input type="radio" name="date">
+                                <span>11/04/2024</span>
+                              </label>
+                              <label>
+                                <input type="radio" name="date">
+                                <span>12/04/2024</span>
+                              </label>
+                              <label>
+                                <input type="radio" name="date">
+                                <span>13/04/2024</span>
+                              </label>
+                          </div>
                         </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      <br>
                         <div class="input-field">
-                            <label>Time</label><br>
-                            <select name="hospital" required>
-                                <option selected value="Select time"</option>
-                                <option value="9:00 AM">9:00 AM</option>
-                                <option value="9:30 AM">9:30 AM</option>
-                                <option value="12:30 PM">12:30 PM</option>
-                                <option value="13:00 PM">13:00 pM</option>
-                                <option value="13:30 PM">13:30 PM</option>
-                            </select>
+                        <label>Select Time Slot</label>
+                          <div class="container-radio">
+                              <label>
+                                <input type="radio" name="time">
+                                <span>10:00 - 10:30 AM</span>
+                              </label>
+                              <label>
+                                <input type="radio" name="time">
+                                <span>10:30 - 11:00 AM</span>
+                              </label>
+                              <label>
+                                <input type="radio" name="time">
+                                <span>11:00 - 11:30 AM</span>
+                              </label>
+                              
+                          </div>
                         </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      <br>
                         <div class="input-field">
-                          <table class="table-edit">
-                              <tr class="table-edit-row" >
-                                  <td>
-                                      <div class="edit-btn">
-                                        <button class='button' >Book Now</button>
-                                      </div>
-                                  </td>
-                                  <td>
-                                      <div class="edit-btn">
-                                        <button class='button red' >Cancel</button>
-                                      </div>
-                                  </td>
-                              </tr>
-                          </table>
+                          <div class="container-radio">
+                              <label>
+                                <input type="radio" name="time">
+                                <span>11:30 - 12:00 AM</span>
+                              </label>
+                              <label>
+                                <input type="radio" name="time">
+                                <span>12:00 - 12:30 AM</span>
+                              </label>
+                              <label>
+                                <input type="radio" name="time">
+                                <span>12:30 - 13:00 AM</span>
+                              </label>
+                              
+                          </div>
                         </div>
-                    </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <!--<input type="submit" class="button" value="Next" name="search" >-->
+                        <button class="button" style="background-color: 4070f4;" >Next</button>
+                        <a href=""><button class="button" style="background-color: red;" >Cancel</button></a>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
-            </div>
+              </form>
+          </div>
         </div>
-    </div>
+    </div> 
+    <br><br>
   </body>
 </html>

@@ -191,6 +191,17 @@ body.dark {
   transition: all 0.5s;
 }
 
+.content-appointment{
+  width: 91%;
+  margin-left: 5%;
+  padding-top: 1%;
+  background-color: var(--white-color);
+  border-radius: 10px;
+  color: var(--white-color);
+  font-size: 18px;
+  transition: all 0.5s;
+}
+
 .button{
   width: 80px;
   padding: 0px 5px;
@@ -207,6 +218,7 @@ body.dark {
 
 .button:hover{
   background-color: #1b52e8;
+  cursor: pointer;
 }
 
 .red{
@@ -275,6 +287,191 @@ body.dark {
   color: var(--grey-color-dark);
 }
 
+/*Appointment*/
+
+.appointment form .fields .input-field{
+  display: flex;
+  width: 800px;
+  flex-direction: column;
+  margin: 0.5% 0;
+  padding-right: 50px;
+  padding-left: 30px;
+}
+
+.appointment form .fields .button{
+  margin-left: 30px;
+  height: 45px;
+}
+
+.appointment form .fields .button:hover{
+  background-color: #1b52e8;
+}
+
+.appointment .input-field label{
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2e2e2e;
+}
+.appointment .input-field input, select{
+  outline: none;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+  border-radius: 5px;
+  border: 2px solid #aaa;
+  padding: 0 15px;
+  height: 42px;
+  margin: 8px 0;
+}
+
+.appointment h2{
+  color: var(--grey-color-dark);
+  padding-left: 30px;
+}
+.appointment .input-field label{
+  color: var(--grey-color-dark);
+}
+
+.container-radio {
+  display: flex;
+  align-items: center; /* Align items vertically in the container */
+}
+
+.container-radio label {
+  display: flex;
+  align-items: center;
+  margin-right: 1em; /* Add space between radio buttons */
+}
+
+.container-radio label:last-child {
+  margin-right: 0; /* Remove margin for the last radio button */
+}
+
+.container-radio label input {
+  position: absolute;
+  left: -9999px;
+}
+
+.container-radio label input:checked + span {
+  background-color: var(--blue-color);
+  color: white;
+}
+
+.container-radio label input:checked + span:before {
+  box-shadow: inset 0 0 0 0.4375em var(--blue-color-very-light);;
+}
+
+.container-radio label span {
+  display: flex;
+  align-items: center;
+  padding: 0.375em 0.75em 0.375em 0.375em;
+  border-radius: 99em;
+  transition: 0.25s ease;
+  color: var(--grey-color);
+}
+
+.container-radio label span:hover {
+  background-color: #d6d6e5;
+}
+
+.container-radio label span:before {
+  display: flex;
+  flex-shrink: 0;
+  content: "";
+  background-color: #fff;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  margin-right: 0.375em;
+  transition: 0.25s ease;
+  box-shadow: inset 0 0 0 0.125em #00005c;
+}
+
+.profile-card {
+  width: 400px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  top: 0;
+  left: 50%;
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.profile-specialization {
+  font-size: 18px;
+  color: #666666;
+}
+.profile-card .button{
+  width: 200px;
+  margin: 2% 9%;
+}
+.profile-card .button:hover{
+  background-color: #1b52e8;
+}
+
+.price-card {
+  width: 400px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.price-label {
+  font-size: 18px;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.price-value {
+  font-size: 24px;
+  color: var(--blue-color);
+}
+
+.price-value-total {
+  font-size: 24px;
+  color: var(--blue-color);
+  font-weight: bold;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.price-item:last-child {
+  margin-bottom: 0;
+}
 
 /*detail card*/
 
