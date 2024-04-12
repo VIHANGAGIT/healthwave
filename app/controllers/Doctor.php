@@ -12,7 +12,7 @@
             }
             
             $data = $this->reservationModel->getReservations($_SESSION['userID']);
-           
+            
             $this->view('doctor/reservations', $data);
         }
 
@@ -34,6 +34,7 @@
     
     
             $doctor_data = $this->doctorModel->doctor_data_fetch($data['ID']);
+            $reservation_data = $this->reservationModel->getReservations($data['ID']);
     
             $data = [
                 'ID' => $doctor_data->Doctor_ID,
@@ -45,7 +46,9 @@
                 'SLMC' => $doctor_data->SLMC_Reg_No,
                 'Spec' => $doctor_data->Specialization,
                 'Email' => $doctor_data->Username,
-                'Password' => $doctor_data->Password
+                'Password' => $doctor_data->Password,
+                'Reservations' => $reservation_data
+
             ];
     
             $this->view("doctor/profile", $data);

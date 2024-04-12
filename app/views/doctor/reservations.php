@@ -117,19 +117,33 @@
                             <th>Location</th>
                             <th>Date</th>
                             <th>Time</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>View</th>
+                            <!--<th>Delete</th>-->
                         </tr>
                     </thead>
                     <tbody>
-                        <? 
-                          var_dump($data);
-                          ?>
+                        <?php 
+                            foreach ($data as $reservation) {
+                                echo "<tr>";
+                                echo "<td>".$reservation->Reservation_ID."</td>";
+                                echo "<td>".$reservation->Hospital."</td>";
+                                echo "<td>".$reservation->Date."</td>";
+                                echo "<td>".$reservation->Time."</td>";
+                                echo "<td><a href='../doctor/edit_reservation/".$reservation->Reservation_ID."'><button class='button'>View</button></a></td>";
+                                //echo "<td><a href='../doctor/delete_reservation/".$reservation->Reservation_ID."'><button class='button'>Delete</button></a></td>";
+                                echo "</tr>";
+                            }
+                        ?>
                     </tbody>
+                    
                 </table>
+                
+                        
                         
             </div>
         </section>
     </div>
+                       
+                
   </body>
 </html>

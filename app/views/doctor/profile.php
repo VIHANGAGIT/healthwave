@@ -154,7 +154,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Doctor</th>
                             <th>Location</th>
                             <th>Date</th>
                             <th>Time</th>
@@ -163,14 +162,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
+                        <?php 
+                            foreach ($data['Reservations'] as $reservation) {
+                                echo "<tr>";
+                                echo "<td>".$reservation->Hospital."</td>";
+                                echo "<td>".$reservation->Date."</td>";
+                                echo "<td>".$reservation->Time."</td>";
+                                echo "<td><a href='../doctor/edit_reservation/".$reservation->Reservation_ID."'><button class='button'>Edit</button></a></td>";
+                                echo "<td><a href='../doctor/delete_reservation/".$reservation->Reservation_ID."'><button class='button red'>Delete</button></a></td>";
+                                echo "</tr>";
+                            }
+                        ?>  
                     </tbody>
                 </table>
             </div>
