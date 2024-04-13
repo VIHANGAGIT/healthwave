@@ -21,6 +21,8 @@ class Patient extends Controller
     public function doc_booking()
     {
         $data = [];
+        //$doctor =  new Doctors();
+        //$doctors = $doctor->getAllDoctors();
         $doctors = $this->doctorModel->getAllDoctors();
         $hospitals = $this->hospitalModel->getAllHospitals();
 
@@ -53,7 +55,14 @@ class Patient extends Controller
 
     public function doc_booking_details()
     {
-        $data = [];
+        
+        $patient_data = $this->patientModel->patient_data_fetch($_SESSION['userID']);
+
+        $data = [
+            
+            'C_Num' => $patient_data->Contact_No,
+            'Email' => $patient_data->Username
+        ];
         $this->view('patient/doc_booking_details', $data);
     }
 
@@ -214,5 +223,54 @@ class Patient extends Controller
             }
         }
 
+    public function make_payment()
+    {
+        $data = [];
+
+        $merchant_id = "1226485";
+        $order_id = uniqid();
+        $amount = "2730.00";
+        $currency = "LKR";
+        $merchant_secret = "MTM1NDY0Njg4ODM5NDA0Mjg4MjE3MjE3MDA3NTczMDEzNDcxNzQ2";
+
+        $hash = strtoupper(
+            md5(
+                $merchant_id . 
+                $order_id . 
+                number_format($amount, 2, '.', '') . 
+                $currency .  
+                strtoupper(md5($merchant_secret)) 
+            ) 
+        );
+        $payment = [
+            "sandbox" => true,
+            "merchant_id" => $merchant_id,  
+            "return_url" => "http://localhost/healthwave/patient/doc_booking_details",
+            "cancel_url" => "http://localhost/healthwave/patient/doc_booking_details",
+            "notify_url" => "http://sample.com/notify",
+            "order_id" => $order_id,
+            "items" => "Doctor Booking Payment",
+            "amount" => $amount,
+            "currency" => $currency,
+            "hash" => $hash,
+            "first_name" => "Vihanga",
+            "last_name" => "Vithanawasam",
+            "email" => "test@jj.com",
+            "phone" => "0978424552",
+            "address" => "",
+            "city" => "",
+            "country" => "",
+            "delivery_address" => "",
+            "delivery_city" => "",
+            "delivery_country" => "",
+            "custom_1" => "",
+            "custom_2" => ""
+        ];
+    
+        echo json_encode($payment);
     }
+
+    }
+
+    
 ?>

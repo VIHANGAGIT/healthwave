@@ -324,6 +324,18 @@ body.dark {
   margin: 8px 0;
 }
 
+.appointment .input-field input:disabled, select:disabled{
+  outline: none;
+  font-size: 14px;
+  font-weight: 400;
+  color: #aaa;
+  border-radius: 5px;
+  border: 2px solid #aaa;
+  padding: 0 15px;
+  height: 42px;
+  margin: 8px 0;
+}
+
 .appointment h2{
   color: var(--grey-color-dark);
   padding-left: 30px;
@@ -559,6 +571,15 @@ body.dark {
   width: 175px;
   margin-left: 5%;
   margin-top: 8%;
+  background-color: #fff;
+  color: #1b52e8;
+}
+
+.detail-view a .button{
+  height: 50px;
+  width: 175px;
+  margin-left: 5%;
+  margin-top: 10%;
   background-color: #fff;
   color: #1b52e8;
 }

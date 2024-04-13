@@ -445,7 +445,13 @@
                 case 'Doctor':
                     $_SESSION['userID'] = $userData->Doctor_ID;
                     break;
-                case 'Hospital_Staff':
+                case 'Manager':
+                    $_SESSION['userID'] = $userData->HS_ID;
+                    break;
+                case 'Lab Assistant':
+                    $_SESSION['userID'] = $userData->HS_ID;
+                    break;
+                case 'Pharmacist':
                     $_SESSION['userID'] = $userData->HS_ID;
                     break;
                 case 'Admin':

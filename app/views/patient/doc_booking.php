@@ -1,5 +1,5 @@
 <?php 
-  session_start();
+  //session_start();
   if(($_SESSION['userType']) != 'Patient'){
     redirect("users/login");
   }
@@ -192,7 +192,7 @@
                   </div>
                   <div class='detail-view'>
                       <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
-                      <button class='button detail-btn' >Book Now</button>
+                      <a href="/healthwave/patient/doc_booking_details"><button class='button detail-btn' >Book Now</button></a>
                   </div>
               </div>
           <?php endforeach; ?>

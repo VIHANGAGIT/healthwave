@@ -134,8 +134,8 @@
                           <div class="profile-photo">
                             <img src="<?php echo URLROOT;?>/img/profile.png" alt="Doctor Photo">
                           </div>
-                          <div class="profile-name">Dr. John Doe</div>
-                          <div class="profile-specialization">Cardiologist</div>
+                          <div class="profile-name">Dr. Tony Stark</div>
+                          <div class="profile-specialization">Gastroenterologist</div>
                           <button class="button" style="background-color: #4070f4;" >View Profile</button>
                         </div>
                         <div class="price-card">
@@ -163,7 +163,7 @@
                       <td>
                         <div class="input-field">
                             <label>Mobile Number</label>
-                            <input type="text" name="patient_mobile">
+                            <input type="text" name="patient_mobile" value="<?php echo $data['C_Num']?>" >
                         </div>
                       </td>
                     </tr>
@@ -171,7 +171,7 @@
                       <td>
                         <div class="input-field">
                             <label>Email Address</label>
-                            <input type="text" name="patient_age">
+                            <input type="text" name="patient_email" value="<?php echo $data['Email']?>">
                         </div>
                       </td>
                     </tr>
@@ -258,7 +258,7 @@
                     <tr>
                       <td>
                         <!--<input type="submit" class="button" value="Next" name="search" >-->
-                        <button class="button" style="background-color: #4070f4;" >Next</button>
+                        <button id="pay" class="button" style="background-color: #4070f4;" >Next</button>
                         <a href=""><button class="button" style="background-color: red;" >Cancel</button></a>
                       </td>
                     </tr>
@@ -269,5 +269,10 @@
         </div>
     </div> 
     <br><br>
+    // link jquery by cdn
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="<?php echo URLROOT;?>/js/payment.js" defer></script>
+    <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
+
   </body>
 </html>
