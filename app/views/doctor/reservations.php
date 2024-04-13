@@ -74,6 +74,14 @@
             </li>
           </ul>
 
+          <li class="item">
+              <a href="../doctor/ongoing_consults" class="link flex">
+                <i class="uil uil-stethoscope"></i>
+                <span>Ongoing Consultations</span>
+              </a>
+            </li>
+          </ul>
+
           <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>

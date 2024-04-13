@@ -21,6 +21,11 @@
             $this->view('doctor/consultations', $data);
         }
 
+        public function ongoing_consultations(){
+            $data = [];
+            $this->view('doctor/ongoing_consults', $data);
+        }
+
         public function profile(){
             session_start();
     
