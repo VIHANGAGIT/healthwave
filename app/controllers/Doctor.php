@@ -21,9 +21,14 @@
             $this->view('doctor/consultations', $data);
         }
 
-        public function ongoing_consultations(){
+        public function ongoing_consults(){
             $data = [];
             $this->view('doctor/ongoing_consults', $data);
+        }
+
+        public function patient_details(){
+            $data = [];
+            $this->view('doctor/patient_details', $data);
         }
 
         public function profile(){

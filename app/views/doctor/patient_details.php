@@ -65,7 +65,7 @@
                 <span>Reservations</span>
               </a>
             </li>
-            <li class="item">
+            <li class="item active">
               <a href="../doctor/consultations" class="link flex">
                 <i class="uil uil-stethoscope"></i>
                 <span>Past Consultations</span>
@@ -85,7 +85,7 @@
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
-            <li class="item active">
+            <li class="item">
               <a href="../doctor/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
@@ -136,7 +136,7 @@
                                     <tr>
                                         <td>Name: <?php //echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
                                         <td>Gender: <?php //echo $data['Gender'] ?></td>
-                                        <td>NIC: <?php echo $data['NIC'] ?></td>
+                                        <td>NIC: <?php // echo $data['NIC'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Contact Number: <?php //echo $data['C_Num'] ?></td>
