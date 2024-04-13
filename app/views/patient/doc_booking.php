@@ -192,7 +192,7 @@
                   </div>
                   <div class='detail-view'>
                       <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
-                      <a href="/healthwave/patient/doc_booking_details?id=<?php echo $doctor->Doctor_ID; ?>"><button class='button detail-btn' >Book Now</button></a>
+                      <a href="/healthwave/patient/doc_booking_details?doctor_id=<?php echo $doctor->Doctor_ID; ?>"><button class='button detail-btn' >Book Now</button></a>
                   </div>
               </div>
           <?php endforeach; ?>

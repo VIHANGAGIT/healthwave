@@ -140,11 +140,11 @@
                         <div class="price-card">
                         <div class="price-item">
                             <span class="price-label">Doctor Charges:</span>
-                            <span class="price-value">LKR <?php echo $data['doctor_data']->Charges . ".00"?></span>
+                            <span class="price-value">LKR <?php echo $data['doctor_data']->Charges . ".00"; ?></span>
                           </div>
                           <div class="price-item">
                             <span class="price-label">Hospital Charges:</span>
-                            <span class="price-value">LKR 800.00</span>
+                            <span class="price-value" id="hospotal_charge">LKR 0.00</span>
                           </div>
                           <div class="price-item">
                             <span class="price-label">Service Charges:</span>
@@ -181,13 +181,13 @@
                     <tr>
                       <td>
                         <div class="input-field">
-                            <label>Select Hospital</label>
-                            <select>
-                                <option disabled selected>Select Hospital</option>
-                                <?php foreach ($data['hospital_data'] as $hospital): ?>
-                                    <option><?php echo $hospital->Hospital_Name; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                          <label>Select Hospital</label>
+                          <select id="hospitalSelect">  
+                              <option disabled selected>Select Hospital</option>
+                              <?php foreach ($data['hospital_data'] as $hospital): ?>
+                                  <option value="<?php echo $hospital->Hospital_ID; ?>"><?php echo $hospital->Hospital_Name; ?></option>
+                              <?php endforeach; ?>
+                          </select>
                         </div>
                       </td>
                     </tr>
@@ -195,45 +195,22 @@
                       <td>
                         <br>
                         <div class="input-field">
-                        <label>Select Date</label>
-                          <div class="container-radio">
-                              <label>
-                                <input type="radio" name="date">
-                                <span>11/04/2024</span>
-                              </label>
-                              <label>
-                                <input type="radio" name="date">
-                                <span>12/04/2024</span>
-                              </label>
-                              <label>
-                                <input type="radio" name="date">
-                                <span>13/04/2024</span>
-                              </label>
-                          </div>
+                            <label>Select Date</label>
+                            <div class="container-radio" name="date">
+                                <!-- Date options will be added here -->
+                            </div>
                         </div>
                       </td>
                     </tr>
                     <tr>
                       <td>
                       <br>
-                        <div class="input-field">
-                        <label>Select Time Slot</label>
-                          <div class="container-radio">
-                              <label>
-                                <input type="radio" name="time">
-                                <span>10:00 - 10:30 AM</span>
-                              </label>
-                              <label>
-                                <input type="radio" name="time">
-                                <span>10:30 - 11:00 AM</span>
-                              </label>
-                              <label>
-                                <input type="radio" name="time">
-                                <span>11:00 - 11:30 AM</span>
-                              </label>
-                              
+                      <div class="input-field">
+                          <label>Select Time Slot</label>
+                          <div class="container-radio" name="time">
+                              <!-- Time slots will be added here -->
                           </div>
-                        </div>
+                      </div>
                       </td>
                     </tr>
                     <tr>
@@ -275,6 +252,101 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="<?php echo URLROOT;?>/js/payment.js" defer></script>
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
+    <script>
+      $(document).ready(function() {
+        $("#hospitalSelect").change(function() {
+          var hospitalId = $(this).val(); // Get the selected hospital ID
+          var doctorId = <?php echo $data['doctor_data']->Doctor_ID; ?>;
 
+          fetchScheduleDetails(hospitalId, doctorId);
+        });
+      });
+
+      function fetchScheduleDetails(hospitalId, doctorId) {
+          $.ajax({
+              url: "<?php echo URLROOT;?>/patient/fetch_schedule_details",
+              type: "GET",
+              data: { hospital_id: hospitalId, doctor_id: doctorId },
+              dataType: "json",
+              success: function(scheduleData) {
+                  if (scheduleData && Array.isArray(scheduleData)) {
+                      displayScheduleDetails(scheduleData);
+                  } else {
+                      console.error("Invalid JSON response:", scheduleData);
+                  }
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                  console.error("Error fetching schedule details:", textStatus, errorThrown);
+              }
+          });
+      }
+
+      function displayScheduleDetails(scheduleData) {
+          var dateContainer = $(".container-radio[name='date']");
+          dateContainer.empty(); // Clear previous date options
+          
+          var timeContainer = $(".container-radio[name='time']");
+          timeContainer.empty(); // Clear previous time slots
+          
+          var today = new Date();
+          //console.log(today);
+          var daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+          
+          // Loop through schedule data and populate date options and time slots
+          for (var i = 0; i < scheduleData.length; i++) {
+              var day = scheduleData[i].day_of_week;
+              var startTime = scheduleData[i].start_time;
+              var endTime = scheduleData[i].end_time;
+              var hospitalCharge = scheduleData[i].hospital_charge;
+              
+              // Calculate the date for the current day in the coming week
+              var currentDate = new Date();
+              var currentDay = daysOfWeek[currentDate.getDay()]
+              var dayIndex = daysOfWeek.indexOf(day);
+              var currentdayIndex = daysOfWeek.indexOf(currentDay);
+              if(dayIndex < currentdayIndex){
+                currentDate.setDate(today.getDate() + (1 + dayIndex)); 
+              }else if(dayIndex > currentdayIndex){
+                currentDate.setDate(today.getDate() + (dayIndex-currentdayIndex)); 
+              }else{
+                currentDate.setDate(today.getDate());
+              }
+              
+              // Format the date as "Day, DD/MM/YYYY" (e.g., "Tuesday, 16/04/2024")
+              var formattedDate = daysOfWeek[currentDate.getDay()] + ", " +
+                                  currentDate.getDate().toString().padStart(2, "0") + "/" +
+                                  (currentDate.getMonth() + 1).toString().padStart(2, "0") + "/" +
+                                  currentDate.getFullYear();
+              
+              // Create radio button for date option
+              var dateRadio = $("<input>").attr({
+                  type: "radio",
+                  name: "date",
+                  value: formattedDate // Set the value to the formatted date
+              });
+              
+              var dateLabel = $("<span>").text(formattedDate); // Create span for date text
+              
+              var dateLabelContainer = $("<label>").append(dateRadio, dateLabel); // Combine radio and label
+              
+              dateContainer.append(dateLabelContainer); // Add date option to container
+              
+              // Create radio button for time slot
+              var timeRadio = $("<input>").attr({
+                  type: "radio",
+                  name: "time",
+                  value: startTime + " " + endTime // Set the value to the start and end time
+              });
+              
+              var timeLabel = $("<span>").text(startTime + " - " + endTime); // Create span for time slot text
+              
+              var timeLabelContainer = $("<label>").append(timeRadio, timeLabel); // Combine radio and label
+              
+              timeContainer.append(timeLabelContainer); // Add time slot to container
+
+              $("#hospotal_charge").text("LKR " + hospitalCharge + ".00");
+          }
+      }
+    </script>
   </body>
 </html>

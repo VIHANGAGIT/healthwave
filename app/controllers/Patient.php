@@ -57,7 +57,7 @@ class Patient extends Controller
     public function doc_booking_details()
     {
         // Get doctor ID from URL parameter
-        $doctor_id = isset($_GET['id']) ? $_GET['id'] : null;
+        $doctor_id = isset($_GET['doctor_id']) ? $_GET['doctor_id'] : null;
 
         if (!$doctor_id) {
             // Handle case where ID is missing in the URL (optional)
@@ -81,6 +81,42 @@ class Patient extends Controller
 
         $this->view('patient/doc_booking_details', $data);
     }
+
+    public function fetch_schedule_details()
+    {
+        // Get hospital ID and doctor ID from request data
+        $doctor_id = isset($_GET['doctor_id']) ? $_GET['doctor_id'] : null;
+        $hospital_id = isset($_GET['hospital_id']) ? $_GET['hospital_id'] : null;
+
+        if (!$hospital_id || !$doctor_id) {
+            echo json_encode(array('error' => 'Missing hospital_id or doctor_id'));  // Send JSON with error message
+            return;
+        }
+        // Perform database query to fetch schedule details based on hospital_id and doctor_id
+        $scheduleData = $this->scheduleModel->get_schedule_by_hospital_doctor($hospital_id, $doctor_id);
+        $hospital_data = $this->hospitalModel->hospital_data_fetch($hospital_id);
+
+        if ($scheduleData === false) {
+            http_response_code(500); // Set HTTP status code to indicate internal server error
+            echo json_encode(array('error' => 'Failed to fetch schedule details'));
+            return;
+        }
+
+        // Prepare data to be sent as JSON response
+        $responseData = array();
+        foreach ($scheduleData as $schedule) {
+            $responseData[] = array(
+                'day_of_week' => $schedule->Day_of_Week,
+                'start_time' => $schedule->Time_Start,
+                'end_time' => $schedule->Time_End,
+                'hospital_charge' => $hospital_data->Charge,
+            );
+        }
+        
+        // Send JSON response with schedule data
+        echo json_encode($responseData);
+    }
+
 
     public function medical_records()
     {
