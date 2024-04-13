@@ -78,9 +78,9 @@
                             <label>SLMC Regisration Number*</label>
                             <input type="number" placeholder="Enter SLMC Regisration Number" name="slmc" value="<?php echo $data['SLMC'] ?>" required>
                         </div>
-                        <div class="input-field" style="opacity: 0;">
-                            <label></label>
-                            <input type="text">
+                        <div class="input-field">
+                            <label>Charges*</label>
+                            <input type="number" step="0.01" placeholder="Enter Doctor Charges" name="charges" value="<?php echo $data['Charges'] ?>" required>
                         </div>
                     </div>
                     <div class="details account">

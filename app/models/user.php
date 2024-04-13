@@ -39,7 +39,7 @@
         }
 
         public function register_doctor($data){
-            $this->db->query('INSERT INTO doctor (First_Name, Last_Name, Gender, NIC, Contact_No, SLMC_Reg_No, Specialization, Availability, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :SLMC, :Spec, :Avail, :Uname, :Pass)');
+            $this->db->query('INSERT INTO doctor (First_Name, Last_Name, Gender, NIC, Contact_No, SLMC_Reg_No, Specialization, Charges, Availability, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :SLMC, :Spec, :Charges, :Avail, :Uname, :Pass)');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':F_name', $data['F_name']);
@@ -49,6 +49,7 @@
             $this->db->bind(':C_num', $data['C_num']);
             $this->db->bind(':SLMC', $data['SLMC']);
             $this->db->bind(':Spec', $data['Spec']);
+            $this->db->bind(':Charges', $data['Charges']);
             $this->db->bind(':Avail', $data['Avail']);
             $this->db->bind(':Uname', $data['Uname']);
             $this->db->bind(':Pass', $data['Pass']);

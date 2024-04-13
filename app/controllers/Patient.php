@@ -10,6 +10,7 @@ class Patient extends Controller
         $this->patientModel = $this->model('patients');
         $this->doctorModel = $this->model('doctors');
         $this->hospitalModel = $this->model('hospitals');
+        $this->scheduleModel = $this->model('schedules');
     }
 
     public function index()
@@ -55,14 +56,29 @@ class Patient extends Controller
 
     public function doc_booking_details()
     {
-        
+        // Get doctor ID from URL parameter
+        $doctor_id = isset($_GET['id']) ? $_GET['id'] : null;
+
+        if (!$doctor_id) {
+            // Handle case where ID is missing in the URL (optional)
+            // You can redirect to an error page or display an error message
+            return;
+        }
+
+        // Fetch patient data
         $patient_data = $this->patientModel->patient_data_fetch($_SESSION['userID']);
 
+        // Fetch doctor data using the model
+        $doctor_data = $this->doctorModel->doctor_data_fetch($doctor_id);
+        $hospital_data = $this->scheduleModel->doctor_schedule_hospital($doctor_id);
+
         $data = [
-            
             'C_Num' => $patient_data->Contact_No,
-            'Email' => $patient_data->Username
+            'Email' => $patient_data->Username,
+            'doctor_data' => $doctor_data,
+            'hospital_data' => $hospital_data
         ];
+
         $this->view('patient/doc_booking_details', $data);
     }
 

@@ -1,5 +1,4 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Patient'){
     redirect("users/login");
   }
@@ -11,7 +10,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Doctor Booking</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -134,27 +133,31 @@
                           <div class="profile-photo">
                             <img src="<?php echo URLROOT;?>/img/profile.png" alt="Doctor Photo">
                           </div>
-                          <div class="profile-name">Dr. Tony Stark</div>
-                          <div class="profile-specialization">Gastroenterologist</div>
+                          <div class="profile-name">Dr. <?php echo $data['doctor_data']->First_Name . ' ' . $data['doctor_data']->Last_Name?></div>
+                          <div class="profile-specialization"><?php echo $data['doctor_data']->Specialization?></div>
                           <button class="button" style="background-color: #4070f4;" >View Profile</button>
                         </div>
                         <div class="price-card">
+                        <div class="price-item">
+                            <span class="price-label">Doctor Charges:</span>
+                            <span class="price-value">LKR <?php echo $data['doctor_data']->Charges . ".00"?></span>
+                          </div>
                           <div class="price-item">
                             <span class="price-label">Hospital Charges:</span>
-                            <span class="price-value">LKR 2400.00</span>
+                            <span class="price-value">LKR 800.00</span>
                           </div>
                           <div class="price-item">
                             <span class="price-label">Service Charges:</span>
-                            <span class="price-value">LKR 200.00</span>
+                            <span class="price-value">LKR 100.00</span>
                           </div>
                           <div class="price-item">
                             <span class="price-label">Taxes:</span>
-                            <span class="price-value">LKR 30.00</span>
+                            <span class="price-value">LKR 50.00</span>
                           </div>
                           <hr>
                           <div class="price-item">
                             <span class="price-label">Total Price:</span>
-                            <span class="price-value-total">LKR 2730.00</span>
+                            <span class="price-value-total">LKR 3950.00</span>
                           </div>
                         </div>
                       </td>
@@ -181,7 +184,7 @@
                             <label>Select Hospital</label>
                             <select>
                                 <option disabled selected>Select Hospital</option>
-                                <?php foreach ($data['hospitals'] as $hospital): ?>
+                                <?php foreach ($data['hospital_data'] as $hospital): ?>
                                     <option><?php echo $hospital->Hospital_Name; ?></option>
                                 <?php endforeach; ?>
                             </select>
@@ -269,7 +272,6 @@
         </div>
     </div> 
     <br><br>
-    // link jquery by cdn
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="<?php echo URLROOT;?>/js/payment.js" defer></script>
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
