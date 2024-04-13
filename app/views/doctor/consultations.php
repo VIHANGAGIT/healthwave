@@ -65,7 +65,7 @@
             <li class="item active">
               <a href="../doctor/consultations" class="link flex">
                 <i class="uil uil-stethoscope"></i>
-                <span>Consultations</span>
+                <span>Past Consultations</span>
               </a>
             </li>
           </ul>
@@ -105,7 +105,7 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Past / Ongoing Consulations</h1>
+                <h1>Past Consulations</h1>
                 <table class="table">
                     <thead>
                         <tr>

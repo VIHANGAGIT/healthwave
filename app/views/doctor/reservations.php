@@ -69,7 +69,7 @@
             <li class="item">
               <a href="../doctor/consultations" class="link flex">
                 <i class="uil uil-stethoscope"></i>
-                <span>Consultations</span>
+                <span>Past Consultations</span>
               </a>
             </li>
           </ul>
