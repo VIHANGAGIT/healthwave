@@ -1,11 +1,9 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Doctor'){
     redirect("users/login");
   }
 ?>
 <!DOCTYPE html>
-<!-- Coding by CodingNepal || www.codingnepalweb.com -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -16,7 +14,6 @@
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <!-- navbar -->
@@ -196,29 +193,27 @@
       <div class="table-container">
         <h1>Hospital :<span class="dashboard-stat" style="font-size: 25px;" >Asiri Hospitals - Kirula Rd.</span></h1>
         <table class="table-dashboard">
-          <tbody>
-            <tr class="dashboard-row">
-                <td class="dashboard-content">
-                    <p class="dashboard-stat-title">Session Date:</p>
-                    <p class="dashboard-stat">2023/10/12</p>
-
-                </td>
-                <td class="dashboard-content">
-                <p class="dashboard-stat-title">Session Time:</p>
-                <p class="dashboard-stat">19:00</p>
-              </td>
-                
-
-              <td class="dashboard-content">
-                <h2 class="dashboard-stat-title">Patients Remaining :</h2>
-                <p class="dashboard-stat">35/40</p>
-              </td>
-
-        
-              
-                
-            </tr>
-          </tbody>
+            <tbody>
+                <tr class="dashboard-row">
+                    <td class="dashboard-content">
+                        <p class="dashboard-stat-title">Session<br> Date :</p>
+                        <p class="dashboard-stat">2024/04/12</p>
+                    </td>
+                    
+                    <td class="dashboard-content">
+                        <p class="dashboard-stat-title">Session <br> Time :</h2>
+                        <p class="dashboard-stat">14.00</p>
+                    </td>
+                    <td class="dashboard-content">
+                        <p class="dashboard-stat-title">Remaining Number<br>of Patients :</h2>
+                        <p class="dashboard-stat">12</p>
+                    </td>
+                    <td class="dashboard-content">
+                        <p class="dashboard-stat-title">Total Number<br> of Patients :</h2>
+                        <p class="dashboard-stat">30</p>
+                    </td>
+                </tr>
+            </tbody>
         </table>
       </div>
     </section><br>
