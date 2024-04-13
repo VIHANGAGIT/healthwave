@@ -133,12 +133,13 @@
                         <td>
                             <table class="table-dashboard">
                                 <tbody class="profile" >
-                                    <tr>
+                                   <tr>
                                         <td>Name: <?php //echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
                                         <td>Gender: <?php //echo $data['Gender'] ?></td>
                                         <td>NIC: <?php // echo $data['NIC'] ?></td>
-                                    </tr>
-                                    <tr>
+                                        </tr>   
+                                        
+                                    <!--<tr>
                                         <td>Contact Number: <?php //echo $data['C_Num'] ?></td>
                                         <td>Email: <?php //echo $data['Email'] ?></td>
                                         <td></td>
@@ -147,7 +148,7 @@
                                     <tr>
                                         <td>SLMC Reg No: <?php //echo $data['SLMC'] ?></td>
                                         <td>Specialization: <?php //echo $data['Spec'] ?></td>
-                                    </tr>
+                                    </tr>-->
                                 </tbody>
                             </table>
                         </td>
@@ -158,31 +159,28 @@
         <br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Doctor Reservations</h1>
+                <h1>Consulation History</h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Location</th>
+                            <th>Reservation ID</th>
                             <th>Date</th>
-                            <th>Time</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Location</th>
+                            <th>Prescription</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>12223</td>
                             <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td><a href=''><button class='button'>Prescription</button></a></td>
                         </tr>
                         <tr>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>12223</td>
                             <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td><a href=''><button class='button'>Prescription</button></a></td>
                         </tr>
 
 
@@ -197,22 +195,20 @@
                 <table class="table">
                     <thead>
                         <tr>
+                        <th>Reservation ID</th>
                             <th>Test Name</th>
-                            <th>Location</th>
-                            <th>Date</th>
+                             <th>Date</th>
                             <th>Time</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Lab Report</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td>12223</td>
                             <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href=''><button class='button'>Lab Report</button></a></td>
                         </tr>
                     </tbody>
                 </table>
