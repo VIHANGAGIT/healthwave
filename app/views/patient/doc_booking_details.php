@@ -258,7 +258,7 @@
                     <tr>
                       <td>
                         <!--<input type="submit" class="button" value="Next" name="search" >-->
-                        <button class="button" style="background-color: 4070f4;" >Next</button>
+                        <button class="button" style="background-color: #4070f4;" >Next</button>
                         <a href=""><button class="button" style="background-color: red;" >Cancel</button></a>
                       </td>
                     </tr>
