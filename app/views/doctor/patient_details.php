@@ -191,23 +191,21 @@
         <br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Lab Tests Reservations</h1>
+                <h1>Lab Tests History</h1>
                 <table class="table">
                     <thead>
                         <tr>
                         <th>Reservation ID</th>
-                            <th>Test Name</th>
-                             <th>Date</th>
-                            <th>Time</th>
-                            <th>Lab Report</th>
+                        <th>Date</th>
+                        <th>Test Name</th>
+                        <th>Lab Report</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>12223</td>
-                            <td>Lipid Profile</td>
                             <td>2023/10/12</td>
-                            <td>14:00 PM</td>
+                            <td>Lipid Profile</td>
                             <td><a href=''><button class='button'>Lab Report</button></a></td>
                         </tr>
                     </tbody>
