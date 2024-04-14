@@ -11,7 +11,7 @@
     <!-- ===== CSS ===== -->
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style.css">
          
-    <title>User Login</title> 
+    <title><?php echo SITENAME?>: User Login</title> 
 </head>
 <body>
     

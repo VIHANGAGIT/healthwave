@@ -17,6 +17,15 @@
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
+
+  <div class="popup-container">
+                  <div class="popup-box">
+                      <h1>Appointment Summary</h1>
+                      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore eius itaque molestiae sit quidem ullam, quis ut molestias quas dolores cum ratione, sint quibusdam iusto.</p>
+                      <button class="pay-btn">Pay Now</button>
+                      <button class="close-btn">Cancel</button>
+                  </div>
+              </div>
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -124,8 +133,12 @@
                     <tr>
                       <td>
                         <div class="input-field">
-                            <label>Patient ID</label>
-                            <input type="text" name="patient_id" value="<?php echo $_SESSION['userID'] ?>" disabled>
+                            <label>Patient NIC</label>
+                            <input type="text" name="patient_nic" value="<?php echo $_SESSION['userID'] ?>" disabled>
+                        </div>
+                        <div class="input-field">
+                            <label>Patient Name</label>
+                            <input type="text" name="patient_name" value="<?php echo $_SESSION['userID'] ?>" disabled>
                         </div>
                       </td>
                       <td rowspan="6">
@@ -133,31 +146,31 @@
                           <div class="profile-photo">
                             <img src="<?php echo URLROOT;?>/img/profile.png" alt="Doctor Photo">
                           </div>
-                          <div class="profile-name">Dr. <?php echo $data['doctor_data']->First_Name . ' ' . $data['doctor_data']->Last_Name?></div>
-                          <div class="profile-specialization"><?php echo $data['doctor_data']->Specialization?></div>
+                          <div class="profile-name" id="doctor-name">Dr. <?php echo $data['doctor_data']->First_Name . ' ' . $data['doctor_data']->Last_Name?></div>
+                          <div class="profile-specialization" id="doctor-spec"><?php echo $data['doctor_data']->Specialization?></div>
                           <button class="button" style="background-color: #4070f4;" >View Profile</button>
                         </div>
                         <div class="price-card">
-                        <div class="price-item">
+                          <div class="price-item">
                             <span class="price-label">Doctor Charges:</span>
-                            <span class="price-value">LKR <?php echo $data['doctor_data']->Charges . ".00"; ?></span>
+                            <span class="price-value" id="price-value-doctor">LKR <?php echo $data['doctor_data']->Charges . ".00"; ?></span>
                           </div>
                           <div class="price-item">
                             <span class="price-label">Hospital Charges:</span>
-                            <span class="price-value" id="hospotal_charge">LKR 0.00</span>
+                            <span class="price-value" id="hospital_charge">LKR 0.00</span>
                           </div>
                           <div class="price-item">
                             <span class="price-label">Service Charges:</span>
-                            <span class="price-value">LKR 100.00</span>
+                            <span class="price-value" id="price-value-service">LKR 100.00</span>
                           </div>
                           <div class="price-item">
-                            <span class="price-label">Taxes:</span>
-                            <span class="price-value">LKR 50.00</span>
+                            <span class="price-label">Taxes (5%):</span>
+                            <span class="price-value" id="price-value-tax">LKR 0.00</span>
                           </div>
                           <hr>
                           <div class="price-item">
                             <span class="price-label">Total Price:</span>
-                            <span class="price-value-total">LKR 3950.00</span>
+                            <span class="price-value-total" id="price-value-total">LKR 3950.00</span>
                           </div>
                         </div>
                       </td>
@@ -215,31 +228,10 @@
                     </tr>
                     <tr>
                       <td>
-                      <br>
-                        <div class="input-field">
-                          <div class="container-radio">
-                              <label>
-                                <input type="radio" name="time">
-                                <span>11:30 - 12:00 AM</span>
-                              </label>
-                              <label>
-                                <input type="radio" name="time">
-                                <span>12:00 - 12:30 AM</span>
-                              </label>
-                              <label>
-                                <input type="radio" name="time">
-                                <span>12:30 - 13:00 AM</span>
-                              </label>
-                              
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
                         <!--<input type="submit" class="button" value="Next" name="search" >-->
-                        <button id="pay" class="button" style="background-color: #4070f4;" >Next</button>
-                        <a href=""><button class="button" style="background-color: red;" >Cancel</button></a>
+                        <button id="show" class="button" style="background-color: #4070f4;" >Next</button>
+                        <a href="/patient/doc_booking"><button class="button" style="background-color: red;" >Cancel</button></a>
+                        
                       </td>
                     </tr>
                   </table>
@@ -251,6 +243,7 @@
     <br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="<?php echo URLROOT;?>/js/payment.js" defer></script>
+    <script src="<?php echo URLROOT;?>/js/popup.js" defer></script>
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
     <script>
         $(document).ready(function() {
@@ -262,6 +255,7 @@
                     if (scheduleData && Array.isArray(scheduleData)) {
                         displayScheduleDetails(scheduleData);
                         updateHospitalCharges(scheduleData);
+                        calculateTotalPrice();
                     } else {
                         console.error("Invalid JSON response:", scheduleData);
                     }
@@ -278,6 +272,17 @@
                 });
             });
         });
+
+        function calculateTotalPrice() {
+            var doctorCharges = parseFloat(<?php echo $data['doctor_data']->Charges; ?>);
+            var hospitalCharges = parseFloat($("#hospital_charge").text().replace("LKR ", ""));
+            var serviceCharges = parseFloat("100.00"); // Assuming service charges are fixed
+            var taxes = (doctorCharges + hospitalCharges + serviceCharges)*0.05 ; // Assuming taxes are fixed
+            $("#price-value-tax").text("LKR " + taxes.toFixed(2));
+
+            var totalPrice = doctorCharges + hospitalCharges + serviceCharges + taxes;
+            $("#price-value-total").text("LKR " + totalPrice.toFixed(2));
+        }
 
         function fetchScheduleDetails(hospitalId, doctorId, callback) {
             $.ajax({
@@ -345,36 +350,52 @@
 
         function updateHospitalCharges(scheduleData) {
             var hospitalCharge = scheduleData[0].hospital_charge; // Assuming hospital charges are the same for all schedules
-            $("#hospotal_charge").text("LKR " + hospitalCharge + ".00"); // Update hospital charges in the HTML
+            $("#hospital_charge").text("LKR " + hospitalCharge + ".00"); // Update hospital charges in the HTML
         }
 
 
-        function updateTimeSlots(selectedDay,scheduleData) {
+        function updateTimeSlots(selectedDay, scheduleData) {
             var timeContainer = $(".container-radio[name='time']");
             timeContainer.empty(); // Clear previous time slots
 
-            // Loop through time slot data and populate time slots
-            for (var i = 0; i < scheduleData.length; i++) {
-              if(scheduleData[i].day_of_week == selectedDay){
-                  var startTime = scheduleData[i].start_time;
-                  var endTime = scheduleData[i].end_time;
+            // Find the schedule data for the selected day
+            var selectedSchedule = scheduleData.find(schedule => schedule.day_of_week === selectedDay);
 
-                  // Create radio button for time slot
-                  var timeRadio = $("<input>").attr({
-                      type: "radio",
-                      name: "time",
-                      value: startTime + " - " + endTime // Set the value to the start and end time
-                  });
+            if (selectedSchedule && selectedSchedule.time_slots) {
+                var radioCount = 0; // Track the count of radio buttons added
+                var lineBreakAfter = 4; // Maximum number of radio buttons per line
 
-                  var timeLabel = $("<span>").text(startTime + " - " + endTime); // Create span for time slot text
+                // Loop through the time slots for the selected day and populate time slots
+                for (var slot in selectedSchedule.time_slots) {
+                    var startTime = selectedSchedule.time_slots[slot].start_time.slice(0, 5);
+                    var endTime = selectedSchedule.time_slots[slot].end_time.slice(0, 5);
 
-                  var timeLabelContainer = $("<label>").append(timeRadio, timeLabel); // Combine radio and label
+                    // Create radio button for time slot
+                    var timeRadio = $("<input>").attr({
+                        type: "radio",
+                        name: "time",
+                        value: startTime + " - " + endTime // Set the value to the start and end time
+                    });
 
-                  timeContainer.append(timeLabelContainer); // Add time slot to container
-              }
-                
+                    var timeLabel = $("<span>").text(startTime + " - " + endTime); // Create span for time slot text
+
+                    var timeLabelContainer = $("<label>").append(timeRadio, timeLabel); // Combine radio and label
+
+                    timeContainer.append(timeLabelContainer); // Add time slot to container
+
+                    radioCount++; // Increment the radio button count
+
+                    // Add a line break after every third radio button
+                    if (radioCount % lineBreakAfter === 0) {
+                        timeContainer.append("<br>"); // Add line break
+                    }
+                }
+            }else {
+                // No schedule data found for the selected day
+                timeContainer.append("<span>No time slots available for this day</span>");
             }
         }
+
     </script>
 
   </body>
