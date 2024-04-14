@@ -253,100 +253,129 @@
     <script src="<?php echo URLROOT;?>/js/payment.js" defer></script>
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
     <script>
-      $(document).ready(function() {
-        $("#hospitalSelect").change(function() {
-          var hospitalId = $(this).val(); // Get the selected hospital ID
-          var doctorId = <?php echo $data['doctor_data']->Doctor_ID; ?>;
+        $(document).ready(function() {
+            $("#hospitalSelect").change(function() {
+                var hospitalId = $(this).val();
+                var doctorId = <?php echo $data['doctor_data']->Doctor_ID; ?>;
 
-          fetchScheduleDetails(hospitalId, doctorId);
+                fetchScheduleDetails(hospitalId, doctorId, function(scheduleData) {
+                    if (scheduleData && Array.isArray(scheduleData)) {
+                        displayScheduleDetails(scheduleData);
+                        updateHospitalCharges(scheduleData);
+                    } else {
+                        console.error("Invalid JSON response:", scheduleData);
+                    }
+                });
+            });
+
+            $(document).on('change', 'input[name="date"]', function() {
+                var selectedDate = $(this).val();
+                var selectedDay = selectedDate.split(',')[0];
+                var hospitalId = $("#hospitalSelect").val();
+                var doctorId = <?php echo $data['doctor_data']->Doctor_ID; ?>;
+                fetchScheduleDetails(hospitalId, doctorId, function(scheduleData) {
+                    updateTimeSlots(selectedDay, scheduleData);
+                });
+            });
         });
-      });
 
-      function fetchScheduleDetails(hospitalId, doctorId) {
-          $.ajax({
-              url: "<?php echo URLROOT;?>/patient/fetch_schedule_details",
-              type: "GET",
-              data: { hospital_id: hospitalId, doctor_id: doctorId },
-              dataType: "json",
-              success: function(scheduleData) {
-                  if (scheduleData && Array.isArray(scheduleData)) {
-                      displayScheduleDetails(scheduleData);
-                  } else {
-                      console.error("Invalid JSON response:", scheduleData);
-                  }
-              },
-              error: function(jqXHR, textStatus, errorThrown) {
-                  console.error("Error fetching schedule details:", textStatus, errorThrown);
+        function fetchScheduleDetails(hospitalId, doctorId, callback) {
+            $.ajax({
+                url: "<?php echo URLROOT;?>/patient/fetch_schedule_details",
+                type: "GET",
+                data: { hospital_id: hospitalId, doctor_id: doctorId },
+                dataType: "json",
+                success: function(scheduleData) {
+                    callback(scheduleData); // Invoke the callback with the fetched data
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("Error fetching schedule details:", textStatus, errorThrown);
+                }
+            });
+        }
+        function displayScheduleDetails(scheduleData) {
+            var dateContainer = $(".container-radio[name='date']");
+            dateContainer.empty(); // Clear previous date options
+
+            var timeContainer = $(".container-radio[name='time']");
+            timeContainer.empty(); // Clear previous time slots
+
+            var today = new Date();
+            var daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+            // Loop through schedule data and populate date options and time slots
+            for (var i = 0; i < scheduleData.length; i++) {
+                var day = scheduleData[i].day_of_week;
+                var startTime = scheduleData[i].start_time;
+                var endTime = scheduleData[i].end_time;
+                var hospitalCharge = scheduleData[i].hospital_charge;
+
+                // Calculate the date for the current day in the coming week
+                var currentDate = new Date();
+                var dayIndex = daysOfWeek.indexOf(day);
+                var currentdayIndex = today.getDay();
+                if (dayIndex < currentdayIndex) {
+                    currentDate.setDate(today.getDate() + (1 + dayIndex));
+                } else if (dayIndex > currentdayIndex) {
+                    currentDate.setDate(today.getDate() + (dayIndex - currentdayIndex));
+                } else {
+                    currentDate.setDate(today.getDate());
+                }
+
+                // Format the date as "Day, DD/MM/YYYY" (e.g., "Tuesday, 16/04/2024")
+                var formattedDate = daysOfWeek[currentDate.getDay()] + ", " +
+                    currentDate.getDate().toString().padStart(2, "0") + "/" +
+                    (currentDate.getMonth() + 1).toString().padStart(2, "0") + "/" +
+                    currentDate.getFullYear();
+
+                // Create radio button for date option
+                var dateRadio = $("<input>").attr({
+                    type: "radio",
+                    name: "date",
+                    value: formattedDate // Set the value to the formatted date
+                });
+
+                var dateLabel = $("<span>").text(formattedDate); // Create span for date text
+
+                var dateLabelContainer = $("<label>").append(dateRadio, dateLabel); // Combine radio and label
+
+                dateContainer.append(dateLabelContainer); // Add date option to container
+            }
+        }
+
+        function updateHospitalCharges(scheduleData) {
+            var hospitalCharge = scheduleData[0].hospital_charge; // Assuming hospital charges are the same for all schedules
+            $("#hospotal_charge").text("LKR " + hospitalCharge + ".00"); // Update hospital charges in the HTML
+        }
+
+
+        function updateTimeSlots(selectedDay,scheduleData) {
+            var timeContainer = $(".container-radio[name='time']");
+            timeContainer.empty(); // Clear previous time slots
+
+            // Loop through time slot data and populate time slots
+            for (var i = 0; i < scheduleData.length; i++) {
+              if(scheduleData[i].day_of_week == selectedDay){
+                  var startTime = scheduleData[i].start_time;
+                  var endTime = scheduleData[i].end_time;
+
+                  // Create radio button for time slot
+                  var timeRadio = $("<input>").attr({
+                      type: "radio",
+                      name: "time",
+                      value: startTime + " - " + endTime // Set the value to the start and end time
+                  });
+
+                  var timeLabel = $("<span>").text(startTime + " - " + endTime); // Create span for time slot text
+
+                  var timeLabelContainer = $("<label>").append(timeRadio, timeLabel); // Combine radio and label
+
+                  timeContainer.append(timeLabelContainer); // Add time slot to container
               }
-          });
-      }
-
-      function displayScheduleDetails(scheduleData) {
-          var dateContainer = $(".container-radio[name='date']");
-          dateContainer.empty(); // Clear previous date options
-          
-          var timeContainer = $(".container-radio[name='time']");
-          timeContainer.empty(); // Clear previous time slots
-          
-          var today = new Date();
-          //console.log(today);
-          var daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-          
-          // Loop through schedule data and populate date options and time slots
-          for (var i = 0; i < scheduleData.length; i++) {
-              var day = scheduleData[i].day_of_week;
-              var startTime = scheduleData[i].start_time;
-              var endTime = scheduleData[i].end_time;
-              var hospitalCharge = scheduleData[i].hospital_charge;
-              
-              // Calculate the date for the current day in the coming week
-              var currentDate = new Date();
-              var currentDay = daysOfWeek[currentDate.getDay()]
-              var dayIndex = daysOfWeek.indexOf(day);
-              var currentdayIndex = daysOfWeek.indexOf(currentDay);
-              if(dayIndex < currentdayIndex){
-                currentDate.setDate(today.getDate() + (1 + dayIndex)); 
-              }else if(dayIndex > currentdayIndex){
-                currentDate.setDate(today.getDate() + (dayIndex-currentdayIndex)); 
-              }else{
-                currentDate.setDate(today.getDate());
-              }
-              
-              // Format the date as "Day, DD/MM/YYYY" (e.g., "Tuesday, 16/04/2024")
-              var formattedDate = daysOfWeek[currentDate.getDay()] + ", " +
-                                  currentDate.getDate().toString().padStart(2, "0") + "/" +
-                                  (currentDate.getMonth() + 1).toString().padStart(2, "0") + "/" +
-                                  currentDate.getFullYear();
-              
-              // Create radio button for date option
-              var dateRadio = $("<input>").attr({
-                  type: "radio",
-                  name: "date",
-                  value: formattedDate // Set the value to the formatted date
-              });
-              
-              var dateLabel = $("<span>").text(formattedDate); // Create span for date text
-              
-              var dateLabelContainer = $("<label>").append(dateRadio, dateLabel); // Combine radio and label
-              
-              dateContainer.append(dateLabelContainer); // Add date option to container
-              
-              // Create radio button for time slot
-              var timeRadio = $("<input>").attr({
-                  type: "radio",
-                  name: "time",
-                  value: startTime + " " + endTime // Set the value to the start and end time
-              });
-              
-              var timeLabel = $("<span>").text(startTime + " - " + endTime); // Create span for time slot text
-              
-              var timeLabelContainer = $("<label>").append(timeRadio, timeLabel); // Combine radio and label
-              
-              timeContainer.append(timeLabelContainer); // Add time slot to container
-
-              $("#hospotal_charge").text("LKR " + hospitalCharge + ".00");
-          }
-      }
+                
+            }
+        }
     </script>
+
   </body>
 </html>

@@ -13,7 +13,9 @@ class Schedules{
 
         // Binding parameters for the prepaired statement
         $this->db->bind(':id', $id);
-        $hospitals = $this->db->resultSet();if($this->db->execute()){
+        $hospitals = $this->db->resultSet();
+        
+        if($this->db->execute()){
             return $hospitals;
         } else{
             return false;
@@ -33,6 +35,36 @@ class Schedules{
         } else{
             return false;
         }
+    }
+
+    public function fetch_booked_slots($schedule_id){
+        $this->db->query('SELECT Time_Start, Time_End FROM schedule
+        WHERE Schedule_ID = :schedule_id');
+        $this->db->bind(':schedule_id', $schedule_id);
+        $time_duration = $this->db->singleRow();
+
+        $startTime = $time_duration->Time_Start;
+        $endTime = $time_duration->Time_End;
+
+        if($this->db->execute()){
+            $this->db->query('SELECT doctor_reservation.Start_Time FROM doctor_reservation
+            WHERE doctor_reservation.Start_Time between :startTime and :end_time');
+    
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':startTime', $startTime);
+            $this->db->bind(':end_time', $endTime);
+            $booked_slots = $this->db->resultSet();
+            
+            if($this->db->execute()){
+                return $booked_slots;
+            } else{
+                return false;
+            }
+        } else{
+            return false;
+        }
+
+        
     }
 
 

@@ -92,6 +92,7 @@ class Patient extends Controller
             echo json_encode(array('error' => 'Missing hospital_id or doctor_id'));  // Send JSON with error message
             return;
         }
+        
         // Perform database query to fetch schedule details based on hospital_id and doctor_id
         $scheduleData = $this->scheduleModel->get_schedule_by_hospital_doctor($hospital_id, $doctor_id);
         $hospital_data = $this->hospitalModel->hospital_data_fetch($hospital_id);
@@ -105,10 +106,29 @@ class Patient extends Controller
         // Prepare data to be sent as JSON response
         $responseData = array();
         foreach ($scheduleData as $schedule) {
+            // Generate time slots with 15-minute intervals
+            $startTime = strtotime($schedule->Time_Start);
+            $endTime = strtotime($schedule->Time_End);
+            $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID);
+            $timeSlots = array();
+            while ($startTime < $endTime) {
+                $timeSlots[] = array(
+                    'start_time' => date('H:i:s', $startTime),
+                    'end_time' => date('H:i:s', $startTime + 900), // 900 seconds = 15 minutes
+                );
+                $startTime += 900; // Move to the next 15-minute interval
+            }
+            foreach ($bookedSlots as $bookedSlot) {
+                foreach ($timeSlots as $key => $timeSlot) {
+                    if ($timeSlot['start_time'] == $bookedSlot->Start_Time) {
+                        unset($timeSlots[$key]);
+                    }
+                }
+            }
+
             $responseData[] = array(
                 'day_of_week' => $schedule->Day_of_Week,
-                'start_time' => $schedule->Time_Start,
-                'end_time' => $schedule->Time_End,
+                'time_slots' => $timeSlots,
                 'hospital_charge' => $hospital_data->Charge,
             );
         }
@@ -116,6 +136,7 @@ class Patient extends Controller
         // Send JSON response with schedule data
         echo json_encode($responseData);
     }
+
 
 
     public function medical_records()
