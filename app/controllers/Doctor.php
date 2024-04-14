@@ -31,6 +31,16 @@
             $this->view('doctor/patient_details', $data);
         }
 
+        public function addprescription(){
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            if(($_SESSION['userType']) != 'Doctor'){
+                redirect("users/login");
+            }
+            $this->view('doctor/addprescription');
+        }
+
         public function profile(){
             session_start();
     
