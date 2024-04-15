@@ -135,20 +135,30 @@
                                 <tbody class="profile" >
                                    <tr>
                                         <td>Name: <?php //echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
+                                      </tr> 
+                                      <tr>
                                         <td>Gender: <?php //echo $data['Gender'] ?></td>
-                                        <td>NIC: <?php // echo $data['NIC'] ?></td>
-                                        </tr>   
-                                        
-                                    <!--<tr>
-                                        <td>Contact Number: <?php //echo $data['C_Num'] ?></td>
-                                        <td>Email: <?php //echo $data['Email'] ?></td>
-                                        <td></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>SLMC Reg No: <?php //echo $data['SLMC'] ?></td>
-                                        <td>Specialization: <?php //echo $data['Spec'] ?></td>
-                                    </tr>-->
+                                      </tr>
+                                      <tr>
+                                        <td>Age: <?php // echo $data['NIC'] ?></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Weight: <?php //echo $data['C_Num'] ?></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Height: <?php //echo $data['SLMC'] ?></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Blood Group: <?php //echo $data['Spec'] ?></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Allergies: <?php //echo $data['Email'] ?></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Medical History: <?php //echo $data['Email'] ?></td>
+                                      </tr>
+                                      
+
                                 </tbody>
                             </table>
                         </td>
