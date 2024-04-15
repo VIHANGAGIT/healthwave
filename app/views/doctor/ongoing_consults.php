@@ -239,7 +239,7 @@
                         <td>Lanka Hospitals - Kiribathgoda</td>
                         <td>2023/10/12</td>
                         <td>10:30 AM</td>
-                        <td><a href=''><button class='button'>Details</button></a></td>
+                        <td><a href='patient_details'><button class='button'>Details</button></a></td>
                         <td><a href='addprescription'><button class='button'>Prescription</button></a></td>
                     </tr>
                     <tr>
