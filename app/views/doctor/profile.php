@@ -156,7 +156,7 @@
             </div>
         </section>
         <br>
-        <section class="table-wrap" >
+        <!--<section class="table-wrap" >
             <div class="table-container">
                 <h1>Doctor Reservations</h1>
                 <table class="table">
@@ -212,7 +212,7 @@
                     </tbody>
                 </table>
             </div>
-        </section>
+        </section>-->
     </div>
   </body>
 </html>
