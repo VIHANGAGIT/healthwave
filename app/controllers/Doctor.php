@@ -31,6 +31,11 @@
             $this->view('doctor/patient_details', $data);
         }
 
+        public function onpatient_details(){
+            $data = [];
+            $this->view('doctor/onpatient_details', $data);
+        }
+
         public function addprescription(){
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
@@ -40,6 +45,10 @@
             }
             $this->view('doctor/addprescription');
         }
+
+        
+
+
 
         public function profile(){
             session_start();

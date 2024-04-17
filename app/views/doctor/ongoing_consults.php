@@ -203,8 +203,8 @@
                     </td>
                     
                     <td class="dashboard-content">
-                        <p class="dashboard-stat-title">Session <br> Time :</h2>
-                        <p class="dashboard-stat">14.00</p>
+                        <p class="dashboard-stat-title">Session <br> Duration :</h2>
+                        <p class="dashboard-stat">12.00-14.00</p>
                     </td>
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Remaining Number<br>of Patients :</h2>
@@ -240,7 +240,7 @@
                         <td>Lanka Hospitals - Kiribathgoda</td>
                         <td>2023/10/12</td>
                         <td>10:30 AM</td>
-                        <td><a href='patient_details'><button class='button'>Details</button></a></td>
+                        <td><a href='onpatient_details'><button class='button'>Details</button></a></td>
                         <td><a href='addprescription'><button class='button' style="width: 50px;"><i class="uil uil-plus"></i>
 
                         </button></a></td>
