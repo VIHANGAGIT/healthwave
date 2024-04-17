@@ -1,5 +1,4 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Patient'){
     redirect("users/login");
   }
@@ -147,7 +146,7 @@
                     <tr>
                       <td>
                         <div class="input-field">
-                            <label>type</label>
+                            <label>Test Type</label>
                             <input type="text" name="search_text" placeholder="Type">
                         </div>
                       </td>

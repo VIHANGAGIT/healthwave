@@ -321,7 +321,7 @@ class Patient extends Controller
         $payment = [
             "sandbox" => true,
             "merchant_id" => $merchant_id,  
-            "return_url" => "http://localhost/healthwave/patient/doc_booking_details",
+            "return_url" => "http://localhost/healthwave/patient/doc_booking",
             "cancel_url" => "http://localhost/healthwave/patient/doc_booking_details",
             "notify_url" => "http://sample.com/notify",
             "order_id" => $order_id,
