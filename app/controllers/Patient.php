@@ -305,7 +305,7 @@ class Patient extends Controller
 
         $merchant_id = "1226485";
         $order_id = uniqid();
-        $amount = "2730.00";
+        $amount = $_POST['amount'];
         $currency = "LKR";
         $merchant_secret = "MTM1NDY0Njg4ODM5NDA0Mjg4MjE3MjE3MDA3NTczMDEzNDcxNzQ2";
 

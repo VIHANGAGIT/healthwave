@@ -52,13 +52,14 @@ $(document).ready(function () {
 
   $("#pay").click(function (event) {
     event.preventDefault();
-    console.log("Payment gateway dfsdfs");
+    var totalPrice = document.getElementById('price-value-total').textContent;
+    totalPrice = parseFloat(totalPrice.replace(/[^0-9.]/g, '')).toFixed(2);
 
     $.ajax({
       url: "http://localhost/healthwave/patient/make_payment/",
       type: "POST",
       data: {
-        amount: 1000,
+        amount: totalPrice,
       },
       success: function (data) {
 

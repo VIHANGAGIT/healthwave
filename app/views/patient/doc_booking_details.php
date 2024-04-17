@@ -32,7 +32,6 @@
             <p class="popup-data" id="app-time-popup" ><b>Time Slot: </b> </p>
             <p class="popup-data" id="price-value-total-popup" ><b>Total Price: </b> </p>
             <button class="close-btn pay-btn" id="pay" >Pay Now</button>
-            <button class="close-btn">Cancel</button>
         </div>
     </div>
     <!-- navbar -->
@@ -175,7 +174,7 @@
                           <hr>
                           <div class="price-item">
                             <span class="price-label">Total Price:</span>
-                            <span class="price-value-total" id="price-value-total">LKR 3950.00</span>
+                            <span class="price-value-total" id="price-value-total">LKR 0.00</span>
                           </div>
                         </div>
                       </td>
@@ -243,8 +242,7 @@
                       <td>
                         <!--<input type="submit" class="button" value="Next" name="search" >-->
                         <button id="show" class="button" style="background-color: #4070f4;" >Next</button>
-                        <a href="/patient/doc_booking"><button class="button" style="background-color: red;" >Cancel</button></a>
-                        
+                        <button id="cancel" class="button" style="background-color: red;" >Cancel</button>
                       </td>
                     </tr>
                   </table>
@@ -332,13 +330,13 @@
                 var currentDate = new Date();
                 var dayIndex = daysOfWeek.indexOf(day);
                 var currentdayIndex = today.getDay();
-                if (dayIndex < currentdayIndex) {
+                if (dayIndex <= currentdayIndex) {
                     change = currentdayIndex - dayIndex;
                     currentDate.setDate(today.getDate() + (7-change));
                 } else if (dayIndex > currentdayIndex) {
                     currentDate.setDate(today.getDate() + (dayIndex - currentdayIndex));
                 } else {
-                    currentDate.setDate(today.getDate());
+                    // currentDate.setDate(today.getDate());
                 }
 
                 // Format the date as "Day, DD/MM/YYYY" (e.g., "Tue, 16/04/2024")
@@ -377,11 +375,10 @@
             var selectedSchedule = scheduleData.find(schedule => schedule.day_of_week === selectedDay);
 
             if (selectedSchedule && selectedSchedule.time_slots) {
-                var radioCount = 0; // Track the count of radio buttons added
-                var lineBreakAfter = 4; // Maximum number of radio buttons per line
-
-                // Loop through the time slots for the selected day and populate time slots
+                
+                // Loop through the time slots for the selected day and populate time 
                 for (var slot in selectedSchedule.time_slots) {
+
                     var startTime = selectedSchedule.time_slots[slot].start_time.slice(0, 5);
                     var endTime = selectedSchedule.time_slots[slot].end_time.slice(0, 5);
 
@@ -399,12 +396,6 @@
 
                     timeContainer.append(timeLabelContainer); // Add time slot to container
 
-                    radioCount++; // Increment the radio button count
-
-                    // Add a line break after every third radio button
-                    if (radioCount % lineBreakAfter === 0) {
-                        timeContainer.append("<br>"); // Add line break
-                    }
                 }
             }else {
                 // No schedule data found for the selected day
