@@ -73,6 +73,9 @@ class Patient extends Controller
         $hospital_data = $this->scheduleModel->doctor_schedule_hospital($doctor_id);
 
         $data = [
+            'First_Name' => $patient_data->First_Name,
+            'Last_Name' => $patient_data->Last_Name,
+            'NIC' => $patient_data->NIC,
             'C_Num' => $patient_data->Contact_No,
             'Email' => $patient_data->Username,
             'doctor_data' => $doctor_data,

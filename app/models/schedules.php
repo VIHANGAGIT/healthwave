@@ -47,13 +47,17 @@ class Schedules{
         $endTime = $time_duration->Time_End;
 
         if($this->db->execute()){
+            $todayDate = date('Y-m-d');
             $this->db->query('SELECT doctor_reservation.Start_Time FROM doctor_reservation
-            WHERE doctor_reservation.Start_Time between :startTime and :end_time');
-    
-            // Binding parameters for the prepaired statement
+                            WHERE DATE(doctor_reservation.Date) > :todayDate
+                            AND doctor_reservation.Start_Time BETWEEN :startTime AND :end_time');
+
+            // Binding parameters for the prepared statement
+            $this->db->bind(':todayDate', $todayDate);
             $this->db->bind(':startTime', $startTime);
             $this->db->bind(':end_time', $endTime);
             $booked_slots = $this->db->resultSet();
+
             
             if($this->db->execute()){
                 return $booked_slots;

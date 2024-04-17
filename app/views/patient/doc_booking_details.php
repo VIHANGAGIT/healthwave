@@ -18,14 +18,23 @@
   </head>
   <body>
 
-  <div class="popup-container">
-                  <div class="popup-box">
-                      <h1>Appointment Summary</h1>
-                      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore eius itaque molestiae sit quidem ullam, quis ut molestias quas dolores cum ratione, sint quibusdam iusto.</p>
-                      <button class="pay-btn">Pay Now</button>
-                      <button class="close-btn">Cancel</button>
-                  </div>
-              </div>
+    <div class="popup-container">
+        <div class="popup-box">
+            <h1>Appointment Summary</h1>
+            <p class="popup-data" id="patient-name-popup" ><b>Patient Name: </b> </p>
+            <p class="popup-data" id="patient-nic-popup" ><b>Patient NIC: </b> </p>
+            <p class="popup-data" id="patient-mobile-popup" ><b>Mobile Number: </b> </p>
+            <p class="popup-data" id="patient-email-popup" ><b>Email Address: </b> </p>
+            <p class="popup-data" id="doctor-name-popup" ><b>Doctor Name: </b> </p>
+            <p class="popup-data" id="doctor-spec-popup" ><b>Specialization: </b> </p>
+            <p class="popup-data" id="hospital-name-popup" ><b>Hospital Name: </b> </p>
+            <p class="popup-data" id="app-date-popup" ><b>Date: </b> </p>
+            <p class="popup-data" id="app-time-popup" ><b>Time Slot: </b> </p>
+            <p class="popup-data" id="price-value-total-popup" ><b>Total Price: </b> </p>
+            <button class="close-btn pay-btn" id="pay" >Pay Now</button>
+            <button class="close-btn">Cancel</button>
+        </div>
+    </div>
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -133,12 +142,8 @@
                     <tr>
                       <td>
                         <div class="input-field">
-                            <label>Patient NIC</label>
-                            <input type="text" name="patient_nic" value="<?php echo $_SESSION['userID'] ?>" disabled>
-                        </div>
-                        <div class="input-field">
                             <label>Patient Name</label>
-                            <input type="text" name="patient_name" value="<?php echo $_SESSION['userID'] ?>" disabled>
+                            <input type="text" name="patient_name" id="patient-name" value="<?php echo $data['First_Name']. ' '. $data['Last_Name'] ?>" disabled>
                         </div>
                       </td>
                       <td rowspan="6">
@@ -178,8 +183,16 @@
                     <tr>
                       <td>
                         <div class="input-field">
+                            <label>Patient NIC</label>
+                            <input type="text" name="patient_nic" id="patient-nic" value="<?php echo $data['NIC'] ?>" disabled>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="input-field">
                             <label>Mobile Number</label>
-                            <input type="text" name="patient_mobile" value="<?php echo $data['C_Num']?>" >
+                            <input type="text" name="patient_mobile" id="patient-mobile" value="<?php echo $data['C_Num']?>" >
                         </div>
                       </td>
                     </tr>
@@ -187,7 +200,7 @@
                       <td>
                         <div class="input-field">
                             <label>Email Address</label>
-                            <input type="text" name="patient_email" value="<?php echo $data['Email']?>">
+                            <input type="text" name="patient_email" id="patient-email" value="<?php echo $data['Email']?>">
                         </div>
                       </td>
                     </tr>
@@ -320,14 +333,15 @@
                 var dayIndex = daysOfWeek.indexOf(day);
                 var currentdayIndex = today.getDay();
                 if (dayIndex < currentdayIndex) {
-                    currentDate.setDate(today.getDate() + (1 + dayIndex));
+                    change = currentdayIndex - dayIndex;
+                    currentDate.setDate(today.getDate() + (7-change));
                 } else if (dayIndex > currentdayIndex) {
                     currentDate.setDate(today.getDate() + (dayIndex - currentdayIndex));
                 } else {
                     currentDate.setDate(today.getDate());
                 }
 
-                // Format the date as "Day, DD/MM/YYYY" (e.g., "Tuesday, 16/04/2024")
+                // Format the date as "Day, DD/MM/YYYY" (e.g., "Tue, 16/04/2024")
                 var formattedDate = daysOfWeek[currentDate.getDay()] + ", " +
                     currentDate.getDate().toString().padStart(2, "0") + "/" +
                     (currentDate.getMonth() + 1).toString().padStart(2, "0") + "/" +
@@ -337,6 +351,7 @@
                 var dateRadio = $("<input>").attr({
                     type: "radio",
                     name: "date",
+                    id: "app-date",
                     value: formattedDate // Set the value to the formatted date
                 });
 
@@ -374,6 +389,7 @@
                     var timeRadio = $("<input>").attr({
                         type: "radio",
                         name: "time",
+                        id: "app-time",
                         value: startTime + " - " + endTime // Set the value to the start and end time
                     });
 

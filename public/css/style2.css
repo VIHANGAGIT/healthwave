@@ -542,6 +542,11 @@ body.dark {
   color: #333;
   margin: 12px 0 20px;
 }
+
+.popup-box .popup-data{
+  font-size: 18px;
+}
+
 .popup-box .close-btn {
   width: 100%;
   height: 45px;
