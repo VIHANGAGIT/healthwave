@@ -8,6 +8,8 @@
 
     <!----======== CSS ======== -->
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/style3.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/stylereg.css">
+
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">

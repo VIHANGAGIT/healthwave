@@ -64,7 +64,8 @@
             </li>
             <li class="item active">
               <a href="../doctor/consultations" class="link flex">
-                <i class="uil uil-stethoscope"></i>
+              <i class="uil uil-history"></i>
+
                 <span>Past Consultations</span>
               </a>
             </li>
@@ -122,7 +123,7 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Details</th>
-                            <th>Prescription</th>
+                            <!--<th>Prescription</th>-->
                         </tr>
                     </thead>
                     <tbody>
@@ -132,7 +133,7 @@
                             <td>2023/10/12</td>
                             <td>10:30 AM</td>
                             <td><a href='patient_details'><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
+                            <!--<td><a href=''><button class='button'>Prescription</button></a></td>-->
                         </tr>
                         <!--<tr>
                             <td>12223</td>

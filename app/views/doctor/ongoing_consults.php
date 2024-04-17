@@ -64,7 +64,8 @@
             </li>
             <li class="item">
               <a href="../doctor/consultations" class="link flex">
-                <i class="uil uil-stethoscope"></i>
+              <i class="uil uil-history"></i>
+
                 <span>Past Consultations</span>
               </a>
             </li>
@@ -240,7 +241,9 @@
                         <td>2023/10/12</td>
                         <td>10:30 AM</td>
                         <td><a href='patient_details'><button class='button'>Details</button></a></td>
-                        <td><a href='addprescription'><button class='button'>Prescription</button></a></td>
+                        <td><a href='addprescription'><button class='button' style="width: 50px;"><i class="uil uil-plus"></i>
+
+                        </button></a></td>
                     </tr>
                     <tr>
                         <td>12223</td>
@@ -248,7 +251,9 @@
                         <td>2023/10/12</td>
                         <td>10:30 AM</td>
                         <td><a href=''><button class='button'>Details</button></a></td>
-                        <td><a href=''><button class='button'>Prescription</button></a></td>
+                        <td><a href=''><button class='button' style="width: 50px;"><i class="uil uil-plus"></i>
+
+                        </button></a></td>
                     </tr>
                    <!-- <tr>
                         <td>12223</td>
