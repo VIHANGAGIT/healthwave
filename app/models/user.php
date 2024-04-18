@@ -199,20 +199,7 @@
             }
         }
 
-        public function doctor_data_fetch($id){
-            $this->db->query('SELECT * FROM doctor WHERE Doctor_ID = :id');
-
-            // Binding parameters for the prepaired statement
-            $this->db->bind(':id', $id);
-            $doctorRow = $this->db->singleRow();
-
-            // Execute query
-            if($this->db->execute()){
-                return $doctorRow;
-            } else{
-                return false;
-            }
-        }
+        
 
         public function staff_data_fetch($id){
             $this->db->query('SELECT * FROM hospital_staff WHERE HS_ID = :id');

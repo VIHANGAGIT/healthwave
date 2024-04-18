@@ -2,18 +2,21 @@
     class Doctor extends Controller{
 
         public function __construct(){
-            $this->doctorModel = $this->model('user');
-            $this->reservationModel = $this->model('reservation');
-        }
-        public function index(){
-           
             if (session_status() == PHP_SESSION_NONE) {
                 session_start(); 
             }
+            $this->doctorModel = $this->model('doctors');
+        }
+        public function index(){
             
-            $data = $this->reservationModel->getReservations($_SESSION['userID']);
+            $data = $this->doctorModel->getReservations($_SESSION['userID']);
             
-            $this->view('doctor/reservations', $data);
+            $this->view('doctor/schedules', $data);
+        }
+
+        public function schedules(){
+            $data = $this->doctorModel->getReservations($_SESSION['userID']);
+            $this->view('doctor/schedules', $data);
         }
 
         public function consultations(){
@@ -51,8 +54,6 @@
 
 
         public function profile(){
-            session_start();
-    
             // Get user data from session
             $data = [
                 'Uname' => $_SESSION['userEmail'],
@@ -63,7 +64,7 @@
     
     
             $doctor_data = $this->doctorModel->doctor_data_fetch($data['ID']);
-            $reservation_data = $this->reservationModel->getReservations($data['ID']);
+            $reservation_data = $this->doctorModel->getReservations($data['ID']);
     
             $data = [
                 'ID' => $doctor_data->Doctor_ID,

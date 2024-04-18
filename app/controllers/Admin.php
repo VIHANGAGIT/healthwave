@@ -11,6 +11,12 @@
             $this->view('admin/dashboard', $data);
         }
 
+        public function profile(){
+            $data = [];
+            $this->view('admin/profile', $data);
+        }
+        
+
         public function approvals(){
             $data = [];
             $this->view('admin/approvals', $data);

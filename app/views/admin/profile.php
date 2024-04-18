@@ -1,9 +1,12 @@
 <?php 
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
   if(($_SESSION['userType']) != 'Admin'){
     redirect("users/login");
   }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -56,7 +59,7 @@
                 <span>Dashboard</span>
               </a>
             </li>
-            <li class="item active">
+            <li class="item">
               <a href="../admin/approvals" class="link flex">
                 <i class="uil uil-check-circle"></i>
                 <span>Approvals</span>
@@ -86,7 +89,7 @@
                 <span>Reservations</span>
               </a>
             </li>
-            <li class="item">
+            <li class="item active">
               <a href="../admin/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
@@ -114,45 +117,73 @@
     </nav>
 
     <div class="content">
+        
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Doctor Approvals</h1>
+                <h1>Account Details
+                    <span class="dashboard-stat" style="font-size: 25px; justify-content: right;" >
+                        <a href='profile_update'><button class='button' style="width: auto;">Update Details</button></a>
+                    </span>
+                    <span class="dashboard-stat" style="font-size: 25px; justify-content: right;" >
+                        <a href='profile_delete'><button class='button red' style="width: auto;">Delete Account</button></a>
+                    </span>
+                </h1>
+                <table class="table-dashboard">
+                    <tr>
+                        <td class="profile-img">
+                            <img src="<?php //echo URLROOT;?>/img/profile.png" alt="profile_img" />
+                        </td>
+                        <td>
+                            <table class="table-dashboard">
+                                <tbody class="profile" >
+                                    <tr>
+                                        <td>Name: <?php //echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
+                                        <td>Gender: <?php //echo $data['Gender'] ?></td>
+                                        <td>NIC: <?php //echo $data['NIC'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contact Number: <?php //echo $data['C_Num'] ?></td>
+                                        <td>Email: <?php //echo $data['Email'] ?></td>
+                                        <td></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>SLMC Reg No: <?php //echo $data['SLMC'] ?></td>
+                                        <td>Specialization: <?php //echo $data['Spec'] ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        <br>
+        <!--<section class="table-wrap" >
+            <div class="table-container">
+                <h1>Doctor Reservations</h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Specialization</th>
-                            <th>NIC</th>
-                            <th>SLMC Reg No</th>
-                            <th>Approve</th>
-                            <th>Decline</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Gastroenterologist</td>
-                            <td>892382331v</td>
-                            <td>No.12/2, Jaya Rd., Colombo</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Gastroenterologist</td>
-                            <td>892382331v</td>
-                            <td>No.12/2, Jaya Rd., Colombo</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Gastroenterologist</td>
-                            <td>892382331v</td>
-                            <td>No.12/2, Jaya Rd., Colombo</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
+                        <?php 
+                            foreach ($data['Reservations'] as $reservation) {
+                                echo "<tr>";
+                                echo "<td>".$reservation->Hospital."</td>";
+                                echo "<td>".$reservation->Date."</td>";
+                                echo "<td>".$reservation->Time."</td>";
+                                echo "<td><a href='../doctor/edit_reservation/".$reservation->Reservation_ID."'><button class='button'>Edit</button></a></td>";
+                                echo "<td><a href='../doctor/delete_reservation/".$reservation->Reservation_ID."'><button class='button red'>Delete</button></a></td>";
+                                echo "</tr>";
+                            }
+                        ?>  
                     </tbody>
                 </table>
             </div>
@@ -160,47 +191,31 @@
         <br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Hospital Approvals</h1>
+                <h1>Lab Tests Reservations</h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Registration No</th>
-                            <th>Address</th>
-                            <th>Region</th>
-                            <th>Approve</th>
-                            <th>Decline</th>
+                            <th>Test Name</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Asiri Hospitals - Panadura</td>
-                            <td>AS0832</td>
-                            <td>No.12/2, Jaya Rd., Panadura</td>
-                            <td>Kalutara</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Asiri Hospitals - Panadura</td>
-                            <td>AS0832</td>
-                            <td>No.12/2, Jaya Rd., Panadura</td>
-                            <td>Kalutara</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Asiri Hospitals - Panadura</td>
-                            <td>AS0832</td>
-                            <td>No.12/2, Jaya Rd., Panadura</td>
-                            <td>Kalutara</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
+                            <td>Lipid Profile</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>14:00 PM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </section>
+        </section>-->
     </div>
   </body>
 </html>

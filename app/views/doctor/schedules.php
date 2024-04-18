@@ -1,9 +1,4 @@
 <?php 
-  if (session_status() === PHP_SESSION_NONE) {
-    // Session has not been started yet
-    session_start(); // Start the session
-}
-
   if(($_SESSION['userType']) != 'Doctor'){
     redirect("users/login");
   }
@@ -61,9 +56,9 @@
               <span class="line"></span>
             </div>
             <li class="item active">
-              <a href="../doctor/reservations" class="link flex">
+              <a href="../doctor/schedules" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+                <span>Schedules</span>
               </a>
             </li>
             <li class="item">
@@ -122,26 +117,30 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Reservation ID</th>
-                            <th>Location</th>
-                            <th>Date</th>
-                            <th>Time</th>
+                            
+                            <th>Hospital</th>
+                            <th>Room</th>
+                            <th>Day</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
                             <!--<th>View</th>-->
                             <!--<th>Delete</th>-->
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
-                            foreach ($data as $reservation) {
+                            foreach ($data as $schedule) {
                                 echo "<tr>";
-                                echo "<td>".$reservation->Reservation_ID."</td>";
-                                echo "<td>".$reservation->Hospital."</td>";
-                                echo "<td>".$reservation->Date."</td>";
-                                echo "<td>".$reservation->Time."</td>";
-                                //echo "<td><a href='../doctor/edit_reservation/".$reservation->Reservation_ID."'><button class='button'>View</button></a></td>";
-                                //echo "<td><a href='../doctor/delete_reservation/".$reservation->Reservation_ID."'><button class='button'>Delete</button></a></td>";
+                                echo "<td>Test Hospital</td>";
+                                echo "<td>Test Room</td>";
+                                echo "<td>".$schedule->Day_of_Week."</td>";
+                                echo "<td>".$schedule->Time_Start."</td>";
+                                echo "<td>".$schedule->Time_End."</td>";
+                                //echo "<td><a href='../doctor/edit_reservation/".$schedule->Reservation_ID."'><button class='button'>View</button></a></td>";
+                                //echo "<td><a href='../doctor/delete_reservation/".$schedule->Reservation_ID."'><button class='button'>Delete</button></a></td>";
                                 echo "</tr>";
                             }
+                            
                         ?>
                     </tbody>
                     

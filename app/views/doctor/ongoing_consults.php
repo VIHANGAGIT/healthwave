@@ -1,5 +1,4 @@
 <?php 
-  session_start(); 
   if(($_SESSION['userType']) != 'Doctor'){
     redirect("users/login");
   }
@@ -57,9 +56,9 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="../doctor/reservations" class="link flex">
+              <a href="../doctor/schedules" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+                <span>Schedules</span>
               </a>
             </li>
             <li class="item">
@@ -204,7 +203,7 @@
                     
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Session <br> Duration :</h2>
-                        <p class="dashboard-stat">12.00-14.00</p>
+                        <p class="dashboard-stat">12:00 - 14:00</p>
                     </td>
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Remaining Number<br>of Patients :</h2>
