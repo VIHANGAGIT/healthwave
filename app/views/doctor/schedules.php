@@ -129,7 +129,7 @@
                     </thead>
                     <tbody>
                         <?php 
-                            foreach ($data as $schedule) {
+                            foreach ($data['schedule'] as $schedule) {
                                 echo "<tr>";
                                 echo "<td>Test Hospital</td>";
                                 echo "<td>Test Room</td>";
