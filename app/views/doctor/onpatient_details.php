@@ -20,6 +20,15 @@
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
+
+    <style>
+      #max-profile-img {
+          max-width: 200px;
+          max-height: 300px;
+        }
+    
+    </style>
+
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -116,56 +125,35 @@
 
     <div class="content">
         
-        <section class="table-wrap" >
-            <div class="table-container">
-                <!--<h1>Account Details
-                    <span class="dashboard-stat" style="font-size: 25px; justify-content: right;" >
-                        <a href='profile_update'><button class='button' style="width: auto;">Update Details</button></a>
-                    </span>
-                    <span class="dashboard-stat" style="font-size: 25px; justify-content: right;" >
-                        <a href='profile_delete'><button class='button red' style="width: auto;">Delete Account</button></a>
-                    </span>
-                </h1>-->
-                <table class="table-dashboard">
-                    <tr>
-                        <td class="profile-img">
-                            <img src="<?php echo URLROOT;?>/img/profile.png" alt="profile_img" />
-                        </td>
-                        <td>
-                            <table class="table-dashboard">
-                                <tbody class="profile" >
-                                   <tr>
-                                        <td>Name: <?php //echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
-                                      </tr> 
-                                      <tr>
-                                        <td>Gender: <?php //echo $data['Gender'] ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Age: <?php // echo $data['NIC'] ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Weight: <?php //echo $data['C_Num'] ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Height: <?php //echo $data['SLMC'] ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Blood Group: <?php //echo $data['Spec'] ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Allergies: <?php //echo $data['Email'] ?></td>
-                                      </tr>
-                                      <tr>
-                                        <td>Medical History: <?php //echo $data['Email'] ?></td>
-                                      </tr>
-                                      
+    <section class="table-wrap">
+        <div class="table-container" style="display:flex; flex-direction:row; justify-content:space-around">
+          <div style="height:300px">
+            <img src="<?php echo URLROOT;?>/img/profile.png" alt="profile" class="profile-img" id="max-profile-img">
+          </div> 
+          <div style="margin-right: 450px;">
+               <p><b>Name</b> - John Doe </p>
+                
+               <p><b>Age</b> - 25</p>
+               
+               <p><b>Gender</b> - Male  </p>
 
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                <p><b>Weight</b> - 70kg</p>
+
+                <p><b>Height</b> - 5'10"</p>
+
+                <p><b>blood group</b> - O+</p>
+
+                <p><b>Allergies</b> - None</p>
+
+                <p><b>Medical History</b> - None</p>
+
+                
+
+
+          </div>
+        </div>
+  
+                     
         </section>
         <br>
         <section class="table-wrap" >
