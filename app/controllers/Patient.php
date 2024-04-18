@@ -346,7 +346,33 @@ class Patient extends Controller
         echo json_encode($payment);
     }
 
+    public function add_reservation()
+    {
+        $data = [
+            'Patient_ID' => $_SESSION['userID'],
+            'Doctor_ID' => $_POST['DoctorID'],
+            'Hospital_ID' => $_POST['HospitalID'],
+            'Selected_Date' => $_POST['SelectedDate'],
+            'Selected_Day' => $_POST['SelectedDay'],
+            'Start_Time' => $_POST['StartTime'],
+            'End_Time' => $_POST['EndTime'],
+            'Total_Price' => $_POST['TotalPrice']
+        ];
+
+        if ($this->patientModel->add_reservation($data)) {
+            echo json_encode(array('message' => 'Reservation added successfully'));
+        } else {
+            echo json_encode(array('message' => 'Failed to add reservation'));
+        }
+
     }
 
+    public function payment_success()
+    {
+        $data = [];
+        $this->view('patient/payment_success', $data);
+
+    }
+}
+
     
-?>

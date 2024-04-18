@@ -344,6 +344,19 @@ body.dark {
   color: var(--grey-color-dark);
 }
 
+.payment img{
+  width: 700px;
+  display: flex;
+  margin: auto;
+
+}
+
+.payment h2{
+  color: var(--grey-color-dark);
+  font-weight: bold;
+  text-align: center;
+}
+
 .container-radio {
   display: flex;
   flex-wrap: wrap; /* Allow items to wrap to the next line */

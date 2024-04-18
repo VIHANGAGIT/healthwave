@@ -249,6 +249,11 @@
                   </table>
                 </div>
               </form>
+              <input type="hidden" id="doctorId" value="<?php echo $data['doctor_data']->Doctor_ID; ?>">
+              <input type="hidden" id="selectedDay">
+              <input type="hidden" id="selectedDate">
+              <input type="hidden" id="startTime">
+              <input type="hidden" id="endTime">
           </div>
         </div>
     </div> 
@@ -259,6 +264,7 @@
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
     <script src="<?php echo URLROOT;?>/js/booking_details.js" defer></script>
     <script>
+        
         var doctorId = <?php echo json_encode($data['doctor_data']->Doctor_ID); ?>;
         var docCharges = <?php echo json_encode($data['doctor_data']->Charges); ?>;
 

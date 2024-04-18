@@ -59,5 +59,45 @@
                 return false;
             }
         }
+
+
+        public function add_reservation($data){
+            $this->db->query('INSERT INTO payment (Bill_Amount, Payment_Method) VALUES (:Bill_Amount, :Payment_Method)');
+
+            $this->db->bind(':Bill_Amount', $data['Total_Price']);
+            $this->db->bind(':Payment_Method', "Online");
+            $this->db->execute();
+
+
+            $this->db->query('SELECT * FROM payment ORDER BY Payment_ID DESC LIMIT 1;');
+            $lastRow = $this->db->singleRow();
+            $payment_id = $lastRow->Payment_ID;
+
+            $this->db->query('SELECT * FROM schedule WHERE Doctor_ID = :Doctor_ID AND Hospital_ID = :Hospital_ID AND Day_of_Week = :Day_of_Week');
+            $this->db->bind(':Doctor_ID', $data['Doctor_ID']);
+            $this->db->bind(':Hospital_ID', $data['Hospital_ID']);
+            $this->db->bind(':Day_of_Week', $data['Selected_Day']);
+
+            $schedule = $this->db->singleRow();
+            $schedule_id = $schedule->Schedule_ID;
+
+            $this->db->query('INSERT INTO doctor_reservation (Patient_ID, Schedule_ID, Payment_ID, Date, Start_Time, End_Time) VALUES (:Patient_ID, :Schedule_ID, :Payment_ID, :Date, :Start_Time, :End_Time)');
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':Patient_ID', $data['Patient_ID']);
+            $this->db->bind(':Schedule_ID', $schedule_id);
+            $this->db->bind(':Payment_ID', $payment_id);
+            $this->db->bind(':Date', $data['Selected_Date']);
+            $this->db->bind(':Start_Time', $data['Start_Time']);
+            $this->db->bind(':End_Time', $data['End_Time']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        
         
     }
