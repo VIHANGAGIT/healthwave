@@ -1,10 +1,10 @@
-$("#show").click(function (event) {
+$("#show1").click(function (event) {
     console.log('Button clicked');
     event.preventDefault();
 
-    const showPopup = document.querySelector('#show');
-    const popupContainer = document.querySelector('.popup-container');
-    const popupBox = document.querySelector('.popup-box');
+    const showPopup = document.querySelector('#show1');
+    const popupContainer = document.querySelector('.popup-container-1');
+    const popupBox = document.querySelector('.popup-box-1');
     const closeBtn = document.querySelector('.close-btn');
 
     // Function to show the popup
@@ -40,6 +40,59 @@ $("#show").click(function (event) {
     // Show popup when show button is clicked
     showPopup.onclick = () => {
         showAppointmentPopup();
+        popupContainer.classList.add('active');
+
+        // Add event listener to close popup when clicking outside
+        document.addEventListener('click', closePopupOutside);
+    }
+
+    // Close popup function
+    function closePopup() {
+        popupContainer.classList.remove('active');
+        document.removeEventListener('click', closePopupOutside); // Remove event listener
+    }
+
+    // Close popup when close button is clicked
+    closeBtn.onclick = () => {
+        closePopup();
+    }
+
+    // Close popup when clicking outside the popup box
+    function closePopupOutside(event) {
+        if (!popupBox.contains(event.target) && event.target !== showPopup) {
+            closePopup();
+        }
+    }
+});
+
+$("#show2").click(function (event) {
+    console.log('Button clicked');
+    event.preventDefault();
+
+    const showPopup = document.querySelector('#show2');
+    const popupContainer = document.querySelector('.popup-container-2');
+    const popupBox = document.querySelector('.popup-box-2');
+    const closeBtn = document.querySelector('.close-btn');
+
+    // Function to show the popup
+    function showAppointmentPopup2() {
+        // Get appointment data from the current page's for
+        var doctorName = document.getElementById('doctor-name').textContent;
+        var doctorSpec = document.getElementById('doctor-spec').textContent;
+        var doctorGender = document.getElementById('doctorGender').value;
+        var doctorSlmc = document.getElementById('doctorSLMC').value;
+
+
+        document.getElementById('doctor-name-popup-2').value = doctorName;
+        document.getElementById('doctor-spec-popup-2').value = doctorSpec;
+        document.getElementById('doctor-gender-popup').value = doctorGender;
+        document.getElementById('doctor-slmc-popup').value = doctorSlmc;
+    
+    }
+
+    // Show popup when show button is clicked
+    showPopup.onclick = () => {
+        showAppointmentPopup2();
         popupContainer.classList.add('active');
 
         // Add event listener to close popup when clicking outside

@@ -403,6 +403,11 @@ class Patient extends Controller
         $this->view('patient/payment_success', $data);
 
     }
+
+    public function doctor_profile(){
+        $data = [];
+        $this->view('patient/doctor_profile', $data);
+    }
 }
 
     

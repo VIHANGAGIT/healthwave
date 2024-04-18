@@ -18,8 +18,8 @@
   </head>
   <body>
 
-    <div class="popup-container">
-        <div class="popup-box">
+    <div class="popup-container-1">
+        <div class="popup-box-1">
             <h1>Appointment Summary</h1><br>
             <hr>
             <p class="popup-data" id="patient-name-popup" ><b>Patient Name: </b> </p>
@@ -35,6 +35,35 @@
             <button class="close-btn pay-btn" id="pay" >Pay Now</button>
         </div>
     </div>
+
+    <div class="popup-container-2">
+        <div class="popup-box-2">
+            <h1>Doctor Profile</h1><br>
+            <hr>
+            <table style="width: 95%;">
+              <tr>
+                <td style="width: 45%;">
+                  <div class="popup-data"><img src="<?php echo URLROOT;?>/img/profile.png" alt="Doctor Photo"></div>
+                </td>
+                <td class="popup-data">
+                  <br>
+                  <span>Doctor Name</span>
+                  <input type="text" class="popup-data" id="doctor-name-popup-2" disabled>
+                  <br>
+                  <span>Specialization</span>
+                  <input type="text" class="popup-data" id="doctor-spec-popup-2" disabled>
+                  <br>
+                  <span>Gender </span>
+                  <input type="text" class="popup-data" id="doctor-gender-popup" disabled>
+                  <br>
+                  <span>SLMC Registration Number</span>
+                  <input type="text" class="popup-data" id="doctor-slmc-popup" disabled>
+                </td>
+              </tr>
+            </table>
+        </div>
+    </div>
+    
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -153,7 +182,7 @@
                           </div>
                           <div class="profile-name" id="doctor-name">Dr. <?php echo $data['doctor_data']->First_Name . ' ' . $data['doctor_data']->Last_Name?></div>
                           <div class="profile-specialization" id="doctor-spec"><?php echo $data['doctor_data']->Specialization?></div>
-                          <button class="button" style="background-color: #4070f4;" >View Profile</button>
+                          <button id="show2" class="button" style="background-color: #4070f4;" >View Profile</button>
                         </div>
                         <div class="price-card">
                           <div class="price-item">
@@ -242,7 +271,7 @@
                     <tr>
                       <td>
                         <!--<input type="submit" class="button" value="Next" name="search" >-->
-                        <button id="show" class="button" style="background-color: #4070f4;" >Next</button>
+                        <button id="show1" class="button" style="background-color: #4070f4;" >Next</button>
                         <button id="cancel" class="button" style="background-color: red;" >Cancel</button>
                       </td>
                     </tr>
@@ -254,6 +283,8 @@
               <input type="hidden" id="selectedDate">
               <input type="hidden" id="startTime">
               <input type="hidden" id="endTime">
+              <input type="hidden" id="doctorGender" value="<?php echo $data['doctor_data']->Gender; ?>">
+              <input type="hidden" id="doctorSLMC" value="<?php echo $data['doctor_data']->SLMC_Reg_No; ?>">
           </div>
         </div>
     </div> 
