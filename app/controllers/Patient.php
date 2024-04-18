@@ -27,22 +27,46 @@ class Patient extends Controller
         $data = [];
         //$doctor =  new Doctors();
         //$doctors = $doctor->getAllDoctors();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+            // Get search parameters from the form
+            $doctorName = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
+            $hospitalName = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+            $specialization = isset($_POST['specialization']) ? $_POST['specialization'] : null;
+    
+            // Perform the search based on the parameters
+            $searchDoctors = $this->doctorModel->search_doctors($doctorName, $hospitalName, $specialization);
+    
+        } else {
+            $searchDoctors = $this->doctorModel->getAllDoctors();
+        }
+
         $doctors = $this->doctorModel->getAllDoctors();
         $hospitals = $this->hospitalModel->getAllHospitals();
 
         // Getting disticnt specializations
         $specializations = [];
+        $no_of_hospitals = [];
+
         foreach ($doctors as $doctor) {
             if (!in_array($doctor->Specialization, $specializations)) {
                 $specializations[] = $doctor->Specialization;
             }
         }
+
+        foreach ($searchDoctors as $doctor) {
+            // Get the number of hospitals for the current doctor
+            $no_of_hospitals[$doctor->Doctor_ID] = $this->doctorModel->get_no_of_hospitals($doctor->Doctor_ID);
+        }
+
         $data = [
             'doctors' => $doctors,
+            'searchDoctors' => $searchDoctors,
             'hospitals' => $hospitals,
-            'specializations' => $specializations
+            'specializations' => $specializations,
+            'no_of_hospitals' => $no_of_hospitals
         ];
         $this->view('patient/doc_booking', $data);
+        
     }
 
     public function test_booking()

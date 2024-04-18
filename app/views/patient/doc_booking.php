@@ -76,7 +76,7 @@
             <li class="item">
               <a href="../patient/medical_records" class="link flex">
                 <i class="uil uil-file-alt"></i>
-                <span>Medical Records</span>
+                <span>Medical History</span>
               </a>
             </li>
           </ul>
@@ -118,17 +118,17 @@
       <div class="content-search">
           <div class="search">
             <h2>Find Your Doctor</h2>
-              <form style="width: 100%;" method="POST">
+              <form style="width: 100%;" method="POST" action="<?php echo URLROOT;?>/patient/doc_booking">
                 <div class="fields">
                   <table style="width: 95%;">
                     <tr>
                       <td>
                         <div class="input-field">
                             <label>Doctor Name</label>
-                            <select>
+                            <select name="doctor_name">
                                 <option disabled selected>Select Doctor Name</option>
-                                <?php foreach ($data['doctors'] as $doctor_name): ?>
-                                    <option><?php echo $doctor_name->First_Name . " " .  $doctor_name->Last_Name;?></option>
+                                <?php foreach ($data['doctors'] as $doctor_search): ?>
+                                    <option value="<?php echo $doctor_search->Doctor_ID; ?>"><?php echo $doctor_search->First_Name . " " .  $doctor_search->Last_Name;?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -136,10 +136,10 @@
                       <td>
                         <div class="input-field">
                             <label>Hospital Name</label>
-                            <select>
+                            <select name="hospital_name">
                                 <option disabled selected>Select Hospital</option>
                                 <?php foreach ($data['hospitals'] as $hospital): ?>
-                                    <option><?php echo $hospital->Hospital_Name; ?></option>
+                                    <option value="<?php echo $hospital->Hospital_ID; ?>"><?php echo $hospital->Hospital_Name; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -152,22 +152,18 @@
                       <td>
                         <div class="input-field">
                             <label>Specialization</label>
-                            <select>
+                            <select name="specialization">
                                 <option disabled selected>Select Specialization</option>
                                 <?php foreach ($data['specializations'] as $specialization): ?>
-                                    <option><?php echo $specialization; ?></option>
+                                    <option value="<?php echo $specialization; ?>"><?php echo $specialization; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                       </td>
                       <td>
-                      <div class="input-field">
-                            <label>Date</label>
-                            <input type="date" name="search_text" placeholder="Date">
-                        </div>
                       </td>
                       <td>
-                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                        <button class="button" style="background-color: red;" >Reset</button>
                       </td>
                     </tr>
                   </table>
@@ -176,8 +172,10 @@
               
           </div>
         </div>
+        
         <div class="detail-wrapper">
-          <?php foreach ($data['doctors'] as $doctor): ?>
+
+          <?php foreach ($data['searchDoctors'] as $doctor): ?>
               <div class='detail-card'>
                   <div class='detail-card-content'>
                       <p class="detail-title"><?php echo $doctor->First_Name . " " .  $doctor->Last_Name; ?></p> 
@@ -187,7 +185,12 @@
                       <hr class="vertical-line">
                       <div class='detail-card-info'>
                           <p>Available at :</p>
-                          <p class="detail-location" >4 locations</p>
+                          <p class="detail-location">
+                              <?php
+                              $noOfHospitals = $data['no_of_hospitals'][$doctor->Doctor_ID]->NoOfHospitals;
+                              echo $noOfHospitals . ($noOfHospitals == 1 ? ' Location' : ' Locations');
+                              ?>
+                          </p>
                       </div>
                   </div>
                   <div class='detail-view'>

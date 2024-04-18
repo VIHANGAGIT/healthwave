@@ -77,7 +77,7 @@
             <li class="item active">
               <a href="../patient/medical_records" class="link flex">
                 <i class="uil uil-file-alt"></i>
-                <span>Medical Records</span>
+                <span>Medical History</span>
               </a>
             </li>
           </ul>
