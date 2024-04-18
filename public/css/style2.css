@@ -344,9 +344,26 @@ body.dark {
   color: var(--grey-color-dark);
 }
 
-.payment img{
-  width: 700px;
+.content-payment{
+  width: 91%;
+  margin-left: 5%;
+  padding-top: 1%;
+  background-color: var(--white-color);
+  border-radius: 10px;
+  color: var(--white-color);
+  font-size: 18px;
+  transition: all 0.5s;
+}
+
+.payment{
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.payment img{
+  width: 750px;
   margin: auto;
 
 }
@@ -355,6 +372,21 @@ body.dark {
   color: var(--grey-color-dark);
   font-weight: bold;
   text-align: center;
+}
+
+.payment p{
+  color: var(--grey-color-dark);
+  text-align: center;
+}
+
+.payment .pay-text{
+  color: var(--blue-color);
+  font-weight: bold;
+}
+
+.payment .button{
+  /* display: flex; */
+  width: 250px;
 }
 
 .container-radio {

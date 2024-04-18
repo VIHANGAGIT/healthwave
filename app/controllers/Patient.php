@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 class Patient extends Controller
 {
     public function __construct()
@@ -369,7 +372,10 @@ class Patient extends Controller
 
     public function payment_success()
     {
-        $data = [];
+        $type = isset($_GET['type']) ? $_GET['type'] : null;
+        $data = [
+            'type' => $type
+        ];
         $this->view('patient/payment_success', $data);
 
     }

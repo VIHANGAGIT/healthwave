@@ -114,14 +114,26 @@
     </nav>
 
     <div class="content">
-      <div class="content-appointment">
+      <div class="content-payment">
         <div class="payment">
           <img src="<?php echo URLROOT;?>/img/payment_success.png" alt="">
-          <h2>Payment Successful!</h2>
+          <h2><?php echo $data['type']?> Booked Successfully!</h2>
+          <p>Your request has been successfully processed. You will receive a confirmation email shortly.</p>
+          <br>
+          <p>You can view your booked <?php echo $data['type']?>s in <span class="pay-text">Reservations</span> section</p>
+          <button class="button" id="reservation" >Go to Reservations</button>
+          <p>Thank you for choosing <span class="pay-text">HealthWave!</span></p>
+          <br>
+
         </div>
       </div>
     
     </div>
+    <script>
+      document.getElementById('reservation').addEventListener('click', function(){
+        window.location.href = '../patient/reservations';
+      });
+    </script>
 
   </body>
 </html>

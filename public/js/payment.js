@@ -230,7 +230,7 @@ $(document).ready(function () {
             success: function (data) {
                 response = JSON.parse(data);
                 console.log(response["message"]);
-                window.location.href = '/healthwave/patient/doc_booking';
+                window.location.href = '/healthwave/patient/payment_success?type=Appointment';
             },
                 error: function (jqXHR, textStatus, errorThrown) {
                 console.error("Error adding reservation:", textStatus, errorThrown);
