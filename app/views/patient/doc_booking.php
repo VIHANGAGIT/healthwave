@@ -171,34 +171,40 @@
               </form>
               
           </div>
-        </div>
+      </div>
         
-        <div class="detail-wrapper">
-
-          <?php foreach ($data['searchDoctors'] as $doctor): ?>
-              <div class='detail-card'>
-                  <div class='detail-card-content'>
-                      <p class="detail-title"><?php echo $doctor->First_Name . " " .  $doctor->Last_Name; ?></p> 
-                      <p class='detail-comp'><?php echo $doctor->Specialization; ?></p>
-                  </div>
-                  <div class='detail-card-sub'>
-                      <hr class="vertical-line">
-                      <div class='detail-card-info'>
-                          <p>Available at :</p>
-                          <p class="detail-location">
-                              <?php
-                              $noOfHospitals = $data['no_of_hospitals'][$doctor->Doctor_ID]->NoOfHospitals;
-                              echo $noOfHospitals . ($noOfHospitals == 1 ? ' Location' : ' Locations');
-                              ?>
-                          </p>
+      <div class="detail-wrapper">
+          <?php if (empty($data['searchDoctors'])): ?>
+              <div class="error-msg">
+                  <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                  <p>Could not find results for your search query.</p>
+              </div>
+          <?php else: ?>
+              <?php foreach ($data['searchDoctors'] as $doctor): ?>
+                  <div class='detail-card'>
+                      <div class='detail-card-content'>
+                          <p class="detail-title"><?php echo $doctor->First_Name . " " .  $doctor->Last_Name; ?></p> 
+                          <p class='detail-comp'><?php echo $doctor->Specialization; ?></p>
+                      </div>
+                      <div class='detail-card-sub'>
+                          <hr class="vertical-line">
+                          <div class='detail-card-info'>
+                              <p>Available at :</p>
+                              <p class="detail-location">
+                                  <?php
+                                  $noOfHospitals = $data['no_of_hospitals'][$doctor->Doctor_ID]->NoOfHospitals;
+                                  echo $noOfHospitals . ($noOfHospitals == 1 ? ' Location' : ' Locations');
+                                  ?>
+                              </p>
+                          </div>
+                      </div>
+                      <div class='detail-view'>
+                          <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
+                          <a href="/healthwave/patient/doc_booking_details?doctor_id=<?php echo $doctor->Doctor_ID; ?>"><button class='button detail-btn' >Book Now</button></a>
                       </div>
                   </div>
-                  <div class='detail-view'>
-                      <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
-                      <a href="/healthwave/patient/doc_booking_details?doctor_id=<?php echo $doctor->Doctor_ID; ?>"><button class='button detail-btn' >Book Now</button></a>
-                  </div>
-              </div>
-          <?php endforeach; ?>
-    </div>
+              <?php endforeach; ?>
+          <?php endif; ?>
+      </div>
   </body>
 </html>
