@@ -138,19 +138,23 @@
                                 <tbody class="profile" >
                                     <tr>
                                         <td>Name: <?php //echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
+                                        <tr>
                                         <td>Gender: <?php //echo $data['Gender'] ?></td>
+                                        </tr>
+                                        <tr>
                                         <td>NIC: <?php //echo $data['NIC'] ?></td>
+                                        </tr>
                                     </tr>
                                     <tr>
                                         <td>Contact Number: <?php //echo $data['C_Num'] ?></td>
+                                        <tr>
                                         <td>Email: <?php //echo $data['Email'] ?></td>
-                                        <td></td>
-                                        
+                                        </tr>
                                     </tr>
-                                    <tr>
+                                    <!--<tr>
                                         <td>SLMC Reg No: <?php //echo $data['SLMC'] ?></td>
                                         <td>Specialization: <?php //echo $data['Spec'] ?></td>
-                                    </tr>
+                                    </tr>-->
                                 </tbody>
                             </table>
                         </td>
