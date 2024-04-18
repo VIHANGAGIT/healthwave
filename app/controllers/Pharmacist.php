@@ -11,4 +11,3 @@
             $this->view('pharmacist/prescription_view', $data);
         }
     }
-?>

@@ -368,6 +368,12 @@ body.dark {
 
 }
 
+.payment h1{
+  color: var(--grey-color-dark);
+  font-weight: bold;
+  text-align: center;
+}
+
 .payment h2{
   color: var(--grey-color-dark);
   font-weight: bold;
@@ -379,6 +385,12 @@ body.dark {
   text-align: center;
 }
 
+.payment .text404 p{
+  color: var(--grey-color-dark);
+  text-align: center;
+  font-size: 1.3rem;
+}
+
 .payment .pay-text{
   color: var(--blue-color);
   font-weight: bold;
@@ -387,6 +399,24 @@ body.dark {
 .payment .button{
   /* display: flex; */
   width: 250px;
+}
+
+.content-static{
+  align-items: center;
+  align-content: center;
+  margin: 5% 2%;
+  transition: all .5s ease;
+  overflow-x: hidden;
+}
+
+.content-404{
+  width: 100vw;
+  padding-top: 1%;
+  background-color: var(--white-color);
+  border-radius: 10px;
+  color: var(--white-color);
+  font-size: 18px;
+  transition: all 0.5s;
 }
 
 .container-radio {
