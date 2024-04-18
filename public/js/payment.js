@@ -212,6 +212,8 @@ $(document).ready(function () {
         var endTime = timeParts[1];
         var totalPrice = document.getElementById('price-value-total').textContent;
         totalPrice = parseFloat(totalPrice.replace(/[^0-9.]/g, '')).toFixed(2);
+        var contactNumber = document.getElementById('patient-mobile').value;
+        var email = document.getElementById('patient-email').value;
   
         // AJAX request to add reservation
         $.ajax({
@@ -226,6 +228,8 @@ $(document).ready(function () {
             SelectedDate: selectedDate,
             StartTime: startTime,
             EndTime: endTime,
+            ContactNo: contactNumber,
+            Email: email
             },
             success: function (data) {
                 response = JSON.parse(data);

@@ -81,7 +81,7 @@
             $schedule = $this->db->singleRow();
             $schedule_id = $schedule->Schedule_ID;
 
-            $this->db->query('INSERT INTO doctor_reservation (Patient_ID, Schedule_ID, Payment_ID, Date, Start_Time, End_Time) VALUES (:Patient_ID, :Schedule_ID, :Payment_ID, :Date, :Start_Time, :End_Time)');
+            $this->db->query('INSERT INTO doctor_reservation (Patient_ID, Schedule_ID, Payment_ID, Date, Start_Time, End_Time, Contact_Number, Email) VALUES (:Patient_ID, :Schedule_ID, :Payment_ID, :Date, :Start_Time, :End_Time, :Contact_Number, :Email)');
             // Binding parameters for the prepaired statement
             $this->db->bind(':Patient_ID', $data['Patient_ID']);
             $this->db->bind(':Schedule_ID', $schedule_id);
@@ -89,6 +89,8 @@
             $this->db->bind(':Date', $data['Selected_Date']);
             $this->db->bind(':Start_Time', $data['Start_Time']);
             $this->db->bind(':End_Time', $data['End_Time']);
+            $this->db->bind(':Contact_Number', $data['Contact_No']);
+            $this->db->bind(':Email', $data['Email']);
 
             // Execute query
             if($this->db->execute()){

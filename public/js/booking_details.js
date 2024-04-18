@@ -1,8 +1,9 @@
 $(document).ready(function() {
     $("#hospitalSelect").change(function() {
         var hospitalId = $(this).val();
+        var selectedDate = null;
 
-        fetchScheduleDetails(hospitalId, doctorId, function(scheduleData) {
+        fetchScheduleDetails(hospitalId, doctorId, selectedDate, function(scheduleData) {
             if (scheduleData && Array.isArray(scheduleData)) {
                 displayScheduleDetails(scheduleData);
                 updateHospitalCharges(scheduleData);
@@ -17,7 +18,7 @@ $(document).ready(function() {
         var selectedDate = $(this).val();
         var selectedDay = selectedDate.split(',')[0];
         var hospitalId = $("#hospitalSelect").val();
-        fetchScheduleDetails(hospitalId, doctorId, function(scheduleData) {
+        fetchScheduleDetails(hospitalId, doctorId, selectedDate, function(scheduleData) {
             updateTimeSlots(selectedDay, scheduleData);
         });
     });
@@ -34,11 +35,11 @@ function calculateTotalPrice() {
     $("#price-value-total").text("LKR " + totalPrice.toFixed(2));
 }
 
-function fetchScheduleDetails(hospitalId, doctorId, callback) {
+function fetchScheduleDetails(hospitalId, doctorId, selectedDate, callback) {
     $.ajax({
         url: "http://localhost/healthwave/patient/fetch_schedule_details",
         type: "GET",
-        data: { hospital_id: hospitalId, doctor_id: doctorId },
+        data: { hospital_id: hospitalId, doctor_id: doctorId, selected_date: selectedDate},
         dataType: "json",
         success: function(scheduleData) {
             callback(scheduleData); // Invoke the callback with the fetched data

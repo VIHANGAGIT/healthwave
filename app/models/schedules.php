@@ -48,7 +48,7 @@ class Schedules{
 
         if($this->db->execute()){
             $todayDate = date('Y-m-d');
-            $this->db->query('SELECT doctor_reservation.Start_Time FROM doctor_reservation
+            $this->db->query('SELECT doctor_reservation.Start_Time, doctor_reservation.Date FROM doctor_reservation
                             WHERE DATE(doctor_reservation.Date) > :todayDate
                             AND doctor_reservation.Start_Time BETWEEN :startTime AND :end_time');
 

@@ -117,6 +117,9 @@ class Patient extends Controller
         // Get hospital ID and doctor ID from request data
         $doctor_id = isset($_GET['doctor_id']) ? $_GET['doctor_id'] : null;
         $hospital_id = isset($_GET['hospital_id']) ? $_GET['hospital_id'] : null;
+        $selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : null;
+        $formatted_date = date('Y-m-d', strtotime(str_replace('/', '-', $selected_date)));
+
 
         if (!$hospital_id || !$doctor_id) {
             echo json_encode(array('error' => 'Missing hospital_id or doctor_id'));  // Send JSON with error message
@@ -151,7 +154,10 @@ class Patient extends Controller
             foreach ($bookedSlots as $bookedSlot) {
                 foreach ($timeSlots as $key => $timeSlot) {
                     if ($timeSlot['start_time'] == $bookedSlot->Start_Time) {
-                        unset($timeSlots[$key]);
+                        //compare date here
+                        if ($bookedSlot->Date == $formatted_date) {
+                            unset($timeSlots[$key]);
+                        }
                     }
                 }
             }
@@ -383,7 +389,9 @@ class Patient extends Controller
             'Selected_Day' => $_POST['SelectedDay'],
             'Start_Time' => $_POST['StartTime'],
             'End_Time' => $_POST['EndTime'],
-            'Total_Price' => $_POST['TotalPrice']
+            'Total_Price' => $_POST['TotalPrice'],
+            'Contact_No' => $_POST['ContactNo'],
+            'Email' => $_POST['Email']
         ];
 
         if ($this->patientModel->add_reservation($data)) {
