@@ -131,7 +131,7 @@
                 <table class="table-dashboard">
                     <tr>
                         <td class="profile-img">
-                            <img src="<?php //echo URLROOT;?>/img/profile.png" alt="profile_img" />
+                            <img src="<?php echo URLROOT;?>/img/profile.png" alt="profile_img" />
                         </td>
                         <td>
                             <table class="table-dashboard">
