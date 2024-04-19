@@ -47,4 +47,20 @@ class Tests{
         }
         
     }
+
+    public function test_schedule_hospital($id){
+        $this->db->query('SELECT DISTINCT hospital_test.Hospital_ID, hospital.Hospital_Name, hospital_test.Price FROM hospital_test
+        INNER JOIN hospital ON hospital_test.Hospital_ID = hospital.Hospital_ID
+        WHERE hospital_test.Test_ID = :id');
+
+        // Binding parameters for the prepaired statement
+        $this->db->bind(':id', $id);
+        $hospitals = $this->db->resultSet();
+        
+        if($this->db->execute()){
+            return $hospitals;
+        } else{
+            return false;
+        }
+    }
 }

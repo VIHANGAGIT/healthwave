@@ -128,8 +128,7 @@ class Patient extends Controller
         $doctor_id = isset($_GET['doctor_id']) ? $_GET['doctor_id'] : null;
 
         if (!$doctor_id) {
-            // Handle case where ID is missing in the URL (optional)
-            // You can redirect to an error page or display an error message
+            $this->view('pages/not_found');
             return;
         }
 
@@ -212,6 +211,35 @@ class Patient extends Controller
         
         // Send JSON response with schedule data
         echo json_encode($responseData);
+    }
+
+    public function test_booking_details()
+    {
+        // Get test ID from URL parameter
+        $test_id = isset($_GET['test_id']) ? $_GET['test_id'] : null;
+
+        if (!$test_id) {
+            $this->view('pages/not_found');
+            return;
+        }
+
+        // Fetch patient data
+        $patient_data = $this->patientModel->patient_data_fetch($_SESSION['userID']);
+
+        // Fetch test data using the model
+        // $doctor_data = $this->doctorModel->doctor_data_fetch($doctor_id);
+        $hospital_data = $this->testModel->test_schedule_hospital($test_id);
+
+        $data = [
+            'First_Name' => $patient_data->First_Name,
+            'Last_Name' => $patient_data->Last_Name,
+            'NIC' => $patient_data->NIC,
+            'C_Num' => $patient_data->Contact_No,
+            'Email' => $patient_data->Username,
+            'hospital_data' => $hospital_data
+        ];
+
+        $this->view('patient/test_booking_details', $data);
     }
 
 
