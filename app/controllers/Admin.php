@@ -51,6 +51,10 @@
             $data = [];
             $this->view('admin/add_doctor', $data);
         }
-        
+
+        public function profile_update(){
+            $data = [];
+            $this->view('admin/profile_update', $data);
+        }
     }
 ?>
