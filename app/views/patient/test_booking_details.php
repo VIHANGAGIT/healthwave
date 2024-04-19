@@ -26,8 +26,8 @@
             <p class="popup-data" id="patient-nic-popup" ><b>Patient NIC: </b> </p>
             <p class="popup-data" id="patient-mobile-popup" ><b>Mobile Number: </b> </p>
             <p class="popup-data" id="patient-email-popup" ><b>Email Address: </b> </p>
-            <p class="popup-data" id="doctor-name-popup" ><b>Test Name: </b> </p>
-            <p class="popup-data" id="doctor-spec-popup" ><b>Test Type: </b> </p>
+            <p class="popup-data" id="test-name-popup" ><b>Test Name: </b> </p>
+            <p class="popup-data" id="test-type-popup" ><b>Test Type: </b> </p>
             <p class="popup-data" id="hospital-name-popup" ><b>Hospital Name: </b> </p>
             <p class="popup-data" id="app-date-popup" ><b>Date: </b> </p>
             <p class="popup-data" id="app-time-popup" ><b>Time Slot: </b> </p>
@@ -175,7 +175,11 @@
                             <input type="text" name="patient_name" id="patient-name" value="<?php echo $data['First_Name']. ' '. $data['Last_Name'] ?>" disabled>
                         </div>
                       </td>
-                      <td rowspan="3">
+                      <td rowspan="5">
+                        <div class="profile-card">
+                          <div class="profile-name" id="test-name"><?php echo $data['test_data']->Test_Name?></div>
+                          <div class="profile-specialization" id="test-type"><?php echo $data['test_data']->Test_Type?></div>
+                        </div>
                         <div class="price-card">
                           <div class="price-item">
                             <span class="price-label">Test Charges:</span>
@@ -266,7 +270,7 @@
                   </table>
                 </div>
               </form>
-              <input type="hidden" id="testId" value="<?php echo $data['test_id']; ?>">
+              <input type="hidden" id="testId" value="<?php echo $data['test_data']->Test_ID; ?>">
               <input type="hidden" id="selectedDay">
               <input type="hidden" id="selectedDate">
               <input type="hidden" id="startTime">
@@ -276,8 +280,8 @@
     </div> 
     <br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="<?php echo URLROOT;?>/js/payment.js" defer></script>
-    <script src="<?php echo URLROOT;?>/js/popup.js" defer></script>
+    <script src="<?php echo URLROOT;?>/js/test_payment.js" defer></script>
+    <script src="<?php echo URLROOT;?>/js/test_popup.js" defer></script>
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
     <script src="<?php echo URLROOT;?>/js/test_booking_details.js" defer></script>
     <!-- <script>

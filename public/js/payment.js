@@ -143,12 +143,24 @@ $(document).ready(function () {
       event.preventDefault();
       var totalPrice = document.getElementById('price-value-total').textContent;
       totalPrice = parseFloat(totalPrice.replace(/[^0-9.]/g, '')).toFixed(2);
+      var patientName = document.getElementById('patient-name').value;
+      var nameParts = patientName.split(" ");
+      var firstName = nameParts[0];
+      var lastName = nameParts[1];
+      var type = "Doctor Booking Payment";
+      var email = document.getElementById('patient-email').value;
+      var mobile = document.getElementById('patient-mobile').value;
   
       $.ajax({
         url: "http://localhost/healthwave/patient/make_payment/",
         type: "POST",
         data: {
-          amount: totalPrice,
+            amount: totalPrice,
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            phone: mobile,
+            type: type
         },
         success: function (data) {
           data = JSON.parse(data);

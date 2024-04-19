@@ -1,5 +1,4 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Patient'){
     redirect("users/login");
   }
@@ -11,7 +10,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Reservations</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -131,30 +130,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
+                      <?php foreach($data['doc_reservations'] as $doc_reservation): ?>
+                          <tr>
+                              <td>Dr. <?php echo $doc_reservation->First_Name . ' ' . $doc_reservation->Last_Name; ?></td>
+                              <td><?php echo $doc_reservation->Hospital_Name; ?></td>
+                              <td><?php echo $doc_reservation->Date; ?></td>
+                              <td><?php echo $doc_reservation->Start_Time . ' - ' . $doc_reservation->End_Time; ?></td>
+                              <td><a href=''><button class='button'>Edit</button></a></td>
+                              <td><a href=''><button class='button red'>Cancel</button></a></td>
+                          </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -175,30 +160,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
+                        <?php foreach($data['test_reservations'] as $test_reservation): ?>
+                          <tr>
+                              <td><?php echo $test_reservation->Test_Name; ?></td>
+                              <td><?php echo $test_reservation->Hospital_Name; ?></td>
+                              <td><?php echo $test_reservation->Date; ?></td>
+                              <td><?php echo $test_reservation->Start_Time . ' - ' . $test_reservation->End_Time; ?></td>
+                              <td><a href=''><button class='button'>Edit</button></a></td>
+                              <td><a href=''><button class='button red'>Cancel</button></a></td>
+                          </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

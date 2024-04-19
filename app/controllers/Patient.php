@@ -119,6 +119,14 @@ class Patient extends Controller
     public function reservations()
     {
         $data = [];
+        $patient_id = $_SESSION['userID'];
+        $doc_reservations = $this->patientModel->get_doc_reservations($patient_id);
+        $test_reservations = $this->patientModel->get_test_reservations($patient_id);
+        $data = [
+            'doc_reservations' => $doc_reservations,
+            'test_reservations' => $test_reservations
+        ];
+
         $this->view('patient/reservations', $data);
     }
 
@@ -224,7 +232,7 @@ class Patient extends Controller
         }
 
         // Fetch patient data
-        // $test_data = $this->testModel->test_data_fetch($test_id);
+        $test_data = $this->testModel->test_data_fetch($test_id);
         $patient_data = $this->patientModel->patient_data_fetch($_SESSION['userID']);
 
         // Fetch test data using the model
@@ -238,7 +246,7 @@ class Patient extends Controller
             'C_Num' => $patient_data->Contact_No,
             'Email' => $patient_data->Username,
             'hospital_data' => $hospital_data,
-            'test_id' => $test_id
+            'test_data' => $test_data
         ];
 
         $this->view('patient/test_booking_details', $data);
@@ -521,13 +529,19 @@ class Patient extends Controller
 
     public function make_payment()
     {
-        $data = [];
-
+       
         $merchant_id = "1226485";
         $order_id = uniqid();
         $amount = $_POST['amount'];
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $email = $_POST['email'];
+        $mobile = $_POST['phone'];
+        $type = $_POST['type'];
         $currency = "LKR";
         $merchant_secret = "MTM1NDY0Njg4ODM5NDA0Mjg4MjE3MjE3MDA3NTczMDEzNDcxNzQ2";
+        $return_url = ($type == "Test Booking Payment" ? "http://localhost/healthwave/patient/test_booking": "http://localhost/healthwave/patient/doc_booking");
+        $cancel_url = ($type == "Test Booking Payment" ? "http://localhost/healthwave/patient/test_booking_details": "http://localhost/healthwave/patient/doc_booking_details");
 
         $hash = strtoupper(
             md5(
@@ -541,18 +555,18 @@ class Patient extends Controller
         $payment = [
             "sandbox" => true,
             "merchant_id" => $merchant_id,  
-            "return_url" => "http://localhost/healthwave/patient/doc_booking",
-            "cancel_url" => "http://localhost/healthwave/patient/doc_booking_details",
-            "notify_url" => "http://sample.com/notify",
+            "return_url" => $return_url,
+            "cancel_url" => $cancel_url,
+            "notify_url" => "",
             "order_id" => $order_id,
-            "items" => "Doctor Booking Payment",
+            "items" => $type,
             "amount" => $amount,
             "currency" => $currency,
             "hash" => $hash,
-            "first_name" => "Vihanga",
-            "last_name" => "Vithanawasam",
-            "email" => "test@jj.com",
-            "phone" => "0978424552",
+            "first_name" => $first_name,
+            "last_name" => $last_name,
+            "email" => $email,
+            "phone" => $mobile,
             "address" => "",
             "city" => "",
             "country" => "",
@@ -582,6 +596,28 @@ class Patient extends Controller
         ];
 
         if ($this->patientModel->add_reservation($data)) {
+            echo json_encode(array('message' => 'Reservation added successfully'));
+        } else {
+            echo json_encode(array('message' => 'Failed to add reservation'));
+        }
+
+    }
+
+    public function add_test_reservation()
+    {
+        $data = [
+            'Patient_ID' => $_SESSION['userID'],
+            'Test_ID' => $_POST['TestID'],
+            'Hospital_ID' => $_POST['HospitalID'],
+            'Selected_Date' => $_POST['SelectedDate'],
+            'Start_Time' => $_POST['StartTime'],
+            'End_Time' => $_POST['EndTime'],
+            'Total_Price' => $_POST['TotalPrice'],
+            'Contact_No' => $_POST['ContactNo'],
+            'Email' => $_POST['Email']
+        ];
+
+        if ($this->testModel->add_reservation($data)) {
             echo json_encode(array('message' => 'Reservation added successfully'));
         } else {
             echo json_encode(array('message' => 'Failed to add reservation'));

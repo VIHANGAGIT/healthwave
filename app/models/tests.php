@@ -97,4 +97,51 @@ class Tests{
             return false;
         }
     }
+
+    public function test_data_fetch($id){
+        $this->db->query('SELECT * FROM test WHERE Test_ID = :id');
+
+        // Binding parameters for the prepaired statement
+        $this->db->bind(':id', $id);
+        $testRow = $this->db->singleRow();
+
+        // Execute query
+        if($this->db->execute()){
+            return $testRow;
+        } else{
+            return false;
+        }
+    }
+
+    public function add_reservation($data){
+        $this->db->query('INSERT INTO payment (Bill_Amount, Payment_Method) VALUES (:Bill_Amount, :Payment_Method)');
+
+        $this->db->bind(':Bill_Amount', $data['Total_Price']);
+        $this->db->bind(':Payment_Method', "Online");
+        $this->db->execute();
+
+
+        $this->db->query('SELECT * FROM payment ORDER BY Payment_ID DESC LIMIT 1;');
+        $lastRow = $this->db->singleRow();
+        $payment_id = $lastRow->Payment_ID;
+
+        $this->db->query('INSERT INTO test_reservation (Patient_ID, Hospital_ID, Test_ID, Payment_ID, Date, Start_Time, End_Time, Contact_Number, Email) VALUES (:Patient_ID, :Hospital_ID, :Test_ID, :Payment_ID, :Date, :Start_Time, :End_Time, :Contact_Number, :Email)');
+        // Binding parameters for the prepaired statement
+        $this->db->bind(':Patient_ID', $data['Patient_ID']);
+        $this->db->bind(':Hospital_ID', $data['Hospital_ID']);
+        $this->db->bind(':Test_ID', $data['Test_ID']);
+        $this->db->bind(':Payment_ID', $payment_id);
+        $this->db->bind(':Date', $data['Selected_Date']);
+        $this->db->bind(':Start_Time', $data['Start_Time']);
+        $this->db->bind(':End_Time', $data['End_Time']);
+        $this->db->bind(':Contact_Number', $data['Contact_No']);
+        $this->db->bind(':Email', $data['Email']);
+
+        // Execute query
+        if($this->db->execute()){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }
