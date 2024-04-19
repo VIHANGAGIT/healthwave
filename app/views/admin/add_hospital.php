@@ -41,12 +41,21 @@
                                 <option>Colombo</option>
                                 <option>Kandy</option>
                                 <option>Galle</option>
+                                <option>Matara</option>
+                                <option>Kurunegala</option>
+                                <option>Badulla</option>
+                                <option>Anuradhapura</option>
+                                <option>Polonnaruwa</option>
+                                <option>Trincomalee</option>
+                                <option>Jaffna</option>
+                                <option>Other</option>
+
                             </select>
                         </div>
 
                         <div class="input-field">
                             <label>Hospital Charge*</label>
-                            <input type="number" placeholder="Enter hospital charge" name="hcharge" value="<?php //echo $data['DOB'] ?>" required>
+                            <input type="text" placeholder="Enter hospital charge" name="hcharge" value="<?php //echo $data['DOB'] ?>" required>
                         </div>
 
                         <div class="input-field">
@@ -54,8 +63,8 @@
                             <input type="text" placeholder="Enter Manager ID" name="managerid" value="<?php //echo $data['NIC'] ?>" required>
                         </div>
                         <div class="input-field">
-                            <label>Mobile Number*</label>
-                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php //echo $data['C_num'] ?>" required>
+                            <label>Contact Number*</label>
+                            <input type="text" placeholder="Enter hospital contact number" name="cnum" value="<?php //echo $data['C_num'] ?>" required>
                         </div>
                     </div>
                 </div>
