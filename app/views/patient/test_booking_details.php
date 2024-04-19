@@ -209,7 +209,7 @@
                       <td>
                         <div class="input-field">
                             <label>Mobile Number</label>
-                            <input type="text" name="patient_mobile" id="patient-mobile" value="<?php echo $data['C_Num']?>" >
+                            <input type="text" name="patient_mobile" id="patient-mobile" value="<?php echo $data['C_Num']?>">
                         </div>
                       </td>
                     </tr>
@@ -271,8 +271,6 @@
               <input type="hidden" id="selectedDate">
               <input type="hidden" id="startTime">
               <input type="hidden" id="endTime">
-              <input type="hidden" id="doctorGender" value="<?php echo $data['doctor_data']->Gender; ?>">
-              <input type="hidden" id="doctorSLMC" value="<?php echo $data['doctor_data']->SLMC_Reg_No; ?>">
           </div>
         </div>
     </div> 

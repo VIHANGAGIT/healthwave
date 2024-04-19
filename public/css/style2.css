@@ -421,7 +421,8 @@ body.dark {
 
 .container-radio {
   display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .container-radio label {
@@ -429,6 +430,7 @@ body.dark {
   align-items: center;
   margin-right: 1em; /* Add space between radio buttons */
   margin-bottom: 0.5em; /* Add vertical spacing between rows */
+  white-space: nowrap;
 }
 
 .container-radio label:last-child {

@@ -244,65 +244,96 @@ class Patient extends Controller
         $this->view('patient/test_booking_details', $data);
     }
 
-    public function fetch_tests_schedule_details()
+    public function fetch_test_schedule_details()
     {
         // Get hospital ID, test ID and date from request data
-        $test_id = isset($_GET['test_id']) ? $_GET['test_id'] : null;
-        $hospital_id = isset($_GET['hospital_id']) ? $_GET['hospital_id'] : null;
-        $selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : null;
+        $test_id = isset($_POST['test_id']) ? $_POST['test_id'] : null;
+        $hospital_id = isset($_POST['hospital_id']) ? $_POST['hospital_id'] : null;
+        $selected_date = isset($_POST['selected_date']) ? $_POST['selected_date'] : null;
         $formatted_date = date('Y-m-d', strtotime(str_replace('/', '-', $selected_date)));
 
-
-        if (!$hospital_id || !$test_id) {
-            echo json_encode(array('error' => 'Missing hospital_id or doctor_id'));  // Send JSON with error message
-            return;
-        }
         
         // Perform database query to fetch schedule details based on hospital_id and doctor_id
-        $scheduleData = $this->scheduleModel->get_schedule_by_hospital_doctor($hospital_id, $test_id);
-        $hospital_data = $this->hospitalModel->hospital_data_fetch($hospital_id);
+        // $scheduleData = $this->scheduleModel->get_schedule_by_hospital_doctor($hospital_id, $test_id);
+        // $hospital_data = $this->hospitalModel->hospital_data_fetch($hospital_id);
 
-        if ($scheduleData === false) {
-            http_response_code(500); // Set HTTP status code to indicate internal server error
-            echo json_encode(array('error' => 'Failed to fetch schedule details'));
-            return;
+        // if ($scheduleData === false) {
+        //     http_response_code(500); // Set HTTP status code to indicate internal server error
+        //     echo json_encode(array('error' => 'Failed to fetch schedule details'));
+        //     return;
+        // }
+
+        // Define the start and end times for the slots
+        $startTime1 = strtotime('9:00');
+        $endTime1 = strtotime('12:00');
+        $startTime2 = strtotime('13:00');
+        $endTime2 = strtotime('15:00');
+
+        $timeSlots = array();
+
+        // Loop to generate time slots
+        while ($startTime1 < $endTime1) {
+            $slotStart = date('H:i', $startTime1);
+            $startTime1 += (15 * 60); // Add 15 minutes
+            $slotEnd = date('H:i', $startTime1);
+            $timeSlots[] = array('start_time' => $slotStart, 'end_time' => $slotEnd);
         }
 
-        // Prepare data to be sent as JSON response
-        $responseData = array();
-        foreach ($scheduleData as $schedule) {
-            // Generate time slots with 15-minute intervals
-            $startTime = strtotime($schedule->Time_Start);
-            $endTime = strtotime($schedule->Time_End);
-            $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID);
-            $timeSlots = array();
-            while ($startTime < $endTime) {
-                $timeSlots[] = array(
-                    'start_time' => date('H:i:s', $startTime),
-                    'end_time' => date('H:i:s', $startTime + 900), // 900 seconds = 15 minutes
-                );
-                $startTime += 900; // Move to the next 15-minute interval
-            }
-            foreach ($bookedSlots as $bookedSlot) {
-                foreach ($timeSlots as $key => $timeSlot) {
-                    if ($timeSlot['start_time'] == $bookedSlot->Start_Time) {
-                        //compare date here
-                        if ($bookedSlot->Date == $formatted_date) {
-                            unset($timeSlots[$key]);
-                        }
-                    }
+        while ($startTime2 < $endTime2) {
+            $slotStart = date('H:i', $startTime2);
+            $startTime2 += (15 * 60); // Add 15 minutes
+            $slotEnd = date('H:i', $startTime2);
+            $timeSlots[] = array('start_time' => $slotStart, 'end_time' => $slotEnd);
+        }
+
+
+        $bookedSlots = $this->testModel->fetch_booked_slots($hospital_id, $formatted_date);
+        
+        foreach ($bookedSlots as $bookedSlot) {
+            foreach ($timeSlots as $key => $timeSlot) {
+                if ($timeSlot['start_time'] == $bookedSlot->Start_Time && $timeSlot['end_time'] == $bookedSlot->End_Time) {
+                        unset($timeSlots[$key]);
                 }
             }
-
-            $responseData[] = array(
-                'day_of_week' => $schedule->Day_of_Week,
-                'time_slots' => $timeSlots,
-                'hospital_charge' => $hospital_data->Charge,
-            );
         }
+
+        // print_r($timeSlots);
+
+        // Prepare data to be sent as JSON response
+        // $responseData = array();
+        // foreach ($scheduleData as $schedule) {
+        //     // Generate time slots with 15-minute intervals
+        //     $startTime = strtotime($schedule->Time_Start);
+        //     $endTime = strtotime($schedule->Time_End);
+        //     $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID);
+        //     $timeSlots = array();
+        //     while ($startTime < $endTime) {
+        //         $timeSlots[] = array(
+        //             'start_time' => date('H:i:s', $startTime),
+        //             'end_time' => date('H:i:s', $startTime + 900), // 900 seconds = 15 minutes
+        //         );
+        //         $startTime += 900; // Move to the next 15-minute interval
+        //     }
+        //     foreach ($bookedSlots as $bookedSlot) {
+        //         foreach ($timeSlots as $key => $timeSlot) {
+        //             if ($timeSlot['start_time'] == $bookedSlot->Start_Time) {
+        //                 //compare date here
+        //                 if ($bookedSlot->Date == $formatted_date) {
+        //                     unset($timeSlots[$key]);
+        //                 }
+        //             }
+        //         }
+        //     }
+
+        //     $responseData[] = array(
+        //         'day_of_week' => $schedule->Day_of_Week,
+        //         'time_slots' => $timeSlots,
+        //         'hospital_charge' => $hospital_data->Charge,
+        //     );
+        // }
         
         // Send JSON response with schedule data
-        echo json_encode($responseData);
+        echo json_encode($timeSlots);
     }
 
     public function fetch_test_prices()

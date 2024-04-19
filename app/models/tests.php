@@ -67,7 +67,6 @@ class Tests{
     public function get_prices($test_id, $hospital_id){
         $this->db->query('SELECT Price FROM hospital_test WHERE Test_ID = :test_id AND Hospital_ID = :hospital_id');
 
-        // Binding parameters for the prepaired statement
         $this->db->bind(':test_id', $test_id);
         $this->db->bind(':hospital_id', $hospital_id);
         $price = $this->db->singleRow();
@@ -78,5 +77,24 @@ class Tests{
             return false;
         }
 
+    }
+
+    public function fetch_booked_slots($hospital_id, $date){
+        $this->db->query('SELECT Start_Time, End_Time FROM test_reservation WHERE Hospital_ID = :hospital_id AND Date = :date');
+
+        $this->db->bind(':hospital_id', $hospital_id);
+        $this->db->bind(':date', $date);
+        $booked_slots = $this->db->resultSet();
+
+        foreach($booked_slots as $slot){
+            $slot->Start_Time = date('h:i', strtotime($slot->Start_Time));
+            $slot->End_Time = date('h:i', strtotime($slot->End_Time));
+        }
+
+        if($this->db->execute()){
+            return $booked_slots;
+        } else{
+            return false;
+        }
     }
 }
