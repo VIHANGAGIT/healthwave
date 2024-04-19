@@ -199,6 +199,12 @@
             $this->view('admin/add_doctor', $data);
         }
 
+        public function add_test(){
+            $data = [];
+            $this->view('admin/add_test', $data);
+        }
+        
+
         
     }
 ?>

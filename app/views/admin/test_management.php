@@ -115,7 +115,7 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Lab Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href=''><button class='button'>Add Test</button></a></span></h1>
+                <h1>Lab Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_test'><button class='button'>Add Test</button></a></span></h1>
                 <table class="table">
                     <thead>
                         <tr>
