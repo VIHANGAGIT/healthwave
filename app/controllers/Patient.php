@@ -14,6 +14,7 @@ class Patient extends Controller
         $this->doctorModel = $this->model('doctors');
         $this->hospitalModel = $this->model('hospitals');
         $this->scheduleModel = $this->model('schedules');
+        $this->testModel = $this->model('tests');
     }
 
     public function index()
@@ -72,6 +73,46 @@ class Patient extends Controller
     public function test_booking()
     {
         $data = [];
+        //$doctor =  new Doctors();
+        //$doctors = $doctor->getAllDoctors();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+            // Get search parameters from the form
+            $testId = isset($_POST['test_name']) ? $_POST['test_name'] : null;
+            $hospitalId = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+            $testType = isset($_POST['test_type']) ? $_POST['test_type'] : null;
+    
+            // Perform the search based on the parameters
+            $searchTests = $this->testModel->search_tests($testId, $hospitalId, $testType);
+    
+        } else {
+            $searchTests = $this->testModel->get_all_available_tests();
+        }
+
+        $tests = $this->testModel->get_all_available_tests();
+        $hospitals = $this->hospitalModel->getAllHospitals();
+
+        // Getting disticnt specializations
+        $types = [];
+        $no_of_hospitals = [];
+
+        foreach ($tests as $test) {
+            if (!in_array($test->Test_Type, $types)) {
+                $types[] = $test->Test_Type;
+            }
+        }
+
+        foreach ($searchTests as $test) {
+            // Get the number of hospitals for the current doctor
+            $no_of_hospitals[$test->Test_ID] = $this->testModel->get_no_of_hospitals($test->Test_ID);
+        }
+
+        $data = [
+            'tests' => $tests,
+            'searchTests' => $searchTests,
+            'hospitals' => $hospitals,
+            'types' => $types,
+            'no_of_hospitals' => $no_of_hospitals
+        ];
         $this->view('patient/test_booking', $data);
     }
 

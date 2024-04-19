@@ -125,18 +125,23 @@
                       <td>
                         <div class="input-field">
                             <label>Test Name</label>
-                            <input type="text" name="search_text" placeholder="Test Name">
+                            <select name="test_name">
+                                <option disabled selected>Select Test</option>
+                                <?php foreach ($data['tests'] as $test): ?>
+                                    <option value="<?php echo $test->Test_ID; ?>"><?php echo $test->Test_Name; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
                           <label>Hospital Name</label>
-                          <select required>
-                              <option disabled selected>Select Hospital</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                          </select>
+                          <select name="hospital_name">
+                                <option disabled selected>Select Hospital</option>
+                                <?php foreach ($data['hospitals'] as $hospital): ?>
+                                    <option value="<?php echo $hospital->Hospital_ID; ?>"><?php echo $hospital->Hospital_Name; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                       </td>
                       <td>
@@ -147,14 +152,15 @@
                       <td>
                         <div class="input-field">
                             <label>Test Type</label>
-                            <input type="text" name="search_text" placeholder="Type">
+                            <select name="test_type">
+                                <option disabled selected>Select Test Type</option>
+                                <?php foreach ($data['types'] as $type): ?>
+                                    <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                       </td>
                       <td>
-                      <div class="input-field">
-                            <label>Date</label>
-                            <input type="date" name="search_text" placeholder="Date">
-                        </div>
                       </td>
                       <td>
                         <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
@@ -167,79 +173,36 @@
           </div>
         </div>
         <div class="detail-wrapper">
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Complete Blood Count (CBC)</p>
-                <p class='detail-comp'>Blood Test</p>
-                <!--div class='detail-details'
-                    <p><i class='uil uil-calendar-alt'></i>hh</p>
-                    <p><i class='uil uil-clock'></i>gg</p>
-                    
-                </-div-->
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class='button detail-btn'style="width:230px" >Book Now</button>
-            </div>
-          </div>
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Complete Blood Count (CBC)</p>
-                <p class='detail-comp'>Blood Test</p>
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class='button detail-btn'style="width:230px" >Book Now</button>
-            </div>
-          </div>
-
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Complete Blood Count (CBC)</p>
-                <p class='detail-comp'>Blood Test</p>
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class='button detail-btn'style="width:230px" >Book Now</button>
-            </div>
-          </div>
-
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Complete Blood Count (CBC)</p>
-                <p class='detail-comp'>Blood Test</p>
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class='button detail-btn'style="width:230px" >Book Now</button>
-            </div>
-          </div>
-
-          
+          <?php if (empty($data['searchTests'])): ?>
+              <div class="error-msg">
+                  <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                  <p>Could not find results for your search query.</p>
+              </div>
+          <?php else: ?>
+              <?php foreach ($data['searchTests'] as $test): ?>
+                  <div class='detail-card'>
+                      <div class='detail-card-content'>
+                          <p class="detail-title"><?php echo $test->Test_Name; ?></p> 
+                          <p class='detail-comp'><?php echo $test->Test_Type; ?></p>
+                      </div>
+                      <div class='detail-card-sub'>
+                          <hr class="vertical-line">
+                          <div class='detail-card-info'>
+                              <p>Available at :</p>
+                              <p class="detail-location">
+                                  <?php
+                                  $noOfHospitals = $data['no_of_hospitals'][$test->Test_ID]->NoOfHospitals;
+                                  echo $noOfHospitals . ($noOfHospitals == 1 ? ' Location' : ' Locations');
+                                  ?>
+                              </p>
+                          </div>
+                      </div>
+                      <div class='detail-view'>
+                      <a href="/healthwave/patient/doc_booking_details?test_id=<?php echo $test->Test_ID; ?>"><button class='button detail-btn' >Book Now</button></a>
+                      </div>
+                  </div>
+              <?php endforeach; ?>
+          <?php endif; ?>
         </div>
         
     </div>
