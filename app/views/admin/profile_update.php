@@ -25,7 +25,7 @@
     <div class="container-signup" style="height: 720px;" >
         <header>Doctor Profile Update</header>
 
-        <form action="<?php //echo URLROOT; ?>/doctor/profile_update" method="POST" style="height: 600px;">
+        <form action="<?php //echo URLROOT; ?>/admin/profile_update" method="POST" style="height: 600px;">
             <div class="form first" >
                 <div class="details personal">
                     <span class="title">Personal Details</span>
