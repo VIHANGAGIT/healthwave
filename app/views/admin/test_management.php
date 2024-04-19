@@ -113,6 +113,59 @@
     </nav>
 
     <div class="content">
+
+    <section class="table-wrap" >
+    <div class="content-search">
+          <div class="search">
+            <h2>Test Search</h2>
+              <form style="width: 100%;" method="POST">
+                <div class="fields">
+                  <table style="width: 95%;">
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Test Name</label>
+                            <input type="text" name="search_text" placeholder="Doctor Name">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-field">
+                          <label>Test Type</label>
+                          <select required>
+                              <option disabled selected>Select Test Type</option>
+                              <option value="Blood Test">Blood Test</option>
+                              <option value="Urine Test">Urine Test</option>
+                              <option value="X-Ray">X-Ray</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <input type="submit" class="button" value="Search" name="search" >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Test ID</label>
+                            <input type="text" name="search_text" placeholder="Enter test id">
+                        </div>
+                      </td>
+                      <td>
+                     
+                      </td>
+                      <td>
+                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </form>
+              
+          </div>
+        </div>
+    </section><br>
+
+
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Lab Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_test'><button class='button'>Add Test</button></a></span></h1>
