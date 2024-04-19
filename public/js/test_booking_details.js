@@ -1,48 +1,105 @@
 $(document).ready(function() {
     $("#hospitalSelect").change(function() {
         var hospitalId = $(this).val();
-        var selectedDate = null;
-
-        fetchScheduleDetails(hospitalId, doctorId, selectedDate, function(scheduleData) {
-            if (scheduleData && Array.isArray(scheduleData)) {
-                displayScheduleDetails(scheduleData);
-                updateHospitalCharges(scheduleData);
-                calculateTotalPrice();
+        var testId = $("#testId").val();
+        // var selectedDate = null;
+        populateDatesForComingWeek();
+        fetchPrices(hospitalId, testId, function(prices) {
+            if (prices) {
+                calculateTotalPrice(prices); // Moved this line inside the success callback
             } else {
-                console.error("Invalid JSON response:", scheduleData);
+                console.error("Invalid JSON response:", prices);
             }
         });
+
+        // fetchScheduleDetails(hospitalId, testId, selectedDate, function(scheduleData) {
+        //     if (scheduleData && Array.isArray(scheduleData)) {
+        //         displayScheduleDetails(scheduleData);
+        //         updateHospitalCharges(scheduleData);
+        //         calculateTotalPrice();
+        //     } else {
+        //         console.error("Invalid JSON response:", scheduleData);
+        //     }
+        // });
     });
 
-    $(document).on('change', 'input[name="date"]', function() {
-        var selectedDate = $(this).val();
-        var selectedDay = selectedDate.split(',')[0];
-        var hospitalId = $("#hospitalSelect").val();
-        fetchScheduleDetails(hospitalId, doctorId, selectedDate, function(scheduleData) {
-            updateTimeSlots(selectedDay, scheduleData);
-        });
-    });
+    // $(document).on('change', 'input[name="date"]', function() {
+    //     var selectedDate = $(this).val();
+    //     var selectedDay = selectedDate.split(',')[0];
+    //     var hospitalId = $("#hospitalSelect").val();
+    //     fetchScheduleDetails(hospitalId, doctorId, selectedDate, function(scheduleData) {
+    //         updateTimeSlots(selectedDay, scheduleData);
+    //     });
+    // });
 });
 
-function calculateTotalPrice() {
-    var doctorCharges = parseFloat(docCharges);
-    var hospitalCharges = parseFloat($("#hospital_charge").text().replace("LKR ", ""));
-    var serviceCharges = parseFloat("100.00"); // Assuming service charges are fixed
-    var taxes = (doctorCharges + hospitalCharges + serviceCharges)*0.05 ; // Assuming taxes are fixed
-    $("#price-value-tax").text("LKR " + taxes.toFixed(2));
+function populateDatesForComingWeek() {
+    var dateContainer = $(".container-radio[name='date']");
+    dateContainer.empty();
 
-    var totalPrice = doctorCharges + hospitalCharges + serviceCharges + taxes;
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 1); // Start from tomorrow
+
+    var daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    for (var i = 0; i < 7; i++) { // Loop for 7 days
+        var formattedDate = daysOfWeek[currentDate.getDay()] + ", " +
+            currentDate.getDate().toString().padStart(2, "0") + "/" +
+            (currentDate.getMonth() + 1).toString().padStart(2, "0") + "/" +
+            currentDate.getFullYear();
+
+        // Create radio button for date option
+        var dateRadio = $("<input>").attr({
+            type: "radio",
+            name: "date",
+            id: "app-date",
+            value: formattedDate // Set the value to the formatted date
+        });
+
+        var dateLabel = $("<span>").text(formattedDate); // Create span for date text
+
+        var dateLabelContainer = $("<label>").append(dateRadio, dateLabel); // Combine radio and label
+
+        dateContainer.append(dateLabelContainer);
+
+        currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+    }
+}
+
+function fetchPrices(hospitalId, testId, callback) {
+    $.ajax({
+        url: "http://localhost/healthwave/patient/fetch_test_prices",
+        type: "POST",
+        data: { hospital_id: hospitalId, test_id: testId},
+        dataType: "json",
+        success: function(prices) {
+            callback(prices); // Invoke the callback with the fetched data since javascript is asynchronous
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching price details:", textStatus, errorThrown);
+        }
+    });
+}
+
+function calculateTotalPrice(prices) {
+    var testCharges = parseFloat(prices.Price);
+    $("#price-value-test").text("LKR " + testCharges.toFixed(2));
+
+    var tax = parseFloat(prices.tax);
+    $("#price-value-tax").text("LKR " + tax.toFixed(2));
+
+    var totalPrice = parseFloat(prices.totalPrice);
     $("#price-value-total").text("LKR " + totalPrice.toFixed(2));
 }
 
-function fetchScheduleDetails(hospitalId, doctorId, selectedDate, callback) {
+function fetchScheduleDetails(hospitalId, testId, selectedDate, callback) {
     $.ajax({
-        url: "http://localhost/healthwave/patient/fetch_schedule_details",
+        url: "http://localhost/healthwave/patient/fetch_test_schedule_details",
         type: "GET",
-        data: { hospital_id: hospitalId, doctor_id: doctorId, selected_date: selectedDate},
+        data: { hospital_id: hospitalId, test_id: testId, selected_date: selectedDate},
         dataType: "json",
         success: function(scheduleData) {
-            callback(scheduleData); // Invoke the callback with the fetched data
+            callback(scheduleData); // Invoke the callback with the fetched data since javascript is asynchronous
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error("Error fetching schedule details:", textStatus, errorThrown);

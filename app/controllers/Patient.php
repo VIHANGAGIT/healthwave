@@ -154,7 +154,7 @@ class Patient extends Controller
 
     public function fetch_schedule_details()
     {
-        // Get hospital ID and doctor ID from request data
+        // Get hospital ID, doctor ID and date from request data
         $doctor_id = isset($_GET['doctor_id']) ? $_GET['doctor_id'] : null;
         $hospital_id = isset($_GET['hospital_id']) ? $_GET['hospital_id'] : null;
         $selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : null;
@@ -224,6 +224,7 @@ class Patient extends Controller
         }
 
         // Fetch patient data
+        // $test_data = $this->testModel->test_data_fetch($test_id);
         $patient_data = $this->patientModel->patient_data_fetch($_SESSION['userID']);
 
         // Fetch test data using the model
@@ -236,12 +237,98 @@ class Patient extends Controller
             'NIC' => $patient_data->NIC,
             'C_Num' => $patient_data->Contact_No,
             'Email' => $patient_data->Username,
-            'hospital_data' => $hospital_data
+            'hospital_data' => $hospital_data,
+            'test_id' => $test_id
         ];
 
         $this->view('patient/test_booking_details', $data);
     }
 
+    public function fetch_tests_schedule_details()
+    {
+        // Get hospital ID, test ID and date from request data
+        $test_id = isset($_GET['test_id']) ? $_GET['test_id'] : null;
+        $hospital_id = isset($_GET['hospital_id']) ? $_GET['hospital_id'] : null;
+        $selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : null;
+        $formatted_date = date('Y-m-d', strtotime(str_replace('/', '-', $selected_date)));
+
+
+        if (!$hospital_id || !$test_id) {
+            echo json_encode(array('error' => 'Missing hospital_id or doctor_id'));  // Send JSON with error message
+            return;
+        }
+        
+        // Perform database query to fetch schedule details based on hospital_id and doctor_id
+        $scheduleData = $this->scheduleModel->get_schedule_by_hospital_doctor($hospital_id, $test_id);
+        $hospital_data = $this->hospitalModel->hospital_data_fetch($hospital_id);
+
+        if ($scheduleData === false) {
+            http_response_code(500); // Set HTTP status code to indicate internal server error
+            echo json_encode(array('error' => 'Failed to fetch schedule details'));
+            return;
+        }
+
+        // Prepare data to be sent as JSON response
+        $responseData = array();
+        foreach ($scheduleData as $schedule) {
+            // Generate time slots with 15-minute intervals
+            $startTime = strtotime($schedule->Time_Start);
+            $endTime = strtotime($schedule->Time_End);
+            $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID);
+            $timeSlots = array();
+            while ($startTime < $endTime) {
+                $timeSlots[] = array(
+                    'start_time' => date('H:i:s', $startTime),
+                    'end_time' => date('H:i:s', $startTime + 900), // 900 seconds = 15 minutes
+                );
+                $startTime += 900; // Move to the next 15-minute interval
+            }
+            foreach ($bookedSlots as $bookedSlot) {
+                foreach ($timeSlots as $key => $timeSlot) {
+                    if ($timeSlot['start_time'] == $bookedSlot->Start_Time) {
+                        //compare date here
+                        if ($bookedSlot->Date == $formatted_date) {
+                            unset($timeSlots[$key]);
+                        }
+                    }
+                }
+            }
+
+            $responseData[] = array(
+                'day_of_week' => $schedule->Day_of_Week,
+                'time_slots' => $timeSlots,
+                'hospital_charge' => $hospital_data->Charge,
+            );
+        }
+        
+        // Send JSON response with schedule data
+        echo json_encode($responseData);
+    }
+
+    public function fetch_test_prices()
+{
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['hospital_id']) && isset($_POST['test_id'])) {
+        // Sanitize the input data
+        $hospital_id = htmlspecialchars($_POST['hospital_id']);
+        $test_id = htmlspecialchars($_POST['test_id']);
+
+        $prices = $this->testModel->get_prices($test_id, $hospital_id);
+
+        $tax = ($prices->Price + 100) * 0.05;
+        $totalPrice = $prices->Price + 100 + $tax;
+
+        $prices->totalPrice = $totalPrice;
+        $prices->tax = $tax;
+
+        $response = json_encode($prices);
+
+        header('Content-Type: application/json');
+        echo $response;
+    } else {
+        http_response_code(400); // Bad Request
+        echo json_encode(array("error" => "Invalid request"));
+    }
+}
 
 
     public function medical_records()

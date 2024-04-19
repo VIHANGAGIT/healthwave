@@ -63,4 +63,20 @@ class Tests{
             return false;
         }
     }
+
+    public function get_prices($test_id, $hospital_id){
+        $this->db->query('SELECT Price FROM hospital_test WHERE Test_ID = :test_id AND Hospital_ID = :hospital_id');
+
+        // Binding parameters for the prepaired statement
+        $this->db->bind(':test_id', $test_id);
+        $this->db->bind(':hospital_id', $hospital_id);
+        $price = $this->db->singleRow();
+        
+        if($this->db->execute()){
+            return $price;
+        } else{
+            return false;
+        }
+
+    }
 }
