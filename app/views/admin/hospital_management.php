@@ -114,8 +114,38 @@
     </nav>
 
     <div class="content">
-        <section class="table-wrap" >
-            <div class="table-container">
+    <section class="table-wrap" >
+    <div class="content-search">
+          <div class="search">
+            <h2 style="color: black;">Hospital Search</h2>
+              <form style="width: 100%;" method="POST">
+                <div class="fields">
+                  <table style="width: 95%;" >
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Hospital ID</label>
+                            <input type="text" name="search_text" placeholder="Hospital ID">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-field">
+                            <label>Hospital Name</label>
+                            <input type="text" name="search_text" placeholder="Hospital Name">
+                        </div>
+                      </td>
+                      <td>
+                        <input type="submit" class="button" value="Search" name="search" >
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </form>
+          </div>
+        </div>
+    </section><br>
+    <section class="table-wrap" >
+    <div class="table-container">
                 <h1>Hospitals Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_hospital'><button class='button'>Add Hospital</button></a></span></h1> 
                 <table class="table">
                     <thead>
