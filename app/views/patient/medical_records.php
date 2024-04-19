@@ -117,6 +117,13 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Past Consultancies</h1>
+                <?php if (empty($data['doc_reservations'])): ?>
+                  <br>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No past consultation records available</p>
+                    </div>
+                <?php else: ?>
                 <table class="table">
                     <thead>
                         <tr>
@@ -141,12 +148,20 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
         <br>
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Lab Tests Results</h1>
+                <?php if (empty($data['test_reservations'])): ?>
+                  <br>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No past lab test records available</p>
+                    </div>
+                <?php else: ?>
                 <table class="table">
                     <thead>
                         <tr>
@@ -166,11 +181,12 @@
                                 <td><?php echo $test_reservation->Hospital_Name; ?></td>
                                 <td><?php echo $test_reservation->Date; ?></td>
                                 <td><a href=''><button class='button'>Details</button></a></td>
-                                <td><button id="btn-cancel" class='button red test-cancel-btn' data-test-reservation-id="<?php echo $test_reservation->Test_Res_ID; ?>">Results</button></td>
+                                <td><button class='button test-cancel-btn' data-test-reservation-id="<?php echo $test_reservation->Test_Res_ID; ?>">Results</button></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
     </div>

@@ -825,6 +825,28 @@ body.dark {
   padding-bottom: 20px;
 }
 
+
+.table-container .error-msg {
+  width: 90%;
+  margin-left: 5%;
+  border: 2px solid var(--blue-color);
+  border-radius: 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.table-container .error-msg i{
+  font-size: 100px;
+  color: var(--blue-color);
+}
+
+.table-container .error-msg p{
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--grey-color-dark);
+  padding-bottom: 20px;
+}
+
 .detail-card{
   display: flex;
   flex-wrap: wrap;

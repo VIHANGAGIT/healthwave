@@ -118,6 +118,13 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Doctor Reservations</h1>
+                <?php if (empty($data['doc_reservations'])): ?>
+                  <br>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No upcoming doctor reservations available</p>
+                    </div>
+                <?php else: ?>
                 <table class="table">
                     <thead>
                         <tr>
@@ -142,12 +149,20 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
         <br>
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Lab Tests Reservations</h1>
+                <?php if (empty($data['test_reservations'])): ?>
+                  <br>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No upcoming test reservations available</p>
+                    </div>
+                <?php else: ?>
                 <table class="table">
                     <thead>
                         <tr>
@@ -172,6 +187,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
     </div>
