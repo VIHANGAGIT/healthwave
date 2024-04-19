@@ -145,6 +145,51 @@
             }
         }
 
+        public function get_past_doc_reservations($patient_id){
+            $this->db->query("SELECT doctor_reservation.*, doctor.First_Name, doctor.Last_Name, doctor.Specialization, hospital.Hospital_Name FROM doctor_reservation
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
+            INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+            WHERE doctor_reservation.Patient_ID = :patient_id
+            AND CONCAT(doctor_reservation.Date, ' ', doctor_reservation.End_Time) < CURRENT_TIMESTAMP() ORDER BY doctor_reservation.Date, doctor_reservation.Start_Time ASC");
+
+            $this->db->bind(':patient_id', $patient_id);
+            $doc_reservations = $this->db->resultSet();
+
+            foreach($doc_reservations as $slot){
+                $slot->Start_Time = date('h:i', strtotime($slot->Start_Time));
+                $slot->End_Time = date('h:i', strtotime($slot->End_Time));
+            }
+
+            if($this->db->execute()){
+                return $doc_reservations;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_past_test_reservations($patient_id){
+            $this->db->query("SELECT test_reservation.*, test.Test_Name, test.Test_Type, hospital.Hospital_Name FROM test_reservation
+            INNER JOIN test ON test_reservation.Test_ID = test.Test_ID
+            INNER JOIN hospital ON test_reservation.Hospital_ID = hospital.Hospital_ID
+            WHERE test_reservation.Patient_ID = :patient_id
+            AND CONCAT(test_reservation.Date, ' ', test_reservation.End_Time) < CURRENT_TIMESTAMP() ORDER BY test_reservation.Date, test_reservation.Start_Time ASC");
+            
+            $this->db->bind(':patient_id', $patient_id);
+            $test_reservations = $this->db->resultSet();
+
+            foreach($test_reservations as $slot){
+                $slot->Start_Time = date('h:i', strtotime($slot->Start_Time));
+                $slot->End_Time = date('h:i', strtotime($slot->End_Time));
+            }
+
+            if($this->db->execute()){
+                return $test_reservations;
+            } else{
+                return false;
+            }
+        }
+
         
         
     }

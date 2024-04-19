@@ -351,6 +351,13 @@ class Patient extends Controller
     public function medical_records()
     {
         $data = [];
+        $patient_id = $_SESSION['userID'];
+        $doc_reservations = $this->patientModel->get_past_doc_reservations($patient_id);
+        $test_reservations = $this->patientModel->get_past_test_reservations($patient_id);
+        $data = [
+            'doc_reservations' => $doc_reservations,
+            'test_reservations' => $test_reservations
+        ];
         $this->view('patient/medical_records', $data);
     }
 

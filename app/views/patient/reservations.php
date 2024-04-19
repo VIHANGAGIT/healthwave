@@ -122,7 +122,7 @@
                     <thead>
                         <tr>
                             <th>Doctor</th>
-                            <th>Location</th>
+                            <th>Hospital</th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Edit</th>
@@ -152,7 +152,7 @@
                     <thead>
                         <tr>
                             <th>Test Name</th>
-                            <th>Location</th>
+                            <th>Hospital</th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Edit</th>

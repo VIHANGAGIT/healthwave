@@ -121,38 +121,24 @@
                     <thead>
                         <tr>
                             <th>Doctor</th>
+                            <th>Specialization</th>
                             <th>Location</th>
                             <th>Date</th>
-                            <th>Time</th>
                             <th>Details</th>
                             <th>Prescription</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
-                        </tr>
+                        <?php foreach($data['doc_reservations'] as $doc_reservation): ?>
+                          <tr>
+                              <td>Dr. <?php echo $doc_reservation->First_Name . ' ' . $doc_reservation->Last_Name; ?></td>
+                              <td><?php echo $doc_reservation->Specialization; ?></td>
+                              <td><?php echo $doc_reservation->Hospital_Name; ?></td>
+                              <td><?php echo $doc_reservation->Date; ?></td>
+                              <td><a href=''><button class='button'>Details</button></a></td>
+                              <td><button class='button doc-cancel-btn' data-doc-reservation-id="<?php echo $doc_reservation->Doc_Res_ID; ?>">Prescription</button></td>
+                          </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -165,38 +151,24 @@
                     <thead>
                         <tr>
                             <th>Test Name</th>
-                            <th>Location</th>
+                            <th>Test Type</th>
+                            <th>Hospital</th>
                             <th>Date</th>
-                            <th>Time</th>
                             <th>Details</th>
                             <th>Results</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Results</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Results</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Results</button></a></td>
-                        </tr>
+                        <?php foreach($data['test_reservations'] as $test_reservation): ?>
+                            <tr>
+                                <td><?php echo $test_reservation->Test_Name; ?></td>
+                                <td><?php echo $test_reservation->Test_Type; ?></td>
+                                <td><?php echo $test_reservation->Hospital_Name; ?></td>
+                                <td><?php echo $test_reservation->Date; ?></td>
+                                <td><a href=''><button class='button'>Details</button></a></td>
+                                <td><button id="btn-cancel" class='button red test-cancel-btn' data-test-reservation-id="<?php echo $test_reservation->Test_Res_ID; ?>">Results</button></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
