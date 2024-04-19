@@ -41,5 +41,10 @@
             $data = [];
             $this->view('admin/reservations', $data);
         }
+
+        public function add_hospital(){
+            $data = [];
+            $this->view('admin/add_hospital', $data);
+        }
     }
 ?>
