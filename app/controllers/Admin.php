@@ -46,5 +46,11 @@
             $data = [];
             $this->view('admin/add_hospital', $data);
         }
+
+        public function add_doctor(){
+            $data = [];
+            $this->view('admin/add_doctor', $data);
+        }
+        
     }
 ?>

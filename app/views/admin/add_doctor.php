@@ -11,65 +11,54 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Hospital Regisration</title>
+   <title>Doctor Regisration</title>
 </head>
 <body>
     <div class="container-signup" style="height: 720px;" >
-        <header>Hospital Registration</header>
+        <header>Doctor Registration</header>
 
         <form action="<?php //echo URLROOT; ?>/users/register_doctor" method="POST" style="height: 600px;">
             <div class="form first" >
                 <div class="details personal">
-                    <span class="title">Hospital Details</span>
+                    <span class="title">Personal Details</span>
 
                     <div class="fields">
                         <div class="input-field">
-                            <label>Hospital Name*</label>
-                            <input type="text" placeholder="Enter hospital name" name="hname" value="<?php //echo $data['F_name'] ?>" required>
+                            <label>First Name*</label>
+                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php //echo $data['F_name'] ?>" required>
                         </div>
 
                         <div class="input-field">
-                            <label>Address*</label>
-                            <input type="text" placeholder="Enter hospital adress" name="hadress" value="<?php //echo $data['L_name'] ?>" required>
+                            <label>Last Name*</label>
+                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php //echo $data['L_name'] ?>" required>
                         </div>
 
                         <div class="input-field">
-                            <label>Region*</label>
-
-                            <select name="region" required>
+                            <label>Gender*</label>
+                            <select name="gender" required>
                             <option selected value="<?php //echo $data['Gender'] ?>" > <?php //echo ($data['Gender'] == '') ? 'Select gender' : $data['Gender'] ?></option>
-                                <option>Colombo</option>
-                                <option>Kandy</option>
-                                <option>Galle</option>
-                                <option>Matara</option>
-                                <option>Kurunegala</option>
-                                <option>Badulla</option>
-                                <option>Anuradhapura</option>
-                                <option>Polonnaruwa</option>
-                                <option>Trincomalee</option>
-                                <option>Jaffna</option>
-                                <option>Other</option>
-
+                                <option>Male</option>
+                                <option>Female</option>
                             </select>
                         </div>
 
                         <div class="input-field">
-                            <label>Hospital Charge*</label>
-                            <input type="text" placeholder="Enter hospital charge" name="hcharge" value="<?php //echo $data['DOB'] ?>" required>
+                            <label>Date of Birth*</label>
+                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php //echo $data['DOB'] ?>" required>
                         </div>
 
                         <div class="input-field">
-                            <label>Manager ID*</label>
-                            <input type="text" placeholder="Enter Manager ID" name="managerid" value="<?php //echo $data['NIC'] ?>" required>
+                            <label>NIC Number*</label>
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php //echo $data['NIC'] ?>" required>
                         </div>
                         <div class="input-field">
-                            <label>Contact Number*</label>
-                            <input type="text" placeholder="Enter hospital contact number" name="cnum" value="<?php //echo $data['C_num'] ?>" required>
+                            <label>Mobile Number*</label>
+                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php //echo $data['C_num'] ?>" required>
                         </div>
                     </div>
                 </div>
 
-                <!--<div class="details Medical">
+                <div class="details Medical">
                     <span class="title">Registration Details</span>
 
                     <div class="fields">
@@ -119,7 +108,7 @@
                             <span class="err-msg"><?php //echo $data['C_pass_err'] . "\u{200B}"; ?></span>
                         </div>
                         
-                    </div>-->
+                    </div>
                     <div class="buttons">
                         <button>
                             <span class="btnText">Clear</span>

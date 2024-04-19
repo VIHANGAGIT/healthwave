@@ -116,7 +116,7 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Doctor Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href=''><button class='button'>Add Doctor</button></a></span></h1>
+                <h1>Doctor Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_doctor'><button class='button'>Add Doctor</button></a></span></h1>
                 <table class="table">
                     <thead>
                         <tr>
