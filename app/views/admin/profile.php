@@ -137,18 +137,18 @@
                             <table class="table-dashboard">
                                 <tbody class="profile" >
                                     <tr>
-                                        <td>Name: <?php //echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
+                                        <td>Name: <?php echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
                                         <tr>
-                                        <td>Gender: <?php //echo $data['Gender'] ?></td>
+                                        <td>Gender: <?php echo $data['Gender'] ?></td>
                                         </tr>
                                         <tr>
-                                        <td>NIC: <?php //echo $data['NIC'] ?></td>
+                                        <td>NIC: <?php echo $data['NIC'] ?></td>
                                         </tr>
                                     </tr>
                                     <tr>
-                                        <td>Contact Number: <?php //echo $data['C_Num'] ?></td>
+                                        <td>Contact Number: <?php echo $data['C_Num'] ?></td>
                                         <tr>
-                                        <td>Email: <?php //echo $data['Email'] ?></td>
+                                        <td>Email: <?php echo $data['Email'] ?></td>
                                         </tr>
                                     </tr>
                                     <!--<tr>

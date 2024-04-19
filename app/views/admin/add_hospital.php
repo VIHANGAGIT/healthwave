@@ -69,57 +69,6 @@
                     </div>
                 </div>
 
-                <!--<div class="details Medical">
-                    <span class="title">Registration Details</span>
-
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Specialization*</label>
-                            <select name="spec" required>
-                                <option selected value="<?php //echo $data['Spec'] ?>" > <?php //echo ($data['Spec'] == '') ? 'Select specialization' : $data['Spec'] ?></option>
-                                <option value="Neurologist">Neurologist</option>
-                                <option value="Gastroenterologist">Gastroenterologist</option>
-                                <option value="Psychiatrist">Psychiatrist</option>
-                                <option value="Radiologist">Radiologist</option>
-                                <option value="General practitioner">General practitioner</option>
-                            </select>
-                        </div>
-
-                        <div class="input-field">
-                            <label>SLMC Regisration Number*</label>
-                            <input type="number" placeholder="Enter SLMC Regisration Number" name="slmc" value="<?php //echo $data['SLMC'] ?>" required>
-                        </div>
-                        <div class="input-field" style="opacity: 0;">
-                            <label></label>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <div class="details account">
-                    <span class="title">Account Details</span>
-
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Email*</label>
-                            <input type="email" placeholder="Enter your email" name="email" value="" class="<?php //echo (!empty($data['Uname_err'])) ? 'error' : '' ?>">
-                            <span class="err-msg"><?php //echo $data['Uname_err'] . "\u{200B}"; ?></span>
-                        </div>
-                        
-
-
-                        <div class="input-field">
-                            <label>Password*</label>
-                            <input type="password" placeholder="Enter a password" name="pass" value="" class="<?php //echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" >
-                            <span class="err-msg"><?php //echo $data['Pass_err'] . "\u{200B}"; ?></span>
-                        </div>
-                        
-
-                        <div class="input-field" style="margin-bottom: 0;" >
-                            <label>Confirm Password*</label>
-                            <input type="password" placeholder="Enter your password again" name="cpass" value="" class="<?php //echo (!empty($data['C_pass_err'])) ? 'error' : '' ?>" >
-                            <span class="err-msg"><?php //echo $data['C_pass_err'] . "\u{200B}"; ?></span>
-                        </div>
-                        
-                    </div>-->
                     <div class="buttons">
                         <button>
                             <span class="btnText">Clear</span>
@@ -130,11 +79,7 @@
                         </button>
                     </div>
                 </div>
-                    <!--<div class="login-signup" style="margin-top: -20px; font-size: 14px;" ">
-                        <span class="text">Already have an account?
-                            <a href="<?php //echo URLROOT; ?>/users/login" class="text login-link">Login Now</a>
-                        </span>
-                    </div>-->
+                   
                 </div>
                 
             </div>

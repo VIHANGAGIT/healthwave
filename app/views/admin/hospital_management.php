@@ -1,5 +1,5 @@
 <?php 
-  session_start();
+ 
   if(($_SESSION['userType']) != 'Admin'){
     redirect("users/login");
   }
