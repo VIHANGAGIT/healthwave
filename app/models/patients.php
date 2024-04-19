@@ -106,8 +106,8 @@
             INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
             INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
             WHERE doctor_reservation.Patient_ID = :patient_id
-            AND CONCAT(doctor_reservation.Date, ' ', doctor_reservation.End_Time) > CURRENT_TIMESTAMP()");
-            
+            AND CONCAT(doctor_reservation.Date, ' ', doctor_reservation.End_Time) > CURRENT_TIMESTAMP() ORDER BY doctor_reservation.Date, doctor_reservation.Start_Time ASC");
+
             $this->db->bind(':patient_id', $patient_id);
             $doc_reservations = $this->db->resultSet();
 
@@ -128,7 +128,7 @@
             INNER JOIN test ON test_reservation.Test_ID = test.Test_ID
             INNER JOIN hospital ON test_reservation.Hospital_ID = hospital.Hospital_ID
             WHERE test_reservation.Patient_ID = :patient_id
-            AND CONCAT(test_reservation.Date, ' ', test_reservation.End_Time) > CURRENT_TIMESTAMP()");
+            AND CONCAT(test_reservation.Date, ' ', test_reservation.End_Time) > CURRENT_TIMESTAMP() ORDER BY test_reservation.Date, test_reservation.Start_Time ASC");
             
             $this->db->bind(':patient_id', $patient_id);
             $test_reservations = $this->db->resultSet();

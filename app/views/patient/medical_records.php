@@ -1,5 +1,4 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Patient'){
     redirect("users/login");
   }
@@ -117,7 +116,7 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Medical Records: Past Consultancies</h1>
+                <h1>Past Consultancies</h1>
                 <table class="table">
                     <thead>
                         <tr>
@@ -161,7 +160,7 @@
         <br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Medical Records: Lab Tests Results</h1>
+                <h1>Lab Tests Results</h1>
                 <table class="table">
                     <thead>
                         <tr>

@@ -137,7 +137,7 @@
                               <td><?php echo $doc_reservation->Date; ?></td>
                               <td><?php echo $doc_reservation->Start_Time . ' - ' . $doc_reservation->End_Time; ?></td>
                               <td><a href=''><button class='button'>Edit</button></a></td>
-                              <td><a href=''><button class='button red'>Cancel</button></a></td>
+                              <td><button id="btn-cancel" class='button red doc-cancel-btn' data-doc-reservation-id="<?php echo $doc_reservation->Doc_Res_ID; ?>">Cancel</button></td>
                           </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -161,14 +161,14 @@
                     </thead>
                     <tbody>
                         <?php foreach($data['test_reservations'] as $test_reservation): ?>
-                          <tr>
-                              <td><?php echo $test_reservation->Test_Name; ?></td>
-                              <td><?php echo $test_reservation->Hospital_Name; ?></td>
-                              <td><?php echo $test_reservation->Date; ?></td>
-                              <td><?php echo $test_reservation->Start_Time . ' - ' . $test_reservation->End_Time; ?></td>
-                              <td><a href=''><button class='button'>Edit</button></a></td>
-                              <td><a href=''><button class='button red'>Cancel</button></a></td>
-                          </tr>
+                            <tr>
+                                <td><?php echo $test_reservation->Test_Name; ?></td>
+                                <td><?php echo $test_reservation->Hospital_Name; ?></td>
+                                <td><?php echo $test_reservation->Date; ?></td>
+                                <td><?php echo $test_reservation->Start_Time . ' - ' . $test_reservation->End_Time; ?></td>
+                                <td><a href=''><button class='button'>Edit</button></a></td>
+                                <td><button id="btn-cancel" class='button red test-cancel-btn' data-test-reservation-id="<?php echo $test_reservation->Test_Res_ID; ?>">Cancel</button></td>
+                            </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
@@ -176,5 +176,7 @@
         </section>
     </div>
     <br><br>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="<?php echo URLROOT;?>/js/reservations.js" defer></script>
   </body>
 </html>

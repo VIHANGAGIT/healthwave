@@ -144,4 +144,16 @@ class Tests{
             return false;
         }
     }
+
+    public function delete_reservation($id){
+        $this->db->query('DELETE FROM test_reservation WHERE Test_Res_ID = :id');
+
+        $this->db->bind(':id', $id);
+
+        if($this->db->execute()){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

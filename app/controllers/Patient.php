@@ -260,17 +260,6 @@ class Patient extends Controller
         $selected_date = isset($_POST['selected_date']) ? $_POST['selected_date'] : null;
         $formatted_date = date('Y-m-d', strtotime(str_replace('/', '-', $selected_date)));
 
-        
-        // Perform database query to fetch schedule details based on hospital_id and doctor_id
-        // $scheduleData = $this->scheduleModel->get_schedule_by_hospital_doctor($hospital_id, $test_id);
-        // $hospital_data = $this->hospitalModel->hospital_data_fetch($hospital_id);
-
-        // if ($scheduleData === false) {
-        //     http_response_code(500); // Set HTTP status code to indicate internal server error
-        //     echo json_encode(array('error' => 'Failed to fetch schedule details'));
-        //     return;
-        // }
-
         // Define the start and end times for the slots
         $startTime1 = strtotime('9:00');
         $endTime1 = strtotime('12:00');
@@ -305,69 +294,58 @@ class Patient extends Controller
             }
         }
 
-        // print_r($timeSlots);
-
-        // Prepare data to be sent as JSON response
-        // $responseData = array();
-        // foreach ($scheduleData as $schedule) {
-        //     // Generate time slots with 15-minute intervals
-        //     $startTime = strtotime($schedule->Time_Start);
-        //     $endTime = strtotime($schedule->Time_End);
-        //     $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID);
-        //     $timeSlots = array();
-        //     while ($startTime < $endTime) {
-        //         $timeSlots[] = array(
-        //             'start_time' => date('H:i:s', $startTime),
-        //             'end_time' => date('H:i:s', $startTime + 900), // 900 seconds = 15 minutes
-        //         );
-        //         $startTime += 900; // Move to the next 15-minute interval
-        //     }
-        //     foreach ($bookedSlots as $bookedSlot) {
-        //         foreach ($timeSlots as $key => $timeSlot) {
-        //             if ($timeSlot['start_time'] == $bookedSlot->Start_Time) {
-        //                 //compare date here
-        //                 if ($bookedSlot->Date == $formatted_date) {
-        //                     unset($timeSlots[$key]);
-        //                 }
-        //             }
-        //         }
-        //     }
-
-        //     $responseData[] = array(
-        //         'day_of_week' => $schedule->Day_of_Week,
-        //         'time_slots' => $timeSlots,
-        //         'hospital_charge' => $hospital_data->Charge,
-        //     );
-        // }
-        
         // Send JSON response with schedule data
         echo json_encode($timeSlots);
     }
 
     public function fetch_test_prices()
-{
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['hospital_id']) && isset($_POST['test_id'])) {
-        // Sanitize the input data
-        $hospital_id = htmlspecialchars($_POST['hospital_id']);
-        $test_id = htmlspecialchars($_POST['test_id']);
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['hospital_id']) && isset($_POST['test_id'])) {
+            // Sanitize the input data
+            $hospital_id = htmlspecialchars($_POST['hospital_id']);
+            $test_id = htmlspecialchars($_POST['test_id']);
 
-        $prices = $this->testModel->get_prices($test_id, $hospital_id);
+            $prices = $this->testModel->get_prices($test_id, $hospital_id);
 
-        $tax = ($prices->Price + 100) * 0.05;
-        $totalPrice = $prices->Price + 100 + $tax;
+            $tax = ($prices->Price + 100) * 0.05;
+            $totalPrice = $prices->Price + 100 + $tax;
 
-        $prices->totalPrice = $totalPrice;
-        $prices->tax = $tax;
+            $prices->totalPrice = $totalPrice;
+            $prices->tax = $tax;
 
-        $response = json_encode($prices);
+            $response = json_encode($prices);
 
-        header('Content-Type: application/json');
-        echo $response;
-    } else {
-        http_response_code(400); // Bad Request
-        echo json_encode(array("error" => "Invalid request"));
+            header('Content-Type: application/json');
+            echo $response;
+        } else {
+            http_response_code(400); // Bad Request
+            echo json_encode(array("error" => "Invalid request"));
+        }
     }
-}
+
+    public function delete_test_reservation(){
+        $Reservation_ID = $_POST['reservation_id'];
+
+        echo $Reservation_ID . 'kk';
+
+        if ($this->testModel->delete_reservation($Reservation_ID)) {
+            echo json_encode('Reservation deleted successfully');
+        } else {
+            echo json_encode('Failed to delete reservation');
+        }
+    }
+
+    public function delete_doc_reservation(){
+        $Reservation_ID = $_POST['reservation_id'];
+
+        echo $Reservation_ID . 'kk';
+
+        if ($this->doctorModel->delete_reservation($Reservation_ID)) {
+            echo json_encode('Reservation deleted successfully');
+        } else {
+            echo json_encode('Failed to delete reservation');
+        }
+    }
 
 
     public function medical_records()
