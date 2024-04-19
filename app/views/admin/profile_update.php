@@ -64,7 +64,7 @@
                     </div>
                 </div>
 
-                <div class="details Medical">
+                <!--<div class="details Medical">
                     <span class="title">Registration Details</span>
 
                     <div class="fields">
@@ -88,7 +88,7 @@
                             <label></label>
                             <input type="text">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="details account">
                     <span class="title">Account Details</span>
 
