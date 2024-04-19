@@ -122,8 +122,8 @@
                             <th>Test ID</th>
                             <th>Test Name</th>
                             <th>Type</th>
-                            <th>Price</th>
-                            <th>Edit</th>
+                            <!--<th>Price</th>-->
+                            <th>Update Test</th>
                             <th>Remove</th>
                         </tr>
                     </thead>
@@ -132,56 +132,49 @@
                             <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
                             <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Update</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
                             <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
                             <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Update</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
                             <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
                             <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Update</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
                             <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
                             <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Update</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
                             <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
                             <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Update</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
                             <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
                             <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Update</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
                             <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
                             <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Update</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                     </tbody>
