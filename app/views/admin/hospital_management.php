@@ -117,30 +117,58 @@
     <section class="table-wrap" >
     <div class="content-search">
           <div class="search">
-            <h2 style="color: black;">Hospital Search</h2>
+            <h2>Hospital Search</h2>
               <form style="width: 100%;" method="POST">
                 <div class="fields">
-                  <table style="width: 95%;" >
+                  <table style="width: 95%;">
                     <tr>
                       <td>
                         <div class="input-field">
                             <label>Hospital ID</label>
-                            <input type="text" name="search_text" placeholder="Hospital ID">
+                            <input type="text" name="search_text" placeholder="Enter hospital ID">
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
-                            <label>Hospital Name</label>
-                            <input type="text" name="search_text" placeholder="Hospital Name">
+                          <label>Hospital Name</label>
+                          <select required>
+                              <option disabled selected>Select Hospital</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                          </select>
                         </div>
                       </td>
                       <td>
                         <input type="submit" class="button" value="Search" name="search" >
                       </td>
                     </tr>
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Reigon</label>
+                            <select required>
+                                <option disabled selected>Select Reigon</option>
+                                <option>Colombo</option>
+                                <option>Gampaha</option>
+                                <option>Kaluthara</option>
+                            </select>
+                        </div>
+                      </td>
+                      <td>
+                      <!--<div class="input-field">
+                            <label>Date</label>
+                            <input type="date" name="search_text" placeholder="Date">
+                        </div>-->
+                      </td>
+                      <td>
+                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                      </td>
+                    </tr>
                   </table>
                 </div>
               </form>
+              
           </div>
         </div>
     </section><br>
