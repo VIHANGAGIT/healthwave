@@ -82,13 +82,14 @@
                         </div>
 
                         <div class="input-field">
-                            <label>Employed Date*</label>
-                            <input type="date" name="employed_date" value="<?php echo $data['Employed_Date'] ?>" required>
+                                <label>Employed Date*</label>
+                                <input type="date" name="employed_date" value="<?php echo $data['Employed_Date'] ?>" required disabled>
                         </div>
 
-                        <div class="input-field" style="opacity: 0;">
-                            <label></label>
-                            <input type="text">
+
+                        <div class="input-field" style=";">
+                            <label>Staff ID</label>
+                            <input type="text" name="staff_id"value="<?php echo $data['Staff_ID'] ?>" required disabled >
                         </div>
                     </div>
                     <div class="details account">

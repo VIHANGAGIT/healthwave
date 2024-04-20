@@ -156,6 +156,7 @@
                                     </tr>
                                     <tr>
                                         <td>Staff ID: <?php echo $data['Staff_ID']?></td>
+                                        <td>Employed Date:<?php echo $data['Employed_Date']?></td>
                                         <td>Hospital: <?php echo $data['Hospital']?></td>
                                         <!--<td>Specialization: <?php  //echo $data['Spec'] ?></td>-->
                                     </tr>
