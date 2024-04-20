@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Ongoing Consultations</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -135,7 +135,7 @@
                     </td>
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Remaining Number<br>of Patients :</h2>
-                        <p class="dashboard-stat">8</p>
+                        <p class="dashboard-stat"><?php echo $data['remaining_patients']?></p>
                     </td>
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Total Number<br> of Patients :</h2>
@@ -149,6 +149,7 @@
     <section class="table-wrap" >
       <div class="table-container">
         <h1>Patient Queue</h1>
+        <hr>
         <?php if (empty($data['reservations'])): ?>
         <br>
             <div class="error-msg">
@@ -165,8 +166,9 @@
                         <th>Gender</th>
                         <th>Age</th>
                         <th>Time Slot</th>
-                        <th>Details</th>
                         <th>Prescription</th>
+                        <th>Complete</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -177,8 +179,9 @@
                             <td><?php echo $reservation->Gender?></td>
                             <td><?php echo $reservation->Age?></td>
                             <td><?php echo $reservation->Start_Time. " - " . $reservation->End_Time?></td>
-                            <td><a href=""><button class="button">Details</button></a></td>
                             <td><a href="addprescription"><button class="button" style="width: 50px;"><i class="uil uil-plus"></i></button></a></td>
+                            <td><a href=""><button class="button" style="width: 50px;"><i class="uil uil-check"></i></button></a></td>
+                            <td><a href=""><button class="button">Details</button></a></td>
                             </tr>
                     <?php endforeach; ?>
                     

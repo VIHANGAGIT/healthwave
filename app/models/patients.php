@@ -81,7 +81,7 @@
             $schedule = $this->db->singleRow();
             $schedule_id = $schedule->Schedule_ID;
 
-            $this->db->query('INSERT INTO doctor_reservation (Patient_ID, Schedule_ID, Payment_ID, Date, Start_Time, End_Time, Contact_Number, Email) VALUES (:Patient_ID, :Schedule_ID, :Payment_ID, :Date, :Start_Time, :End_Time, :Contact_Number, :Email)');
+            $this->db->query('INSERT INTO doctor_reservation (Patient_ID, Schedule_ID, Payment_ID, Date, Start_Time, End_Time, Contact_Number, Email, Status) VALUES (:Patient_ID, :Schedule_ID, :Payment_ID, :Date, :Start_Time, :End_Time, :Contact_Number, :Email, :Status)');
             // Binding parameters for the prepaired statement
             $this->db->bind(':Patient_ID', $data['Patient_ID']);
             $this->db->bind(':Schedule_ID', $schedule_id);
@@ -91,6 +91,7 @@
             $this->db->bind(':End_Time', $data['End_Time']);
             $this->db->bind(':Contact_Number', $data['Contact_No']);
             $this->db->bind(':Email', $data['Email']);
+            $this->db->bind(':Status', "Pending");
 
             // Execute query
             if($this->db->execute()){
@@ -112,8 +113,8 @@
             $doc_reservations = $this->db->resultSet();
 
             foreach($doc_reservations as $slot){
-                $slot->Start_Time = date('h:i', strtotime($slot->Start_Time));
-                $slot->End_Time = date('h:i', strtotime($slot->End_Time));
+                $slot->Start_Time = date('H:i', strtotime($slot->Start_Time));
+                $slot->End_Time = date('H:i', strtotime($slot->End_Time));
             }
 
             if($this->db->execute()){
@@ -134,8 +135,8 @@
             $test_reservations = $this->db->resultSet();
 
             foreach($test_reservations as $slot){
-                $slot->Start_Time = date('h:i', strtotime($slot->Start_Time));
-                $slot->End_Time = date('h:i', strtotime($slot->End_Time));
+                $slot->Start_Time = date('H:i', strtotime($slot->Start_Time));
+                $slot->End_Time = date('H:i', strtotime($slot->End_Time));
             }
 
             if($this->db->execute()){

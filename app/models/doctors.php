@@ -172,7 +172,8 @@ class Doctors{
 
         $this->db->query('SELECT doctor_reservation.*, patient.First_Name, patient.Last_Name, patient.Gender, patient.DOB FROM doctor_reservation 
         INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
-        WHERE doctor_reservation.Schedule_ID = :ScheduleId AND doctor_reservation.Date = :currentDate AND doctor_reservation.Start_Time >= :startTime AND doctor_reservation.End_Time <= :endTime');
+        WHERE doctor_reservation.Schedule_ID = :ScheduleId AND doctor_reservation.Date = :currentDate AND doctor_reservation.Start_Time >= :startTime AND doctor_reservation.End_Time <= :endTime AND doctor_reservation.Status = "Pending"
+        ORDER BY doctor_reservation.Start_Time ASC');
 
         $this->db->bind(':ScheduleId', $schedule_id);
         $this->db->bind(':currentDate', $currentDate);

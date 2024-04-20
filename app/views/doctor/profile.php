@@ -1,7 +1,4 @@
 <?php 
-  if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
   if(($_SESSION['userType']) != 'Doctor'){
     redirect("users/login");
   }
@@ -13,7 +10,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Profile</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -60,15 +57,23 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="../doctor/reservations" class="link flex">
-                <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+              <a href="../doctor/schedules" class="link flex">
+                  <i class="uil uil-calendar-alt"></i>
+                  <span>Schedules</span>
               </a>
             </li>
             <li class="item">
               <a href="../doctor/consultations" class="link flex">
+              <i class="uil uil-history"></i>
+
+                <span>Past Consultations</span>
+              </a>
+            </li>
+
+            <li class="item">
+              <a href="../doctor/ongoing_consults" class="link flex">
                 <i class="uil uil-stethoscope"></i>
-                <span>Consultations</span>
+                <span>Ongoing Consultations</span>
               </a>
             </li>
           </ul>
@@ -144,62 +149,6 @@
                             </table>
                         </td>
                     </tr>
-                </table>
-            </div>
-        </section>
-        <br>
-        <section class="table-wrap" >
-            <div class="table-container">
-                <h1>Doctor Reservations</h1>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Doctor</th>
-                            <th>Location</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <br>
-        <section class="table-wrap" >
-            <div class="table-container">
-                <h1>Lab Tests Reservations</h1>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Test Name</th>
-                            <th>Location</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Lipid Profile</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </section>

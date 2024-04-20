@@ -626,9 +626,9 @@ body.dark {
 }
 
 .popup-box-1 hr{
-  border: none; /* Remove default border */
-  height: 4px; /* Set the height of the line */
-  background-color: var(--blue-color); /* Set the background color to blue */
+  border: none; 
+  height: 4px;
+  background-color: var(--blue-color);
   margin-top: -10px;
 }
 
@@ -714,9 +714,9 @@ body.dark {
 }
 
 .popup-box-2 hr{
-    border: none; /* Remove default border */
-    height: 4px; /* Set the height of the line */
-    background-color: var(--blue-color); /* Set the background color to blue */
+    border: none; 
+    height: 4px; 
+    background-color: var(--blue-color); 
     margin-top: -10px;
 }
 
@@ -773,9 +773,9 @@ body.dark {
 }
 
 .popup-box-3 hr{
-  border: none; /* Remove default border */
-  height: 4px; /* Set the height of the line */
-  background-color: red; /* Set the background color to blue */
+  border: none; 
+  height: 4px; 
+  background-color: red; 
   margin-top: -10px;
 }
 
@@ -1027,6 +1027,16 @@ table thead tr{
   color: var(--grey-color-dark);
 }
 
+.table-container hr{
+  border: none; 
+  height: 4px; 
+  background-color: var(--blue-color);
+  margin-top: 8px;
+}
+
+.table button i{
+  font-size: 20px;
+}
 
 /*Dashboard*/
 

@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Past Consultations</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -165,6 +165,7 @@
         <section class="table-wrap" >
             <div class="table-container">
               <h1>Past Consulations</h1>
+              <hr>
                 <table class="table">
                     <thead>
                         <tr>

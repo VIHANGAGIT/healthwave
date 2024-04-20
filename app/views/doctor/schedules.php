@@ -112,7 +112,8 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Doctor Appointments Management</h1>
+                <h1>Doctor Schedule Management</h1>
+                <hr>
                 <table class="table">
                     <thead>
                         <tr>

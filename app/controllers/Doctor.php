@@ -33,6 +33,7 @@
         public function ongoing_consults(){
             $doctorId = $_SESSION['userID'];
             $data = [];
+            $remaining_patients = 0;
             $schedule = $this->doctorModel->get_current_schedule($doctorId);
             $reservations = [];
             if($schedule){
@@ -40,11 +41,13 @@
                 foreach($reservations as $reservation){
                     $Age = date_diff(date_create($reservation->DOB), date_create('now'))->y;
                     $reservation->Age = $Age;
+                    $remaining_patients++;
                 }
             }
             $data = [
                 'schedule' => $schedule,
-                'reservations' => $reservations
+                'reservations' => $reservations,
+                'remaining_patients' => $remaining_patients
             ];
             $this->view('doctor/ongoing_consults', $data);
         }
