@@ -211,6 +211,11 @@ function deleteTestRow() {
     }
 }
 
+// Attach event listeners to the Add Row and Delete Row buttons in the Recommended Tests section
+document.getElementById('add-row-test-btn').addEventListener('click', addTestRow);
+document.getElementById('delete-row-test-btn').addEventListener('click', deleteTestRow);
+
+
 
 
 
