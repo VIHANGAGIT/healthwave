@@ -31,10 +31,20 @@
         }
 
         public function ongoing_consults(){
+            $doctorId = $_SESSION['userID'];
             $data = [];
-            $schedule = $this->doctorModel->get_ongoing_reservations($_SESSION['userID']);
+            $schedule = $this->doctorModel->get_current_schedule($doctorId);
+            $reservations = [];
+            if($schedule){
+                $reservations = $this->doctorModel->get_ongoing_reservations($schedule->Schedule_ID,$schedule->Time_Start,$schedule->Time_End);
+                foreach($reservations as $reservation){
+                    $Age = date_diff(date_create($reservation->DOB), date_create('now'))->y;
+                    $reservation->Age = $Age;
+                }
+            }
             $data = [
-                'schedule' => $schedule
+                'schedule' => $schedule,
+                'reservations' => $reservations
             ];
             $this->view('doctor/ongoing_consults', $data);
         }

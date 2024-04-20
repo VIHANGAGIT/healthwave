@@ -113,26 +113,33 @@
     <div class="content">
     <section class="table-wrap" >
       <div class="table-container">
-        <h1>Hospital :<span class="dashboard-stat" style="font-size: 25px;" >Asiri Hospitals - Kirula Rd.</span></h1>
+        <?php if (empty($data['schedule'])): ?>
+            <br>
+            <div class="error-msg">
+                <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                <p>No sessions available at the moment</p>
+            </div>
+        <?php else: ?>
+        <h1>Hospital :<span class="dashboard-stat" style="font-size: 25px;" ><?php echo $data['schedule']->Hospital_Name?></span></h1>
         <table class="table-dashboard">
             <tbody>
                 <tr class="dashboard-row">
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Session<br> Date :</p>
-                        <p class="dashboard-stat">2024/04/12</p>
+                        <p class="dashboard-stat"><?php echo $data['schedule']->Date?></p>
                     </td>
                     
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Session <br> Duration :</h2>
-                        <p class="dashboard-stat">12:00 - 14:00</p>
+                        <p class="dashboard-stat"><?php echo $data['schedule']->Time_Start. " - " . $data['schedule']->Time_End?></p>
                     </td>
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Remaining Number<br>of Patients :</h2>
-                        <p class="dashboard-stat">12</p>
+                        <p class="dashboard-stat">8</p>
                     </td>
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Total Number<br> of Patients :</h2>
-                        <p class="dashboard-stat">30</p>
+                        <p class="dashboard-stat"><?php echo $data['schedule']->No_Of_Total_Slots?></p>
                     </td>
                 </tr>
             </tbody>
@@ -141,44 +148,47 @@
     </section><br>
     <section class="table-wrap" >
       <div class="table-container">
-        <h1>Ongoing Consultations</h1>
+        <h1>Patient Queue</h1>
+        <?php if (empty($data['reservations'])): ?>
+        <br>
+            <div class="error-msg">
+                <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                <p>No reservations available for current session</p>
+            </div>
+        <?php else: ?>
         <section class="table-wrap" >
             <table class="table">
                 <thead>
                     <tr>
                         <th>Reservation ID</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Time</th>
+                        <th>Patient Name</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Time Slot</th>
                         <th>Details</th>
                         <th>Prescription</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>12223</td>
-                        <td>Lanka Hospitals - Kiribathgoda</td>
-                        <td>2023/10/12</td>
-                        <td>10:30 AM</td>
-                        <td><a href='onpatient_details'><button class='button'>Details</button></a></td>
-                        <td><a href='addprescription'><button class='button' style="width: 50px;"><i class="uil uil-plus"></i>
-
-                        </button></a></td>
-                    </tr>
-                    <tr>
-                        <td>12223</td>
-                        <td>Lanka Hospitals - Kiribathgoda</td>
-                        <td>2023/10/12</td>
-                        <td>10:30 AM</td>
-                        <td><a href=''><button class='button'>Details</button></a></td>
-                        <td><a href=''><button class='button' style="width: 50px;"><i class="uil uil-plus"></i>
-
-                        </button></a></td>
+                    <?php foreach ($data['reservations'] as $reservation): ?>
+                            <tr>
+                            <td><?php echo $reservation->Doc_Res_ID?></td>
+                            <td><?php echo $reservation->First_Name. " " . $reservation->Last_Name?></td>
+                            <td><?php echo $reservation->Gender?></td>
+                            <td><?php echo $reservation->Age?></td>
+                            <td><?php echo $reservation->Start_Time. " - " . $reservation->End_Time?></td>
+                            <td><a href=""><button class="button">Details</button></a></td>
+                            <td><a href="addprescription"><button class="button" style="width: 50px;"><i class="uil uil-plus"></i></button></a></td>
+                            </tr>
+                    <?php endforeach; ?>
+                    
                     </tr>
                 </tbody>
             </table>
         </div>
+        <?php endif; ?>
     </section>
+    <?php endif; ?>
 </div>
   </body>
 </html>

@@ -1064,6 +1064,10 @@ table thead tr{
   justify-content: space-between;
 }
 
+.dashboard-content .dashboard-stat-title{
+  color: var(--grey-color-dark);
+}
+
 .dashboard-stat{
   color: #4070f4;
   font-size: 30px;
