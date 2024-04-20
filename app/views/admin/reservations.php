@@ -113,6 +113,59 @@
     </nav>
 
     <div class="content">
+    <section class="table-wrap" >
+    <div class="content-search">
+          <div class="search">
+            <h2>Appointment Search</h2>
+              <form style="width: 100%;" method="POST">
+                <div class="fields">
+                  <table style="width: 95%;">
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Patient Name</label>
+                            <input type="text" name="search_text" placeholder="Patient Name">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-field">
+                          <label>Doctor Name</label>
+                          <input type="text" name="search_text" placeholder="Doctor Name">                        
+                        </div>
+                      </td>
+                      <td>
+                        <input type="submit" class="button" value="Search" name="search" >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                        <label>Hospital Name</label>
+                          <select required>
+                              <option disabled selected>Select Hospital</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                      <div class="input-field">
+                            <label>Date</label>
+                            <input type="date" name="search_text" placeholder="Date">
+                        </div>
+                      </td>
+                      <td>
+                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </form>
+              
+          </div>
+        </div>
+    </section><br>
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Doctor Appointments Management</h1>
@@ -162,6 +215,58 @@
         </section>
         <br>
         <section class="table-wrap" >
+    <div class="content-search">
+          <div class="search">
+            <h2>Test Search</h2>
+              <form style="width: 100%;" method="POST">
+                <div class="fields">
+                  <table style="width: 95%;">
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Patient Name</label>
+                            <input type="text" name="search_text" placeholder="Patient Name">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-field">
+                          <label>Test Name</label>
+                          <input type="text" name="search_text" placeholder="Test Name">                        
+                        </div>
+                      </td>
+                      <td>
+                        <input type="submit" class="button" value="Search" name="search" >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                        <label>Hospital Name</label>
+                          <select required>
+                              <option disabled selected>Select Hospital</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                      <div class="input-field">
+                            <label>Date</label>
+                            <input type="date" name="search_text" placeholder="Date">
+                        </div>
+                      </td>
+                      <td>
+                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </form>
+              
+          </div>
+        </div>
+    </section><br>
             <div class="table-container">
                 <h1>Test Appointments Management</h1>
                 <table class="table">
