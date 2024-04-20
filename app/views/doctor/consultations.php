@@ -111,6 +111,58 @@
     </nav>
 
     <div class="content">
+
+    <section class="table-wrap" >
+    <div class="content-search">
+          <div class="search">
+            <h2>Consulations Search</h2>
+              <form style="width: 100%;" method="POST">
+                <div class="fields">
+                  <table style="width: 95%;">
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Reservation ID</label>
+                            <input type="text" name="search_text" placeholder="Reservation ID">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-field">
+                        <label>Hospital Name</label>
+                          <select required>
+                              <option disabled selected>Select Hospital</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <input type="submit" class="button" value="Search" name="search" >
+                      </td>
+                    </tr>
+                    <tr>
+                      
+                      <td>
+                      <div class="input-field">
+                            <label>Date</label>
+                            <input type="date" name="search_text" placeholder="Date">
+                        </div>
+                      </td>
+                      <td>
+                        
+                      </td>
+                      <td>
+                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </form>
+              
+          </div>
+        </div>
+    </section><br>
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Past Consulations</h1>
@@ -134,62 +186,24 @@
                             <td><a href='patient_details'><button class='button'>Details</button></a></td>
                             <!--<td><a href=''><button class='button'>Prescription</button></a></td>-->
                         </tr>
-                        <!--<tr>
-                            <td>12223</td>
+                        <tr>
+                            <td>12224</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
+                            <td><a href='patient_details'><button class='button'>Details</button></a></td>
+                            <!--<td><a href=''><button class='button'>Prescription</button></a></td>-->
                         </tr>
                         <tr>
-                            <td>12223</td>
+                            <td>12225</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
+                            <td><a href='patient_details'><button class='button'>Details</button></a></td>
+                            <!--<td><a href=''><button class='button'>Prescription</button></a></td>-->
                         </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
-                        </tr>-->
+                        
+                        
                     </tbody>
                 </table>
             </div>
