@@ -39,7 +39,7 @@
       </div>-->
       <div class="form-group diagnosis">
         <label for="diagnosis">Diagnosis</label>
-        <input type="text" id="diagnosis" placeholder="Enter diagnosis">
+        <textarea id="diagnosis" placeholder="Enter diagnosis" rows="4" cols="50" style="width: 939px; height: 65px;"></textarea>      </div>
       </div>
       <div class="form-group treatment" id="treatment_table">
         <label for="treatment">Treatment</label>
@@ -123,20 +123,19 @@
       
       
       <div class="button-container">
-        <button id="add-row-btn" type="button" onclick="addTestRow()">Add Row</button>
-        <button id="delete-row-btn" type="button" onclick="deleteRow()">Delete Row</button>
-        
+        <button id="add-row-test-btn" type="button">Add Row</button>
+        <button id="delete-row-test-btn" type="button">Delete Row</button>
       </div>
       
       <div class="form-group remarks">
         <label for="remarks">Remarks</label>
-        <input type="text" id="remarks" placeholder="Enter remarks">
-      </div>
+        <textarea id="remarks" placeholder="Enter Remarks" rows="4" cols="50" style="width: 939px; height: 65px;"></textarea>      </div>
+
 
       <div class="form-group referals">
         <label for="referals">Referals</label>
-        <input type="text" id="referals" placeholder="Enter referals">
-      </div>
+        <textarea id="referals" placeholder="Enter referals" rows="4" cols="50" style="width: 939px; height: 65px;"></textarea>      </div>
+
 
       <div class="form-group date-signed">
         <label for="dateSigned">Date Signed</label>
@@ -151,6 +150,6 @@
       </div>
     </form>
 
-    <script src="script.js"></script>
+    <script src="form.js"></script>
   </body>
 </html>
