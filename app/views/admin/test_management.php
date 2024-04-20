@@ -185,7 +185,7 @@
                             <td>T112</td>
                             <td>Complete Blood Count (CBC)</td>
                             <td>Blood Test</td>
-                            <td><a href=''><button class='button'>Update</button></a></td>
+                            <td><a href='update_test'><button class='button'>Update</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>

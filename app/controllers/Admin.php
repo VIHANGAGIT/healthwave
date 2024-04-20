@@ -203,6 +203,12 @@
             $data = [];
             $this->view('admin/add_test', $data);
         }
+
+        public function update_test(){
+            $data = [];
+            $this->view('admin/update_test', $data);
+        }
+        
         
 
         
