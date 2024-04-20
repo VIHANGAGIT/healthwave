@@ -188,6 +188,45 @@ form .password i {
   background: #cf1b1b;
 }
 
+#add-row-test-btn
+{
+  margin-top: -30px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  padding: 10px 20px; 
+  background-color: #416de5; 
+  color: white; 
+  font-weight: 500;
+  border: none; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+#add-row-test-btn:hover
+{
+  background: #1d54ec;
+}
+
+#delete-row-test-btn
+{
+  margin-top: -30px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  padding: 10px 15px; 
+  background-color: #d14848; 
+  color: white; 
+  font-weight: 500;
+  border: none; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+#delete-row-test-btn:hover
+{
+  background: #cf1b1b;
+}
+
+
 /* button {
   margin-top: -30px;
   margin-bottom: 30px;

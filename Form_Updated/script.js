@@ -179,6 +179,43 @@ function isNumberKey(evt) {
     return true;
 }
 
+// Function to add a new row in the Recommended Tests section
+function addTestRow() {
+    // Clone the original test row
+    var originalRow = document.querySelector('#tests-container select');
+    var newRow = originalRow.cloneNode(true);
+
+    // Append the new row after the last test row
+    var container = document.getElementById('tests-container');
+    container.appendChild(newRow);
+}
+
+// Function to delete the last row in the Recommended Tests section
+function deleteTestRow() {
+    // Get the container element that holds all test rows
+    var container = document.getElementById('tests-container');
+    
+    // Get all test rows
+    var rows = container.querySelectorAll('select');
+    
+    // Check if there's at least one row to delete
+    if (rows.length > 1) {
+        // Get the last test row
+        var lastRow = rows[rows.length - 1];
+        
+        // Remove the last test row
+        container.removeChild(lastRow);
+    } else {
+        // Optionally, provide a message or action if there's only one row left and cannot be deleted
+        console.log("Cannot delete the last row.");
+    }
+}
+
+// Attach event listeners to the Add Row and Delete Row buttons in the Recommended Tests section
+document.getElementById('add-row-test-btn').addEventListener('click', addTestRow);
+document.getElementById('delete-row-test-btn').addEventListener('click', deleteTestRow);
+
+
 
 
 
