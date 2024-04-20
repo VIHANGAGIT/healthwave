@@ -1,14 +1,28 @@
 <?php
     class Doctor extends Controller{
         public function __construct(){
-            $this->doctorModel = $this->model('user');
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $this->doctorModel = $this->model('doctors');
         }
         public function index(){
             
-            //$users = $this->userModel->getUsers();
             $data = [];
-            
-            $this->view('doctor/reservations', $data);
+            $schedule = $this->doctorModel->get_reservations($_SESSION['userID']);
+            $data = [
+                'schedule' => $schedule
+            ];            
+            $this->view('doctor/schedules', $data);
+        }
+
+        public function schedules(){
+            $data = [];
+            $schedule = $this->doctorModel->get_reservations($_SESSION['userID']);
+            $data = [
+                'schedule' => $schedule
+            ];
+            $this->view('doctor/schedules', $data);
         }
 
         public function consultations(){
@@ -16,9 +30,16 @@
             $this->view('doctor/consultations', $data);
         }
 
+        public function ongoing_consults(){
+            $data = [];
+            $schedule = $this->doctorModel->get_ongoing_reservations($_SESSION['userID']);
+            $data = [
+                'schedule' => $schedule
+            ];
+            $this->view('doctor/ongoing_consults', $data);
+        }
+        
         public function profile(){
-            session_start();
-    
             // Get user data from session
             $data = [
                 'Uname' => $_SESSION['userEmail'],

@@ -1,5 +1,4 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Doctor'){
     redirect("users/login");
   }
@@ -10,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Doctor Schedules</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -57,15 +56,23 @@
               <span class="line"></span>
             </div>
             <li class="item active">
-              <a href="../doctor/reservations" class="link flex">
+              <a href="../doctor/schedules" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+                <span>Schedules</span>
               </a>
             </li>
             <li class="item">
               <a href="../doctor/consultations" class="link flex">
+              <i class="uil uil-history"></i>
+
+                <span>Past Consultations</span>
+              </a>
+            </li>
+
+            <li class="item">
+                <a href="../doctor/ongoing_consults" class="link flex">
                 <i class="uil uil-stethoscope"></i>
-                <span>Consultations</span>
+                <span>Ongoing Consultations</span>
               </a>
             </li>
           </ul>
@@ -109,21 +116,30 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Hospital Name</th>
-                            <th>Date</th>
+                            
+                            <th>Hospital</th>
+                            <th>Room</th>
+                            <th>Next Date</th>
                             <th>Session Time</th>
-                            <th># of Appointments</th>
-                            <th>View</th>
+                            <th>No of Reservations</th>
+                            <!--<th>View</th>-->
+                            <!--<th>Delete</th>-->
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td>8</td>
-                            <td><a href=''><button class='button'>View</button></a></td>
-                        </tr>
+                        <?php 
+                            foreach ($data['schedule'] as $schedule) {
+                                echo "<tr>";
+                                echo "<td>".$schedule->Hospital_Name."</td>";
+                                echo "<td>".$schedule->Room_Name."</td>";
+                                echo "<td>".$schedule->Date."</td>";
+                                echo "<td>".$schedule->Time_Start. " - " . $schedule->Time_End."</td>";
+                                echo "<td>".$schedule->NoOfReservations."</td>";
+                                //echo "<td><a href='../doctor/edit_reservation/".$schedule->Reservation_ID."'><button class='button'>View</button></a></td>";
+                                //echo "<td><a href='../doctor/delete_reservation/".$schedule->Reservation_ID."'><button class='button'>Delete</button></a></td>";
+                                echo "</tr>";
+                            }
+                        ?>
                     </tbody>
                 </table>
             </div>
