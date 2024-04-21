@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
@@ -169,24 +171,24 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Lab Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_test'><button class='button'>Add Test</button></a></span></h1>
-                <table class="table">
+                <table id="myTable" class="table">
                     <thead>
                         <tr>
-                            <th>Test ID</th>
-                            <th>Test Name</th>
-                            <th>Type</th>
-                            <th>Update Test</th>
-                            <th>Remove</th>
+                            <th style="text-align: center;">Test ID</th>
+                            <th style="text-align: center;">Test Name</th>
+                            <th style="text-align: center;">Type</th>
+                            <th style="text-align: center;">Update Test</th>
+                            <th style="text-align: center;">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                          <?php foreach($data['tests'] as $test) : ?>
                         <tr>
-                          <td><?php echo $test->Test_ID; ?></td>
-                          <td><?php echo $test->Test_Name; ?></td>
-                          <td><?php echo $test->Test_Type; ?></td>
-                          <td><a href="update_test/<?php echo $test->Test_ID; ?>"><button class="button">Update</button></a></td>
-                          <td><a href="remove_test/<?php echo $test->Test_ID; ?>"><button class="button" style="background-color: red;">Remove</button></a></td>
+                          <td style="text-align: center;"><?php echo $test->Test_ID; ?></td>
+                          <td style="text-align: center;"><?php echo $test->Test_Name; ?></td>
+                          <td style="text-align: center;"><?php echo $test->Test_Type; ?></td>
+                          <td style="text-align: center;"><a href="update_test/<?php echo $test->Test_ID; ?>"><button class="button">Update</button></a></td>
+                          <td style="text-align: center;"><a href="remove_test/<?php echo $test->Test_ID; ?>"><button class="button" style="background-color: red;">Remove</button></a></td>
                         </tr>
                         <?php endforeach; ?>
 
@@ -195,5 +197,20 @@
             </div>
         </section>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#myTable').dataTable( {
+              "bPaginate": false,
+              "bFilter": false,
+              "bInfo": false,
+              "columnDefs": [
+                {"targets": [4], "orderable": false}, // Disable ordering on the last column
+              ]
+                    
+          } );
+      } );
+    </script> 
   </body>
 </html>
