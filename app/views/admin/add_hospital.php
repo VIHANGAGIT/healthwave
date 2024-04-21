@@ -37,7 +37,7 @@
                             <label>Region*</label>
 
                             <select name="region" required>
-                            <option selected value="<?php //echo $data['Gender'] ?>" > <?php //echo ($data['Gender'] == '') ? 'Select gender' : $data['Gender'] ?></option>
+                            <option selected value="<?php //echo $data['Gender'] ?>" > <?php //echo ($data['Gender'] == '') ? 'Select region' : $data['Gender'] ?></option>
                                 <option>Colombo</option>
                                 <option>Kandy</option>
                                 <option>Galle</option>
