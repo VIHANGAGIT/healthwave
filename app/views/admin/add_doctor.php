@@ -83,7 +83,7 @@
                             <input type="text">
                         </div>
                     </div>
-                    <!--<div class="details account">
+                    <div class="details account">
                     <span class="title">Account Details</span>
 
                     <div class="fields">
@@ -108,7 +108,7 @@
                             <span class="err-msg"><?php //echo $data['C_pass_err'] . "\u{200B}"; ?></span>
                         </div>
                         
-                    </div>-->
+                    </div>
                     <div class="buttons">
                         <button>
                             <span class="btnText">Clear</span>
