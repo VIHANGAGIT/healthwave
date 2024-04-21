@@ -31,16 +31,17 @@ class Tests{
     }
 
     public function search_tests($testId, $hospitalId, $testType){
-        $this->db->query('SELECT test.* FROM test
+        $this->db->query('SELECT DISTINCT test.Test_ID, test.Test_Name, test.Test_Type FROM test
         INNER JOIN hospital_test ON hospital_test.Test_ID = test.Test_ID
-        WHERE hospital_test.Test_ID LIKE :testId AND test.Test_Type LIKE :testType AND hospital_test.Hospital_ID = :hospitalId');
+        WHERE hospital_test.Test_ID LIKE :testId AND test.Test_Type LIKE :testType AND hospital_test.Hospital_ID LIKE :hospitalId');
 
         $this->db->bind(':testId', $testId === null ? '%' : $testId);
         $this->db->bind(':testType', $testType === null ? '%' : $testType);
         $this->db->bind(':hospitalId', $hospitalId === null ? '%' : $hospitalId);
 
         $tests = $this->db->resultSet();
-        if($this->db->execute()){
+
+        if($this->db->rowCount()>0){
             return $tests;
         } else{
             return false;
