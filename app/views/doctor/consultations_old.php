@@ -13,13 +13,9 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link href="<?php echo URLROOT;?>/css/datatables.min.css" rel="stylesheet">
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
-
-  
-
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -114,51 +110,103 @@
     </nav>
 
     <div class="content">
+      
+    <section class="table-wrap" >
+    <div class="content-search">
+          <div class="search">
+            <h2>Consulations Search</h2>
+              <form style="width: 100%;" method="POST">
+                <div class="fields">
+                  <table style="width: 95%;">
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Reservation ID</label>
+                            <input type="text" name="search_text" placeholder="Reservation ID" style="margin: 0%;">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-field">
+                        <label>Hospital Name</label>
+                          <select required>
+                              <option disabled selected>Select Hospital</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <input type="submit" class="button" value="Search" name="search" >
+                      </td>
+                    </tr>
+                    <tr>
+                      
+                      <td>
+                      <div class="input-field">
+                            <label>Date</label>
+                            <input type="date" name="search_text" placeholder="Date" style="margin: 0%;">
+                        </div>
+                      </td>
+                      <td>
+                        
+                      </td>
+                      <td>
+                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </form>
+              
+          </div>
+        </div>
+    </section>
+    <br>
         <section class="table-wrap" >
             <div class="table-container">
               <h1>Past Consulations</h1>
-              <hr><br>
-              <table id="myTable" class="table">
+              <hr>
+                <table class="table">
                     <thead>
                         <tr>
-                            
-                            <th style="text-align: center;">Reservation ID</th>
-                            <th style="text-align: center;">Patient Name</th>
-                            <th style="text-align: center;">Hospital</th>
-                            <th style="text-align: center;">Date</th>
-                            <th style="text-align: center;">Details</th>
+                            <th>Reservation ID</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Details</th>
+                            <!--<th>Prescription</th>-->
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($data['consultations'] as $consultation): ?>
-                                <tr>
-                                <td style="text-align: center;"><?php echo $consultation->Doc_Res_ID?></td>
-                                <td style="text-align: center;"><?php echo $consultation->First_Name. " " . $consultation->Last_Name?></td>
-                                <td style="text-align: center;"><?php echo $consultation->Hospital_Name?></td>
-                                <td style="text-align: center;"><?php echo $consultation->Date?></td>
-                                <td style="text-align: center;"><a href=""><button class="button">Details</button></a></td>
-                                </tr>
-                        <?php endforeach; ?>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href='patient_details'><button class='button'>Details</button></a></td>
+                            <!--<td><a href=''><button class='button'>Prescription</button></a></td>-->
+                        </tr>
+                        <tr>
+                            <td>12224</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href='patient_details'><button class='button'>Details</button></a></td>
+                            <!--<td><a href=''><button class='button'>Prescription</button></a></td>-->
+                        </tr>
+                        <tr>
+                            <td>12225</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href='patient_details'><button class='button'>Details</button></a></td>
+                            <!--<td><a href=''><button class='button'>Prescription</button></a></td>-->
+                        </tr>
                     </tbody>
-                    
                 </table>
             </div>
         </section>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="<?php echo URLROOT?>/js/datatables.min.js"></script>
-    <script>
-      $(document).ready(function() {
-          $('#myTable').dataTable( {
-              "bPaginate": false,
-              "bFilter": false,
-              "bInfo": false,
-              "columnDefs": [
-                {"targets": [4], "orderable": false}, // Disable ordering on the last column
-              ]
-                    
-          } );
-      } );
-    </script> 
   </body>
 </html>

@@ -26,13 +26,16 @@
         }
 
         public function consultations(){
-            $data = [];
+            $doctorId = $_SESSION['userID'];
+            $consultations = $this->doctorModel->get_past_consultations($doctorId);
+            $data = [
+                'consultations' => $consultations
+            ];
             $this->view('doctor/consultations', $data);
         }
 
         public function ongoing_consults(){
             $doctorId = $_SESSION['userID'];
-            $data = [];
             $remaining_patients = 0;
             $schedule = $this->doctorModel->get_current_schedule($doctorId);
             $reservations = [];

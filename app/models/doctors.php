@@ -105,21 +105,23 @@ class Doctors{
 
             $nextReservationDate = date('Y-m-d', strtotime('next ' . $reservationDayOfWeek, strtotime($currentDate)));
 
-            if ($reservationDayOfWeek === $currentDayOfWeek && $reservation->End_Time < $currentTime) {
+            if ($reservationDayOfWeek === $currentDayOfWeek && $reservation->Time_End > $currentTime) {
                 $reservation->Date = $currentDate; 
             } else {
                 $reservation->Date = $nextReservationDate; 
             }
 
-            $reservation->Time_Start = date('H:i', strtotime($reservation->Time_Start));
-            $reservation->Time_End = date('H:i', strtotime($reservation->Time_End));
-
             $this->db->query('SELECT COUNT(doctor_reservation.Doc_Res_ID) AS NoOfReservations FROM doctor_reservation
-            WHERE doctor_reservation.Schedule_ID = :schedule_id');
+            WHERE doctor_reservation.Schedule_ID = :schedule_id AND doctor_reservation.Date = :Date');
 
             $this->db->bind(':schedule_id', $reservation->Schedule_ID);
+            $this->db->bind(':Date', $reservation->Date);
+            
             $noOfReservations = $this->db->singleRow();
             $reservation->NoOfReservations = $noOfReservations->NoOfReservations;
+
+            $reservation->Time_Start = date('H:i', strtotime($reservation->Time_Start));
+            $reservation->Time_End = date('H:i', strtotime($reservation->Time_End));
 
         }
         // Check if any rows were returned
@@ -212,6 +214,29 @@ class Doctors{
             return false;
         }
         
+    }
+
+    public function get_past_consultations($doctorId){
+        $this->db->query('SELECT doctor_reservation.*, patient.First_Name, patient.Last_Name, hospital.Hospital_Name FROM doctor_reservation
+        INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
+        INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+        INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+        WHERE schedule.Doctor_ID = :doctorId AND doctor_reservation.Status = "Consulted" ORDER BY doctor_reservation.Date, doctor_reservation.Start_Time ASC');
+
+        $this->db->bind(':doctorId', $doctorId);
+        $consultations = $this->db->resultSet();
+
+        // Loop through the reservations and set the date and time
+        foreach($consultations as $consultation) {
+            $consultation->Start_Time = date('H:i', strtotime($consultation->Start_Time));
+            $consultation->End_Time = date('H:i', strtotime($consultation->End_Time));
+        }
+
+        if ($this->db->execute()) {
+            return $consultations;
+        } else {
+            return false;
+        }
     }
 
 

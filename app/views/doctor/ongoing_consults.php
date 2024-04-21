@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link href="<?php echo URLROOT;?>/css/datatables.min.css" rel="stylesheet">
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
@@ -117,7 +118,7 @@
             <br>
             <div class="error-msg">
                 <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
-                <p>No sessions available at the moment</p>
+                <p>No ongoing sessions available at the moment</p>
             </div>
         <?php else: ?>
         <h1>Hospital :<span class="dashboard-stat" style="font-size: 25px;" ><?php echo $data['schedule']->Hospital_Name?></span></h1>
@@ -149,7 +150,7 @@
     <section class="table-wrap" >
       <div class="table-container">
         <h1>Patient Queue</h1>
-        <hr>
+        <hr><br>
         <?php if (empty($data['reservations'])): ?>
         <br>
             <div class="error-msg">
@@ -158,30 +159,30 @@
             </div>
         <?php else: ?>
         <section class="table-wrap" >
-            <table class="table">
+            <table class="table" id="ongoing-consults-table">
                 <thead>
                     <tr>
-                        <th>Reservation ID</th>
-                        <th>Patient Name</th>
-                        <th>Gender</th>
-                        <th>Age</th>
-                        <th>Time Slot</th>
-                        <th>Prescription</th>
-                        <th>Complete</th>
-                        <th>Details</th>
+                        <th style="text-align: center;">Reservation ID</th>
+                        <th style="text-align: center;">Patient Name</th>
+                        <th style="text-align: center;">Gender</th>
+                        <th style="text-align: center;">Age</th>
+                        <th style="text-align: center;">Time Slot</th>
+                        <th style="text-align: center;">Prescription</th>
+                        <th style="text-align: center;">Complete</th>
+                        <th style="text-align: center;">Details</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($data['reservations'] as $reservation): ?>
                             <tr>
-                            <td><?php echo $reservation->Doc_Res_ID?></td>
-                            <td><?php echo $reservation->First_Name. " " . $reservation->Last_Name?></td>
-                            <td><?php echo $reservation->Gender?></td>
-                            <td><?php echo $reservation->Age?></td>
-                            <td><?php echo $reservation->Start_Time. " - " . $reservation->End_Time?></td>
-                            <td><a href="addprescription"><button class="button" style="width: 50px;"><i class="uil uil-plus"></i></button></a></td>
-                            <td><a href=""><button class="button" style="width: 50px;"><i class="uil uil-check"></i></button></a></td>
-                            <td><a href=""><button class="button">Details</button></a></td>
+                            <td style="text-align: center;"><?php echo $reservation->Doc_Res_ID?></td>
+                            <td style="text-align: center;"><?php echo $reservation->First_Name. " " . $reservation->Last_Name?></td>
+                            <td style="text-align: center;"><?php echo $reservation->Gender?></td>
+                            <td style="text-align: center;"><?php echo $reservation->Age?></td>
+                            <td style="text-align: center;"><?php echo $reservation->Start_Time. " - " . $reservation->End_Time?></td>
+                            <td style="text-align: center;"><a href="addprescription"><button class="button" style="width: 50px;"><i class="uil uil-plus"></i></button></a></td>
+                            <td style="text-align: center;"><a href=""><button class="button" style="width: 50px;"><i class="uil uil-check"></i></button></a></td>
+                            <td style="text-align: center;"><a href=""><button class="button">Details</button></a></td>
                             </tr>
                     <?php endforeach; ?>
                     
@@ -192,6 +193,20 @@
         <?php endif; ?>
     </section>
     <?php endif; ?>
-</div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="<?php echo URLROOT?>/js/datatables.min.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#ongoing-consults-table').dataTable( {
+              "bPaginate": false,
+              "bFilter": false,
+              "bInfo": false,
+              "columnDefs": [
+                  { "orderable": false, "targets": [5,6,7] }
+              ]
+          } );
+      } );
+    </script> 
   </body>
 </html>
