@@ -13,12 +13,12 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link href="<?php echo URLROOT;?>/css/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
 
-      <div class="popup-container-4 active">
+      <div class="popup-container-4 ">
         <div class="popup-box-4">
             <h1>Consultation Details</h1><br>
             <hr>
@@ -181,7 +181,7 @@
         </section>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="<?php echo URLROOT?>/js/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script src="<?php echo URLROOT;?>/js/popup.js" defer></script>
     <script>
       $(document).ready(function() {
