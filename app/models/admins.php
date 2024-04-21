@@ -77,4 +77,26 @@
             }
         }
    
+        public function add_doctor($data){
+            $this->db->query('INSERT INTO doctor (First_Name, Last_Name, Gender, NIC, Contact_No, SLMC_Reg_No, Specialization, Availability, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :SLMC, :Spec, :Avail, :Uname, :Pass)');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':F_name', $data['F_name']);
+            $this->db->bind(':L_name', $data['L_name']);
+            $this->db->bind(':Gender', $data['Gender']);
+            $this->db->bind(':NIC', $data['NIC']);
+            $this->db->bind(':C_num', $data['C_num']);
+            $this->db->bind(':SLMC', $data['SLMC']);
+            $this->db->bind(':Spec', $data['Spec']);
+            $this->db->bind(':Avail', $data['Avail']);
+            $this->db->bind(':Uname', $data['Uname']);
+            $this->db->bind(':Pass', $data['Pass']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
     }

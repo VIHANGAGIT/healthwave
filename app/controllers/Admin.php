@@ -201,9 +201,125 @@
             $this->view('admin/add_hospital', $data);
         }
 
-        public function add_doctor(){
+        /*public function add_doctor(){
             $data = [];
             $this->view('admin/add_doctor', $data);
+        }*/
+
+        public function add_doctor(){
+            // Check for POST request
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+                // Sanitize strings
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                // Register user
+                $data = [
+                    'F_name' => trim($_POST['fname']),
+                    'L_name' => trim($_POST['lname']),
+                    'Gender' => trim($_POST['gender']),
+                    'NIC' => trim($_POST['nic']),
+                    'C_num' => $_POST['cnum'],
+                    'DOB' => $_POST['dob'],
+                    'Spec' => $_POST['spec'],
+                    'SLMC' => $_POST['slmc'],
+                    'Avail' => 1,
+                    'Uname' => trim($_POST['email']),
+                    'Pass' => trim($_POST['pass']),
+                    'C_pass' => trim($_POST['cpass']),
+                    'Uname_err' => '',
+                    'Pass_err' => '',
+                    'C_pass_err' => ''
+                ];
+
+
+                // Validate Email
+                if(empty($data['Uname'])){
+                    $data['Uname_err'] = 'Please enter your email';
+                } else{
+                    // Check for duplicates
+                    /*if($this->adminModel->findUserByUname($data['Uname'])){
+                        $data['Uname_err'] = 'Another account already has this email';
+                    }*/
+                }
+
+                // Validate Password
+                $length = strlen($data['Pass']);
+                $uppercase = preg_match('@[A-Z]@', $data['Pass']);
+                $lowercase = preg_match('@[a-z]@', $data['Pass']);
+                $number = preg_match('@[0-9]@', $data['Pass']);
+                $spec = preg_match('@[^\w]@', $data['Pass']);
+
+                if(empty($data['Pass'])){
+                    $data['Pass_err'] = 'Please enter a password';
+                } else{
+                    if($length < 8){
+                        $data['Pass_err'] = 'Password must be atleast 8 characters';
+                    }
+                    if(!$uppercase){
+                        $data['Pass_err'] = 'Password must include atleast 1 uppercase character';
+                    }
+                    if(!$lowercase){
+                        $data['Pass_err'] = 'Password must include atleast 1 lowercase character';
+                    }
+                    if(!$number){
+                        $data['Pass_err'] = 'Password must include atleast 1 number';
+                    }
+                    if(!$spec){
+                        $data['Pass_err'] = 'Password must include atleast 1 special character';
+                    }
+
+                } 
+
+                // Validate Confirm Password
+                if(empty($data['C_pass'])){
+                    $data['C_pass_err'] = 'Please confirm password';
+                } else{
+                    if($data['Pass'] != $data['C_pass']){
+                        $data['C_pass_err'] = 'Confirm password does not match with password';
+                    }
+                }
+
+                // Check whether errors are empty
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
+                    // Hashing password
+                    $data['Pass'] = hash('sha256',$data['Pass']);
+
+                    // Register user
+                    if($this->adminModel->add_doctor($data)){
+                        redirect('admin/doc_management');
+                    } else{
+                        die("Couldn't register the doctor! ");
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('admin/add_doctor', $data);
+                }
+
+
+            }else{
+                // Get data
+                $data = [
+                    'F_name' => '',
+                    'L_name' => '',
+                    'Gender' => '',
+                    'DOB' => '',
+                    'NIC' => '',
+                    'C_num' => '',
+                    'Spec' => '',
+                    'SLMC' => '',
+                    'Avail' => '',
+                    'Uname' => '',
+                    'Pass' => '',
+                    'C_pass' => '',
+                    'Uname_err' => '',
+                    'Pass_err' => '',
+                    'C_pass_err' => ''
+                ];
+
+                // Load view
+                $this->view('admin/add_doctor', $data);
+            }
         }
 
         public function add_test(){
