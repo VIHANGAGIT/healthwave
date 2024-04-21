@@ -18,7 +18,42 @@
   </head>
   <body>
 
-  
+      <div class="popup-container-4 active">
+        <div class="popup-box-4">
+            <h1>Consultation Details</h1><br>
+            <hr>
+            <table style="width: 95%;">
+              
+              <tr>
+                <td class="popup-data">
+                  <br>
+                  <span class="category" >Patient Name: </span><span id="patient-name-popup-4">Steven Spilberg</span>
+                  <br>
+                  <span class="category">Gender: </span> <span id="patient-gender-popup-4">Male</span>
+                  <br>
+                  <span class="category">Age: </span> <span id="patient-age-popup-4">55</span>
+                  <br>
+                </td>
+                <td class="popup-data">
+                  <span class="category">Blood Group: </span> <span id="patient-blood-popup-4">A+</span>
+                  <br>
+                  <span class="category">Allergies: </span> <span id="patient-allergies-popup-4">Penicillin antibiotics</span>
+                  <br>
+                  </td>
+              </tr>
+              <tr>
+                <td class="popup-data" colspan="2">
+                    <span class="category">Comments: </span> <span id="patient-comment-popup-4">He is making impressive progress and should continue with the current regimen for optimal results. Encouragement to maintain the good work is recommended.</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="popup-data" colspan="2">
+                    <br><button class="close-btn btn" id="pay" >Prescription</button>
+                </td>
+              </tr>
+            </table>
+        </div>
+    </div>
 
     <!-- navbar -->
     <nav class="navbar">
@@ -147,6 +182,7 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="<?php echo URLROOT?>/js/datatables.min.js"></script>
+    <script src="<?php echo URLROOT;?>/js/popup.js" defer></script>
     <script>
       $(document).ready(function() {
           $('#myTable').dataTable( {

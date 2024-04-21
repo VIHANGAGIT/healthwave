@@ -172,7 +172,7 @@ class Doctors{
         $schedule_start_time = date('H:i:s', strtotime($schedule_start_time));
         $schecule_end_time = date('H:i:s', strtotime($schecule_end_time));
 
-        $this->db->query('SELECT doctor_reservation.*, patient.First_Name, patient.Last_Name, patient.Gender, patient.DOB FROM doctor_reservation 
+        $this->db->query('SELECT doctor_reservation.*, patient.First_Name, patient.Last_Name, patient.Gender, patient.DOB, patient.Patient_ID FROM doctor_reservation 
         INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
         WHERE doctor_reservation.Schedule_ID = :ScheduleId AND doctor_reservation.Date = :currentDate AND doctor_reservation.Start_Time >= :startTime AND doctor_reservation.End_Time <= :endTime AND doctor_reservation.Status = "Pending"
         ORDER BY doctor_reservation.Start_Time ASC');
@@ -234,6 +234,19 @@ class Doctors{
 
         if ($this->db->execute()) {
             return $consultations;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_patient_details($patient_id){
+        $this->db->query('SELECT First_Name, Last_Name, Gender, DOB, Blood_Group, Allergies FROM patient WHERE Patient_ID = :patient_id');
+
+        $this->db->bind(':patient_id', $patient_id);
+        $patient = $this->db->singleRow();
+
+        if ($this->db->execute()) {
+            return $patient;
         } else {
             return false;
         }

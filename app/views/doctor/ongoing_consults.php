@@ -17,6 +17,39 @@
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
+
+    <div class="popup-container-4">
+        <div class="popup-box-4">
+            <h1>Consultation Details</h1><br>
+            <hr>
+            <table style="width: 95%;">
+              
+              <tr>
+                <td class="popup-data">
+                  <br>
+                  <span class="category" >Patient Name: </span><span id="patient-name-popup-4"></span>
+                  <br>
+                  <span class="category">Gender: </span> <span id="patient-gender-popup-4"></span>
+                  <br>
+                  <span class="category">Age: </span> <span id="patient-age-popup-4"></span>
+                  <br>
+                </td>
+                <td class="popup-data">
+                  <span class="category">Blood Group: </span> <span id="patient-blood-popup-4"></span>
+                  <br>
+                  <span class="category">Allergies: </span> <span id="patient-allergies-popup-4"></span>
+                  <br>
+                  </td>
+              </tr>
+              <tr>
+                <td class="popup-data" colspan="2">
+                    <br><button class="close-btn btn" id="add_presc" >Add Prescription</button>
+                </td>
+              </tr>
+            </table>
+        </div>
+    </div>
+
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -182,7 +215,7 @@
                             <td style="text-align: center;"><?php echo $reservation->Start_Time. " - " . $reservation->End_Time?></td>
                             <td style="text-align: center;"><a href="addprescription"><button class="button" style="width: 50px;"><i class="uil uil-plus"></i></button></a></td>
                             <td style="text-align: center;"><a href=""><button class="button" style="width: 50px;"><i class="uil uil-check"></i></button></a></td>
-                            <td style="text-align: center;"><a href=""><button class="button">Details</button></a></td>
+                            <td style="text-align: center;"><a href=""><button class="button show-details-4" data-patient-id="<?php echo $reservation->Patient_ID; ?>">Details</button></a></td>
                             </tr>
                     <?php endforeach; ?>
                     
@@ -194,6 +227,7 @@
     </section>
     <?php endif; ?>
     </div>
+    <script src="<?php echo URLROOT;?>/js/popup.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="<?php echo URLROOT?>/js/datatables.min.js"></script>
     <script>
