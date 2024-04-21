@@ -63,6 +63,21 @@
             $patient->Name = $patient->First_Name . ' ' . $patient->Last_Name;
             echo json_encode($patient);
         }
+
+        public function prescription(){
+            if(isset($_GET['patient_id'])){
+                $patient_id = $_GET['patient_id'];
+                $patient = $this->doctorModel->get_patient_details($patient_id, 'patient');
+                $patient->Age = date_diff(date_create($patient->DOB), date_create('now'))->y;
+                $data = [
+                    'patient' => $patient
+                ];
+                $this->view('doctor/prescription', $data);
+            }else{
+                redirect('page/not_found');
+            }
+            
+        }
         
         public function profile(){
             // Get user data from session

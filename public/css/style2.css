@@ -1361,3 +1361,224 @@ table thead tr{
   width: 180px;
 
 }
+
+/*Prescription*/
+
+
+.prescription form {
+  padding: 25px;
+  width: 100%;
+  border-radius: 7px;
+}
+
+.prescription form h2 {
+  font-size: 29px;
+  color: var(--grey-color-dark);
+  margin: 0px 0 30px;
+}
+
+.prescription hr{
+  border: none; 
+  height: 4px; 
+  background-color: var(--blue-color);
+  margin-top: -10px;
+}
+
+.prescription form .form-group {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.prescription form label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 7px;
+}
+
+.prescription form input, .prescription form select {
+  height: 45px;
+  padding: 10px;
+  width: 100%;
+  font-size: 15px;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid #bfbfbf;
+}
+
+.prescription form input:focus, .prescription form select:focus {
+  border-color: #9a9a9a;
+}
+
+.prescription form input.error, .prescription form select.error {
+  border-color: #f91919;
+  background: #f9f0f1;
+}
+
+.prescription form small {
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+  color: #f91919;
+}
+
+.prescription .submit-btn .button {
+  height: 45px;
+  width: 125px;
+  padding: 0%;
+  text-align: center;
+  margin-top: -50px;
+  margin-bottom: -100px;
+  margin-right: 10px;
+  background-color: var(--blue-color);
+  color: white;
+}
+
+.prescription .submit-btn .button:hover {
+  background: #1d54ec;
+}
+
+.prescription .treatment-form {
+  max-width: 600px; /* Adjust as needed */
+  margin: 0 auto; /* Center the form */
+}
+
+.prescription .treatment-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.prescription .form-group {
+  flex: 1 1 25%; /* Adjust width of form groups */
+  margin-right: 10px; /* Adjust spacing between form groups */
+}
+
+.prescription .form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.prescription .form-group input, .prescription .form-group select {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.prescription .suggestions {
+  position: absolute;
+  background-color: #fff;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 5px 0;
+}
+
+.form-group textarea {
+  width: 100%;
+}
+
+/* button {
+  margin-top: -30px;
+  margin-bottom: 30px;
+} */
+
+.prescription #add-row-btn{
+  font-size: 17px;
+  margin-top: -30px;
+  margin-bottom: 30px;
+  padding: 0%;
+  border-radius: 5px;
+  text-align: center;
+  background-color: var(--blue-color); 
+  color: white; 
+  font-weight: 600;
+  border: none; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.prescription .button{
+  height: 45px;
+  width: 125px;
+  padding-left: 5%;
+  margin-right: 10px;
+  margin-top: 8%;
+}
+
+.prescription #add-row-btn:hover{
+  background: #1d54ec;
+}
+
+.prescription #delete-row-btn{
+  font-size: 17px;
+  margin-top: -30px;
+  margin-bottom: 30px;
+  padding: 0%;
+  border-radius: 5px;
+  text-align: center;
+  background-color: red; 
+  color: white; 
+  font-weight: 600;
+  border: none; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.prescription #delete-row-btn:hover{
+  background: #cf1b1b;
+}
+
+.prescription #add-row-test-btn{
+  font-size: 17px;
+  margin-top: -30px;
+  margin-bottom: 30px;
+  padding: 0%;
+  border-radius: 5px;
+  text-align: center;
+  background-color: var(--blue-color); 
+  color: white; 
+  font-weight: 600;
+  border: none; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.prescription #add-row-test-btn:hover{
+  background: #1d54ec;
+}
+
+.prescription #delete-row-test-btn{
+  font-size: 17px;
+  margin-top: -30px;
+  margin-bottom: 30px;
+  padding: 0%;
+  border-radius: 5px;
+  text-align: center; 
+  background-color: red; 
+  color: white; 
+  font-weight: 600;
+  border: none; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.prescription #delete-row-test-btn:hover{
+  background: #cf1b1b;
+}
+
+
+/*.prescription  button {
+  margin-top: -30px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  padding: 10px 20px; 
+  background-color: #416de5; 
+  color: white; 
+  border: none; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.prescription button:hover {
+  background: #1d54ec;
+} */

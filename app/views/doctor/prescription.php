@@ -1,7 +1,4 @@
 <?php 
-  if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
   if(($_SESSION['userType']) != 'Doctor'){
     redirect("users/login");
   }
@@ -9,147 +6,282 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Prescription Form</title>
-    <link rel="stylesheet" href="<?php echo URLROOT;?>/css/form_style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><?php echo SITENAME; ?>: Past Consultations</title>
+    <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
-    <script src="<?php echo URLROOT;?>/js/form.js" defer></script>
-
-
-    <!-- Fontawesome CDN Link For Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
   </head>
   <body>
-    <form action="thank-you.html">
-      <h2>Doctor Prescription Form</h2>
-      <div class="form-group fullname">
-        <label for="fullname">Full Name</label>
-        <input type="text" id="fullname" placeholder="Enter patient's full name">
-      </div>
-      <div class="form-group age">
-        <label for="patientAge">Patient's Age</label>
-        <input type="text" id="patientAge" placeholder="Enter patient's age">
-      </div>
-     <!--- <div class="form-group medication">
-        <label for="medication">Medication</label>
-        <input type="text" id="medication" placeholder="Enter medication">
-      </div>-->
-      <div class="form-group diagnosis">
-        <label for="diagnosis">Diagnosis</label>
-        <textarea id="diagnosis" placeholder="Enter diagnosis" rows="4" cols="50" style="width: 939px; height: 65px;"></textarea>      </div>
-      </div>
-      <div class="form-group treatment" id="treatment_table">
-        <label for="treatment">Treatment</label>
-                <div id="treatment-row"  class="treatment-row">
-                    <div class="form-group">
-                        <label>Drug Name</label>
-                        <input type="text" name="drug_name[]" placeholder="Enter drug name">
-                    </div>
-                    <div class="form-group">
-                        <label>Amount</label>
-                        <input type="text" name="amount[]" placeholder="Enter amount" onkeypress="return isNumberKey(event)">
-                    </div>
-                    <div class="form-group">
-                        <label>Unit</label>
-                        <select name="amount_unit[]">
-                          <option value="mg">mcg</option>
-                            <option value="mg">mg</option>
-                            <option value="g">g</option>
-                            <option value="ml">ml</option>
-                            <option value="tsp">tsp</option>
-                            <option value="tsp">tablet</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Frequency</label>
-                        <input type="text" name="frequency[]" id="frequency_input_0" placeholder="Enter frequency" onkeyup="suggestFrequency(this, 0)">
-                        <div id="frequency_suggestions_0" class="suggestions"></div>
-                    </div>
-                    <div class="form-group">
-                        <label>Duration</label>
-                        <select name="duration[]">
-                          <option value="3 days">1 day</option>
-                          <option value="3 days">2 days</option>
-                          <option value="3 days">3 days</option>
-                            <option value="3 days">6 days</option>
-                            <option value="1 week">1 week</option>
-                            <option value="2 weeks">2 weeks</option>
-                            <option value="2 weeks">3 weeks</option>
-                            <option value="2 weeks">1 month</option>
-                            <option value="2 weeks">2 months</option>
-                            <option value="2 weeks">3 months</option>
-                            <option value="2 weeks">4 months</option>
-                            <option value="2 weeks">5 months</option>
-                            <option value="2 weeks">6 months</option>
-                        </select>
-                      
-                      
-                    </div>
-                </div>
-                <!-- You can add more rows and delete newly added row dynamically if needed -->
+
+      <div class="popup-container-4 ">
+        <div class="popup-box-4">
+            <h1>Consultation Details</h1><br>
+            <hr>
+            <table style="width: 95%;">
               
-      </div>
+              <tr>
+                <td class="popup-data">
+                  <br>
+                  <span class="category" >Patient Name: </span><span id="patient-name-popup-4">Steven Spilberg</span>
+                  <br>
+                  <span class="category">Gender: </span> <span id="patient-gender-popup-4">Male</span>
+                  <br>
+                  <span class="category">Age: </span> <span id="patient-age-popup-4">55</span>
+                  <br>
+                </td>
+                <td class="popup-data">
+                  <span class="category">Blood Group: </span> <span id="patient-blood-popup-4">A+</span>
+                  <br>
+                  <span class="category">Allergies: </span> <span id="patient-allergies-popup-4">Penicillin antibiotics</span>
+                  <br>
+                  </td>
+              </tr>
+              <tr>
+                <td class="popup-data" colspan="2">
+                    <span class="category">Comments: </span> <span id="patient-comments-popup-4">He is making impressive progress and should continue with the current regimen for optimal results. Encouragement to maintain the good work is recommended.</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="popup-data" colspan="2">
+                    <br><button class="close-btn btn" id="pay" >Prescription</button>
+                </td>
+              </tr>
+            </table>
+        </div>
+    </div>
 
-     
-      <!-- <button type="button" onclick="addRow()">Add Row</button> -->
-      
-      <div class="button-container">
-        <button id="add-row-btn" type="button" onclick="addRow()">Add Row</button>
-        <button id="delete-row-btn" type="button" onclick="deleteRow()">Delete Row</button>
-        
+    <!-- navbar -->
+    <nav class="navbar">
+      <div class="logo_item">
+        <img src="<?php echo URLROOT;?>/img/logo.png" alt=""> HealthWave
       </div>
-
-      <div class="form-group tests" id="tests-container"> <!-- Correct ID here -->
-        <label for="tests">Recommended Tests</label>
-        <select name="tests[]" id="tests"> 
-          <option value="blood test">Creatinine (with e GFR)</option>
-          <option value="urine test">CRP</option>
-          <option value="x-ray">Electrolytes</option>
-          <option value="x-ray">ESR</option>
-          <option value="x-ray">Fasting Blood Sugar</option>
-          <option value="x-ray">Full Blood Count</option>
-          <option value="x-ray">HBA1C</option>
-          <option value="x-ray">Microalbumin (Urine)</option>
-          <option value="x-ray">TSH</option>
-          <option value="x-ray">Urea</option>
-          <option value="x-ray">Urea & Electrolytes</option>
-          <option value="x-ray">Urine FR</option>
-          <option value="x-ray">Dengue Antigen</option>
-        </select>
+      <div class="navbar_content">
+        <i class='uil uil-sun' id="darkLight"></i>
+        <a href='../users/logout'><button class='button'>Logout</button></a>
       </div>
-      
-      
-      <div class="button-container">
-        <button id="add-row-test-btn" type="button">Add Row</button>
-        <button id="delete-row-test-btn" type="button">Delete Row</button>
+    </nav>
+
+   
+
+   <!--sidebar-->
+    <nav class="sidebar">
+      <div class="menu_container">
+        <div class="menu_items">
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
+            <li class="item">
+              <a href="" class="link flex">
+                <i class="uil uil-estate"></i>
+                <span>Home</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="uil uil-info-circle"></i>
+                <span>About Us</span>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
+            <li class="item">
+              <a href="../doctor/schedules" class="link flex">
+                <i class="uil uil-calendar-alt"></i>
+                <span>Schedules</span>
+              </a>
+            </li>
+            <li class="item ">
+              <a href="../doctor/consultations" class="link flex">
+              <i class="uil uil-history"></i>
+
+                <span>Past Consultations</span>
+              </a>
+            </li>
+
+            <li class="item active">
+              <a href="../doctor/ongoing_consults" class="link flex">
+                <i class="uil uil-stethoscope"></i>
+                <span>Ongoing Consultations</span>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
+            <li class="item">
+              <a href="../doctor/profile" class="link flex">
+                <i class="uil uil-user"></i>
+                <span>Profile</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="uil uil-bell"></i>
+                <span>Notifications</span>
+              </a>
+            </li>
+           
+          </ul>
+        </div>
+
+        <div class="sidebar_profile flex">
+          <span class="nav_image">
+            <img src="<?php echo URLROOT;?>/img/profile.png" alt="logo_img" />
+          </span>
+          <div class="data_text">
+            <span class="name"><?php echo $_SESSION['userName'] ?></span><br>
+            <span class="role"><?php echo $_SESSION['userType'] ?></span>
+          </div>
+        </div>
       </div>
-      
-      <div class="form-group remarks">
-        <label for="remarks">Remarks</label>
-        <textarea id="remarks" placeholder="Enter Remarks" rows="4" cols="50" style="width: 939px; height: 65px;"></textarea>      </div>
+    </nav>
 
+    <div class="content">
+        <section class="table-wrap" >
+            <div class="table-container">
+                <h1>Add Prescription</h1>
+                <hr><br>
+                <div class="prescription">
+                    <form action="" method="POST">
+                    <table style="width: 100%;" >
+                        <tr>
+                            <td>
+                                <div class="form-group fullname">
+                                    <label>Patient Name</label>
+                                    <input type="text" name="patientName" value="<?php echo $data['patient']->First_Name.' '.$data['patient']->Last_Name ?>" disabled>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group age">
+                                    <label>Patient's Age</label>
+                                    <input type="text" name="patientAge" value="<?php echo $data['patient']->Age ?>" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="form-group diagnosis">
+                                    <label for="diagnosis">Diagnosis</label>
+                                    <textarea id="diagnosis" placeholder="Enter Diagnosis" rows="4"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="form-group treatment" id="treatment_table">
+                                    <label for="treatment">Treatment</label>
+                                    <div id="treatment-row"  class="treatment-row">
+                                        <div class="form-group">
+                                            <label>Drug Name</label>
+                                            <input type="text" name="drug_name[]" placeholder="Enter drug name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Amount</label>
+                                            <input type="text" name="amount[]" placeholder="Enter amount" onkeypress="return isNumberKey(event)">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Unit</label>
+                                            <select name="amount_unit[]">
+                                            <option value="mg">mcg</option>
+                                                <option value="mg">mg</option>
+                                                <option value="g">g</option>
+                                                <option value="ml">ml</option>
+                                                <option value="tsp">tsp</option>
+                                                <option value="tsp">tablet</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Frequency</label>
+                                            <input type="text" name="frequency[]" id="frequency_input_0" placeholder="Enter frequency" onkeyup="suggestFrequency(this, 0)">
+                                            <div id="frequency_suggestions_0" class="suggestions"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Duration</label>
+                                            <select name="duration[]">
+                                            <option value="3 days">1 day</option>
+                                            <option value="3 days">2 days</option>
+                                            <option value="3 days">3 days</option>
+                                                <option value="3 days">6 days</option>
+                                                <option value="1 week">1 week</option>
+                                                <option value="2 weeks">2 weeks</option>
+                                                <option value="2 weeks">3 weeks</option>
+                                                <option value="2 weeks">1 month</option>
+                                                <option value="2 weeks">2 months</option>
+                                                <option value="2 weeks">3 months</option>
+                                                <option value="2 weeks">4 months</option>
+                                                <option value="2 weeks">5 months</option>
+                                                <option value="2 weeks">6 months</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button-container">
+                                    <button id="add-row-btn" type="button" class="button" onclick="addRow()">Add</button>
+                                    <button id="delete-row-btn" type="button" class="button red" onclick="deleteRow()">Delete</button>
+                                </div>
+                                <div class="form-group tests" id="tests-container"> <!-- Correct ID here -->
+                                    <label for="tests">Recommended Tests</label>
+                                    <select name="tests[]" id="tests"> 
+                                    <option value="">Select a test</option>
+                                    <option value="blood test">Creatinine (with e GFR)</option>
+                                    <option value="urine test">CRP</option>
+                                    <option value="x-ray">Electrolytes</option>
+                                    <option value="x-ray">ESR</option>
+                                    <option value="x-ray">Fasting Blood Sugar</option>
+                                    <option value="x-ray">Full Blood Count</option>
+                                    <option value="x-ray">HBA1C</option>
+                                    <option value="x-ray">Microalbumin (Urine)</option>
+                                    <option value="x-ray">TSH</option>
+                                    <option value="x-ray">Urea</option>
+                                    <option value="x-ray">Urea & Electrolytes</option>
+                                    <option value="x-ray">Urine FR</option>
+                                    <option value="x-ray">Dengue Antigen</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="button-container">
+                                    <button id="add-row-test-btn" type="button" class="button" >Add</button>
+                                    <button id="delete-row-test-btn" type="button" class="button red">Delete</button>
+                                </div>
+                                
+                                <div class="form-group remarks">
+                                    <label for="remarks">Remarks</label>
+                                    <textarea id="remarks" placeholder="Enter Remarks" rows="4"></textarea>
+                                </div>
 
-      <div class="form-group referals">
-        <label for="referals">Referals</label>
-        <textarea id="referals" placeholder="Enter referals" rows="4" cols="50" style="width: 939px; height: 65px;"></textarea>      </div>
-
-
-      <div class="form-group date-signed">
-        <label for="dateSigned">Date Signed</label>
-        <input type="date" id="dateSigned">
-      </div>
-      <div class="form-group doctor-signature">
-        <label for="doctorSignature">Doctor's Signature</label>
-        <input type="text" id="doctorSignature" placeholder="Enter doctor's signature">
-      </div>
-      <div class="form-group submit-btn">
-        <input type="submit" value="Submit">
-      </div>
-    </form>
-
-    <script src="form.js"></script>
+                                <div class="form-group referals">
+                                    <label for="referals">Referals</label>
+                                    <textarea id="referals" placeholder="Enter referals" rows="4"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="form-group submit-btn">
+                                    <button class="button" >Submit</button>
+                                    <button class="button" style="background-color: red;">Cancel</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    </form>
+                </div>
+            </div>
+        </section><br>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="<?php echo URLROOT;?>/js/prescription.js" defer></script>
   </body>
 </html>
