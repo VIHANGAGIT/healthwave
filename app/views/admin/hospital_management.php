@@ -212,16 +212,15 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script>
       $(document).ready(function() {
-          $('#myTable').dataTable( {
-              "bPaginate": false,
-              "bFilter": false,
-              "bInfo": false,
-              "columnDefs": [
-                {"targets": [3], "orderable": false}, // Disable ordering on the last column
-              ]
-                    
-          } );
-      } );
+            $('#myTable').dataTable({
+                "bPaginate": false, // Disable pagination
+                "bFilter": false, // Disable search/filtering
+                "bInfo": false, // Disable info text
+                "columnDefs": [
+                    { "targets": [4, 5], "orderable": false } // Disable ordering on columns 5 and 6
+                ]
+            });
+        });
     </script> 
   </body>
 </html>
