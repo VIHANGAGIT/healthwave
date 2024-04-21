@@ -43,7 +43,7 @@
               </tr>
               <tr>
                 <td class="popup-data" colspan="2">
-                    <span class="category">Comments: </span> <span id="patient-comment-popup-4">He is making impressive progress and should continue with the current regimen for optimal results. Encouragement to maintain the good work is recommended.</span>
+                    <span class="category">Comments: </span> <span id="patient-comments-popup-4">He is making impressive progress and should continue with the current regimen for optimal results. Encouragement to maintain the good work is recommended.</span>
                 </td>
               </tr>
               <tr>
@@ -171,7 +171,7 @@
                                 <td style="text-align: center;"><?php echo $consultation->First_Name. " " . $consultation->Last_Name?></td>
                                 <td style="text-align: center;"><?php echo $consultation->Hospital_Name?></td>
                                 <td style="text-align: center;"><?php echo $consultation->Date?></td>
-                                <td style="text-align: center;"><a href=""><button class="button">Details</button></a></td>
+                                <td style="text-align: center;"><a href=""><button class="button show-details-5" data-patient-id="<?php echo $consultation->Patient_ID; ?>">Details</button></a></td>
                                 </tr>
                         <?php endforeach; ?>
                     </tbody>

@@ -217,10 +217,11 @@ class Doctors{
     }
 
     public function get_past_consultations($doctorId){
-        $this->db->query('SELECT doctor_reservation.*, patient.First_Name, patient.Last_Name, hospital.Hospital_Name FROM doctor_reservation
+        $this->db->query('SELECT doctor_reservation.*, patient.First_Name, patient.Last_Name, hospital.Hospital_Name, doctor_consultation.Comments FROM doctor_reservation
         INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
         INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
         INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+        LEFT JOIN doctor_consultation ON doctor_reservation.Doc_Res_ID = doctor_consultation.Doc_Res_ID
         WHERE schedule.Doctor_ID = :doctorId AND doctor_reservation.Status = "Consulted" ORDER BY doctor_reservation.Date, doctor_reservation.Start_Time ASC');
 
         $this->db->bind(':doctorId', $doctorId);
@@ -239,8 +240,15 @@ class Doctors{
         }
     }
 
-    public function get_patient_details($patient_id){
-        $this->db->query('SELECT First_Name, Last_Name, Gender, DOB, Blood_Group, Allergies FROM patient WHERE Patient_ID = :patient_id');
+    public function get_patient_details($patient_id, $type){
+        if($type == 'past'){
+            $this->db->query('SELECT patient.First_Name, patient.Last_Name, patient.Gender, patient.DOB, patient.Blood_Group, patient.Allergies, doctor_consultation.Comments FROM patient
+            INNER JOIN doctor_reservation ON patient.Patient_ID = doctor_reservation.Patient_ID
+            INNER JOIN doctor_consultation ON doctor_reservation.Doc_Res_ID = doctor_consultation.Doc_Res_ID
+            WHERE patient.Patient_ID = :patient_id');
+        }else{
+            $this->db->query('SELECT First_Name, Last_Name, Gender, DOB, Blood_Group, Allergies FROM patient WHERE Patient_ID = :patient_id');
+        }
 
         $this->db->bind(':patient_id', $patient_id);
         $patient = $this->db->singleRow();

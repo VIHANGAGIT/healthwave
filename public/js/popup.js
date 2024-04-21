@@ -146,10 +146,74 @@ $(".show-details-4").click(function (event) {
             $.ajax({
                 url: 'get_patient_details',
                 type: 'POST',
-                data: { patient_id: patientId },
+                data: { patient_id: patientId, type: 'ongoing' },
                 success: function(response) {
                     var data = JSON.parse(response);
                     showAppointmentPopup4(data.Name, data.Gender, data.Age, data.Blood_Group, data.Allergies);
+                },
+                error: function(xhr, status, error) {
+                    alert('Failed to get patient details. Please try again.');
+                }
+            });
+        }
+        popupContainer.classList.add('active');
+
+        // Add event listener to close popup when clicking outside
+        document.addEventListener('click', closePopupOutside);
+    }
+
+    // Close popup function
+    function closePopup() {
+        popupContainer.classList.remove('active');
+        document.removeEventListener('click', closePopupOutside); // Remove event listener
+    }
+
+    // Close popup when close button is clicked
+    closeBtn.onclick = () => {
+        closePopup();
+    }
+
+    // Close popup when clicking outside the popup box
+    function closePopupOutside(event) {
+        if (!popupBox.contains(event.target) && event.target !== showPopup) {
+            closePopup();
+        }
+    }
+});
+
+$(".show-details-5").click(function (event) {
+    console.log('Button clicked');
+    event.preventDefault();
+
+    const showPopup = document.querySelector('.show-details-5');
+    const popupContainer = document.querySelector('.popup-container-4');
+    const popupBox = document.querySelector('.popup-box-4');
+    const closeBtn = document.querySelector('.close-btn');
+
+    // Function to show the popup
+    function showAppointmentPopup4(name, gender, age, bloodGroup, allergies, comments) {
+        document.getElementById('patient-name-popup-4').textContent = name;
+        document.getElementById('patient-gender-popup-4').textContent = gender;
+        document.getElementById('patient-age-popup-4').textContent = age;
+        document.getElementById('patient-blood-popup-4').textContent = bloodGroup;
+        document.getElementById('patient-allergies-popup-4').textContent = allergies;
+        document.getElementById('patient-comments-popup-4').textContent = comments;
+    }
+    
+
+    // Show popup when show button is clicked
+    showPopup.onclick = () => {
+        var patientId = $(this).data('patient-id');
+
+        if (patientId) {
+            
+            $.ajax({
+                url: 'get_patient_details',
+                type: 'POST',
+                data: { patient_id: patientId, type: 'past'},
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    showAppointmentPopup4(data.Name, data.Gender, data.Age, data.Blood_Group, data.Allergies, data.Comments);
                 },
                 error: function(xhr, status, error) {
                     alert('Failed to get patient details. Please try again.');

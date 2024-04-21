@@ -57,7 +57,8 @@
 
         public function get_patient_details(){
             $patient_id = $_POST['patient_id'];
-            $patient = $this->doctorModel->get_patient_details($patient_id);
+            $type = $_POST['type'];
+            $patient = $this->doctorModel->get_patient_details($patient_id, $type);
             $patient->Age = date_diff(date_create($patient->DOB), date_create('now'))->y;
             $patient->Name = $patient->First_Name . ' ' . $patient->Last_Name;
             echo json_encode($patient);
