@@ -177,14 +177,16 @@
         }
 
         public function test_management(){
-            $data = [];
+            $data = [
+                'tests' => $this->adminModel->getTests()
+            ];
             $this->view('admin/test_management', $data);
         }
 
         public function hospital_management(){
             $data = [
                 'hospitals' => $this->adminModel->getHospitals()
-                
+
             ];
             $this->view('admin/hospital_management', $data);
         }

@@ -64,5 +64,17 @@
                 return false;
             }
         }
+
+        public function getTests(){
+            $this->db->query('SELECT * FROM test');
+            $tests = $this->db->resultSet();
+
+            // Check if any rows were returned
+            if ($this->db->rowCount() > 0) {
+                return $tests;
+            } else {
+                return false;
+            }
+        }
    
     }

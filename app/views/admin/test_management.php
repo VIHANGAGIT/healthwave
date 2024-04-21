@@ -175,62 +175,22 @@
                             <th>Test ID</th>
                             <th>Test Name</th>
                             <th>Type</th>
-                            <!--<th>Price</th>-->
                             <th>Update Test</th>
                             <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
+                         <?php foreach($data['tests'] as $test) : ?>
                         <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td><a href='update_test'><button class='button'>Update</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
+                          <td><?php echo $test->Test_ID; ?></td>
+                          <td><?php echo $test->Test_Name; ?></td>
+                          <td><?php echo $test->Test_Type; ?></td>
+                          <td><a href="update_test/<?php echo $test->Test_ID; ?>"><button class="button">Update</button></a></td>
+                          <td><a href="remove_test/<?php echo $test->Test_ID; ?>"><button class="button" style="background-color: red;">Remove</button></a></td>
                         </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td><a href=''><button class='button'>Update</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td><a href=''><button class='button'>Update</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td><a href=''><button class='button'>Update</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td><a href=''><button class='button'>Update</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td><a href=''><button class='button'>Update</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td><a href=''><button class='button'>Update</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                    </tbody>
+                        <?php endforeach; ?>
+
+                      </tbody>
                 </table>
             </div>
         </section>

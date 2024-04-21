@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
@@ -169,26 +171,26 @@
     <section class="table-wrap" >
             <div class="table-container">
                 <h1>Doctor Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_doctor'><button class='button'>Add Doctor</button></a></span></h1>
-                <table class="table">
+                <table  id="myTable" class="table">
                     <thead>
                         <tr>
-                            <th>Doctor ID</th>
-                            <th>Doctor Name</th>
-                            <th>Specialization</th>
-                            <th>NIC</th>
-                            <th>SLMC Reg No</th>
-                            <th>Remove</th>
+                            <th style="text-align: center;">Doctor ID</th>
+                            <th style="text-align: center;">Doctor Name</th>
+                            <th style="text-align: center;">Specialization</th>
+                            <th style="text-align: center;">NIC</th>
+                            <th style="text-align: center;">SLMC Reg No</th>
+                            <th style="text-align: center;">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php foreach($data['doctors'] as $doctor): ?>
       <tr>
-        <td><?php echo $doctor->Doctor_ID; ?></td>
-        <td><?php echo $doctor->First_Name . " " . $doctor->Last_Name; ?></td>
-        <td><?php echo $doctor->Specialization; ?></td>
-        <td><?php echo $doctor->NIC; ?></td>
-        <td><?php echo $doctor->SLMC_Reg_No; ?></td>
-        <td><a href='remove_doctor/<?php echo $doctor->Doctor_ID; ?>'><button class='button' style='background-color: red;'>Remove</button></a></td>
+        <td style="text-align: center;"><?php echo $doctor->Doctor_ID; ?></td>
+        <td style="text-align: center;"><?php echo $doctor->First_Name . " " . $doctor->Last_Name; ?></td>
+        <td style="text-align: center;"><?php echo $doctor->Specialization; ?></td>
+        <td style="text-align: center;"><?php echo $doctor->NIC; ?></td>
+        <td style="text-align: center;"><?php echo $doctor->SLMC_Reg_No; ?></td>
+        <td style="text-align: center;"><a href='remove_doctor/<?php echo $doctor->Doctor_ID; ?>'><button class='button' style='background-color: red;'>Remove</button></a></td>
       </tr>
     <?php endforeach; ?>
 
@@ -197,5 +199,21 @@
             </div>
         </section>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#myTable').dataTable( {
+              "bPaginate": false,
+              "bFilter": false,
+              "bInfo": false,
+              "columnDefs": [
+                {"targets": [5], "orderable": false}, // Disable ordering on the last column
+              ]
+                    
+          } );
+      } );
+    </script> 
+
   </body>
 </html>
