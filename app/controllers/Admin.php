@@ -170,7 +170,9 @@
         }
 
         public function doc_management(){
-            $data = [];
+            $data = [
+                'doctors' => $this->adminModel->getDoctors()
+            ];
             $this->view('admin/doc_management', $data);
         }
 

@@ -40,5 +40,17 @@
                 return false;
             }
         }
+
+        public function getDoctors(){
+            $this->db->query('SELECT * FROM doctor');
+            $doctors = $this->db->resultSet();
+
+            // Check if any rows were returned
+            if ($this->db->rowCount() > 0) {
+                return $doctors;
+            } else {
+                return false;
+            }
+        }
    
     }

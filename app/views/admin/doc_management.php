@@ -181,62 +181,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
+                    <?php foreach($data['doctors'] as $doctor): ?>
+      <tr>
+        <td><?php echo $doctor->Doctor_ID; ?></td>
+        <td><?php echo $doctor->First_Name . " " . $doctor->Last_Name; ?></td>
+        <td><?php echo $doctor->Specialization; ?></td>
+        <td><?php echo $doctor->NIC; ?></td>
+        <td><?php echo $doctor->SLMC_Reg_No; ?></td>
+        <td><a href='remove_doctor/<?php echo $doctor->Doctor_ID; ?>'><button class='button' style='background-color: red;'>Remove</button></a></td>
+      </tr>
+    <?php endforeach; ?>
+
                     </tbody>
                 </table>
             </div>
