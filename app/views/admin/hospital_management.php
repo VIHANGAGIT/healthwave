@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
@@ -175,26 +177,26 @@
     <section class="table-wrap" >
     <div class="table-container">
                 <h1>Hospitals Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_hospital'><button class='button'>Add Hospital</button></a></span></h1> 
-                <table class="table">
+                <table  id="myTable" class="table">
                     <thead>
                         <tr>
-                            <th>Hospital ID</th>
-                            <th>Hospital Name</th>
-                            <th>Address</th>
-                            <th>Reigon</th>
-                            <th>Edit</th>
-                            <th>Remove</th>
+                            <th style="text-align: center;">Hospital ID</th>
+                            <th style="text-align: center;">Hospital Name</th>
+                            <th style="text-align: center;">Address</th>
+                            <th style="text-align: center;">Reigon</th>
+                            <th style="text-align: center;">Edit</th>
+                            <th style="text-align: center;">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php foreach($data['hospitals'] as $hospital): ?>
     <tr>
-        <td><?php echo $hospital->Hospital_ID; ?></td>
-        <td><?php echo $hospital->Hospital_Name; ?></td>
-        <td><?php echo $hospital->Address; ?></td>
-        <td><?php echo $hospital->Region; ?></td>
-        <td><a href='edit_hospital?id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
-        <td><a href='remove_hospital?id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Remove</button></a></td>
+        <td style="text-align: center;"><?php echo $hospital->Hospital_ID; ?></td>
+        <td style="text-align: center;"><?php echo $hospital->Hospital_Name; ?></td>
+        <td style="text-align: center;"><?php echo $hospital->Address; ?></td>
+        <td style="text-align: center;"><?php echo $hospital->Region; ?></td>
+        <td style="text-align: center;"><a href='edit_hospital?id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
+        <td style="text-align: center;"><a href='remove_hospital?id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Remove</button></a></td>
     </tr>
 <?php endforeach; ?>
 
@@ -206,5 +208,20 @@
             </div>
         </section>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#myTable').dataTable( {
+              "bPaginate": false,
+              "bFilter": false,
+              "bInfo": false,
+              "columnDefs": [
+                {"targets": [3], "orderable": false}, // Disable ordering on the last column
+              ]
+                    
+          } );
+      } );
+    </script> 
   </body>
 </html>
