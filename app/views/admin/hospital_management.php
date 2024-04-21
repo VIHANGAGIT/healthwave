@@ -187,61 +187,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>12223</td>
-                            <td>Asiri Hospitals - Kirula Rd.</td>
-                            <td>No. 12/2 Kirula Rd.</td>
-                            <td>Colombo</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Asiri Hospitals - Kirula Rd.</td>
-                            <td>No. 12/2 Kirula Rd.</td>
-                            <td>Colombo</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Asiri Hospitals - Kirula Rd.</td>
-                            <td>No. 12/2 Kirula Rd.</td>
-                            <td>Colombo</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Asiri Hospitals - Kirula Rd.</td>
-                            <td>No. 12/2 Kirula Rd.</td>
-                            <td>Colombo</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Asiri Hospitals - Kirula Rd.</td>
-                            <td>No. 12/2 Kirula Rd.</td>
-                            <td>Colombo</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Asiri Hospitals - Kirula Rd.</td>
-                            <td>No. 12/2 Kirula Rd.</td>
-                            <td>Colombo</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>12223</td>
-                            <td>Asiri Hospitals - Kirula Rd.</td>
-                            <td>No. 12/2 Kirula Rd.</td>
-                            <td>Colombo</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
+                    <?php foreach($data['hospitals'] as $hospital): ?>
+    <tr>
+        <td><?php echo $hospital->Hospital_ID; ?></td>
+        <td><?php echo $hospital->Hospital_Name; ?></td>
+        <td><?php echo $hospital->Address; ?></td>
+        <td><?php echo $hospital->Region; ?></td>
+        <td><a href='edit_hospital?id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
+        <td><a href='remove_hospital?id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Remove</button></a></td>
+    </tr>
+<?php endforeach; ?>
+
+
+
                         </tr>
                     </tbody>
                 </table>

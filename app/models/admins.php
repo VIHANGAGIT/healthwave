@@ -52,5 +52,17 @@
                 return false;
             }
         }
+
+        public function getHospitals(){
+            $this->db->query('SELECT * FROM hospital');
+            $hospitals = $this->db->resultSet();
+
+            // Check if any rows were returned
+            if ($this->db->rowCount() > 0) {
+                return $hospitals;
+            } else {
+                return false;
+            }
+        }
    
     }

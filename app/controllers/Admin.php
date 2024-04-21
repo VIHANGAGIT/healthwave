@@ -182,7 +182,10 @@
         }
 
         public function hospital_management(){
-            $data = [];
+            $data = [
+                'hospitals' => $this->adminModel->getHospitals()
+                
+            ];
             $this->view('admin/hospital_management', $data);
         }
 
