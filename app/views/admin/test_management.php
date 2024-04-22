@@ -188,7 +188,11 @@
                           <td style="text-align: center;"><?php echo $test->Test_Name; ?></td>
                           <td style="text-align: center;"><?php echo $test->Test_Type; ?></td>
                           <td style="text-align: center;"><a href="update_test?test_id=<?php echo $test->Test_ID; ?>"><button class="button">Update</button></a></td>
-                          <td style="text-align: center;"><a href="remove_test?test_id=<?php echo $test->Test_ID; ?>"><button class="button" style="background-color: red;">Remove</button></a></td>
+                          <td style="text-align: center;">
+                          <a href='remove_test?test_id=<?php echo $test->Test_ID; ?>' onclick="confirmRemove(event)">
+                              <button class='button red'>Remove</button>
+                          </a>
+                      </td>
                         </tr>
                         <?php endforeach; ?>
 
@@ -211,5 +215,20 @@
             });
         });
     </script>
+    <script>
+    function confirmRemove(event) {
+        event.preventDefault(); // Prevent the default action of the link
+        
+        // Display a confirmation dialog
+        if (window.confirm('Are you sure you want to remove?')) {
+            // If confirmed, proceed with the removal action
+            window.location.href = event.target.closest('a').href;
+        } else {
+            // If not confirmed, do nothing
+            return false;
+        }
+    }
+</script>
+
   </body>
 </html>
