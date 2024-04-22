@@ -180,4 +180,81 @@
                 return false;
             }
         }
+
+        public function hospital_data_fetch($id){
+            $this->db->query('SELECT * FROM hospital WHERE Hospital_ID = :id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':id', $id);
+            $hospitalRow = $this->db->singleRow();
+
+            // Execute query
+            if($this->db->execute()){
+                return $hospitalRow;
+            } else{
+                return false;
+            }
+        }
+
+        public function edit_hospital($data){
+            $this->db->query('UPDATE hospital SET Hospital_Name = :H_name, Address = :H_address, Region = :Region, Charge = :H_charge, Mng_ID = :M_ID, Contact_No = :C_num WHERE Hospital_ID = :H_ID');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':H_name', $data['H_name']);
+            $this->db->bind(':H_address', $data['H_address']);
+            $this->db->bind(':Region', $data['Region']);
+            $this->db->bind(':H_charge', $data['H_charge']);
+            $this->db->bind(':M_ID', $data['M_ID']);
+            $this->db->bind(':H_ID', $data['H_ID']);
+            $this->db->bind(':C_num', $data['C_num']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function remove_test(){
+            $this->db->query('DELETE FROM test WHERE Test_ID = :id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':id', $_GET['test_id']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function remove_doctor(){
+            $this->db->query('DELETE FROM doctor WHERE Doctor_ID = :id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':id', $_GET['doc_id']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function remove_hospital(){
+            $this->db->query('DELETE FROM hospital WHERE Hospital_ID = :id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':id', $_GET['hospital_id']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
     }        

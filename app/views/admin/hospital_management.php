@@ -195,8 +195,8 @@
         <td style="text-align: center;"><?php echo $hospital->Hospital_Name; ?></td>
         <td style="text-align: center;"><?php echo $hospital->Address; ?></td>
         <td style="text-align: center;"><?php echo $hospital->Region; ?></td>
-        <td style="text-align: center;"><a href='edit_hospital?id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
-        <td style="text-align: center;"><a href='remove_hospital?id=<?php echo $hospital->Hospital_ID; ?>'><button class='button red'>Remove</button></a></td>
+        <td style="text-align: center;"><a href='edit_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
+        <td style="text-align: center;"><a href='remove_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>'><button class='button red'>Remove</button></a></td>
     </tr>
 <?php endforeach; ?>
 

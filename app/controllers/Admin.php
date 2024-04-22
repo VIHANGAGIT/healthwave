@@ -521,10 +521,118 @@
         }
     
         public function edit_hospital(){
-            $data = [];
-            $this->view('admin/edit_hospital', $data);
+            //check for POST request
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Sanitize POST array
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                //add test
+                $data = [
+                    'H_ID' => $_POST['hid'],
+                    'H_name' => trim($_POST['hname']),
+                    'H_address' => trim($_POST['haddress']),
+                    'Region' => trim($_POST['region']),
+                    'H_charge' => trim($_POST['hcharge']),
+                    'M_ID' => trim($_POST['managerid']),
+                    'C_num' => trim($_POST['cnum']),
+                    'H_name_err' => '',
+                    'H_address_err' => '',
+                    'Region_err' => '',
+                    'H_charge_err' => '',
+                    'M_ID_err' => '',
+                    'C_num_err' => ''
+                ];
+
+                // Validate Hospital Name
+                if(empty($data['H_name'])){
+                    $data['H_name_err'] = 'Please enter hospital name';
+                }
+
+                // Validate Hospital Address
+                if(empty($data['H_address'])){
+                    $data['H_address_err'] = 'Please enter hospital address';
+                }
+
+                // Validate Region
+                if(empty($data['Region'])){
+                    $data['Region_err'] = 'Please enter region';
+                }
+
+                // Validate Hospital Charge
+                if(empty($data['H_charge'])){
+                    $data['H_charge_err'] = 'Please enter hospital charge';
+                }
+
+                // Validate Manager ID
+                if(empty($data['M_ID'])){
+                    $data['M_ID_err'] = 'Please enter manager ID';
+                }
+
+                // Validate Contact Number
+                if(empty($data['C_num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                }
+
+                // Check whether errors are empty
+                if(empty($data['H_name_err']) && empty($data['H_address_err']) && empty($data['Region_err']) && empty($data['H_charge_err']) && empty($data['M_ID_err']) && empty($data['C_num_err'])){
+                    // Register user
+                    if($this->adminModel->edit_hospital($data)){
+                        redirect('admin/hospital_management');
+                    } else{
+                        die("Couldn't register the hospital! ");
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('admin/edit_hospital', $data);
+                }
+
+            }else{
+                
+                $hospital_id = $_GET['hospital_id'];
+
+                $hospital_data = $this->adminModel->hospital_data_fetch($hospital_id);
+                
+                $data = [
+                    'H_ID' => $hospital_data->Hospital_ID,
+                    'H_name' => $hospital_data->Hospital_Name,
+                    'H_address' => $hospital_data->Address,
+                    'Region' => $hospital_data->Region,
+                    'H_charge' => $hospital_data->Charge,
+                    'M_ID' => $hospital_data->Mng_ID,
+                    'C_num' => $hospital_data->Contact_No
+                ];
+                
+                // Load view
+                $this->view('admin/edit_hospital', $data);
+            }
+         
+           }
+           
+           public function remove_test(){
+            $test_id = $_GET['test_id'];
+            if($this->adminModel->remove_test($test_id)){
+                redirect('admin/test_management');
+            } else{
+                die("Couldn't remove the test! ");
+            }    
+    }
+
+        public function remove_doctor(){
+            $doc_id = $_GET['doc_id'];
+            if($this->adminModel->remove_doctor($doc_id)){
+                redirect('admin/doc_management');
+            } else{
+                die("Couldn't remove the doctor! ");
+            }    
         }
 
-        
+        public function remove_hospital(){
+            $hospital_id = $_GET['hospital_id'];
+            if($this->adminModel->remove_hospital($hospital_id)){
+                redirect('admin/hospital_management');
+            } else{
+                die("Couldn't remove the hospital! ");
+            }    
+        }
     }
 ?>
