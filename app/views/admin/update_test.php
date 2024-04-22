@@ -41,6 +41,12 @@
                             <option>CT Scan</option>
                             <option>Urine Test</option>
                             <option>MRI Scan</option>
+                            <option>ECG</option>
+                            <option>Endoscopy</option>
+                            <option>Colonoscopy</option>
+                            <option>Biopsy</option>
+                            <option>Ultrasound</option>
+                            <option>X-Ray</option>
                                 
 
                             </select>
