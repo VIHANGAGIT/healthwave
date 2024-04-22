@@ -118,4 +118,19 @@
                 return false;
             }
         }
+
+        public function add_test($data){
+            $this->db->query('INSERT INTO test (Test_Name, Test_Type) VALUES (:T_name, :T_type)');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':T_name', $data['T_name']);
+            $this->db->bind(':T_type', $data['T_type']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
     }
