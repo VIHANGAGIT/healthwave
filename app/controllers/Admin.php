@@ -466,7 +466,10 @@
             $this->view('admin/update_test', $data);
         }
         
-        
+        public function edit_hospital(){
+            $data = [];
+            $this->view('admin/edit_hospital', $data);
+        }
 
         
     }
