@@ -123,6 +123,17 @@
             }
             
         }
+
+        public function add_consultations(){
+            $resId = $_POST['res_id'];
+            $comments = $_POST['comments'];
+            $consultationId = $this->doctorModel->add_consultation($resId, null, $comments);
+            if($consultationId){
+                redirect('doctor/ongoing_consults');
+            }else{
+                echo 'error';
+            }
+        }
         
         public function profile(){
             // Get user data from session

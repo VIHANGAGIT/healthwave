@@ -241,6 +241,64 @@ $(".show-details-5").click(function (event) {
     }
 });
 
+$(".show-details-6").click(function (event) {
+    console.log('Button clicked');
+    event.preventDefault();
+
+    const showPopup = $(this);
+    const popupContainer = document.querySelector('.popup-container-6');
+    const popupBox = document.querySelector('.popup-box-6');
+    const closeBtn = document.querySelector('.close-btn');
+    var reservationId = $(this).data('res-id');
+    
+    popupContainer.classList.add('active');
+
+    // Add event listener to close popup when clicking outside
+    document.addEventListener('click', closePopupOutside);
+
+    $("#add_consult").click(function (event) {
+        event.preventDefault();
+        var comments = document.getElementById('comments').value;
+    
+        if (reservationId) {
+            
+            $.ajax({
+                url: 'add_consultations',
+                type: 'POST',
+                data: { res_id: reservationId, comments: comments},
+                success: function(response) {
+                    alert('Consultation Added.');
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert('Failed to add consultation. Please try again.');
+                }
+            });
+        }
+    });
+    
+
+    // Close popup function
+    function closePopup() {
+        popupContainer.classList.remove('active');
+        document.removeEventListener('click', closePopupOutside); // Remove event listener
+    }
+
+    // Close popup when close button is clicked
+    closeBtn.onclick = () => {
+        closePopup();
+    }
+
+    // Close popup when clicking outside the popup box
+    function closePopupOutside(event) {
+        if (!popupBox.contains(event.target) && !showPopup.is(event.target)) {
+            closePopup();
+        }
+    }
+});
+
+
+
 $("#cancel").click(function (event) {
     event.preventDefault();
     window.location.href = '/healthwave/patient/doc_booking';

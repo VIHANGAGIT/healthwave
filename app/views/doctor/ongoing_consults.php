@@ -50,6 +50,26 @@
         </div>
     </div>
 
+    <div class="popup-container-6">
+        <div class="popup-box-6">
+            <h1>Complete without Prescription</h1><br>
+            <hr>
+            <table style="width: 95%;">
+              <tr>
+                <td class="popup-data">
+                  <br>
+                  <form action="" method="POST">
+                    <span class="category" >Comments: </span><br>
+                    <textarea name="comments" id="comments" rows="4" placeholder="Add comments here" required></textarea>
+                    <br><br>
+                    <button class="close-btn btn" id="add_consult" >Complete</button>
+                  </form>
+                </td>
+              </tr>
+            </table>
+        </div>
+    </div>
+
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -214,7 +234,7 @@
                             <td style="text-align: center;"><?php echo $reservation->Age?></td>
                             <td style="text-align: center;"><?php echo $reservation->Start_Time. " - " . $reservation->End_Time?></td>
                             <td style="text-align: center;"><a href="prescription?patient_id=<?php echo $reservation->Patient_ID;?>&res_id=<?php echo $reservation->Doc_Res_ID?>"><button class="button" style="width: 50px;"><i class="uil uil-plus"></i></button></a></td>
-                            <td style="text-align: center;"><a href=""><button class="button" style="width: 50px;"><i class="uil uil-check"></i></button></a></td>
+                            <td style="text-align: center;"><button class="button show-details-6" data-res-id="<?php echo $reservation->Doc_Res_ID; ?>" style="width: 50px;"><i class="uil uil-check"></i></button></td>
                             <td style="text-align: center;"><button class="button show-details-4" data-patient-id="<?php echo $reservation->Patient_ID; ?>">Details</button></td>
                             </tr>
                     <?php endforeach; ?>
