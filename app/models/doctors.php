@@ -261,19 +261,28 @@ class Doctors{
     }
 
     public function add_consultation($res_id, $prescription_id, $comments){
-        $this->db->query('INSERT INTO doctor_consultation(Doc_Res_ID, Prescription_ID, Comments) VALUES(:res_id, :prescription_id, :comments)');
+        $this->db->query('UPDATE doctor_reservation SET Status = "Consulted" WHERE Doc_Res_ID = :res_id');
 
         $this->db->bind(':res_id', $res_id);
-        $this->db->bind(':prescription_id', $prescription_id);
-        $this->db->bind(':comments', $comments);
-
+        
         if($this->db->execute()){
-            $this->db->query('SELECT LAST_INSERT_ID() AS consultation_id');
-            $row = $this->db->singleRow();
-            return $row->consultation_id;
-        } else{
+            $this->db->query('INSERT INTO doctor_consultation(Doc_Res_ID, Prescription_ID, Comments) VALUES(:res_id, :prescription_id, :comments)');
+
+            $this->db->bind(':res_id', $res_id);
+            $this->db->bind(':prescription_id', $prescription_id);
+            $this->db->bind(':comments', $comments);
+
+            if($this->db->execute()){
+                $this->db->query('SELECT LAST_INSERT_ID() AS consultation_id');
+                $row = $this->db->singleRow();
+                return $row->consultation_id;
+            } else{
+                return false;
+            }
+        }else{
             return false;
         }
+        
     }
 
     public function add_prescription($consultationId, $diagnosis, $remarks, $referral, $drugDetails, $testDetails){

@@ -115,7 +115,7 @@
 
                 $this->doctorModel->add_prescription($consultationId, $diagnosis, $remarks, $referral, $drugDetails, $testDetails);
 
-                // redirect('doctor/ongoing_consults');
+                redirect('doctor/ongoing_consults');
 
                 
             }else{
