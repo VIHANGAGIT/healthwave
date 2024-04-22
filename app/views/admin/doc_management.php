@@ -195,6 +195,7 @@
           <button class='button' style='background-color: red;'>Remove</button>
         </a>
       </td>
+
       </tr>
     <?php endforeach; ?>
 
