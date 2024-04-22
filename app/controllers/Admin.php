@@ -462,7 +462,61 @@
         }
 
         public function update_test() {
-            $data = [];
+            
+
+             //check for POST request
+             if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Sanitize POST array
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                //add test
+                $data = [
+                    'ID' => $_POST['testid'],
+                    'T_name' => trim($_POST['testname']),
+                    'T_type' => trim($_POST['testtype']),
+                    'T_name_err' => '',
+                    'T_type_err' => ''
+                ];
+
+                // Validate Test Name
+                if(empty($data['T_name'])){
+                    $data['Test_Name_err'] = 'Please enter test name';
+                }
+
+                // Validate Test Type
+                if(empty($data['T_type'])){
+                    $data['T_type_err'] = 'Please enter test type';
+                }
+
+                // Check whether errors are empty
+                if(empty($data['Test_Name_err']) && empty($data['T_type_err'])){
+                    // Register user
+                    if($this->adminModel->update_test($data)){
+                        redirect('admin/test_management');
+                    } else{
+                        die("Couldn't update the test! ");
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('admin/update_test', $data);
+                }
+
+            }else{
+                $test_id = $_GET['test_id'];
+
+                $test_data = $this->adminModel->test_data_fetch($test_id);
+                
+                $data = [
+                    'ID' => $test_data->Test_ID,
+                    'T_name' => $test_data->Test_Name,
+                    'T_type' => $test_data->Test_Type
+                ];
+                
+                // Load view
+                $this->view('admin/update_test', $data);
+            }
+
+            // Load view
             $this->view('admin/update_test', $data);
         }
     

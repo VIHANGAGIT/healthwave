@@ -187,8 +187,8 @@
                           <td style="text-align: center;"><?php echo $test->Test_ID; ?></td>
                           <td style="text-align: center;"><?php echo $test->Test_Name; ?></td>
                           <td style="text-align: center;"><?php echo $test->Test_Type; ?></td>
-                          <td style="text-align: center;"><a href="update_test/<?php echo $test->Test_ID; ?>"><button class="button">Update</button></a></td>
-                          <td style="text-align: center;"><a href="remove_test/<?php echo $test->Test_ID; ?>"><button class="button" style="background-color: red;">Remove</button></a></td>
+                          <td style="text-align: center;"><a href="update_test?test_id=<?php echo $test->Test_ID; ?>"><button class="button">Update</button></a></td>
+                          <td style="text-align: center;"><a href="remove_test?test_id=<?php echo $test->Test_ID; ?>"><button class="button" style="background-color: red;">Remove</button></a></td>
                         </tr>
                         <?php endforeach; ?>
 

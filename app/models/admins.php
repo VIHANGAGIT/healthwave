@@ -150,4 +150,34 @@
             }
         }
       
+        public function test_data_fetch($id){
+            $this->db->query('SELECT * FROM test WHERE Test_ID = :id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':id', $id);
+            $testRow = $this->db->singleRow();
+
+            // Execute query
+            if($this->db->execute()){
+                return $testRow;
+            } else{
+                return false;
+            }
+        }
+
+        public function update_test($data){
+            $this->db->query('UPDATE test SET Test_Name = :T_name, Test_Type = :T_type WHERE Test_ID = :Test_ID');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':T_name', $data['T_name']);
+            $this->db->bind(':T_type', $data['T_type']);
+            $this->db->bind(':Test_ID', $data['ID']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
     }        
