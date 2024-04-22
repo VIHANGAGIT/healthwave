@@ -19,11 +19,11 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Doctor Profile Update</title>
+   <title>Admin Profile Update</title>
 </head>
 <body>
     <div class="container-signup" style="height: 720px;" >
-        <header>Doctor Profile Update</header>
+        <header>Admin Profile Update</header>
 
         <form action="<?php echo URLROOT; ?>/admin/profile_update" method="POST" style="height: 600px;">
             <div class="form first" >
