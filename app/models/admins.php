@@ -133,4 +133,20 @@
                 return false;
             }
         }
+
+        // Check for duplicate Username entries
+        public function findUserByUname($uname){
+            $this->db->query('SELECT Username FROM patient WHERE Username = :uname UNION SELECT Username FROM doctor WHERE Username = :uname UNION SELECT Username FROM admin WHERE Username = :uname UNION SELECT Username FROM hospital_staff WHERE Username = :uname');
+            
+             // Binding parameters for the prepaired statement
+            $this->db->bind(':uname', $uname);
+
+            $row = $this->db->singleRow();
+
+            if($this->db->rowCount() > 0){
+                return true;
+            } else{
+                return false;
+            }
+        }
     }

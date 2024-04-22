@@ -323,9 +323,9 @@
                     $data['Uname_err'] = 'Please enter your email';
                 } else{
                     // Check for duplicates
-                    /*if($this->adminModel->findUserByUname($data['Uname'])){
+                    if($this->adminModel->findUserByUname($data['Uname'])){
                         $data['Uname_err'] = 'Another account already has this email';
-                    }*/
+                    }
                 }
 
                 // Validate Password
