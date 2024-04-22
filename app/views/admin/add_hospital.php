@@ -17,7 +17,7 @@
     <div class="container-signup" style="height: 720px;" >
         <header>Hospital Registration</header>
 
-        <form action="<?php //echo URLROOT; ?>/users/register_doctor" method="POST" style="height: 600px;">
+        <form action="<?php echo URLROOT; ?>/admin/add_hospital" method="POST" style="height: 600px;">
             <div class="form first" >
                 <div class="details personal">
                     <span class="title">Hospital Details</span>
@@ -25,19 +25,19 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Hospital Name*</label>
-                            <input type="text" placeholder="Enter hospital name" name="hname" value="<?php //echo $data['F_name'] ?>" required>
+                            <input type="text" placeholder="Enter hospital name" name="hname" value="<?php echo $data['H_name'] ?>" required>
                         </div>
 
                         <div class="input-field">
                             <label>Address*</label>
-                            <input type="text" placeholder="Enter hospital adress" name="hadress" value="<?php //echo $data['L_name'] ?>" required>
+                            <input type="text" placeholder="Enter hospital adress" name="haddress" value="<?php echo $data['H_address'] ?>" required>
                         </div>
 
                         <div class="input-field">
                             <label>Region*</label>
 
                             <select name="region" required>
-                            <option selected value="<?php //echo $data['Gender'] ?>" > <?php //echo ($data['Gender'] == '') ? 'Select region' : $data['Gender'] ?></option>
+                            <option selected value="<?php echo $data['Region'] ?>" > <?php echo ($data['Region'] == '') ? 'Select region' : $data['Region'] ?></option>
                                 <option>Colombo</option>
                                 <option>Kandy</option>
                                 <option>Galle</option>
@@ -55,16 +55,16 @@
 
                         <div class="input-field">
                             <label>Hospital Charge*</label>
-                            <input type="text" placeholder="Enter hospital charge" name="hcharge" value="<?php //echo $data['DOB'] ?>" required>
+                            <input type="text" placeholder="Enter hospital charge" name="hcharge" value="<?php echo $data['H_charge'] ?>" required>
                         </div>
 
                         <div class="input-field">
                             <label>Manager ID*</label>
-                            <input type="text" placeholder="Enter Manager ID" name="managerid" value="<?php //echo $data['NIC'] ?>" required>
+                            <input type="text" placeholder="Enter Manager ID" name="managerid" value="<?php echo $data['M_ID'] ?>" required>
                         </div>
                         <div class="input-field">
                             <label>Contact Number*</label>
-                            <input type="text" placeholder="Enter hospital contact number" name="cnum" value="<?php //echo $data['C_num'] ?>" required>
+                            <input type="text" placeholder="Enter hospital contact number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
                         </div>
                     </div>
                 </div>
