@@ -190,7 +190,11 @@
         <td style="text-align: center;"><?php echo $doctor->Specialization; ?></td>
         <td style="text-align: center;"><?php echo $doctor->NIC; ?></td>
         <td style="text-align: center;"><?php echo $doctor->SLMC_Reg_No; ?></td>
-        <td style="text-align: center;"><a href='remove_doctor?doc_id=<?php echo $doctor->Doctor_ID; ?>'><button class='button' style='background-color: red;'>Remove</button></a></td>
+        <td style="text-align: center;">
+        <a href="#" onclick="confirmRemove('<?php echo $doctor->Doctor_ID; ?>')">
+          <button class='button' style='background-color: red;'>Remove</button>
+        </a>
+      </td>
       </tr>
     <?php endforeach; ?>
 
@@ -214,6 +218,19 @@
           } );
       } );
     </script> 
+
+<script>
+  function confirmRemove(doctorId) {
+    if (confirm('Are you sure you want to remove?')) {
+      // If user confirms, redirect to the remove doctor page
+      window.location.href = 'remove_doctor?doc_id=' + doctorId;
+    } else {
+      // If user cancels, do nothing
+      return false;
+    }
+  }
+</script>
+
 
   </body>
 </html>
