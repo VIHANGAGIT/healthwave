@@ -196,7 +196,11 @@
         <td style="text-align: center;"><?php echo $hospital->Address; ?></td>
         <td style="text-align: center;"><?php echo $hospital->Region; ?></td>
         <td style="text-align: center;"><a href='edit_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
-        <td style="text-align: center;"><a href='remove_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>'><button class='button red'>Remove</button></a></td>
+        <td style="text-align: center;">
+        <a href='remove_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>' onclick="confirmRemove(event)">
+            <button class='button red'>Remove</button>
+        </a>
+    </td>
     </tr>
 <?php endforeach; ?>
 
@@ -222,5 +226,20 @@
             });
         });
     </script> 
+    <script>
+    function confirmRemove(event) {
+        event.preventDefault(); // Prevent the default action of the link
+        
+        // Display a confirmation dialog
+        if (window.confirm('Are you sure you want to remove?')) {
+            // If confirmed, proceed with the removal action
+            window.location.href = event.target.closest('a').href;
+        } else {
+            // If not confirmed, do nothing
+            return false;
+        }
+    }
+</script>
+
   </body>
 </html>
