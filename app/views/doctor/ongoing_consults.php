@@ -215,7 +215,7 @@
                             <td style="text-align: center;"><?php echo $reservation->Start_Time. " - " . $reservation->End_Time?></td>
                             <td style="text-align: center;"><a href="prescription?patient_id=<?php echo $reservation->Patient_ID;?>"><button class="button" style="width: 50px;"><i class="uil uil-plus"></i></button></a></td>
                             <td style="text-align: center;"><a href=""><button class="button" style="width: 50px;"><i class="uil uil-check"></i></button></a></td>
-                            <td style="text-align: center;"><a href=""><button class="button show-details-4" data-patient-id="<?php echo $reservation->Patient_ID; ?>">Details</button></a></td>
+                            <td style="text-align: center;"><button class="button show-details-4" data-patient-id="<?php echo $reservation->Patient_ID; ?>">Details</button></td>
                             </tr>
                     <?php endforeach; ?>
                     

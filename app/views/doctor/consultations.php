@@ -153,7 +153,7 @@
             <div class="table-container">
               <h1>Past Consulations</h1>
               <hr><br>
-              <table id="myTable" class="table">
+              <table id="past-consults-table" class="table">
                     <thead>
                         <tr>
                             
@@ -171,7 +171,7 @@
                                 <td style="text-align: center;"><?php echo $consultation->First_Name. " " . $consultation->Last_Name?></td>
                                 <td style="text-align: center;"><?php echo $consultation->Hospital_Name?></td>
                                 <td style="text-align: center;"><?php echo $consultation->Date?></td>
-                                <td style="text-align: center;"><a href=""><button class="button show-details-5" data-patient-id="<?php echo $consultation->Patient_ID; ?>">Details</button></a></td>
+                                <td style="text-align: center;"><button class="button show-details-5" data-patient-id="<?php echo $consultation->Patient_ID; ?>">Details</button></td>
                                 </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -185,7 +185,7 @@
     <script src="<?php echo URLROOT;?>/js/popup.js" defer></script>
     <script>
       $(document).ready(function() {
-          $('#myTable').dataTable( {
+          $('#past-consults-table').dataTable( {
               "bPaginate": false,
               "bFilter": false,
               "bInfo": false,
