@@ -23,22 +23,22 @@
                     <span class="title">Test Details</span>
 
                     <div class="fields">
-                        <div class="input-field">
+                        <div class="input-field" style="width: calc(50% - 10px); margin-right: 10px;">
                             <label>Test Name*</label>
                             <input type="text" placeholder="Enter test name" name="testname" value="<?php //echo $data['T_name'] ?>" required>
                         </div>
 
                         
 
-                        <div class="input-field">
+                        <div class="input-field" style="width: calc(50% - 10px);">
                             <label>Test Type*</label>
 
                             <select name="testtype" required>
                             <option selected value=" <?php //echo $data['T_type'] ?>" > <?php //echo ($data['T_type'] == '') ? 'Select test type' : $data['T_type'] ?></option>
-                                <option>Test Type 1</option>
-                                <option>Test Type 2</option>
-                                <option>Test Type 3</option>
-                                <option>Test Type 4</option>
+                            <option>Blood Test</option>
+                            <option>CT Scan</option>
+                            <option>Urine Test</option>
+                            <option>MRI Scan</option>
                                 
 
                             </select>
@@ -52,11 +52,11 @@
                 </div>
 
                     <div class="buttons">
-                        <button>
+                        <button style="width: calc(50% - 10px);>
                             <span class="btnText">Clear</span>
                         </button>
                         
-                        <button class="sumbit">
+                        <button class="sumbit" style="width: calc(50% - 10px);  margin-left: 15px;">
                             <span class="btnText">Update</span>
                         </button>
                     </div>
@@ -68,6 +68,6 @@
         </form>
 </div>
 
-    <script src="<?php echo URLROOT; ?>/js/signup.js"></script>
+    <script src="<?php //echo URLROOT; ?>/js/signup.js"></script>
 </body>
 </html>
