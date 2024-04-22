@@ -43,15 +43,6 @@ const handleFormData = (e) => {
     if (!emailPattern.test(email)) {
         showError(emailInput, "Enter a valid email address");
     }
-    if (password === "") {
-        showError(passwordInput, "Enter your password");
-    }
-    if (date === "") {
-        showError(dateInput, "Select your date of birth");
-    }
-    if (gender === "") {
-        showError(genderInput, "Select your gender");
-    }
 
     // Checking for any remaining errors before form submission
     const errorInputs = document.querySelectorAll(".form-group .error");

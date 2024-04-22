@@ -5,6 +5,7 @@
                 session_start();
             }
             $this->doctorModel = $this->model('doctors');
+            $this->testModel = $this->model('tests');
         }
         public function index(){
             
@@ -65,14 +66,58 @@
         }
 
         public function prescription(){
-            if(isset($_GET['patient_id'])){
+            if(isset($_GET['patient_id']) && isset($_GET['res_id'])){
                 $patient_id = $_GET['patient_id'];
+                $res_id = $_GET['res_id'];
                 $patient = $this->doctorModel->get_patient_details($patient_id, 'patient');
                 $patient->Age = date_diff(date_create($patient->DOB), date_create('now'))->y;
+                $tests = $this->testModel->get_all_tests();
+                $durations = ['1 Day', '2 Days', '3 Days', '4 Days', '5 Days', '6 Days', '1 Week', '2 Weeks', '3 Weeks', '1 Month', '2 Months', '3 Months', '4 Months', '5 Months', '6 Months', '1 Year'];
                 $data = [
-                    'patient' => $patient
+                    'patient' => $patient,
+                    'tests' => $tests,
+                    'durations' => $durations,
+                    'res_id' => $res_id
                 ];
                 $this->view('doctor/prescription', $data);
+            }else{
+                redirect('page/not_found');
+            }
+            
+        }
+
+        public function add_prescription(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+                $patientId = $_POST['patient_id'];
+                $resId = $_POST['res_id'];
+                $diagnosis = $_POST['diagnosis'];
+                $remarks = $_POST['remarks'];
+                $referral = $_POST['referals'];
+
+                // Process drug details
+                $drugDetails = [];
+                $numberOfDrugs = count($_POST['drug_name']);
+                for ($i = 0; $i < $numberOfDrugs; $i++) {
+                    $drugDetails[] = [
+                        'drug_name' => $_POST['drug_name'][$i],
+                        'amount' => $_POST['amount'][$i],
+                        'amount_unit' => $_POST['amount_unit'][$i],
+                        'frequency' => $_POST['frequency'][$i],
+                        'duration' => $_POST['duration'][$i]
+                    ];
+                }
+
+                $drugDetails = json_encode($drugDetails);
+                $testDetails = json_encode($_POST['tests']);
+
+                $consultationId = $this->doctorModel->add_consultation($resId, null, null);
+
+                $this->doctorModel->add_prescription($consultationId, $diagnosis, $remarks, $referral, $drugDetails, $testDetails);
+
+                // redirect('doctor/ongoing_consults');
+
+                
             }else{
                 redirect('page/not_found');
             }

@@ -242,12 +242,12 @@ class Doctors{
 
     public function get_patient_details($patient_id, $type){
         if($type == 'past'){
-            $this->db->query('SELECT patient.First_Name, patient.Last_Name, patient.Gender, patient.DOB, patient.Blood_Group, patient.Allergies, doctor_consultation.Comments FROM patient
+            $this->db->query('SELECT patient.Patient_ID, patient.First_Name, patient.Last_Name, patient.Gender, patient.DOB, patient.Blood_Group, patient.Allergies, doctor_consultation.Comments FROM patient
             INNER JOIN doctor_reservation ON patient.Patient_ID = doctor_reservation.Patient_ID
             INNER JOIN doctor_consultation ON doctor_reservation.Doc_Res_ID = doctor_consultation.Doc_Res_ID
             WHERE patient.Patient_ID = :patient_id');
         }else{
-            $this->db->query('SELECT First_Name, Last_Name, Gender, DOB, Blood_Group, Allergies FROM patient WHERE Patient_ID = :patient_id');
+            $this->db->query('SELECT Patient_ID, First_Name, Last_Name, Gender, DOB, Blood_Group, Allergies FROM patient WHERE Patient_ID = :patient_id');
         }
 
         $this->db->bind(':patient_id', $patient_id);
@@ -256,6 +256,51 @@ class Doctors{
         if ($this->db->execute()) {
             return $patient;
         } else {
+            return false;
+        }
+    }
+
+    public function add_consultation($res_id, $prescription_id, $comments){
+        $this->db->query('INSERT INTO doctor_consultation(Doc_Res_ID, Prescription_ID, Comments) VALUES(:res_id, :prescription_id, :comments)');
+
+        $this->db->bind(':res_id', $res_id);
+        $this->db->bind(':prescription_id', $prescription_id);
+        $this->db->bind(':comments', $comments);
+
+        if($this->db->execute()){
+            $this->db->query('SELECT LAST_INSERT_ID() AS consultation_id');
+            $row = $this->db->singleRow();
+            return $row->consultation_id;
+        } else{
+            return false;
+        }
+    }
+
+    public function add_prescription($consultationId, $diagnosis, $remarks, $referral, $drugDetails, $testDetails){
+        $this->db->query('INSERT INTO prescription(Doc_Consult_ID, Diagnosis, Referrals, Drug_Details, Test_Details) VALUES(:consultationId, :diagnosis, :referral, :drugDetails, :testDetails)');
+
+        $this->db->bind(':consultationId', $consultationId);
+        $this->db->bind(':diagnosis', $diagnosis);
+        $this->db->bind(':referral', $referral);
+        $this->db->bind(':drugDetails', $drugDetails);
+        $this->db->bind(':testDetails', $testDetails);
+
+        if($this->db->execute()){
+            $this->db->query('SELECT LAST_INSERT_ID() AS prescription_id');
+            $row = $this->db->singleRow();
+
+            $this->db->query('UPDATE doctor_consultation SET Prescription_ID = :prescription_id, Comments = :comments WHERE Doc_Consult_ID = :consultationId');
+
+            $this->db->bind(':prescription_id', $row->prescription_id);
+            $this->db->bind(':comments', $remarks);
+            $this->db->bind(':consultationId', $consultationId);
+
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        } else{
             return false;
         }
     }

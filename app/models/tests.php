@@ -15,6 +15,14 @@ class Tests{
         return $tests;
     }
 
+    public function get_all_tests(){
+        $this->db->query('SELECT * FROM test');
+
+        $tests = $this->db->resultSet(); // Fetches multiple rows
+
+        return $tests;
+    }
+
     public function get_no_of_hospitals($id){
         $this->db->query('SELECT COUNT(DISTINCT Hospital_ID) AS NoOfHospitals FROM hospital_test WHERE Test_ID = :id');
 

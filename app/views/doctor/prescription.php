@@ -154,8 +154,10 @@
                 <h1>Add Prescription</h1>
                 <hr><br>
                 <div class="prescription">
-                    <form action="" method="POST">
+                    <form action="add_prescription" method="POST">
                     <table style="width: 100%;" >
+                        <input type="hidden" name="patient_id" value="<?php echo $data['patient']->Patient_ID ?>">
+                        <input type="hidden" name="res_id" value="<?php echo $data['res_id']?>">
                         <tr>
                             <td>
                                 <div class="form-group fullname">
@@ -174,14 +176,13 @@
                             <td colspan="2">
                                 <div class="form-group diagnosis">
                                     <label for="diagnosis">Diagnosis</label>
-                                    <textarea id="diagnosis" placeholder="Enter Diagnosis" rows="4"></textarea>
+                                    <textarea id="diagnosis" name="diagnosis" placeholder="Enter Diagnosis" rows="4"></textarea>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2">
                                 <div class="form-group treatment" id="treatment_table">
-                                    <label for="treatment">Treatment</label>
                                     <div id="treatment-row"  class="treatment-row">
                                         <div class="form-group">
                                             <label>Drug Name</label>
@@ -210,19 +211,9 @@
                                         <div class="form-group">
                                             <label>Duration</label>
                                             <select name="duration[]">
-                                            <option value="3 days">1 day</option>
-                                            <option value="3 days">2 days</option>
-                                            <option value="3 days">3 days</option>
-                                                <option value="3 days">6 days</option>
-                                                <option value="1 week">1 week</option>
-                                                <option value="2 weeks">2 weeks</option>
-                                                <option value="2 weeks">3 weeks</option>
-                                                <option value="2 weeks">1 month</option>
-                                                <option value="2 weeks">2 months</option>
-                                                <option value="2 weeks">3 months</option>
-                                                <option value="2 weeks">4 months</option>
-                                                <option value="2 weeks">5 months</option>
-                                                <option value="2 weeks">6 months</option>
+                                              <?php foreach ($data['durations'] as $duration): ?>
+                                                <option value="<?php echo $duration; ?>"><?php echo $duration; ?></option>
+                                              <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -235,19 +226,9 @@
                                     <label for="tests">Recommended Tests</label>
                                     <select name="tests[]" id="tests"> 
                                     <option value="">Select a test</option>
-                                    <option value="blood test">Creatinine (with e GFR)</option>
-                                    <option value="urine test">CRP</option>
-                                    <option value="x-ray">Electrolytes</option>
-                                    <option value="x-ray">ESR</option>
-                                    <option value="x-ray">Fasting Blood Sugar</option>
-                                    <option value="x-ray">Full Blood Count</option>
-                                    <option value="x-ray">HBA1C</option>
-                                    <option value="x-ray">Microalbumin (Urine)</option>
-                                    <option value="x-ray">TSH</option>
-                                    <option value="x-ray">Urea</option>
-                                    <option value="x-ray">Urea & Electrolytes</option>
-                                    <option value="x-ray">Urine FR</option>
-                                    <option value="x-ray">Dengue Antigen</option>
+                                    <?php foreach ($data['tests'] as $test): ?>
+                                        <option value="<?php echo $test->Test_ID; ?>"><?php echo $test->Test_Name; ?></option>
+                                    <?php endforeach; ?>
                                     </select>
                                 </div>
                                 
@@ -258,12 +239,12 @@
                                 
                                 <div class="form-group remarks">
                                     <label for="remarks">Remarks</label>
-                                    <textarea id="remarks" placeholder="Enter Remarks" rows="4"></textarea>
+                                    <textarea id="remarks" name="remarks" placeholder="Enter Remarks" rows="4"></textarea>
                                 </div>
 
                                 <div class="form-group referals">
-                                    <label for="referals">Referals</label>
-                                    <textarea id="referals" placeholder="Enter referals" rows="4"></textarea>
+                                    <label for="referals">Referrals</label>
+                                    <textarea id="referals" name="referals" placeholder="Enter referals" rows="4"></textarea>
                                 </div>
                             </td>
                         </tr>
