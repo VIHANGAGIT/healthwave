@@ -72,8 +72,8 @@
                 </div>
 
                     <div class="buttons">
-                        <button>
-                            <span class="btnText">Clear</span>
+                        <button type="button" onclick="window.history.back()" >
+                            <span class="btnText">Back</span>
                         </button>
                         
                         <button class="sumbit">
