@@ -60,8 +60,8 @@
                 </div>
 
                     <div class="buttons">
-                        <button style="width: calc(50% - 10px);">
-                            <span class="btnText">Clear</span>
+                    <button type="button" onclick="window.history.back()" style="width: calc(50% - 10px);">
+                            <span class="btnText">Back</span>
                         </button>
                         
                         <button class="sumbit" style="width: calc(50% - 10px);  margin-left: 15px;">
