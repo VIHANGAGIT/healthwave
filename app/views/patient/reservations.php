@@ -118,6 +118,7 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Doctor Reservations</h1>
+                <hr>
                 <?php if (empty($data['doc_reservations'])): ?>
                   <br>
                     <div class="error-msg">
@@ -132,8 +133,8 @@
                             <th>Hospital</th>
                             <th>Date</th>
                             <th>Time</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Details</th>
+                            <th>Cancel</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,8 +144,8 @@
                               <td><?php echo $doc_reservation->Hospital_Name; ?></td>
                               <td><?php echo $doc_reservation->Date; ?></td>
                               <td><?php echo $doc_reservation->Start_Time . ' - ' . $doc_reservation->End_Time; ?></td>
-                              <td><a href=''><button class='button'>Edit</button></a></td>
-                              <td><button id="btn-cancel" class='button red doc-cancel-btn' data-doc-reservation-id="<?php echo $doc_reservation->Doc_Res_ID; ?>">Cancel</button></td>
+                              <td><a href=''><button class='button'>Details</button></a></td>
+                              <td><button id="btn-cancel" class='button red doc-cancel-btn' data-doc-reservation-id="<?php echo $doc_reservation->Doc_Res_ID; ?>" <?php echo ($doc_reservation->allow_cancel == false ? 'disabled' : '') ?>>Cancel</button></td>
                           </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -156,6 +157,7 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Lab Tests Reservations</h1>
+                <hr>
                 <?php if (empty($data['test_reservations'])): ?>
                   <br>
                     <div class="error-msg">
@@ -170,8 +172,8 @@
                             <th>Hospital</th>
                             <th>Date</th>
                             <th>Time</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Details</th>
+                            <th>Cancel</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -181,7 +183,7 @@
                                 <td><?php echo $test_reservation->Hospital_Name; ?></td>
                                 <td><?php echo $test_reservation->Date; ?></td>
                                 <td><?php echo $test_reservation->Start_Time . ' - ' . $test_reservation->End_Time; ?></td>
-                                <td><a href=''><button class='button'>Edit</button></a></td>
+                                <td><a href=''><button class='button'>Details</button></a></td>
                                 <td><button id="btn-cancel" class='button red test-cancel-btn' data-test-reservation-id="<?php echo $test_reservation->Test_Res_ID; ?>">Cancel</button></td>
                             </tr>
                         <?php endforeach; ?>

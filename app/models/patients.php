@@ -107,7 +107,8 @@
             INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
             INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
             WHERE doctor_reservation.Patient_ID = :patient_id
-            AND CONCAT(doctor_reservation.Date, ' ', doctor_reservation.End_Time) > CURRENT_TIMESTAMP() ORDER BY doctor_reservation.Date, doctor_reservation.Start_Time ASC");
+            AND CONCAT(doctor_reservation.Date, ' ', doctor_reservation.End_Time) > CURRENT_TIMESTAMP() AND doctor_reservation.Status = 'Pending'
+            ORDER BY doctor_reservation.Date, doctor_reservation.Start_Time ASC");
 
             $this->db->bind(':patient_id', $patient_id);
             $doc_reservations = $this->db->resultSet();
@@ -146,13 +147,14 @@
             }
         }
 
-        public function get_past_doc_reservations($patient_id){
-            $this->db->query("SELECT doctor_reservation.*, doctor.First_Name, doctor.Last_Name, doctor.Specialization, hospital.Hospital_Name FROM doctor_reservation
+        public function get_consultations($patient_id){
+            $this->db->query("SELECT doctor_reservation.*, doctor_consultation.*, doctor.First_Name, doctor.Last_Name, doctor.Specialization, hospital.Hospital_Name FROM doctor_consultation
+            INNER JOIN doctor_reservation ON doctor_consultation.Doc_Res_ID = doctor_reservation.Doc_Res_ID
             INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
             INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
             INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
             WHERE doctor_reservation.Patient_ID = :patient_id
-            AND CONCAT(doctor_reservation.Date, ' ', doctor_reservation.End_Time) < CURRENT_TIMESTAMP() ORDER BY doctor_reservation.Date, doctor_reservation.Start_Time ASC");
+            AND doctor_reservation.Status = 'Consulted' ORDER BY doctor_reservation.Date, doctor_reservation.Start_Time ASC");
 
             $this->db->bind(':patient_id', $patient_id);
             $doc_reservations = $this->db->resultSet();

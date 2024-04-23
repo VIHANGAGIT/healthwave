@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Medical Records</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -117,7 +117,8 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Past Consultancies</h1>
-                <?php if (empty($data['doc_reservations'])): ?>
+                <hr>
+                <?php if (empty($data['doc_consultations'])): ?>
                   <br>
                     <div class="error-msg">
                         <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
@@ -129,21 +130,21 @@
                         <tr>
                             <th>Doctor</th>
                             <th>Specialization</th>
-                            <th>Location</th>
+                            <th>Hospital</th>
                             <th>Date</th>
                             <th>Details</th>
                             <th>Prescription</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($data['doc_reservations'] as $doc_reservation): ?>
+                        <?php foreach($data['doc_consultations'] as $doc_consultation): ?>
                           <tr>
-                              <td>Dr. <?php echo $doc_reservation->First_Name . ' ' . $doc_reservation->Last_Name; ?></td>
-                              <td><?php echo $doc_reservation->Specialization; ?></td>
-                              <td><?php echo $doc_reservation->Hospital_Name; ?></td>
-                              <td><?php echo $doc_reservation->Date; ?></td>
+                              <td>Dr. <?php echo $doc_consultation->First_Name . ' ' . $doc_consultation->Last_Name; ?></td>
+                              <td><?php echo $doc_consultation->Specialization; ?></td>
+                              <td><?php echo $doc_consultation->Hospital_Name; ?></td>
+                              <td><?php echo $doc_consultation->Date; ?></td>
                               <td><a href=''><button class='button'>Details</button></a></td>
-                              <td><button class='button doc-cancel-btn' data-doc-reservation-id="<?php echo $doc_reservation->Doc_Res_ID; ?>">Prescription</button></td>
+                              <td><button class='button doc-cancel-btn' data-doc-reservation-id="<?php echo $doc_consultation->Doc_Res_ID; ?>" <?php echo ($doc_consultation->Prescription_ID == null ? 'disabled' : '') ?> >Prescription</button></td>
                           </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -155,6 +156,7 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Lab Tests Results</h1>
+                <hr>
                 <?php if (empty($data['test_reservations'])): ?>
                   <br>
                     <div class="error-msg">

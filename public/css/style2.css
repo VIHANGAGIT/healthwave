@@ -541,6 +541,10 @@ body.dark {
   background-color: #c80000;
 }
 
+#btn-cancel:disabled {
+  background-color: #c9c9c9;
+}
+
 .price-label {
   font-size: 18px;
   color: #333333;
@@ -1673,6 +1677,16 @@ table thead tr{
   background: #cf1b1b;
 }
 
+.doc-cancel-btn:disabled{
+  background-color: #c9c9c9;
+  color: #a6a6a6;
+}
+
+.doc-cancel-btn:disabled:hover{
+  background-color: #c9c9c9;
+  color: #a6a6a6;
+  cursor: not-allowed;
+}
 
 /*.prescription  button {
   margin-top: -30px;

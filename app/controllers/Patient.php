@@ -121,6 +121,18 @@ class Patient extends Controller
         $data = [];
         $patient_id = $_SESSION['userID'];
         $doc_reservations = $this->patientModel->get_doc_reservations($patient_id);
+        foreach ($doc_reservations as $reservation) {
+            $res_time = strtotime($reservation->Date . ' ' . $reservation->Start_Time);
+            $current_time = strtotime(date('Y-m-d H:i:s'));
+            $time_diff = $res_time - $current_time;
+            if ($time_diff < 60 * 60 * 24) {
+                $reservation->allow_cancel = false;
+                
+            }else{
+                $reservation->allow_cancel = true;
+            }
+        }
+        
         $test_reservations = $this->patientModel->get_test_reservations($patient_id);
         $data = [
             'doc_reservations' => $doc_reservations,
@@ -352,10 +364,10 @@ class Patient extends Controller
     {
         $data = [];
         $patient_id = $_SESSION['userID'];
-        $doc_reservations = $this->patientModel->get_past_doc_reservations($patient_id);
+        $doc_consultations = $this->patientModel->get_consultations($patient_id);
         $test_reservations = $this->patientModel->get_past_test_reservations($patient_id);
         $data = [
-            'doc_reservations' => $doc_reservations,
+            'doc_consultations' => $doc_consultations,
             'test_reservations' => $test_reservations
         ];
         $this->view('patient/medical_records', $data);
