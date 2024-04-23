@@ -17,7 +17,7 @@
     <div class="container-signup" style="height: 720px;" >
         <header>Doctor Registration</header>
 
-        <form action="<?php echo URLROOT; ?>/admin/add_doctor" method="POST" style="height: 600px;">
+        <form id="registrationForm" action="<?php echo URLROOT; ?>/admin/add_doctor" method="POST" style="height: 600px;">
             <div class="form first" >
                 <div class="details personal">
                     <span class="title">Personal Details</span>
@@ -110,9 +110,10 @@
                         
                     </div>
                     <div class="buttons">
-                        <button>
-                            <span class="btnText">Clear</span>
-                        </button>
+                    <button id="clearButton">
+                     <span class="btnText">Clear</span>
+                    </button>
+
                         
                         <button class="sumbit">
                             <span class="btnText">Add</span>
@@ -131,5 +132,22 @@
 </div>
 
     <script src="<?php echo URLROOT; ?>/js/signup.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const clearButton = document.getElementById('clearButton');
+        const registrationForm = document.getElementById('registrationForm');
+
+        // Add click event listener to the Clear button
+        clearButton.addEventListener('click', function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Reset the form
+            registrationForm.reset();
+        });
+    });
+</script>
+
 </body>
 </html>
