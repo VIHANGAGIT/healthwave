@@ -48,9 +48,9 @@
             </div>
 
             <div class="buttons">
-                <button style="width: calc(50% - 10px);">
-                    <span class="btnText">Clear</span>
-                </button>
+            <button type="reset" style="width: calc(50% - 10px);">
+                        <span class="btnText">Clear</span>
+                    </button>
                 <button class="submit" style="width: calc(50% - 10px);  margin-left: 15px;">
                     <span class="btnText">Add</span>
                 </button>
