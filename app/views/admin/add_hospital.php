@@ -17,7 +17,7 @@
     <div class="container-signup" style="height: 720px;" >
         <header>Hospital Registration</header>
 
-        <form id="hospitalRegistrationForm" action="<?php echo URLROOT; ?>/admin/add_hospital" method="POST" style="height: 600px;">
+        <form action="<?php echo URLROOT; ?>/admin/add_hospital" method="POST" style="height: 600px;">
             <div class="form first" >
                 <div class="details personal">
                     <span class="title">Hospital Details</span>
@@ -70,9 +70,9 @@
                 </div>
 
                     <div class="buttons">
-                    <button id="clearButton">
+                    <button type = "reset">
                     <span class="btnText">Clear</span>
-                     </button>
+                    </button>
 
                         
                         <button class="sumbit">
@@ -88,7 +88,7 @@
 </div>
 
     <script src="<?php echo URLROOT; ?>/js/signup.js"></script>
-    <script>
+    <!--<script>
     document.addEventListener('DOMContentLoaded', function() {
         const clearButton = document.getElementById('clearButton');
         const hospitalRegistrationForm = document.getElementById('hospitalRegistrationForm');
@@ -102,7 +102,7 @@
             hospitalRegistrationForm.reset();
         });
     });
-</script>
+</script> -->
 
 </body>
 </html>
