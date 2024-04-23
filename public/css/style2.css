@@ -1004,6 +1004,13 @@ body.dark {
   font-size: 17px;
 }
 
+.form-group textarea{
+  border-radius: 5px;
+  border: 2px solid #aaa;
+  width: 100%;
+  font-size: 15px;
+}
+
 /*detail card*/
 
 .detail-wrapper{

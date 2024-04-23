@@ -40,6 +40,12 @@ class MYPDF extends TCPDF {
         $this->SetTextColor(14, 14, 83);
         $this->Ln(6); // Move down a bit
         $this->Cell(0, 10, $this->hospitalName , 0, false, 'C', 0, '', 0, false, 'M', 'M');
+
+        $this->SetFont('helvetica', 'b', 15);
+        $this->SetTextColor(14, 14, 83);
+        $this->SetXY(30, 247);
+        $this->Cell(0, 10, $this->docName, 0, false, 'L', 0, '', 0, false, 'M', 'M');
+    
         
 
         $this->SetAlpha(.1);
@@ -57,7 +63,7 @@ $pdf->slmc = 'SLMC No: '.$data['SLMC_Reg_No'];
 
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('HealthWave');
-$pdf->SetTitle((isset($fullname) ? $fullname : "").'- Digital Prescription');
+$pdf->SetTitle( $data['Name'] .'- Digital Prescription');
 $pdf->SetSubject('Generated Digital Prescription');
 
 $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -76,8 +82,6 @@ $pdf->SetAutoPageBreak(TRUE, 0);
 // set image scale factor
 $pdf->setImageScale(2.5);
 
-
-// ---------------------------------------------------------
 
 // set font
 $pdf->SetFont('dejavusans', '', 13);
@@ -132,7 +136,7 @@ ob_start();
         </tr>
         <tr>
             <td width="18%"><span></span></td>
-            <td width="72%"><span style="border:1px"><br>&nbsp;<?= $data['Diagnosis']?></span></td>
+            <td width="72%"><span style="border:1px"><br><?= $data['Diagnosis']?></span></td>
         </tr>
     </table>
     <br><br><br><br>
@@ -146,8 +150,6 @@ ob_start();
 
 $html = ob_get_clean();
 
-// output the HTML content
-// $pdf->writeHTML($html, true, false, true, false, '');
 
 // Decode drug details JSON string
 $drugDetails = $data['Drugs'];
@@ -178,8 +180,7 @@ if (!empty($testDetails)) {
 }
 
 if (!empty($testDetails)) {
-    // Begin test details table HTML
-    // $testNamesHtml = ''; // Add some spacing
+    
     // $testNamesHtml .= '<div style="display: flex; justify-content: center;">'; // Center the div
     $testNamesHtml = '<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Recommended Tests: '; // Paragraph to contain the test names
 
@@ -197,49 +198,10 @@ if (!empty($testDetails)) {
     $testNamesHtml .= '<p>';
     $testNamesHtml .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refarrals: ' . $data['Referral'];   
     $testNamesHtml .= '</p>'; // End of paragraph
-    // $testNamesHtml .= '</div>'; // End of centered div
 
     // Append the test names HTML to the existing HTML content
     $html .= $testNamesHtml;
 }
-
-$signatureHtml = ''
-    . '<br><br><br><br><br><br><br><br><br><br><br><br>'
-    . '<table>'
-    . '<tr>'
-    . '<td><span> </span></td>'
-    . '<td><span style="border:1px"></span></td>'
-    . '</tr>'
-    . '<tr>'
-    . '<td><span> </span></td>'
-    . '<td><span style="border:1px"></span></td>'
-    . '</tr>'
-    . '<tr>'
-    . '<td><span> </span></td>'
-    . '<td><span style="border:1px"></span></td>'
-    . '</tr>'
-    . '<tr>'
-    . '<td><span> </span></td>'
-    . '<td><span style="border:1px"></span></td>'
-    . '</tr>'
-    . '<tr>'
-    . '<td><span> </span></td>'
-    . '<td><span style="border:1px"></span></td>'
-    . '</tr>'
-    . '<tr>'
-    . '<td><span> </span></td>'
-    . '<td><span style="border:1px"></span></td>'
-    . '</tr>'
-    . '<tr>'
-    . '<td width="13%"><span></span></td>'
-    . '<td width="28%"><span style="border:1px">Dr. ' . $data['Doc_Name'] . '</span></td>'
-    . '</tr>'
-    . '</table>';
-
-$html .= $signatureHtml;
-
-// Begin test details table HTML
-
 
 // Output the HTML content with drug details table to the PDF
 $pdf->writeHTML($html, true, false, true, false, '');
@@ -258,17 +220,10 @@ $validation_url = "http://localhost/healthwave/prescription/validate?id=".$data[
 $pdf->write2DBarcode($validation_url, 'QRCODE,L', 145, 220, 50, 50, $style, 'N');
 
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 // reset pointer to the last page
 $pdf->lastPage();
 
-// ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output('Prescription.pdf', 'I');
+$pdf->Output('Prescription-'. $data["Name"] . '-' . $data["Date"] . '-' . $data["Prescription_ID"]  .'.pdf', 'I');
 unset($pdf);
-
-//============================================================+
-// END OF FILE
-//============================================================+

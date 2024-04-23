@@ -176,7 +176,7 @@
                             <td colspan="2">
                                 <div class="form-group diagnosis">
                                     <label for="diagnosis">Diagnosis</label>
-                                    <textarea id="diagnosis" name="diagnosis" placeholder="Enter Diagnosis" rows="4"></textarea>
+                                    <input type="text" id="diagnosis" name="diagnosis" placeholder="Enter Diagnosis" maxlength="100">
                                 </div>
                             </td>
                         </tr>
@@ -239,12 +239,12 @@
                                 
                                 <div class="form-group remarks">
                                     <label for="remarks">Remarks</label>
-                                    <textarea id="remarks" name="remarks" placeholder="Enter Remarks" rows="4"></textarea>
+                                    <textarea id="remarks" name="remarks" placeholder=" Enter remarks" rows="4"></textarea>
                                 </div>
 
                                 <div class="form-group referals">
                                     <label for="referals">Referrals</label>
-                                    <textarea id="referals" name="referals" placeholder="Enter referals" rows="4"></textarea>
+                                    <input type="text" id="referals" name="referals" placeholder="Enter referals" maxlength="100">
                                 </div>
                             </td>
                         </tr>

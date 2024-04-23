@@ -142,6 +142,42 @@ class Patient extends Controller
         $this->view('patient/reservations', $data);
     }
 
+    public function view_prescription(){
+        $prescription_id = $_GET['id'];
+        $prescription = $this->doctorModel->get_prescription_data($prescription_id);
+        $Name = $prescription->First_Name . ' ' . $prescription->Last_Name;
+        $Age = date_diff(date_create($prescription->DOB), date_create('now'))->y;
+        $Doc_Name = $prescription->Doc_First_Name . ' ' . $prescription->Doc_Last_Name;
+
+        $data = [
+            'Prescription_ID' => $prescription_id,
+            'Name' => $Name,
+            'Age' => $Age,
+            'Gender' => $prescription->Gender,
+            'NIC' => $prescription->NIC,
+            'Allergies' => $prescription->Allergies,
+            'Date' => $prescription->Date,
+            'Doc_Name' => $Doc_Name,
+            'Diagnosis' => $prescription->Diagnosis,
+            'Remarks' => $prescription->Comments,
+            'Referral' => $prescription->Referrals,
+            'Drugs' => $prescription->Drug_Details,
+            'Tests' => $prescription->Test_Details,
+            'Hospital_Name' => $prescription->Hospital_Name,
+            'Contact_No' => $prescription->Contact_No,
+            'Specialization' => $prescription->Specialization,
+            'SLMC_Reg_No' => $prescription->SLMC_Reg_No,
+        ];
+
+
+        try{
+            include_once APPROOT.'/helpers/generate_prescription.php';
+        }catch(Exception $e){
+            echo $e;
+
+        }
+    }
+
     public function doc_booking_details()
     {
         // Get doctor ID from URL parameter

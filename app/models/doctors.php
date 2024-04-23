@@ -287,13 +287,14 @@ class Doctors{
 
     public function add_prescription($consultationId, $diagnosis, $remarks, $referral, $drugDetails, $testDetails){
         
-        $this->db->query('INSERT INTO prescription(Doc_Consult_ID, Diagnosis, Referrals, Drug_Details, Test_Details) VALUES(:consultationId, :diagnosis, :referral, :drugDetails, :testDetails)');
+        $this->db->query('INSERT INTO prescription(Doc_Consult_ID, Diagnosis, Referrals, Drug_Details, Test_Details, Status) VALUES(:consultationId, :diagnosis, :referral, :drugDetails, :testDetails, :status)');
 
         $this->db->bind(':consultationId', $consultationId);
         $this->db->bind(':diagnosis', $diagnosis);
         $this->db->bind(':referral', $referral);
         $this->db->bind(':drugDetails', $drugDetails);
         $this->db->bind(':testDetails', $testDetails);
+        $this->db->bind(':status', 'Not Claimed');
 
         if($this->db->execute()){
             $this->db->query('SELECT LAST_INSERT_ID() AS prescription_id');

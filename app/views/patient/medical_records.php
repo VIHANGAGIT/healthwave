@@ -143,8 +143,8 @@
                               <td><?php echo $doc_consultation->Specialization; ?></td>
                               <td><?php echo $doc_consultation->Hospital_Name; ?></td>
                               <td><?php echo $doc_consultation->Date; ?></td>
-                              <td><a href=''><button class='button'>Details</button></a></td>
-                              <td><button class='button doc-cancel-btn' data-doc-reservation-id="<?php echo $doc_consultation->Doc_Res_ID; ?>" <?php echo ($doc_consultation->Prescription_ID == null ? 'disabled' : '') ?> >Prescription</button></td>
+                              <td><a href=''><button class='button' data-doc-reservation-id="<?php echo $doc_consultation->Doc_Res_ID; ?>">Details</button></a></td>
+                              <td><a href='view_prescription?id=<?php echo $doc_consultation->Prescription_ID ?>' ><button class='button doc-cancel-btn'<?php echo ($doc_consultation->Prescription_ID == null ? 'disabled' : '') ?> >Prescription</button></td>
                           </tr>
                         <?php endforeach; ?>
                     </tbody>
