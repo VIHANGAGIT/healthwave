@@ -121,6 +121,7 @@
                 $Doc_Name = $prescription->Doc_First_Name . ' ' . $prescription->Doc_Last_Name;
 
                 $data = [
+                    'Prescription_ID' => $prescription_id,
                     'Name' => $Name,
                     'Age' => $Age,
                     'Gender' => $prescription->Gender,
@@ -132,8 +133,13 @@
                     'Remarks' => $prescription->Comments,
                     'Referral' => $prescription->Referrals,
                     'Drugs' => $prescription->Drug_Details,
-                    'Tests' => $prescription->Test_Details
+                    'Tests' => $prescription->Test_Details,
+                    'Hospital_Name' => $prescription->Hospital_Name,
+                    'Contact_No' => $prescription->Contact_No,
+                    'Specialization' => $prescription->Specialization,
+                    'SLMC_Reg_No' => $prescription->SLMC_Reg_No,
                 ];
+
 
                 try{
                     include_once APPROOT.'/helpers/generate_prescription.php';
