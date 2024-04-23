@@ -264,7 +264,7 @@ class Doctors{
         $this->db->query('UPDATE doctor_reservation SET Status = "Consulted" WHERE Doc_Res_ID = :res_id');
 
         $this->db->bind(':res_id', $res_id);
-        
+
         if($this->db->execute()){
             $this->db->query('INSERT INTO doctor_consultation(Doc_Res_ID, Prescription_ID, Comments) VALUES(:res_id, :prescription_id, :comments)');
 
@@ -286,6 +286,7 @@ class Doctors{
     }
 
     public function add_prescription($consultationId, $diagnosis, $remarks, $referral, $drugDetails, $testDetails){
+        
         $this->db->query('INSERT INTO prescription(Doc_Consult_ID, Diagnosis, Referrals, Drug_Details, Test_Details) VALUES(:consultationId, :diagnosis, :referral, :drugDetails, :testDetails)');
 
         $this->db->bind(':consultationId', $consultationId);
@@ -305,13 +306,52 @@ class Doctors{
             $this->db->bind(':consultationId', $consultationId);
 
             if($this->db->execute()){
-                return true;
+                $this->db->query('SELECT LAST_INSERT_ID() AS prescription_id');
+                $row = $this->db->singleRow();
+                return $row->prescription_id;
             } else{
                 return false;
             }
         } else{
             return false;
         }
+    }
+
+    public function get_prescription_data($id){
+        $this->db->query('SELECT prescription.*, patient.First_Name, patient.Last_Name, patient.Gender, patient.DOB, patient.Allergies, patient.NIC, doctor_reservation.Date, doctor_consultation.Comments, doctor.First_Name as Doc_First_Name, doctor.Last_Name as Doc_Last_Name, doctor.SLMC_Reg_No, doctor.Specialization FROM prescription 
+        INNER JOIN doctor_consultation ON prescription.Doc_Consult_ID = doctor_consultation.Doc_Consult_ID
+        INNER JOIN doctor_reservation ON doctor_consultation.Doc_Res_ID = doctor_reservation.Doc_Res_ID
+        INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+        INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
+        INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
+        WHERE prescription.Prescription_ID = :id');
+        $this->db->bind(':id', $id);
+        $prescription = $this->db->singleRow();
+
+        if ($prescription->Drug_Details != null) {
+            $drugDetails = json_decode($prescription->Drug_Details, true); 
+            
+            $prescription->Drug_Details = $drugDetails;
+        }
+
+        if ($prescription->Test_Details != null) {
+            $testDetails = json_decode($prescription->Test_Details, true);
+            foreach ($testDetails as &$test) { // Use reference (&) to modify the array directly
+                $this->db->query('SELECT Test_Name FROM test WHERE Test_ID = :test');
+                $this->db->bind(':test', $test);
+                $testName = $this->db->singleRow();
+                $test = $testName->Test_Name;
+            }
+            $prescription->Test_Details = $testDetails;
+        }
+
+
+        if ($this->db->execute()) {
+            return $prescription;
+        } else {
+            return false;
+        }
+
     }
 
 
