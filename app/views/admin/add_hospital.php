@@ -11,7 +11,7 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Hospital Regisration</title>
+   <title>Hospital Registration</title>
 </head>
 <body>
     <div class="container-signup" style="height: 720px;" >

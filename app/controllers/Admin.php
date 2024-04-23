@@ -606,9 +606,19 @@
                     $data['M_ID_err'] = 'Please enter manager ID';
                 }
 
-                // Validate Contact Number
-                if(empty($data['C_num'])){
+                 // Validate Contact Number
+                 if(empty($data['C_num'])){
                     $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
+
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
+                    } else {
+                        // Proceed with other validations if needed
+                    }
                 }
 
                 // Check whether errors are empty

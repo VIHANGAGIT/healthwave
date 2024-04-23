@@ -67,6 +67,8 @@
                         <div class="input-field">
                             <label>Contact Number*</label>
                             <input type="text" placeholder="Enter hospital contact number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
+                            <span class="err-msg"><?php echo $data['C_num_err'] ?></span>
+
                         </div>
                     </div>
                 </div>
