@@ -61,13 +61,14 @@
                         </div>
 
                         <div class="input-field">
-                            <label>Manager ID*</label>
-                            <input type="text" placeholder="Enter Manager ID" name="managerid" value="<?php echo $data['M_ID'] ?>" required>
-                        </div>
-                        <div class="input-field">
                             <label>Contact Number*</label>
                             <input type="text" placeholder="Enter hospital contact number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
                             <span class="err-msg"><?php echo $data['C_num_err'] ?></span>
+
+                        </div>
+                        <div class="input-field">
+                            <label></label>
+                            <input type="hidden" placeholder="" name="" value="<?php //echo $data['C_num'] ?>" required>
                         </div>
                     </div>
                 </div>

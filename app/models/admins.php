@@ -101,14 +101,14 @@
         }
 
         public function add_hospital($data){
-            $this->db->query('INSERT INTO hospital (Hospital_Name, Address, Region, Charge, Mng_ID, Contact_No) VALUES (:H_name, :H_address, :Region, :H_charge, :M_ID, :C_num)');
+            $this->db->query('INSERT INTO hospital (Hospital_Name, Address, Region, Charge,Contact_No) VALUES (:H_name, :H_address, :Region, :H_charge, :C_num)');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':H_name', $data['H_name']);
             $this->db->bind(':H_address', $data['H_address']);
             $this->db->bind(':Region', $data['Region']);
             $this->db->bind(':H_charge', $data['H_charge']);
-            $this->db->bind(':M_ID', $data['M_ID']);
+            //$this->db->bind(':M_ID', $data['M_ID']);
             $this->db->bind(':C_num', $data['C_num']);
 
             // Execute query
