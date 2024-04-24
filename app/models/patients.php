@@ -66,39 +66,44 @@
 
             $this->db->bind(':Bill_Amount', $data['Total_Price']);
             $this->db->bind(':Payment_Method', "Online");
-            $this->db->execute();
+            
+            if ($this->db->execute()) {
+                $this->db->query('SELECT * FROM payment ORDER BY Payment_ID DESC LIMIT 1;');
+                $lastRow = $this->db->singleRow();
+                $payment_id = $lastRow->Payment_ID;
 
+                $this->db->query('SELECT * FROM schedule WHERE Doctor_ID = :Doctor_ID AND Hospital_ID = :Hospital_ID AND Day_of_Week = :Day_of_Week');
+                $this->db->bind(':Doctor_ID', $data['Doctor_ID']);
+                $this->db->bind(':Hospital_ID', $data['Hospital_ID']);
+                $this->db->bind(':Day_of_Week', $data['Selected_Day']);
 
-            $this->db->query('SELECT * FROM payment ORDER BY Payment_ID DESC LIMIT 1;');
-            $lastRow = $this->db->singleRow();
-            $payment_id = $lastRow->Payment_ID;
+                $schedule = $this->db->singleRow();
+                $schedule_id = $schedule->Schedule_ID;
 
-            $this->db->query('SELECT * FROM schedule WHERE Doctor_ID = :Doctor_ID AND Hospital_ID = :Hospital_ID AND Day_of_Week = :Day_of_Week');
-            $this->db->bind(':Doctor_ID', $data['Doctor_ID']);
-            $this->db->bind(':Hospital_ID', $data['Hospital_ID']);
-            $this->db->bind(':Day_of_Week', $data['Selected_Day']);
+                $this->db->query('INSERT INTO doctor_reservation (Patient_ID, Schedule_ID, Payment_ID, Date, Appointment_No, Start_Time, End_Time, Contact_Number, Email, Status) VALUES (:Patient_ID, :Schedule_ID, :Payment_ID, :Date, :App_No, :Start_Time, :End_Time, :Contact_Number, :Email, :Status)');
+                // Binding parameters for the prepaired statement
+                $this->db->bind(':Patient_ID', $data['Patient_ID']);
+                $this->db->bind(':Schedule_ID', $schedule_id);
+                $this->db->bind(':Payment_ID', $payment_id);
+                $this->db->bind(':Date', $data['Selected_Date']);
+                $this->db->bind(':App_No', $data['Appointment_No']);
+                $this->db->bind(':Start_Time', $data['Start_Time']);
+                $this->db->bind(':End_Time', $data['End_Time']);
+                $this->db->bind(':Contact_Number', $data['Contact_No']);
+                $this->db->bind(':Email', $data['Email']);
+                $this->db->bind(':Status', "Pending");
 
-            $schedule = $this->db->singleRow();
-            $schedule_id = $schedule->Schedule_ID;
+                // Execute query
+                if($this->db->execute()){
+                    return true;
+                } else{
+                    return false;
+                }
 
-            $this->db->query('INSERT INTO doctor_reservation (Patient_ID, Schedule_ID, Payment_ID, Date, Start_Time, End_Time, Contact_Number, Email, Status) VALUES (:Patient_ID, :Schedule_ID, :Payment_ID, :Date, :Start_Time, :End_Time, :Contact_Number, :Email, :Status)');
-            // Binding parameters for the prepaired statement
-            $this->db->bind(':Patient_ID', $data['Patient_ID']);
-            $this->db->bind(':Schedule_ID', $schedule_id);
-            $this->db->bind(':Payment_ID', $payment_id);
-            $this->db->bind(':Date', $data['Selected_Date']);
-            $this->db->bind(':Start_Time', $data['Start_Time']);
-            $this->db->bind(':End_Time', $data['End_Time']);
-            $this->db->bind(':Contact_Number', $data['Contact_No']);
-            $this->db->bind(':Email', $data['Email']);
-            $this->db->bind(':Status', "Pending");
-
-            // Execute query
-            if($this->db->execute()){
-                return true;
-            } else{
+            } else {
                 return false;
             }
+
         }
 
         public function get_doc_reservations($patient_id){

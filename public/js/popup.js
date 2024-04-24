@@ -20,7 +20,8 @@ $("#show1").click(function (event) {
         // var hospitalId = hospitalSelect.value;
         var hospitalName = hospitalSelect.options[hospitalSelect.selectedIndex].text;
         var appDate = document.querySelector('input[name="date"]:checked').value;
-        var appTime = document.querySelector('input[name="time"]:checked').value;
+        var appNo = document.querySelector('.app_no').textContent;
+        var appTime = document.querySelector('.time_slot').textContent;
         var totalPrice = document.getElementById('price-value-total').textContent;
     
         // Populate the appointment data in the popup
@@ -32,19 +33,18 @@ $("#show1").click(function (event) {
         document.getElementById('doctor-spec-popup').innerHTML = "<b>Specialization:</b> " + doctorSpec;
         document.getElementById('hospital-name-popup').innerHTML = "<b>Hospital Name:</b> " + hospitalName;
         document.getElementById('app-date-popup').innerHTML = "<b>Date:</b> " + appDate;
+        document.getElementById('app-no-popup').innerHTML = "<b>Appointment No:</b> " + appNo;
         document.getElementById('app-time-popup').innerHTML = "<b>Time Slot:</b> " + appTime;
         document.getElementById('price-value-total-popup').innerHTML = "<b>Total Price:</b> " + totalPrice;
     
     }
 
-    // Show popup when show button is clicked
-    showPopup.onclick = () => {
-        showAppointmentPopup();
-        popupContainer.classList.add('active');
 
-        // Add event listener to close popup when clicking outside
-        document.addEventListener('click', closePopupOutside);
-    }
+    showAppointmentPopup();
+    popupContainer.classList.add('active');
+
+    // Add event listener to close popup when clicking outside
+    document.addEventListener('click', closePopupOutside);
 
     // Close popup function
     function closePopup() {

@@ -30,6 +30,7 @@
             <p class="popup-data" id="doctor-spec-popup" ><b>Specialization: </b> </p>
             <p class="popup-data" id="hospital-name-popup" ><b>Hospital Name: </b> </p>
             <p class="popup-data" id="app-date-popup" ><b>Date: </b> </p>
+            <p class="popup-data" id="app-no-popup" ><b>Appointment No: </b> </p>
             <p class="popup-data" id="app-time-popup" ><b>Time Slot: </b> </p>
             <p class="popup-data" id="price-value-total-popup" ><b>Total Price: </b> </p>
             <button class="close-btn pay-btn" id="pay" >Pay Now</button>
@@ -260,12 +261,27 @@
                     <tr>
                       <td>
                       <br>
-                      <div class="input-field">
-                          <label>Select Time Slot</label>
-                          <div class="container-radio" name="time">
-                              <!-- Time slots will be added here -->
+                      <div class="appointment-card">
+                          <div class="container" name="time">
+                            <table>
+                              <tr>
+                                <td class="App-Cont">
+                                  <p>Appointment No :</p>
+                                  <span class="app_no" ></span>
+                                  <!-- appointment no will be added here -->
+                                </td>
+                                <td class="App-Cont">
+                                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                                </td>
+                                <td class="App-Cont">
+                                  <p>Time Slot :</p>
+                                  <span class="time_slot" ></span>
+                                  <!-- timeslot no will be added here -->
+                                </td>
+                              </tr>
+                            </table>
                           </div>
-                      </div>
+                      </div><br><br>
                       </td>
                     </tr>
                     <tr>

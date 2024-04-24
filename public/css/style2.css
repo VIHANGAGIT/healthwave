@@ -537,6 +537,20 @@ body.dark {
   text-align: center;
 }
 
+.appointment-card {
+  width: 550px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #btn-cancel:hover {
   background-color: #c80000;
 }
@@ -1832,6 +1846,22 @@ table thead tr{
   width: 45%; 
   margin: 4px 2.5%; 
   text-align: center; /* Center text within each detail */
+}
+
+.App-Cont{
+  text-align: center;
+}
+.App-Cont p{
+  color: var(--grey-color-dark);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.App-Cont span{
+  color: var(--blue-color);
+  font-size: 35px;
+  font-weight: 700;
+
 }
 
 /*.prescription  button {

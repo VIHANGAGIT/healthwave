@@ -53,7 +53,12 @@ function displayScheduleDetails(scheduleData) {
     var dateContainer = $(".container-radio[name='date']");
     dateContainer.empty(); // Clear previous date options
 
-    var timeContainer = $(".container-radio[name='time']");
+    // var timeContainer = $(".container-radio[name='time']");
+    // timeContainer.empty(); // Clear previous time slots
+    var numContainer = $(".app_no");
+    numContainer.empty(); // Clear previous app no
+
+    var timeContainer = $(".time_slot");
     timeContainer.empty(); // Clear previous time slots
 
     var today = new Date();
@@ -68,6 +73,7 @@ function displayScheduleDetails(scheduleData) {
 
         // Calculate the date for the current day in the coming week
         var currentDate = new Date();
+        var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var dayIndex = daysOfWeek.indexOf(day);
         var currentdayIndex = today.getDay();
         if (dayIndex < currentdayIndex) {
@@ -76,7 +82,11 @@ function displayScheduleDetails(scheduleData) {
         } else if (dayIndex > currentdayIndex) {
             currentDate.setDate(today.getDate() + (dayIndex - currentdayIndex));
         } else {
+            if(currentTime < startTime){
             currentDate.setDate(today.getDate());
+            }else{
+                currentDate.setDate(today.getDate() + 7);
+            }
         }
 
         // Format the date as "Day, DD/MM/YYYY" (e.g., "Tue, 16/04/2024")
@@ -108,37 +118,46 @@ function updateHospitalCharges(scheduleData) {
 
 
 function updateTimeSlots(selectedDay, scheduleData) {
-    var timeContainer = $(".container-radio[name='time']");
-    timeContainer.empty(); // Clear previous time slots
+    // var numContainer = $(".app_no");
+    // numContainer.empty(); // Clear previous app no
+
+    // var timeContainer = $(".time_slot");
+    // timeContainer.empty(); // Clear previous time slots
+    var appNoSpan = document.querySelector('.app_no');
+    var timeSlotSpan = document.querySelector('.time_slot');
+    var timeContainer = $(".container[name='time']");
 
     // Find the schedule data for the selected day
     var selectedSchedule = scheduleData.find(schedule => schedule.day_of_week === selectedDay);
 
-    if (selectedSchedule && selectedSchedule.time_slots) {
+    if (selectedSchedule && selectedSchedule.next_appointment_number && selectedSchedule.next_slot) {
+
+        var startTime = selectedSchedule.next_slot.start_time.slice(0, 5);
+        var endTime = selectedSchedule.next_slot.end_time.slice(0, 5);
+
+        var nextAppNo = selectedSchedule.next_appointment_number;
+
+        appNoSpan.innerHTML = nextAppNo;
+        timeSlotSpan.innerHTML = startTime + ' - ' + endTime;
+
+
+        // // Create radio button for time slot
+        // var timeRadio = $("<input>").attr({
+        //     type: "radio",
+        //     name: "time",
+        //     id: "app-time",
+        //     value: startTime + " - " + endTime // Set the value to the start and end time
+        // });
+
+        // var timeLabel = $("<span>").text(startTime + " - " + endTime); // Create span for time slot text
+
+        // var timeLabelContainer = $("<label>").append(timeRadio, timeLabel); // Combine radio and label
+
+        // timeContainer.append(timeLabelContainer); // Add time slot to container
+
         
-        // Loop through the time slots for the selected day and populate time 
-        for (var slot in selectedSchedule.time_slots) {
-
-            var startTime = selectedSchedule.time_slots[slot].start_time.slice(0, 5);
-            var endTime = selectedSchedule.time_slots[slot].end_time.slice(0, 5);
-
-            // Create radio button for time slot
-            var timeRadio = $("<input>").attr({
-                type: "radio",
-                name: "time",
-                id: "app-time",
-                value: startTime + " - " + endTime // Set the value to the start and end time
-            });
-
-            var timeLabel = $("<span>").text(startTime + " - " + endTime); // Create span for time slot text
-
-            var timeLabelContainer = $("<label>").append(timeRadio, timeLabel); // Combine radio and label
-
-            timeContainer.append(timeLabelContainer); // Add time slot to container
-
-        }
     }else {
         // No schedule data found for the selected day
-        timeContainer.append("<span>No time slots available for this day</span>");
+        timeContainer.append("<span>All Apoointments are booked</span>");
     }
 }

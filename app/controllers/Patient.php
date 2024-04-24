@@ -208,8 +208,76 @@ class Patient extends Controller
         $this->view('patient/doc_booking_details', $data);
     }
 
-    public function fetch_schedule_details()
-    {
+    // public function fetch_schedule_details(){
+    //     // Get hospital ID, doctor ID and date from request data
+    //     $doctor_id = isset($_GET['doctor_id']) ? $_GET['doctor_id'] : null;
+    //     $hospital_id = isset($_GET['hospital_id']) ? $_GET['hospital_id'] : null;
+    //     $selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : null;
+    //     $formatted_date = date('Y-m-d', strtotime(str_replace('/', '-', $selected_date)));
+
+
+    //     if (!$hospital_id || !$doctor_id) {
+    //         echo json_encode(array('error' => 'Missing hospital_id or doctor_id'));  // Send JSON with error message
+    //         return;
+    //     }
+        
+    //     // Perform database query to fetch schedule details based on hospital_id and doctor_id
+    //     $scheduleData = $this->scheduleModel->get_schedule_by_hospital_doctor($hospital_id, $doctor_id);
+    //     $hospital_data = $this->hospitalModel->hospital_data_fetch($hospital_id);
+
+    //     if ($scheduleData === false) {
+    //         http_response_code(500); // Set HTTP status code to indicate internal server error
+    //         echo json_encode(array('error' => 'Failed to fetch schedule details'));
+    //         return;
+    //     }
+
+    //     // Prepare data to be sent as JSON response
+    //     $responseData = array();
+    //     foreach ($scheduleData as $schedule) {
+    //         // Generate time slots with 15-minute intervals
+    //         $startTime = strtotime($schedule->Time_Start);
+    //         $endTime = strtotime($schedule->Time_End);
+    //         $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID);
+    //         $timeSlots = array();
+    //         while ($startTime < $endTime) {
+    //             $timeSlots[] = array(
+    //                 'start_time' => date('H:i:s', $startTime),
+    //                 'end_time' => date('H:i:s', $startTime + 900), // 900 seconds = 15 minutes
+    //             );
+    //             $startTime += 900; // Move to the next 15-minute interval
+    //         }
+    //         foreach ($bookedSlots as $bookedSlot) {
+    //             foreach ($timeSlots as $key => $timeSlot) {
+    //                 if ($timeSlot['start_time'] == $bookedSlot->Start_Time) {
+    //                     //compare date here
+    //                     if ($bookedSlot->Date == $formatted_date) {
+    //                         unset($timeSlots[$key]);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //         if ($formatted_date == date('Y-m-d')) {
+    //             foreach ($timeSlots as $key => $timeSlot) {
+    //                 date_default_timezone_set('Asia/Colombo');
+    //                 if ($timeSlot['start_time'] < date('H:i:s')) {
+    //                     unset($timeSlots[$key]);
+    //                 }
+    //             }
+    //         }
+
+
+    //         $responseData[] = array(
+    //             'day_of_week' => $schedule->Day_of_Week,
+    //             'time_slots' => $timeSlots,
+    //             'hospital_charge' => $hospital_data->Charge,
+    //         );
+    //     }
+        
+    //     // Send JSON response with schedule data
+    //     echo json_encode($responseData);
+    // }
+
+    public function fetch_schedule_details(){
         // Get hospital ID, doctor ID and date from request data
         $doctor_id = isset($_GET['doctor_id']) ? $_GET['doctor_id'] : null;
         $hospital_id = isset($_GET['hospital_id']) ? $_GET['hospital_id'] : null;
@@ -233,12 +301,26 @@ class Patient extends Controller
         }
 
         // Prepare data to be sent as JSON response
+        // Assuming $scheduleData, $formatted_date, and $hospital_data are already defined
+
         $responseData = array();
+
         foreach ($scheduleData as $schedule) {
+            // Fetch booked slots for the current schedule
+            $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID);
+
+            // Initialize variables to track available slots and appointment number
+            $availableSlots = array();
+            $lastBookedAppointmentNumber = 0;
+
+            // Determine the last booked appointment number
+            foreach ($bookedSlots as $bookedSlot) {
+                $lastBookedAppointmentNumber = max($lastBookedAppointmentNumber, $bookedSlot->Appointment_No);
+            }
+
             // Generate time slots with 15-minute intervals
             $startTime = strtotime($schedule->Time_Start);
             $endTime = strtotime($schedule->Time_End);
-            $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID);
             $timeSlots = array();
             while ($startTime < $endTime) {
                 $timeSlots[] = array(
@@ -247,33 +329,61 @@ class Patient extends Controller
                 );
                 $startTime += 900; // Move to the next 15-minute interval
             }
-            foreach ($bookedSlots as $bookedSlot) {
-                foreach ($timeSlots as $key => $timeSlot) {
-                    if ($timeSlot['start_time'] == $bookedSlot->Start_Time) {
-                        //compare date here
-                        if ($bookedSlot->Date == $formatted_date) {
-                            unset($timeSlots[$key]);
-                        }
-                    }
-                }
-            }
-            foreach ($timeSlots as $key => $timeSlot) {
-                date_default_timezone_set('Asia/Colombo');
-                if ($timeSlot['start_time'] < date('H:i:s')) {
-                    unset($timeSlots[$key]);
-                }
+            $nextAppointmentNumber = $lastBookedAppointmentNumber + 1; // Get the next appointment number
+
+            $slotIndex = ceil($nextAppointmentNumber / 3); // Calculate the slot index
+
+            if ($slotIndex <= count($timeSlots)) {
+                $nextTimeSlot = $timeSlots[$slotIndex - 1]; // Get the time slot corresponding to the slot index
+            } else {
+                // Handle the case where the next appointment number exceeds the available slots
+                $nextTimeSlot = null; // Set to null or handle appropriately
             }
 
+            // // Find the next available appointment number and corresponding time slot
+            // foreach ($timeSlots as $key => $timeSlot) {
+            //     // Check if this time slot is available (not fully booked)
+            //     $bookedCount = 0;
+            //     foreach ($bookedSlots as $bookedSlot) {
+            //         if ($timeSlot['start_time'] == $bookedSlot->Start_Time && $bookedSlot->Date == $formatted_date) {
+            //             $bookedCount++;
+            //         }
+            //     }
+
+            //     if ($bookedCount < 3) {
+            //         $availableSlots[] = array(
+            //             'start_time' => $timeSlot['start_time'],
+            //             'end_time' => $timeSlot['end_time'],
+            //             'available_appointment_number' => $bookedCount + 1, // Next available appointment number
+            //         );
+            //     }
+                
+            // }
+
+            // // Sort availableSlots by start_time
+            // usort($availableSlots, function ($a, $b) {
+            //     return strtotime($a['start_time']) - strtotime($b['start_time']);
+            // });
+
+            // // Get the next 3 available slots within a single 15-minute time slot
+            // $nextAvailableSlots = array_slice($availableSlots, 0, 3);
+
+
+            // Add data to responseData
             $responseData[] = array(
                 'day_of_week' => $schedule->Day_of_Week,
-                'time_slots' => $timeSlots,
+                'start_time' => $schedule->Time_Start,
+                'end_time' => $schedule->Time_End,
+                'next_slot' => $nextTimeSlot,
+                'next_appointment_number' => $nextAppointmentNumber,
                 'hospital_charge' => $hospital_data->Charge,
             );
         }
-        
+
         // Send JSON response with schedule data
         echo json_encode($responseData);
     }
+
 
     public function test_booking_details()
     {
@@ -629,6 +739,7 @@ class Patient extends Controller
             'Selected_Day' => $_POST['SelectedDay'],
             'Start_Time' => $_POST['StartTime'],
             'End_Time' => $_POST['EndTime'],
+            'Appointment_No' => $_POST['AppNo'],
             'Total_Price' => $_POST['TotalPrice'],
             'Contact_No' => $_POST['ContactNo'],
             'Email' => $_POST['Email']
