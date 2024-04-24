@@ -70,13 +70,13 @@ function displayScheduleDetails(scheduleData) {
         var currentDate = new Date();
         var dayIndex = daysOfWeek.indexOf(day);
         var currentdayIndex = today.getDay();
-        if (dayIndex <= currentdayIndex) {
+        if (dayIndex < currentdayIndex) {
             change = currentdayIndex - dayIndex;
             currentDate.setDate(today.getDate() + (7-change));
         } else if (dayIndex > currentdayIndex) {
             currentDate.setDate(today.getDate() + (dayIndex - currentdayIndex));
         } else {
-            // currentDate.setDate(today.getDate());
+            currentDate.setDate(today.getDate());
         }
 
         // Format the date as "Day, DD/MM/YYYY" (e.g., "Tue, 16/04/2024")

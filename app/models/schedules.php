@@ -47,9 +47,10 @@ class Schedules{
         $endTime = $time_duration->Time_End;
 
         if($this->db->execute()){
+            // date_default_timezone_set('Asia/Colombo');
             $todayDate = date('Y-m-d');
             $this->db->query('SELECT doctor_reservation.Start_Time, doctor_reservation.Date FROM doctor_reservation
-                            WHERE DATE(doctor_reservation.Date) > :todayDate
+                            WHERE DATE(doctor_reservation.Date) >= :todayDate
                             AND doctor_reservation.Start_Time BETWEEN :startTime AND :end_time');
 
             // Binding parameters for the prepared statement

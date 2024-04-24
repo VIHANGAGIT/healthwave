@@ -112,7 +112,7 @@ class Doctors{
             }
 
             $this->db->query('SELECT COUNT(doctor_reservation.Doc_Res_ID) AS NoOfReservations FROM doctor_reservation
-            WHERE doctor_reservation.Schedule_ID = :schedule_id AND doctor_reservation.Date = :Date');
+            WHERE doctor_reservation.Schedule_ID = :schedule_id AND doctor_reservation.Date = :Date AND doctor_reservation.Status = "Pending"');
 
             $this->db->bind(':schedule_id', $reservation->Schedule_ID);
             $this->db->bind(':Date', $reservation->Date);
@@ -217,7 +217,7 @@ class Doctors{
     }
 
     public function get_past_consultations($doctorId){
-        $this->db->query('SELECT doctor_reservation.*, patient.First_Name, patient.Last_Name, hospital.Hospital_Name, doctor_consultation.Comments FROM doctor_reservation
+        $this->db->query('SELECT doctor_reservation.*, patient.First_Name, patient.Last_Name, hospital.Hospital_Name, doctor_consultation.Comments, doctor_consultation.Prescription_ID FROM doctor_reservation
         INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
         INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
         INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID

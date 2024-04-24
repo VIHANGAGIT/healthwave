@@ -257,6 +257,12 @@ class Patient extends Controller
                     }
                 }
             }
+            foreach ($timeSlots as $key => $timeSlot) {
+                date_default_timezone_set('Asia/Colombo');
+                if ($timeSlot['start_time'] < date('H:i:s')) {
+                    unset($timeSlots[$key]);
+                }
+            }
 
             $responseData[] = array(
                 'day_of_week' => $schedule->Day_of_Week,
@@ -671,6 +677,13 @@ class Patient extends Controller
     public function doctor_profile(){
         $data = [];
         $this->view('patient/doctor_profile', $data);
+    }
+
+    public function get_patient_details(){
+        $resId = $_POST['resId'];
+        $type = $_POST['type'];
+        $patient = $this->doctorModel->get_patient_details($resId, $type);
+        echo json_encode($patient);
     }
 }
 

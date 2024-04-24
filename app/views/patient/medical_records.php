@@ -16,6 +16,21 @@
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
+
+      <div class="popup-container-4">
+        <div class="popup-box-4">
+            <h1>Consultation Details</h1><br>
+            <hr>
+            <table style="width: 95%;">
+              <tr>
+                <td class="popup-data" colspan="2">
+                  <br>
+                    <span class="category">Comments: </span> <span id="patient-comments-popup-4"></span>
+                </td>
+              </tr>
+            </table>
+        </div>
+    </div>
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -143,7 +158,7 @@
                               <td><?php echo $doc_consultation->Specialization; ?></td>
                               <td><?php echo $doc_consultation->Hospital_Name; ?></td>
                               <td><?php echo $doc_consultation->Date; ?></td>
-                              <td><a href=''><button class='button' data-doc-reservation-id="<?php echo $doc_consultation->Doc_Res_ID; ?>">Details</button></a></td>
+                              <td><button class='button show-details-7' data-res-id="<?php echo $doc_consultation->Doc_Res_ID; ?>">Details</button></td>
                               <td><a href='view_prescription?id=<?php echo $doc_consultation->Prescription_ID ?>' ><button class='button doc-cancel-btn'<?php echo ($doc_consultation->Prescription_ID == null ? 'disabled' : '') ?> >Prescription</button></td>
                           </tr>
                         <?php endforeach; ?>
@@ -192,5 +207,8 @@
             </div>
         </section>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script src="<?php echo URLROOT;?>/js/popup.js" defer></script>
   </body>
 </html>

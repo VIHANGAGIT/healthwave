@@ -297,6 +297,59 @@ $(".show-details-6").click(function (event) {
     }
 });
 
+$(".show-details-7").click(function (event) {
+    console.log('Button clicked');
+    event.preventDefault();
+
+    const showPopup = $(this);
+    const popupContainer = document.querySelector('.popup-container-4');
+    const popupBox = document.querySelector('.popup-box-4');
+    const closeBtn = document.querySelector('.close-btn');
+
+    var resId = $(this).data('res-id');
+
+    if (resId) {
+        
+        $.ajax({
+            url: 'get_patient_details',
+            type: 'POST',
+            data: { resId: resId, type: 'past'},
+            success: function(response) {
+                var data = JSON.parse(response);
+                showAppointmentPopup6(data.Remarks);
+            },
+            error: function(xhr, status, error) {
+                alert('Failed to get patient details. Please try again.');
+            }
+        });
+    }
+    popupContainer.classList.add('active');
+
+    // Add event listener to close popup when clicking outside
+    document.addEventListener('click', closePopupOutside);
+
+    // Function to show the popup
+    function showAppointmentPopup6(comments) {
+        document.getElementById('patient-comments-popup-4').textContent = comments;
+    }
+    
+
+    // Close popup function
+    function closePopup() {
+        popupContainer.classList.remove('active');
+        document.removeEventListener('click', closePopupOutside); // Remove event listener
+    }
+
+    
+
+    // Close popup when clicking outside the popup box
+    function closePopupOutside(event) {
+        if (!popupBox.contains(event.target) && !showPopup.is(event.target)) {
+            closePopup();
+        }
+    }
+});
+
 
 
 $("#cancel").click(function (event) {

@@ -46,11 +46,11 @@
                     <span class="category">Comments: </span> <span id="patient-comments-popup-4"></span>
                 </td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td class="popup-data" colspan="2">
-                    <br><button class="close-btn btn" id="pay" >Prescription</button>
+                    <br><a href=""><button class="close-btn btn" id="pay" >Prescription</button></a>
                 </td>
-              </tr>
+              </tr> -->
             </table>
         </div>
     </div>
@@ -153,6 +153,12 @@
             <div class="table-container">
               <h1>Past Consulations</h1>
               <hr><br>
+              <?php if (empty($data['consultations'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No past consultation records available</p>
+                    </div>
+              <?php else: ?>
               <table id="past-consults-table" class="table">
                     <thead>
                         <tr>
@@ -162,6 +168,7 @@
                             <th style="text-align: center;">Hospital</th>
                             <th style="text-align: center;">Date</th>
                             <th style="text-align: center;">Details</th>
+                            <th style="text-align: center;">Prescription</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -172,11 +179,12 @@
                                 <td style="text-align: center;"><?php echo $consultation->Hospital_Name?></td>
                                 <td style="text-align: center;"><?php echo $consultation->Date?></td>
                                 <td style="text-align: center;"><button class="button show-details-5" data-res-id="<?php echo $consultation->Doc_Res_ID; ?>">Details</button></td>
+                                <td><a href='view_prescription?id=<?php echo $consultation->Prescription_ID ?>' ><button class='button doc-cancel-btn'<?php echo ($consultation->Prescription_ID == null ? 'disabled' : '') ?> >Prescription</button></td>
                                 </tr>
                         <?php endforeach; ?>
                     </tbody>
-                    
                 </table>
+                <?php endif; ?>
             </div>
         </section>
     </div>
@@ -190,7 +198,7 @@
               "bFilter": false,
               "bInfo": false,
               "columnDefs": [
-                {"targets": [4], "orderable": false}, // Disable ordering on the last column
+                {"targets": [4,5], "orderable": false}, // Disable ordering on the last column
               ]
                     
           } );
