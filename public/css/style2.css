@@ -1695,6 +1695,145 @@ table thead tr{
   cursor: not-allowed;
 }
 
+/*profile card*/
+
+.profile-content{
+  height: fit-content;
+  display: flex;
+  margin: auto;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  transition: all .5s ease;
+}
+
+.profile-content .profile-card{
+  margin-top: 10%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  max-width: 960px;
+  width: 100%;
+  background: var(--white-color);
+  border-radius: 24px;
+  /* padding: 25px; */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  margin-left: -19%;
+  position: absolute;
+}
+
+.profile-content .profile-card::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30%;
+  width: 100%;
+  border-radius: 24px 24px 0 0;
+  background-color: var(--blue-color);
+}
+
+.profile-card .pr-image {
+  position: relative;
+  margin: 0 auto; /* Center horizontally */
+  margin-bottom: 10px;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  background-color: var(--blue-color);
+  padding: 3px;
+}
+
+
+
+.profile-card .pr-image .prof-image{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--white-color);
+}
+
+.profile-content .profile-card .profile-text{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--grey-color);
+}
+
+.profile-text .profile-name{
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.profile-text .profile-role{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.profile-content .profile-card .profile-btns{
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  margin-top: 25px;
+
+}
+
+.profile-btns .profile-btn{
+  color: #ffffff;
+  width: 100px;
+  height: 45px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  padding: auto;
+  background-color: var(--blue-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+}
+
+.profile-btns .profile-btn:hover{
+  background-color:#1b52e8;
+}
+
+.profile-btns .profile-delete{
+  color: #ffffff;
+  width: 100px;
+  height: 45px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  padding: auto;
+  background-color: red;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+}
+
+.profile-btns .profile-delete:hover{
+  background-color:rgb(152, 36, 36);
+}
+
+.profile-details {
+  color: var(--grey-color-dark);
+  font-size: 20px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  flex-wrap: wrap; /* Allow items to wrap */
+  margin-top: 20px;
+}
+
+.profile-details .profile-detail {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 45%; 
+  margin: 4px 2.5%; 
+  text-align: center; /* Center text within each detail */
+}
+
 /*.prescription  button {
   margin-top: -30px;
   margin-bottom: 30px;
