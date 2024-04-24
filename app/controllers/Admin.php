@@ -681,7 +681,12 @@
                     'H_charge' => $hospital_data->Charge,
                     'M_ID' => $hospital_data->Mng_ID,
                     'C_num' => $hospital_data->Contact_No,
-                    'C_num_err' => ''
+                    'C_num_err' => '',
+                    'H_name_err' => '',
+                    'H_address_err' => '',
+                    'Region_err' => '',
+                    'H_charge_err' => '',
+                    'M_ID_err' => '',
 
                 ];
                 
