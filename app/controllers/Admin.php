@@ -609,7 +609,7 @@
                     'H_address' => trim($_POST['haddress']),
                     'Region' => trim($_POST['region']),
                     'H_charge' => trim($_POST['hcharge']),
-                    'M_ID' => trim($_POST['managerid']),
+                    //'M_ID' => trim($_POST['managerid']),
                     'C_num' => trim($_POST['cnum']),
                     'H_name_err' => '',
                     'H_address_err' => '',
@@ -640,9 +640,9 @@
                 }
 
                 // Validate Manager ID
-                if(empty($data['M_ID'])){
-                    $data['M_ID_err'] = 'Please enter manager ID';
-                }
+                // if(empty($data['M_ID'])){
+                //     $data['M_ID_err'] = 'Please enter manager ID';
+                // }
 
                  // Validate Contact Number
                  if(empty($data['C_num'])){
@@ -660,7 +660,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['H_name_err']) && empty($data['H_address_err']) && empty($data['Region_err']) && empty($data['H_charge_err']) && empty($data['M_ID_err']) && empty($data['C_num_err'])){
+                if(empty($data['H_name_err']) && empty($data['H_address_err']) && empty($data['Region_err']) && empty($data['H_charge_err']) && empty($data['C_num_err'])){
                     // Register user
                     if($this->adminModel->edit_hospital($data)){
                         redirect('admin/hospital_management');
@@ -684,7 +684,7 @@
                     'H_address' => $hospital_data->Address,
                     'Region' => $hospital_data->Region,
                     'H_charge' => $hospital_data->Charge,
-                    'M_ID' => $hospital_data->Mng_ID,
+                    //'M_ID' => $hospital_data->Mng_ID,
                     'C_num' => $hospital_data->Contact_No,
                     'C_num_err' => '',
                     'H_name_err' => '',
