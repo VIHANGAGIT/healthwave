@@ -1,5 +1,4 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Admin'){
     redirect("users/login");
   }
@@ -10,10 +9,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Doctor Management</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
@@ -87,7 +88,7 @@
               </a>
             </li>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../admin/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -114,81 +115,120 @@
     </nav>
 
     <div class="content">
+      <section class="table-wrap" >
+        <div class="content-search">
+              <div class="search">
+                <h2>Doctor Search</h2>
+                  <form style="width: 100%;" method="POST">
+                    <div class="fields">
+                      <table style="width: 95%;">
+                        <tr>
+                          <td>
+                            <div class="input-field">
+                                <label>Doctor Name</label>
+                                <input type="text" name="search_text" placeholder="Doctor Name" style="margin: 0%;" >
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-field">
+                              <label>Hospital Name</label>
+                              <select required>
+                                  <option disabled selected>Select Hospital</option>
+                                  <option>Lanka Hospitals - Kiribathgoda</option>
+                                  <option>Lanka Hospitals - Kiribathgoda</option>
+                                  <option>Lanka Hospitals - Kiribathgoda</option>
+                              </select>
+                            </div>
+                          </td>
+                          <td>
+                            <input type="submit" class="button" value="Search" name="search" >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="input-field">
+                                <label>Specialization</label>
+                                <input type="text" name="search_text" placeholder="Specialization" style="margin: 0%;">
+                            </div>
+                          </td>
+                          <td>
+                          <div class="input-field">
+                                <label>Date</label>
+                                <input type="date" name="search_text" placeholder="Date" style="margin: 0%;">
+                            </div>
+                          </td>
+                          <td>
+                            <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </form>
+                  
+              </div>
+            </div>
+        </section><br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Doctor Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href=''><button class='button'>Add Doctor</button></a></span></h1>
-                <table class="table">
+            <h1>Doctor Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_doctor'><button class='button'>Add Doctor</button></a></span></h1>
+            <hr><br>
+            <table  id="myTable" class="table">
                     <thead>
                         <tr>
-                            <th>Doctor ID</th>
-                            <th>Doctor Name</th>
-                            <th>Specialization</th>
-                            <th>NIC</th>
-                            <th>SLMC Reg No</th>
-                            <th>Remove</th>
+                            <th style="text-align: center;">Doctor ID</th>
+                            <th style="text-align: center;">Doctor Name</th>
+                            <th style="text-align: center;">Specialization</th>
+                            <th style="text-align: center;">NIC</th>
+                            <th style="text-align: center;">SLMC Reg No</th>
+                            <th style="text-align: center;">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>342</td>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
+                    <?php foreach($data['doctors'] as $doctor): ?>
+                      <tr>
+                        <td style="text-align: center;"><?php echo $doctor->Doctor_ID; ?></td>
+                        <td style="text-align: center;"><?php echo $doctor->First_Name . " " . $doctor->Last_Name; ?></td>
+                        <td style="text-align: center;"><?php echo $doctor->Specialization; ?></td>
+                        <td style="text-align: center;"><?php echo $doctor->NIC; ?></td>
+                        <td style="text-align: center;"><?php echo $doctor->SLMC_Reg_No; ?></td>
+                        <td style="text-align: center;">
+                        <a href="#" onclick="confirmRemove('<?php echo $doctor->Doctor_ID; ?>')">
+                          <button class='button' style='background-color: red;'>Remove</button>
+                        </a>
+                      </td>
+
+                      </tr>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
         </section>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#myTable').dataTable( {
+              "bPaginate": false,
+              "bFilter": false,
+              "bInfo": false,
+              "columnDefs": [
+                {"targets": [5], "orderable": false}, // Disable ordering on the last column
+              ]
+                    
+          } );
+      } );
+    </script> 
+    <script>
+      function confirmRemove(doctorId) {
+        if (confirm('Are you sure you want to remove?')) {
+          // If user confirms, redirect to the remove doctor page
+          window.location.href = 'remove_doctor?doc_id=' + doctorId;
+        } else {
+          // If user cancels, do nothing
+          return false;
+        }
+      }
+    </script>
   </body>
 </html>
