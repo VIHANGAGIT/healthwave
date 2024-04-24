@@ -79,7 +79,7 @@
                         </button>
                         
                         <button class="sumbit">
-                            <span class="btnText">Add</span>
+                            <span class="btnText">Sumbit</span>
                         </button>
                     </div>
                 </div>
