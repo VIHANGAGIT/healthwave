@@ -205,7 +205,7 @@
 
                 // Register user
                 $data = [
-                    'H_name' => trim($_POST['hname']),
+                    'H_name' => $_POST['hname'],
                     'H_address' => trim($_POST['haddress']),
                     'Region' => trim($_POST['region']),
                     'H_charge' => trim($_POST['hcharge']),
@@ -220,8 +220,13 @@
                 ];
 
                 // Validate Hospital Name
-                if(empty($data['H_name'])){
+                if (empty($data['H_name'])) {
                     $data['H_name_err'] = 'Please enter hospital name';
+                } else {
+                    // Check for duplicate hospital names
+                    if ($this->adminModel->findHospitalByName($data['H_name'])) {
+                        $data['H_name_err'] = 'Hospital name already exists';
+                    }
                 }
 
                 // Validate Hospital Address
@@ -294,12 +299,6 @@
                 // Load view
                 $this->view('admin/add_hospital', $data);
             }
-
-            // Load view
-
-            //
-            // $data = [];
-            // $this->view('admin/add_hospital', $data);
         }
 
         public function add_doctor(){
@@ -327,7 +326,9 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => ''
+                    'DOB_err' => '',
+                    'SLMC_err' => '',
+                    'NIC_err' => ''
                 ];
                 // Validate Contact Number
                 if(empty($data['C_num'])){
@@ -351,6 +352,36 @@
                 if($diff->format('%y') < 18){
                     $data['DOB_err'] = 'Doctor must be atleast 18 years old';
                 }
+
+                //validate SLMC number
+                if(empty($data['SLMC'])){
+                    $data['SLMC_err'] = 'Please enter SLMC number';
+                }else{
+                    if (!preg_match('/^\d{5}$/', $data['SLMC'])) {
+                        // Invalid SLMC Number
+                        $data['SLMC_err'] = "SLMC number must be a 5-digit number.";
+                    } 
+                }
+
+                // Validate NIC number
+                if (empty($data['NIC'])) {
+                    $data['NIC_err'] = 'Please enter NIC number';
+                } else {
+                    // Remove any spaces or hyphens from the NIC number
+                    $nic = str_replace([' ', '-'], '', $data['NIC']);
+
+                    // Define regex patterns for the two NIC formats
+                    $pattern1 = '/^\d{9}[VX]$/i';  // Format: 9 digits followed by 'V' or 'X'
+                    $pattern2 = '/^\d{12}$/';       // Format: 12 digits
+
+                    // Check if the NIC number matches either pattern
+                    if (!preg_match($pattern1, $nic) && !preg_match($pattern2, $nic)) {
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                }
+
+                
+
 
 
 
@@ -402,7 +433,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['DOB_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['DOB_err'])&& empty($data['SLMC_err'])&& empty($data['NIC_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 
@@ -437,7 +468,9 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => ''
+                    'DOB_err' => '',
+                    'SLMC_err' => '',
+                    'NIC_err' => ''
                 ];
 
                 // Load view
@@ -647,7 +680,9 @@
                     'Region' => $hospital_data->Region,
                     'H_charge' => $hospital_data->Charge,
                     'M_ID' => $hospital_data->Mng_ID,
-                    'C_num' => $hospital_data->Contact_No
+                    'C_num' => $hospital_data->Contact_No,
+                    'C_num_err' => ''
+
                 ];
                 
                 // Load view

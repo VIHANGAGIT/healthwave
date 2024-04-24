@@ -51,6 +51,7 @@
                         <div class="input-field">
                             <label>NIC Number*</label>
                             <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
+                            <span class="err-msg"><?php echo $data['NIC_err'] ?></span>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
@@ -79,6 +80,7 @@
                         <div class="input-field">
                             <label>SLMC Regisration Number*</label>
                             <input type="number" placeholder="Enter SLMC Regisration Number" name="slmc" value="<?php echo $data['SLMC'] ?>" required>
+                            <span class="err-msg"><?php echo $data['SLMC_err'] ?></span>
                         </div>
                         <div class="input-field" style="opacity: 0;">
                             <label></label>

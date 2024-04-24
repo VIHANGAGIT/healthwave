@@ -257,4 +257,17 @@
                 return false;
             }
         }
+
+        public function findHospitalByName()
+        {
+            $this->db->query('SELECT Hospital_Name FROM hospital WHERE Hospital_Name = :H_name');
+            $this->db->bind(':H_name', $_POST['hname']);
+            $row = $this->db->singleRow();
+
+            if($this->db->rowCount() > 0){
+                return true;
+            } else{
+                return false;
+            }
+        }
     }        

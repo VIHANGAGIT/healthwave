@@ -26,6 +26,7 @@
                         <div class="input-field">
                             <label>Hospital Name*</label>
                             <input type="text" placeholder="Enter hospital name" name="hname" value="<?php echo $data['H_name'] ?>" required>
+                            <span class="err-msg"><?php echo $data['H_name_err'] ?></span>
                         </div>
 
                         <div class="input-field">
