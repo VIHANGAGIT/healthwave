@@ -65,7 +65,7 @@
                         </button>
                         
                         <button class="sumbit" style="width: calc(50% - 10px);  margin-left: 15px;">
-                            <span class="btnText">Update</span>
+                            <span class="btnText">Submit</span>
                         </button>
                     </div>
                 </div>
