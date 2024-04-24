@@ -135,8 +135,8 @@ ob_start();
             <td width="75%"><span style="border:1px"> <?= !empty($data['Allergies']) ? $data['Allergies'] : " None " ?></span></td>
         </tr>
         <tr>
-            <td width="18%"><span></span></td>
-            <td width="72%"><span style="border:1px"><br><?= $data['Diagnosis']?></span></td>
+            <td width="19%"><span></span></td>
+            <td width="70%"><span style="border:1px"><br><?= $data['Diagnosis']?></span></td>
         </tr>
     </table>
     <br><br><br><br>

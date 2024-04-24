@@ -189,17 +189,17 @@ $(".show-details-5").click(function (event) {
     const popupBox = document.querySelector('.popup-box-4');
     const closeBtn = document.querySelector('.close-btn');
 
-    var patientId = $(this).data('patient-id');
+    var resId = $(this).data('res-id');
 
-    if (patientId) {
+    if (resId) {
         
         $.ajax({
             url: 'get_patient_details',
             type: 'POST',
-            data: { patient_id: patientId, type: 'past'},
+            data: { resId: resId, type: 'past'},
             success: function(response) {
                 var data = JSON.parse(response);
-                showAppointmentPopup4(data.Name, data.Gender, data.Age, data.Blood_Group, data.Allergies, data.Comments);
+                showAppointmentPopup4(data.Name, data.Gender, data.Age, data.Blood_Group, data.Allergies, data.Remarks);
             },
             error: function(xhr, status, error) {
                 alert('Failed to get patient details. Please try again.');

@@ -27,23 +27,23 @@
               <tr>
                 <td class="popup-data">
                   <br>
-                  <span class="category" >Patient Name: </span><span id="patient-name-popup-4">Steven Spilberg</span>
+                  <span class="category" >Patient Name: </span><span id="patient-name-popup-4"></span>
                   <br>
-                  <span class="category">Gender: </span> <span id="patient-gender-popup-4">Male</span>
+                  <span class="category">Gender: </span> <span id="patient-gender-popup-4"></span>
                   <br>
-                  <span class="category">Age: </span> <span id="patient-age-popup-4">55</span>
+                  <span class="category">Age: </span> <span id="patient-age-popup-4"></span>
                   <br>
                 </td>
                 <td class="popup-data">
-                  <span class="category">Blood Group: </span> <span id="patient-blood-popup-4">A+</span>
+                  <span class="category">Blood Group: </span> <span id="patient-blood-popup-4"></span>
                   <br>
-                  <span class="category">Allergies: </span> <span id="patient-allergies-popup-4">Penicillin antibiotics</span>
+                  <span class="category">Allergies: </span> <span id="patient-allergies-popup-4"></span>
                   <br>
                   </td>
               </tr>
               <tr>
                 <td class="popup-data" colspan="2">
-                    <span class="category">Comments: </span> <span id="patient-comments-popup-4">He is making impressive progress and should continue with the current regimen for optimal results. Encouragement to maintain the good work is recommended.</span>
+                    <span class="category">Comments: </span> <span id="patient-comments-popup-4"></span>
                 </td>
               </tr>
               <tr>
@@ -171,7 +171,7 @@
                                 <td style="text-align: center;"><?php echo $consultation->First_Name. " " . $consultation->Last_Name?></td>
                                 <td style="text-align: center;"><?php echo $consultation->Hospital_Name?></td>
                                 <td style="text-align: center;"><?php echo $consultation->Date?></td>
-                                <td style="text-align: center;"><button class="button show-details-5" data-patient-id="<?php echo $consultation->Patient_ID; ?>">Details</button></td>
+                                <td style="text-align: center;"><button class="button show-details-5" data-res-id="<?php echo $consultation->Doc_Res_ID; ?>">Details</button></td>
                                 </tr>
                         <?php endforeach; ?>
                     </tbody>

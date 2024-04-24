@@ -240,23 +240,36 @@ class Doctors{
         }
     }
 
-    public function get_patient_details($patient_id, $type){
+    public function get_patient_details($id, $type){
         if($type == 'past'){
-            $this->db->query('SELECT patient.Patient_ID, patient.First_Name, patient.Last_Name, patient.Gender, patient.DOB, patient.Blood_Group, patient.Allergies, doctor_consultation.Comments FROM patient
-            INNER JOIN doctor_reservation ON patient.Patient_ID = doctor_reservation.Patient_ID
-            INNER JOIN doctor_consultation ON doctor_reservation.Doc_Res_ID = doctor_consultation.Doc_Res_ID
-            WHERE patient.Patient_ID = :patient_id');
+            $this->db->query('SELECT patient.Patient_ID, patient.First_Name, patient.Last_Name, patient.Gender, patient.DOB, patient.Blood_Group, patient.Allergies FROM doctor_reservation 
+            INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
+            WHERE doctor_reservation.Doc_Res_ID = :res_id');
+
+            $this->db->bind(':res_id', $id);
+            $patient = $this->db->singleRow();
+
+            $this->db->query('SELECT doctor_consultation.Comments FROM doctor_consultation WHERE doctor_consultation.Doc_Res_ID = :res_id');
+
+            $this->db->bind(':res_id', $id);
+            $comment = $this->db->singleRow();
+
+            $patient->Remarks = $comment->Comments;
+            
         }else{
             $this->db->query('SELECT Patient_ID, First_Name, Last_Name, Gender, DOB, Blood_Group, Allergies FROM patient WHERE Patient_ID = :patient_id');
+            $this->db->bind(':patient_id', $id);
+
+            $patient = $this->db->singleRow();
         }
 
-        $this->db->bind(':patient_id', $patient_id);
-        $patient = $this->db->singleRow();
+        
+        // echo json_encode($patient);
 
         if ($this->db->execute()) {
             return $patient;
         } else {
-            return false;
+            return 'false';
         }
     }
 
