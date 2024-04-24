@@ -270,4 +270,17 @@
                 return false;
             }
         }
+
+        public function findHospitalByAddress()
+        {
+            $this->db->query('SELECT Address FROM hospital WHERE Address = :H_address');
+            $this->db->bind(':H_address', $_POST['haddress']);
+            $row = $this->db->singleRow();
+
+            if($this->db->rowCount() > 0){
+                return true;
+            } else{
+                return false;
+            }
+        }
     }        

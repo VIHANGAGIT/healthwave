@@ -206,7 +206,7 @@
                 // Register user
                 $data = [
                     'H_name' => $_POST['hname'],
-                    'H_address' => trim($_POST['haddress']),
+                    'H_address' => $_POST['haddress'],
                     'Region' => trim($_POST['region']),
                     'H_charge' => trim($_POST['hcharge']),
                     'M_ID' => trim($_POST['managerid']),
@@ -230,8 +230,13 @@
                 }
 
                 // Validate Hospital Address
-                if(empty($data['H_address'])){
+                if (empty($data['H_address'])) {
                     $data['H_address_err'] = 'Please enter hospital address';
+                } else {
+                    // Check if the hospital address already exists in the database
+                    if ($this->adminModel->findHospitalByAddress($data['H_address'])) {
+                        $data['H_address_err'] = 'This hospital address is already taken';
+                    }
                 }
 
                 // Validate Region

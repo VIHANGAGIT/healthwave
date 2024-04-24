@@ -32,6 +32,7 @@
                         <div class="input-field">
                             <label>Address*</label>
                             <input type="text" placeholder="Enter hospital adress" name="haddress" value="<?php echo $data['H_address'] ?>" required>
+                            <span class="err-msg"><?php echo $data['H_address_err'] ?></span>
                         </div>
 
                         <div class="input-field">
