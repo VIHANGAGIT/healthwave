@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!----======== CSS ======== -->
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/style.css">
-     
-    <!----===== Iconscout CSS ===== -->
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/style.css">
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Doctor Regisration</title>
-</head>
-<body>
+        <title><?php echo SITENAME?>: Add Doctor</title>
+    </head>
+    <body>
     <div class="container-signup" style="height: 720px;" >
-        <header>Doctor Registration</header>
+        <header>Add Doctor</header>
 
-        <form action="<?php echo URLROOT; ?>/users/register_doctor" method="POST" style="height: 600px;">
+        <form  action="<?php echo URLROOT; ?>/admin/add_doctor" method="POST" style="height: 600px;">
             <div class="form first" >
                 <div class="details personal">
                     <span class="title">Personal Details</span>
@@ -45,17 +42,18 @@
                         <div class="input-field">
                             <label>Date of Birth*</label>
                             <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>" required>
-                            <span class="err-msg"><?php echo $data['DOB_err']; ?></span>
+                            <span class="err-msg"><?php echo $data['DOB_err'] ?></span>
                         </div>
 
                         <div class="input-field">
                             <label>NIC Number*</label>
                             <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
+                            <span class="err-msg"><?php echo $data['NIC_err'] ?></span>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
                             <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
-                            <span class="err-msg"><?php echo $data['C_num_err']; ?></span>
+                            <span class="err-msg"><?php echo $data['C_num_err'] ?></span>
                         </div>
                     </div>
                 </div>
@@ -85,12 +83,13 @@
 
                         <div class="input-field">
                             <label>SLMC Regisration Number*</label>
-                            <input type="number" placeholder="Enter SLMC Regisration Number" name="slmc" value="<?php echo $data['SLMC'] ?>" required>
+                            <input type="number" placeholder="Enter SLMC regisration number" name="slmc" value="<?php echo $data['SLMC'] ?>" required>
                             <span class="err-msg"><?php echo $data['SLMC_err']; ?></span>
                         </div>
                         <div class="input-field">
-                            <label>Charges*</label>
-                            <input type="number" step="0.01" placeholder="Enter Doctor Charges" name="charges" value="<?php echo $data['Charges'] ?>" required>
+                            <label>Appointment Charges*</label>
+                            <input type="number" step="0.01" placeholder="Enter appointment charges" name="charges" value="<?php echo $data['Charges'] ?>" required>
+                            <span class="err-msg"><?php echo $data['Char_err']; ?></span>
                         </div>
                     </div>
                     <div class="details account">
@@ -120,26 +119,44 @@
                         
                     </div>
                     <div class="buttons">
-                        <button>
-                            <span class="btnText">Clear</span>
-                        </button>
+                    <button type="reset">
+                     <span class="btnText">Clear</span>
+                    </button>
+
                         
                         <button class="sumbit">
-                            <span class="btnText">Submit</span>
+                            <span class="btnText">Add</span>
                         </button>
                     </div>
                 </div>
-                    <div class="login-signup" style="margin-top: -20px; font-size: 14px;" ">
+                    <!--<div class="login-signup" style="margin-top: -20px; font-size: 14px;" ">
                         <span class="text">Already have an account?
-                            <a href="<?php echo URLROOT; ?>/users/login" class="text login-link">Login Now</a>
+                            <a href="<?php //echo URLROOT; ?>/users/login" class="text login-link">Login Now</a>
                         </span>
-                    </div>
+                    </div>-->
                 </div>
                 
             </div>
         </form>
-</div>
+    </div>
 
     <script src="<?php echo URLROOT; ?>/js/signup.js"></script>
-</body>
+
+    <!--<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const clearButton = document.getElementById('clearButton');
+        const registrationForm = document.getElementById('registrationForm');
+
+        // Add click event listener to the Clear button
+        clearButton.addEventListener('click', function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Reset the form
+            registrationForm.reset();
+        });
+    });
+    </script>-->
+
+    </body>
 </html>

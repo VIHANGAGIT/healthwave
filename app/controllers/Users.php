@@ -154,10 +154,41 @@
                     'C_pass' => trim($_POST['cpass']),
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'C_num_err' => '',
+                    'DOB_err' => '',
+                    'SLMC_err' => ''
                 ];
 
+                // Validate Contact Number
+                if(empty($data['C_num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
 
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
+                    }
+                }
+
+                //validate date of birth
+                $dob = $data['DOB'];
+                $today = date("Y-m-d");
+                $diff = date_diff(date_create($dob), date_create($today));
+                if($diff->format('%y') < 18){
+                    $data['DOB_err'] = 'Doctor must be atleast 18 years old';
+                }
+
+                if (empty($data['SLMC'])) {
+                    $data['SLMC_err'] = 'Please enter SLMC registration number';
+                } else {
+                    $slmc = $data['SLMC'];
+                    if (strlen($slmc) < 4 || strlen($slmc) > 5) {
+                        $data['SLMC_err'] = 'SLMC registration number must be between 4 and 5 digits';
+                    }
+                }
                 // Validate Email
                 if(empty($data['Uname'])){
                     $data['Uname_err'] = 'Please enter your email';
@@ -240,7 +271,10 @@
                     'C_pass' => '',
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'C_num_err' => '',
+                    'DOB_err' => '',
+                    'SLMC_err' => ''
                 ];
 
                 // Load view

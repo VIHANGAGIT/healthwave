@@ -5,6 +5,7 @@
                 session_start(); 
             }
             $this->adminModel = $this->model('admins');
+            $this->userModel = $this->model('user');
         }
         public function index(){
             $data = [];
@@ -300,6 +301,7 @@
                     'Spec' => $_POST['spec'],
                     'SLMC' => $_POST['slmc'],
                     'Avail' => 1,
+                    'Charges' => $_POST['charges'],
                     'Uname' => trim($_POST['email']),
                     'Pass' => trim($_POST['pass']),
                     'C_pass' => trim($_POST['cpass']),
@@ -307,7 +309,10 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => ''
+                    'DOB_err' => '',
+                    'SLMC_err' => '',
+                    'Char_err' => '',
+                    'NIC_err' => ''
                 ];
                 // Validate Contact Number
                 if(empty($data['C_num'])){
@@ -319,8 +324,6 @@
                     // Check if the cleaned number is not exactly 10 digits long
                     if(strlen($cleaned_number) !== 10){
                         $data['C_num_err'] = 'Invalid Number';
-                    } else {
-                        // Proceed with other validations if needed
                     }
                 }
 
@@ -332,6 +335,46 @@
                     $data['DOB_err'] = 'Doctor must be atleast 18 years old';
                 }
 
+                if (empty($data['SLMC'])) {
+                    $data['SLMC_err'] = 'Please enter SLMC registration number';
+                } else {
+                    $slmc = $data['SLMC'];
+                    if (strlen($slmc) < 4 || strlen($slmc) > 5) {
+                        $data['SLMC_err'] = 'SLMC registration number must be between 4 and 5 digits';
+                    }
+                }
+
+                if (empty($data['Charges'])) {
+                    $data['Char_err'] = 'Please enter charges';
+                } else {
+                    $charge = $data['Charges'];
+                    if ($charge > 25000 ) {
+                        $data['Char_err'] = 'Charges must be less than 25000';
+                    }
+                }
+
+                if (empty($data['NIC'])) {
+                    $data['NIC_err'] = 'Please enter NIC number';
+                } else {
+                    $nic = $data['NIC'];
+                    if (strlen($nic)!=10 && strlen($nic)!=12){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                    if (strlen($nic) == 10){
+                        $lastChar = strtoupper(substr($nic, 9, 1)); // Get the last character and convert to uppercase
+
+                        if ($lastChar !== 'V') {
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                        if(!is_numeric(substr($nic, 0, 9))){
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                    }
+                    // }
+                    if (strlen($nic) == 12 && !is_numeric($nic)){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                }
 
 
                 // Validate Email
@@ -339,7 +382,7 @@
                     $data['Uname_err'] = 'Please enter your email';
                 } else{
                     // Check for duplicates
-                    if($this->adminModel->findUserByUname($data['Uname'])){
+                    if($this->userModel->findUserByUname($data['Uname'])){
                         $data['Uname_err'] = 'Another account already has this email';
                     }
                 }
@@ -382,7 +425,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['DOB_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['DOB_err'])&& empty($data['SLMC_err'])&& empty($data['Char_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 
@@ -409,6 +452,7 @@
                     'Spec' => '',
                     'SLMC' => '',
                     'Avail' => '',
+                    'Charges' => '',
                     'Uname' => '',
                     'Pass' => '',
                     'C_pass' => '',
@@ -416,7 +460,10 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => ''
+                    'DOB_err' => '',
+                    'SLMC_err' => '',
+                    'Char_err' => '',
+                    'NIC_err' => ''
                 ];
 
                 // Load view

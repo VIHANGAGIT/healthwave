@@ -78,7 +78,7 @@
         }
    
         public function add_doctor($data){
-            $this->db->query('INSERT INTO doctor (First_Name, Last_Name, Gender, NIC, Contact_No, SLMC_Reg_No, Specialization, Availability, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :SLMC, :Spec, :Avail, :Uname, :Pass)');
+            $this->db->query('INSERT INTO doctor (First_Name, Last_Name, Gender, NIC, Contact_No, SLMC_Reg_No, Specialization, Availability, Charges, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :SLMC, :Spec, :Avail, :Charges, :Uname, :Pass)');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':F_name', $data['F_name']);
@@ -89,6 +89,7 @@
             $this->db->bind(':SLMC', $data['SLMC']);
             $this->db->bind(':Spec', $data['Spec']);
             $this->db->bind(':Avail', $data['Avail']);
+            $this->db->bind(':Charges', $data['Charges']);
             $this->db->bind(':Uname', $data['Uname']);
             $this->db->bind(':Pass', $data['Pass']);
 
@@ -134,21 +135,6 @@
             }
         }
 
-        // Check for duplicate Username entries
-        public function findUserByUname($uname){
-            $this->db->query('SELECT Username FROM patient WHERE Username = :uname UNION SELECT Username FROM doctor WHERE Username = :uname UNION SELECT Username FROM admin WHERE Username = :uname UNION SELECT Username FROM hospital_staff WHERE Username = :uname');
-            
-             // Binding parameters for the prepaired statement
-            $this->db->bind(':uname', $uname);
-
-            $row = $this->db->singleRow();
-
-            if($this->db->rowCount() > 0){
-                return true;
-            } else{
-                return false;
-            }
-        }
       
         public function test_data_fetch($id){
             $this->db->query('SELECT * FROM test WHERE Test_ID = :id');
