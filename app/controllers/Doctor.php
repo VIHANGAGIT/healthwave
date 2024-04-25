@@ -38,6 +38,7 @@
         public function ongoing_consults(){
             $doctorId = $_SESSION['userID'];
             $remaining_patients = 0;
+            $total_patients = 0;
             $schedule = $this->doctorModel->get_current_schedule($doctorId);
             $reservations = [];
             if($schedule){
@@ -47,8 +48,8 @@
                     $reservation->Age = $Age;
                     $remaining_patients++;
                 }
+                $total_patients = $this->doctorModel->get_total_reservations($schedule->Schedule_ID);
             }
-            $total_patients = $this->doctorModel->get_total_reservations($schedule->Schedule_ID);
 
             $data = [
                 'schedule' => $schedule,
@@ -259,12 +260,12 @@
                 // Register user
                 $data = [
                     'ID'=> $_SESSION['userID'],
-                    'First_Name' => trim($_POST['fname']),
-                    'Last_Name' => trim($_POST['lname']),
+                    'First_Name' => $doctor_data->First_Name,
+                    'Last_Name' => $doctor_data->Last_Name,
                     'Gender' => $doctor_data->Gender,
-                    'NIC' => trim($_POST['nic']),
+                    'NIC' => $doctor_data->NIC,
                     'C_Num' => $_POST['cnum'],
-                    'Avail' => 1,
+                    'Charges' => $_POST['charges'],
                     'SLMC' => $doctor_data->SLMC_Reg_No,
                     'Spec' => $doctor_data->Specialization,
                     'Email' => trim($_POST['email']),
@@ -272,7 +273,9 @@
                     'C_pass' => trim($_POST['cpass']),
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'C_num_err' => '',
+                    'Char_err' => ''
                 ];
                 // Validate Email
                 if(empty($data['Email'])){
@@ -316,9 +319,30 @@
                     }
                 }
 
+                if (empty($data['Charges'])) {
+                    $data['Char_err'] = 'Please enter charges';
+                } else {
+                    $charge = $data['Charges'];
+                    if ($charge > 25000 ) {
+                        $data['Char_err'] = 'Charges must be less than 25000';
+                    }
+                }
+
+                if(empty($data['C_Num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_Num']);
+
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
+                    }
+                }
+
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err']) && empty($data['C_num_err']) && empty($data['Char_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 
@@ -344,13 +368,16 @@
                     'NIC' => $doctor_data->NIC,
                     'C_Num' => $doctor_data->Contact_No,
                     'SLMC' => $doctor_data->SLMC_Reg_No,
+                    'Charges' => $doctor_data->Charges,
                     'Spec' => $doctor_data->Specialization,
                     'Email' => $doctor_data->Username,
                     'Password' => $doctor_data->Password,
                     'C_pass' => '',
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'C_num_err' => '',
+                    'Char_err' => ''
                 ];
 
                 // Load view
@@ -379,4 +406,3 @@
     }
 
     
-?>

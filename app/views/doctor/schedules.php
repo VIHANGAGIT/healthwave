@@ -132,7 +132,7 @@
                                 echo "<td style='text-align: center;'>".$schedule->Date."</td>";
                                 echo "<td style='text-align: center;'>".$schedule->Time_Start. " - " . $schedule->Time_End."</td>";
                                 echo "<td style='text-align: center;'>".$schedule->NoOfReservations."</td>";
-                                echo "<td style='text-align: center;'><a href=''><button class='button'>Avilability</button></a></td>";
+                                echo "<td style='text-align: center;'><a href=''><button class='button'>Availability</button></a></td>";
                                 //echo "<td><a href='../doctor/edit_reservation/".$schedule->Reservation_ID."'><button class='button'>View</button></a></td>";
                                 //echo "<td><a href='../doctor/delete_reservation/".$schedule->Reservation_ID."'><button class='button'>Delete</button></a></td>";
                                 echo "</tr>";

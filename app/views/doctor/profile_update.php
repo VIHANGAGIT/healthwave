@@ -33,12 +33,12 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>First Name*</label>
-                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['First_Name'] ?>" required>
+                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['First_Name'] ?>" disabled>
                         </div>
 
                         <div class="input-field">
                             <label>Last Name*</label>
-                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['Last_Name'] ?>" required>
+                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['Last_Name'] ?>" disabled>
                         </div>
 
                         <div class="input-field">
@@ -51,11 +51,12 @@
                         </div>
                         <div class="input-field">
                             <label>NIC Number*</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" disabled>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
                             <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_Num'] ?>" required>
+                            <span class="err-msg"><?php echo $data['C_num_err']; ?></span>
                         </div>
                         <div class="input-field">
                             <label></label>
@@ -84,9 +85,10 @@
                             <label>SLMC Regisration Number*</label>
                             <input type="number" placeholder="Enter SLMC Regisration Number" name="slmc" value="<?php echo $data['SLMC'] ?>" disabled>
                         </div>
-                        <div class="input-field" style="opacity: 0;">
-                            <label></label>
-                            <input type="text">
+                        <div class="input-field">
+                            <label>Appointment Charges*</label>
+                            <input type="number" step="0.01" placeholder="Enter appointment charges" name="charges" value="<?php echo $data['Charges'] ?>" required>
+                            <span class="err-msg"><?php echo $data['Char_err']; ?></span>
                         </div>
                     </div>
                     <div class="details account">

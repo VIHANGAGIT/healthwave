@@ -1037,7 +1037,7 @@ body.dark {
   margin-left: 5%;
   border: 2px solid red;
   border-radius: 20px;
-  background-color: #fff;
+  background-color: var(--white-color);
   text-align: center;
 }
 
@@ -1059,7 +1059,7 @@ body.dark {
   margin-left: 5%;
   border: 2px solid var(--blue-color);
   border-radius: 20px;
-  background-color: #fff;
+  background-color: var(--white-color);
   text-align: center;
 }
 
@@ -1741,7 +1741,7 @@ table thead tr{
   position: absolute;
   top: 0;
   left: 0;
-  height: 30%;
+  height: 155px;
   width: 100%;
   border-radius: 24px 24px 0 0;
   background-color: var(--blue-color);

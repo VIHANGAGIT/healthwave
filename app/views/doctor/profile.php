@@ -112,7 +112,7 @@
 
         <div class="profile-text">
           <span class="profile-name"><?php echo $data['First_Name'] . ' ' . $data['Last_Name']?></span>
-          <span class="profile-role"><?php echo $_SESSION['userType'] ?></span>
+          <span class="profile-role"><?php echo $_SESSION['userType'] ?> - <?php echo $data['Spec'] ?></span>
         </div>
 
         <div class="profile-details">

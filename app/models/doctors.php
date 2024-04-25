@@ -371,5 +371,23 @@ class Doctors{
 
     }
 
+    public function doctor_profile_update($data){
+        $this->db->query('UPDATE doctor SET Contact_No = :C_num, Charges = :Charges, Username = :Uname, Password = :Pass WHERE Doctor_ID = :Doctor_ID');
+
+        // Binding parameters for the prepaired statement
+        $this->db->bind(':Charges', $data['Charges']);
+        $this->db->bind(':C_num', $data['C_Num']);
+        $this->db->bind(':Uname', $data['Email']);
+        $this->db->bind(':Pass', $data['Pass']);
+        $this->db->bind(':Doctor_ID', $data['ID']);
+
+        // Execute query
+        if($this->db->execute()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
 
 }
