@@ -55,12 +55,12 @@
                 <span>Dashboard</span>
               </a>
             </li>
-            <li class="item">
+            <!-- <li class="item">
               <a href="../admin/approvals" class="link flex">
                 <i class="uil uil-check-circle"></i>
                 <span>Approvals</span>
               </a>
-            </li>
+            </li> -->
             <li class="item">
               <a href="../admin/doc_management" class="link flex">
                 <i class="uil uil-stethoscope"></i>

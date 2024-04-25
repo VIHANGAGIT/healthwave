@@ -47,12 +47,12 @@
                 <span>Home</span>
               </a>
             </li>
-            <li class="item">
+            <!-- <li class="item">
               <a href="#" class="link flex">
                 <i class="uil uil-info-circle"></i>
                 <span>About Us</span>
               </a>
-            </li>
+            </li> -->
             <li class="item">
               <a href="../admin/dashboard" class="link flex">
                 <i class="uil uil-chart-line"></i>
