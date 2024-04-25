@@ -184,11 +184,42 @@
         }
 
         public function hospital_management(){
-            $data = [
-                'hospitals' => $this->adminModel->getHospitals()
 
-            ];
-            $this->view('admin/hospital_management', $data);
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+
+
+                $data = [
+                    'H_name' => $_POST['H_name'],
+                    'H_ID' => $_POST['H_ID'],
+                    'Region' => trim($_POST['H_region']),
+                    'hospitals' => ''
+                ];
+
+                if(empty($data['H_name']) && empty($data['H_ID']) && empty($data['Region'])){
+                    $data['hospitals'] = $this->adminModel->getHospitals();
+                    $this->view('admin/hospital_management', $data);
+                }else{
+                    $data['hospitals'] = $this->adminModel->searchHospitals($data);
+                    $this->view('admin/hospital_management', $data);
+                }
+               
+
+
+
+            }else{
+            
+                $data = [
+                'hospitals' => $this->adminModel->getHospitals(),
+                'H_ID' => '',
+                'H_name' => '',
+                'Region' => ''
+
+                ];
+                $this->view('admin/hospital_management', $data);
+            }
         }
 
         public function reservations(){

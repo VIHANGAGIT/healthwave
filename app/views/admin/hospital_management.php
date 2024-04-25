@@ -120,24 +120,26 @@
     <div class="content-search">
           <div class="search">
             <h2>Hospital Search</h2>
-              <form style="width: 100%;" method="POST">
+              <form style="width: 100%;" method="POST" action="<?php echo URLROOT;?>/admin/hospital_management">
                 <div class="fields">
                   <table style="width: 95%;">
                     <tr>
                       <td>
                         <div class="input-field">
                             <label>Hospital ID</label>
-                            <input type="text" name="search_text" placeholder="Enter hospital ID">
+                            <input type="text" name="H_ID" placeholder="Enter hospital ID" value="<?php echo $data['H_ID'];?>" >
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
                           <label>Hospital Name</label>
-                          <select required>
-                              <option disabled selected>Select Hospital</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
+                          <select name="H_name" >
+                              <option value="" selected>Select Hospital</option>
+                              <?php foreach($data['hospitals'] as $hospital): ?>
+                              <option value="<?php echo $hospital->Hospital_Name?>" <?php if($hospital->Hospital_Name == $data['H_name']) echo 'selected'; ?> >
+                                <?php echo $hospital->Hospital_Name?>
+                              </option>
+                              <?php endforeach; ?>
                           </select>
                         </div>
                       </td>
@@ -149,9 +151,9 @@
                       <td>
                         <div class="input-field">
                             <label>Reigon</label>
-                            <select required>
-                                <option disabled selected>Select Reigon</option>
-                                <option>Colombo</option>
+                            <select name="H_region" >
+                                <option  selected value="">Select Reigon</option>
+                                <option value="Colombo">Colombo</option>
                                 <option>Kandy</option>
                                 <option>Galle</option>
                                 <option>Matara</option>

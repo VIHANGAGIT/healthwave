@@ -283,4 +283,38 @@
                 return false;
             }
         }
+
+        public function searchHospitals($data)
+        {
+            $hospitalName = $data['H_name'] ?? null;
+            $region = $data['Region'] ?? null;
+            $hospitalID = $data['H_ID'] ?? null;
+
+            $query = 'SELECT * FROM hospital WHERE  ';
+
+            if($hospitalName != null){
+                
+                $query .= "Hospital_Name LIKE  '%$hospitalName%'";
+            }
+
+            if($region != null){
+                if($hospitalName != null){
+                    $query .= "AND Region LIKE '%$region%'";
+                }
+                $query .= "Region LIKE '%$region%'";
+            }
+
+            if($hospitalID != null){
+                if($hospitalName != null || $region != null){
+                    $query .= "AND Hospital_ID = $hospitalID";
+                }
+                $query .= "Hospital_ID = $hospitalID";
+            }        
+
+            $this->db->query($query);
+            $hospitals = $this->db->resultSet();
+            return $hospitals;
+           
+        }
+
     }        
