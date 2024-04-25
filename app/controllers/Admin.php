@@ -159,15 +159,17 @@
         }
 
         public function doc_management(){
+            $doctors = $this->adminModel->getDoctors();
             $data = [
-                'doctors' => $this->adminModel->getDoctors()
+                'doctors' => $doctors
             ];
             $this->view('admin/doc_management', $data);
         }
 
         public function test_management(){
+            $tests = $this->adminModel->getTests();
             $data = [
-                'tests' => $this->adminModel->getTests()
+                'tests' => $tests
             ];
             $this->view('admin/test_management', $data);
         }

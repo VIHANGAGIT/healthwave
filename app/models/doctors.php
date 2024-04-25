@@ -398,7 +398,7 @@ class Doctors{
 
         // Execute query
         if($this->db->execute()){
-            return true;
+            return $doctorRow;
         } else{
             return false;
         }
