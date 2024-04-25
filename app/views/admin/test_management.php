@@ -135,9 +135,16 @@
                           <label>Test Type</label>
                           <select required>
                               <option disabled selected>Select Test Type</option>
-                              <option value="Blood Test">Blood Test</option>
-                              <option value="Urine Test">Urine Test</option>
-                              <option value="X-Ray">X-Ray</option>
+                              <option>Blood Test</option>
+                                <option>CT Scan</option>
+                                <option>Urine Test</option>
+                                <option>MRI Scan</option>
+                                <option>ECG</option>
+                                <option>Endoscopy</option>
+                                <option>Colonoscopy</option>
+                                <option>Biopsy</option>
+                                <option>Ultrasound</option>
+                                <option>X-Ray</option>
                           </select>
                         </div>
                       </td>
