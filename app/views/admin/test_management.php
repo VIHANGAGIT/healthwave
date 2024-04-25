@@ -126,8 +126,8 @@
                     <tr>
                       <td>
                         <div class="input-field">
-                            <label>Test Name</label>
-                            <input type="text" name="search_text" placeholder="Doctor Name">
+                        <label>Test ID</label>
+                        <input type="text" name="search_text" placeholder="Enter test id">
                         </div>
                       </td>
                       <td>
@@ -155,8 +155,8 @@
                     <tr>
                       <td>
                         <div class="input-field">
-                            <label>Test ID</label>
-                            <input type="text" name="search_text" placeholder="Enter test id">
+                        <label>Test Name</label>
+                        <input type="text" name="search_text" placeholder="Test Name">
                         </div>
                       </td>
                       <td>
