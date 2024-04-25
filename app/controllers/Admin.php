@@ -178,11 +178,17 @@
 
             }
             $hospitals = $this->adminModel->getHospitals();
+
             $specializations = [];
 
             foreach ($doctors as $doctor) {
                 if (!in_array($doctor->Specialization, $specializations)) {
                     $specializations[] = $doctor->Specialization;
+                }
+                if($this->adminModel->get_appointments($doctor->Doctor_ID)){
+                    $doctor->Cancel = 'Not allowed';
+                }else{
+                    $doctor->Cancel = 'Allowed';
                 }
             }
             $data = [
@@ -202,37 +208,69 @@
         }
 
         public function hospital_management(){
+            $data = [];
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+                // Get search parameters from the form
+                $H_name = isset($_POST['H_name']) ? $_POST['H_name'] : null;
+                $H_ID = isset($_POST['H_ID']) ? $_POST['H_ID'] : null;
+                $H_region = isset($_POST['H_region']) ? $_POST['H_region'] : null;
+        
+                // Perform the search based on the parameters
+                $hospitals = $this->hospitalModel->search_hospitals($H_name, $H_ID, $H_region);
+        
+            } else {
+                $hospitals = $this->hospitalModel->getAllHospitals();
 
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                $data = [
-                    'H_name' => $_POST['H_name'],
-                    'H_ID' => $_POST['H_ID'],
-                    'Region' => trim($_POST['H_region']),
-                    'hospitals' => ''
-                ];
-
-                if(empty($data['H_name']) && empty($data['H_ID']) && empty($data['Region'])){
-                    $data['hospitals'] = $this->adminModel->getHospitals();
-                    $this->view('admin/hospital_management', $data);
-                }else{
-                    $data['hospitals'] = $this->adminModel->searchHospitals($data);
-                    $this->view('admin/hospital_management', $data);
-                }
-
-            }else{
-            
-                $data = [
-                'hospitals' => $this->adminModel->getHospitals(),
-                'H_ID' => '',
-                'H_name' => '',
-                'Region' => ''
-
-                ];
-                $this->view('admin/hospital_management', $data);
             }
+
+            $regions = [];
+
+            foreach ($hospitals as $hospital) {
+                if (!in_array($hospital->Region, $regions)) {
+                    $regions[] = $hospital->Region;
+                }
+                if($this->adminModel->get_appointments_hospital($hospital->Hospital_ID)){
+                    $hospital->Cancel = 'Not allowed';
+                }else{
+                    $hospital->Cancel = 'Allowed';
+                }
+            }
+            $data = [
+                'hospitals' => $hospitals,
+                'regions' => $regions
+            ];
+            $this->view('admin/hospital_management', $data);
+
+            // if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            //     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            //     $data = [
+            //         'H_name' => $_POST['H_name'],
+            //         'H_ID' => $_POST['H_ID'],
+            //         'Region' => trim($_POST['H_region']),
+            //         'hospitals' => ''
+            //     ];
+
+            //     if(empty($data['H_name']) && empty($data['H_ID']) && empty($data['Region'])){
+            //         $data['hospitals'] = $this->adminModel->getHospitals();
+            //         $this->view('admin/hospital_management', $data);
+            //     }else{
+            //         $data['hospitals'] = $this->adminModel->searchHospitals($data);
+            //         $this->view('admin/hospital_management', $data);
+            //     }
+
+            // }else{
+            
+            //     $data = [
+            //     'hospitals' => $this->adminModel->getHospitals(),
+            //     'H_ID' => '',
+            //     'H_name' => '',
+            //     'Region' => ''
+
+            //     ];
+            //     $this->view('admin/hospital_management', $data);
+            // }
         }
 
         public function reservations(){

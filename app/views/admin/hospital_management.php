@@ -149,17 +149,9 @@
                             <label>Reigon</label>
                             <select name="H_region" >
                                 <option  selected value="">Select Reigon</option>
-                                <option value="Colombo">Colombo</option>
-                                <option>Kandy</option>
-                                <option>Galle</option>
-                                <option>Matara</option>
-                                <option>Kurunegala</option>
-                                <option>Badulla</option>
-                                <option>Anuradhapura</option>
-                                <option>Polonnaruwa</option>
-                                <option>Trincomalee</option>
-                                <option>Jaffna</option>
-                                <option>Other</option>
+                                <?php foreach ($data['regions'] as $region): ?>
+                                    <option value="<?php echo $region; ?>"><?php echo $region; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                       </td>
@@ -206,7 +198,7 @@
                             <td style="text-align: center;"><a href='edit_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
                             <td style="text-align: center;">
                             <a href='remove_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>' onclick="confirmRemove(event)">
-                                <button class='button red'>Remove</button>
+                                <button class='button red' <?php echo ($hospital->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
                             </a>
                             </td>
                         </tr>

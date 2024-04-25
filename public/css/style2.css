@@ -1075,6 +1075,16 @@ body.dark {
   padding-bottom: 20px;
 }
 
+.table button:disabled{
+  background-color: #b6b6b6;
+  color: #e8e8e8;
+}
+
+.table button:disabled:hover{
+  background-color: #aaaaaa;
+  color: #e8e8e8;
+}
+
 .detail-card{
   display: flex;
   flex-wrap: wrap;

@@ -48,8 +48,8 @@ class Doctors{
             $this->db->query('SELECT doctor.* FROM doctor
             WHERE (doctor.First_Name LIKE :doctor_name OR doctor.Last_Name LIKE :doctor_name) AND doctor.Specialization LIKE :specialization');
 
-            $doctorNameValue = ($doctorName === null) ? '%' : '%' . $doctorName . '%';
-            $specialization = ($specialization === null) ? '%' : $specialization;
+            $doctorNameValue = ($doctorName === null) ? '%' : '%' . $doctorName . '%'; // not including === here is recommended since it doesnt work sometimes
+            $specialization = ($specialization === null) ? '%' : $specialization; // not including === here is recommended
 
             $this->db->bind(':doctor_name', $doctorNameValue);
             $this->db->bind(':specialization', $specialization);
@@ -59,8 +59,8 @@ class Doctors{
             INNER JOIN schedule ON doctor.Doctor_ID = schedule.Doctor_ID
             WHERE (doctor.First_Name LIKE :doctor_name OR doctor.Last_Name LIKE :doctor_name) AND doctor.Specialization LIKE :specialization AND schedule.Hospital_ID = :hospitalId');
             
-            $doctorNameValue = ($doctorName === null) ? '%' : '%' . $doctorName . '%';
-            $specialization = ($specialization === null) ? '%' : $specialization;
+            $doctorNameValue = ($doctorName === null) ? '%' : '%' . $doctorName . '%'; // not including === here is recommended
+            $specialization = ($specialization === null) ? '%' : $specialization; // not including === here is recommended
 
             $this->db->bind(':doctor_name', $doctorNameValue);
             $this->db->bind(':specialization', $specialization);

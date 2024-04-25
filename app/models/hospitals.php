@@ -59,5 +59,28 @@ class Hospitals{
         }
     }
 
+    public function search_hospitals($name, $id, $region){
+
+        $this->db->query('SELECT * FROM hospital WHERE Hospital_Name LIKE :hospitalName AND Hospital_ID LIKE :hospitalId AND Region LIKE :region');
+
+        $hospitalName = ($name == null) ? "%" : "%" . $name . "%"; // Do not include === here since it doesnt work sometimes
+        $region = ($region == null) ? "%" :$region;
+        $hospitalId = ($id == null) ? "%" : "%" . $id . "%"; // Do not include === here  since it doesnt work sometimes
+
+        // Binding parameters for the prepaired statement
+        $this->db->bind(':hospitalName', $hospitalName);
+        $this->db->bind(':hospitalId', $hospitalId);
+        $this->db->bind(':region', $region);
+
+        $hospitals = $this->db->resultSet();
+
+        // Execute query
+        if($this->db->execute()){
+            return $hospitals;
+        } else{
+            return false;
+        }
+    }
+
 
 }

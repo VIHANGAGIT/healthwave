@@ -200,6 +200,40 @@
             }
         }
 
+        public function get_appointments($doc_id){
+            $this->db->query('SELECT doctor_reservation.Doc_Res_ID FROM doctor_reservation 
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            WHERE schedule.Doctor_ID = :doc_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.End_Time >= CURTIME()');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':doc_id', $doc_id);
+            $appointments = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $appointments;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_appointments_hospital($hospital_id){
+            $this->db->query('SELECT doctor_reservation.Doc_Res_ID FROM doctor_reservation 
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            WHERE schedule.Hospital_ID = :hospital_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.End_Time >= CURTIME()');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $appointments = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $appointments;
+            } else{
+                return false;
+            }
+        }
+
         public function remove_test(){
             $this->db->query('DELETE FROM test WHERE Test_ID = :id');
 
