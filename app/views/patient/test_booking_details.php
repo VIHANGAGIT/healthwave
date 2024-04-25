@@ -35,34 +35,6 @@
             <button class="close-btn pay-btn" id="pay" >Pay Now</button>
         </div>
     </div>
-
-    <!-- <div class="popup-container-2">
-        <div class="popup-box-2">
-            <h1>Doctor Profile</h1><br>
-            <hr>
-            <table style="width: 95%;">
-              <tr>
-                <td style="width: 45%;">
-                  <div class="popup-data"><img src="/img/profile.png" alt="Doctor Photo"></div>
-                </td>
-                <td class="popup-data">
-                  <br>
-                  <span>Doctor Name</span>
-                  <input type="text" class="popup-data" id="doctor-name-popup-2" disabled>
-                  <br>
-                  <span>Specialization</span>
-                  <input type="text" class="popup-data" id="doctor-spec-popup-2" disabled>
-                  <br>
-                  <span>Gender </span>
-                  <input type="text" class="popup-data" id="doctor-gender-popup" disabled>
-                  <br>
-                  <span>SLMC Registration Number</span>
-                  <input type="text" class="popup-data" id="doctor-slmc-popup" disabled>
-                </td>
-              </tr>
-            </table>
-        </div>
-    </div> -->
     
     <!-- navbar -->
     <nav class="navbar">
@@ -87,12 +59,6 @@
               <a href="#" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
               </a>
             </li>
           </ul>
