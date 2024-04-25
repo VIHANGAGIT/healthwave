@@ -758,5 +758,10 @@
                 die("Couldn't remove the hospital! ");
             }    
         }
+
+        public function edit_appointments(){
+            $data = [];
+            $this->view('admin/edit_appointments', $data);
+        }
     }
 ?>
