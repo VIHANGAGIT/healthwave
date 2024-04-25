@@ -89,18 +89,6 @@ $(document).ready(function () {
         totalPrice = parseFloat(totalPrice.replace(/[^0-9.]/g, '')).toFixed(2);
         var contactNumber = document.getElementById('patient-mobile').value;
         var email = document.getElementById('patient-email').value;
-
-        console.log("appNo:", appNo);
-        console.log("startTime:", startTime);
-        console.log("endTime:", endTime);
-        console.log("selectedDay:", selectedDay);
-        console.log("selectedDate:", selectedDate);
-        console.log("doctorId:", doctorId);
-        console.log("hospitalId:", hospitalId);
-        console.log("totalPrice:", totalPrice);
-        console.log("contactNumber:", contactNumber);
-        console.log("email:", email);
-
   
         // AJAX request to add reservation
         $.ajax({

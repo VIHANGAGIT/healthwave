@@ -66,7 +66,7 @@
 
             $this->db->bind(':Bill_Amount', $data['Total_Price']);
             $this->db->bind(':Payment_Method', "Online");
-            
+
             if ($this->db->execute()) {
                 $this->db->query('SELECT * FROM payment ORDER BY Payment_ID DESC LIMIT 1;');
                 $lastRow = $this->db->singleRow();
@@ -93,12 +93,32 @@
                 $this->db->bind(':Email', $data['Email']);
                 $this->db->bind(':Status', "Pending");
 
-                // Execute query
                 if($this->db->execute()){
-                    return true;
+                    $this->db->query('SELECT LAST_INSERT_ID() AS res_id');
+                    $row = $this->db->singleRow();
+                    $res_id = $row->res_id;
+
+                    $this->db->query('SELECT patient.First_Name, patient.Last_Name, doctor.First_Name AS Doc_First_Name, doctor.Last_Name AS Doc_Last_Name, doctor.Specialization, hospital.Hospital_Name, room.Room_Name FROM doctor_reservation
+                    INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+                    INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
+                    INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+                    INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
+                    INNER JOIN room ON schedule.Room_ID = room.Room_ID
+                    WHERE doctor_reservation.Doc_Res_ID = :res_id');
+
+                    $this->db->bind(':res_id', $res_id);
+                    $reservation = $this->db->singleRow();
+                    return $reservation;
                 } else{
                     return false;
                 }
+                
+
+                // if($this->db->execute()){
+                //     return true;
+                // } else{
+                //     return false;
+                // }
 
             } else {
                 return false;
