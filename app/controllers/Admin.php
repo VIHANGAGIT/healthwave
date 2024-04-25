@@ -763,5 +763,10 @@
             $data = [];
             $this->view('admin/edit_appointments', $data);
         }
+
+        public function edit_test_appointments(){
+            $data = [];
+            $this->view('admin/edit_test_appointments', $data);
+        }
     }
 ?>

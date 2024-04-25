@@ -288,7 +288,7 @@
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href='edit_test_appointments'><button class='button'>Edit</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                         <tr>
