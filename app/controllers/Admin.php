@@ -161,9 +161,34 @@
         }
 
         public function doc_management(){
-            $doctors = $this->adminModel->getDoctors();
+            $data = [];
+            //$doctor =  new Doctors();
+            //$doctors = $doctor->getAllDoctors();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+                // Get search parameters from the form
+                $doctorName = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
+                $hospitalName = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+                $specialization = isset($_POST['specialization']) ? $_POST['specialization'] : null;
+        
+                // Perform the search based on the parameters
+                $doctors = $this->doctorModel->search_doctors($doctorName, $hospitalName, $specialization);
+        
+            } else {
+                $doctors = $this->doctorModel->getAllDoctors();
+
+            }
+            $hospitals = $this->adminModel->getHospitals();
+            $specializations = [];
+
+            foreach ($doctors as $doctor) {
+                if (!in_array($doctor->Specialization, $specializations)) {
+                    $specializations[] = $doctor->Specialization;
+                }
+            }
             $data = [
-                'doctors' => $doctors
+                'doctors' => $doctors,
+                'hospitals' => $hospitals,
+                'specializations' => $specializations
             ];
             $this->view('admin/doc_management', $data);
         }

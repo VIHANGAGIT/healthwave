@@ -130,17 +130,17 @@
                           <td>
                             <div class="input-field">
                                 <label>Doctor Name</label>
-                                <input type="text" name="search_text" placeholder="Doctor Name" style="margin: 0%;" >
+                                <input type="text" name="doctor_name" placeholder="Doctor Name" style="margin: 0%;" >
                             </div>
                           </td>
                           <td>
                             <div class="input-field">
                               <label>Hospital Name</label>
-                              <select required>
-                                  <option disabled selected>Select Hospital</option>
-                                  <option>Lanka Hospitals - Kiribathgoda</option>
-                                  <option>Lanka Hospitals - Kiribathgoda</option>
-                                  <option>Lanka Hospitals - Kiribathgoda</option>
+                              <select name="hospital_name" >
+                                <option disabled selected>Select Hospital</option>
+                                <?php foreach ($data['hospitals'] as $hospital): ?>
+                                  <option value="<?php echo $hospital->Hospital_ID; ?>"><?php echo $hospital->Hospital_Name; ?></option>
+                                <?php endforeach; ?> 
                               </select>
                             </div>
                           </td>
@@ -152,7 +152,12 @@
                           <td>
                             <div class="input-field">
                                 <label>Specialization</label>
-                                <input type="text" name="search_text" placeholder="Specialization" style="margin: 0%;">
+                                <select name="specialization" >
+                                  <option disabled selected>Select Specialization</option>
+                                  <?php foreach ($data['specializations'] as $specialization): ?>
+                                    <option value="<?php echo $specialization; ?>"><?php echo $specialization; ?></option>
+                                  <?php endforeach; ?>
+                                </select>
                             </div>
                           </td>
                           <td>
