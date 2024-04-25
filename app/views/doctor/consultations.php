@@ -82,12 +82,6 @@
                 <span>Home</span>
               </a>
             </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
-              </a>
-            </li>
           </ul>
 
           <ul class="menu_item">
