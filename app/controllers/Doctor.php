@@ -48,18 +48,21 @@
                     $remaining_patients++;
                 }
             }
+            $total_patients = $this->doctorModel->get_total_reservations($schedule->Schedule_ID);
+
             $data = [
                 'schedule' => $schedule,
                 'reservations' => $reservations,
-                'remaining_patients' => $remaining_patients
+                'remaining_patients' => $remaining_patients,
+                'total_patients' => $total_patients,
             ];
             $this->view('doctor/ongoing_consults', $data);
         }
 
         public function get_patient_details(){
-            $resId = $_POST['resId'];
+            $Id = $_POST['Id'];
             $type = $_POST['type'];
-            $patient = $this->doctorModel->get_patient_details($resId, $type);
+            $patient = $this->doctorModel->get_patient_details($Id, $type);
             $patient->Age = date_diff(date_create($patient->DOB), date_create('now'))->y;
             $patient->Name = $patient->First_Name . ' ' . $patient->Last_Name;
             echo json_encode($patient);
@@ -312,6 +315,7 @@
                         $data['C_pass_err'] = 'Confirm password does not match with password';
                     }
                 }
+
 
                 // Check whether errors are empty
                 if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){

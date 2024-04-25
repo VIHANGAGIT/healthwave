@@ -118,7 +118,7 @@ class Doctors{
             }
 
             $this->db->query('SELECT COUNT(doctor_reservation.Doc_Res_ID) AS NoOfReservations FROM doctor_reservation
-            WHERE doctor_reservation.Schedule_ID = :schedule_id AND doctor_reservation.Date = :Date AND doctor_reservation.Status = "Pending"');
+            WHERE doctor_reservation.Schedule_ID = :schedule_id AND doctor_reservation.Date = :Date');
 
             $this->db->bind(':schedule_id', $reservation->Schedule_ID);
             $this->db->bind(':Date', $reservation->Date);
@@ -155,11 +155,11 @@ class Doctors{
         $schedule = $this->db->singleRow();
         if($this->db->rowCount()>0){
             $schedule->Date = $currentDate;
-            $startTimestamp = strtotime($schedule->Time_Start);
-            $endTimestamp = strtotime($schedule->Time_End);
+            // $startTimestamp = strtotime($schedule->Time_Start);
+            // $endTimestamp = strtotime($schedule->Time_End);
             
-            $timeDiffInSeconds = $endTimestamp - $startTimestamp;
-            $schedule->No_Of_Total_Slots = ceil($timeDiffInSeconds / 900);;
+            // $timeDiffInSeconds = $endTimestamp - $startTimestamp;
+            // $schedule->No_Of_Total_Slots = ceil($timeDiffInSeconds / 900);;
 
             $schedule->Time_Start = date('H:i', strtotime($schedule->Time_Start));
             $schedule->Time_End = date('H:i', strtotime($schedule->Time_End));
@@ -169,6 +169,20 @@ class Doctors{
             return false;
         }
 
+    }
+
+    public function get_total_reservations($schedule_id){
+        $this->db->query('SELECT COUNT(Doc_Res_ID) AS NoOfReservations FROM doctor_reservation WHERE Schedule_ID = :schedule_id AND Date = :curretnDate');
+
+        $this->db->bind(':schedule_id', $schedule_id);
+        $this->db->bind(':curretnDate', date('Y-m-d'));
+        $noOfReservations = $this->db->singleRow();
+
+        if($this->db->execute()){
+            return $noOfReservations;
+        } else{
+            return false;
+        }
     }
 
     public function get_ongoing_reservations($schedule_id, $schedule_start_time,$schecule_end_time){
@@ -194,24 +208,6 @@ class Doctors{
         foreach($reservations as $reservation) {
             $reservation->Start_Time = date('H:i', strtotime($reservation->Start_Time));
             $reservation->End_Time = date('H:i', strtotime($reservation->End_Time));
-
-            // $reservationDayOfWeek = $reservation->Day_of_Week;
-
-            // $nextReservationDate = date('Y-m-d', strtotime('next ' . $reservationDayOfWeek, strtotime($currentDate)));
-
-            // if ($reservationDayOfWeek === $currentDayOfWeek && $reservation->Time_End < $currentTime) {
-            //     $reservation->Date = $currentDate; 
-            // } else {
-            //     $reservation->Date = $nextReservationDate; 
-            // }
-
-            // $this->db->query('SELECT COUNT(doctor_reservation.Doc_Res_ID) AS NoOfReservations FROM doctor_reservation
-            // WHERE doctor_reservation.Schedule_ID = :schedule_id');
-
-            // $this->db->bind(':schedule_id', $reservation->Schedule_ID);
-            // $noOfReservations = $this->db->singleRow();
-            // $reservation->NoOfReservations = $noOfReservations->NoOfReservations;
-
         }
         
         if ($this->db->execute()) {

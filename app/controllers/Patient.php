@@ -331,42 +331,14 @@ class Patient extends Controller
             }
             $nextAppointmentNumber = $lastBookedAppointmentNumber + 1; // Get the next appointment number
 
-            $slotIndex = ceil($nextAppointmentNumber / 3); // Calculate the slot index
+            $slotIndex = ceil($nextAppointmentNumber / 2); // Calculate the slot index
 
             if ($slotIndex <= count($timeSlots)) {
                 $nextTimeSlot = $timeSlots[$slotIndex - 1]; // Get the time slot corresponding to the slot index
             } else {
                 // Handle the case where the next appointment number exceeds the available slots
-                $nextTimeSlot = null; // Set to null or handle appropriately
+                $nextTimeSlot = null;
             }
-
-            // // Find the next available appointment number and corresponding time slot
-            // foreach ($timeSlots as $key => $timeSlot) {
-            //     // Check if this time slot is available (not fully booked)
-            //     $bookedCount = 0;
-            //     foreach ($bookedSlots as $bookedSlot) {
-            //         if ($timeSlot['start_time'] == $bookedSlot->Start_Time && $bookedSlot->Date == $formatted_date) {
-            //             $bookedCount++;
-            //         }
-            //     }
-
-            //     if ($bookedCount < 3) {
-            //         $availableSlots[] = array(
-            //             'start_time' => $timeSlot['start_time'],
-            //             'end_time' => $timeSlot['end_time'],
-            //             'available_appointment_number' => $bookedCount + 1, // Next available appointment number
-            //         );
-            //     }
-                
-            // }
-
-            // // Sort availableSlots by start_time
-            // usort($availableSlots, function ($a, $b) {
-            //     return strtotime($a['start_time']) - strtotime($b['start_time']);
-            // });
-
-            // // Get the next 3 available slots within a single 15-minute time slot
-            // $nextAvailableSlots = array_slice($availableSlots, 0, 3);
 
 
             // Add data to responseData

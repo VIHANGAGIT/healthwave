@@ -187,7 +187,7 @@
                     </td>
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Total Number<br> of Patients :</h2>
-                        <p class="dashboard-stat"><?php echo $data['schedule']->No_Of_Total_Slots?></p>
+                        <p class="dashboard-stat"><?php echo $data['total_patients']->NoOfReservations?></p>
                     </td>
                 </tr>
             </tbody>
@@ -209,7 +209,7 @@
             <table class="table" id="ongoing-consults-table">
                 <thead>
                     <tr>
-                        <th style="text-align: center;">Reservation ID</th>
+                        <th style="text-align: center;">Appointment No</th>
                         <th style="text-align: center;">Patient Name</th>
                         <th style="text-align: center;">Gender</th>
                         <th style="text-align: center;">Age</th>
@@ -222,7 +222,7 @@
                 <tbody>
                     <?php foreach ($data['reservations'] as $reservation): ?>
                             <tr>
-                            <td style="text-align: center;"><?php echo $reservation->Doc_Res_ID?></td>
+                            <td style="text-align: center;"><?php echo $reservation->Appointment_No?></td>
                             <td style="text-align: center;"><?php echo $reservation->First_Name. " " . $reservation->Last_Name?></td>
                             <td style="text-align: center;"><?php echo $reservation->Gender?></td>
                             <td style="text-align: center;"><?php echo $reservation->Age?></td>

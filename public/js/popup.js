@@ -145,7 +145,7 @@ $(".show-details-4").click(function (event) {
         $.ajax({
             url: 'get_patient_details',
             type: 'POST',
-            data: { patient_id: patientId, type: 'ongoing' },
+            data: { Id: patientId, type: 'ongoing' },
             success: function(response) {
                 var data = JSON.parse(response);
                 showAppointmentPopup4(data.Name, data.Gender, data.Age, data.Blood_Group, data.Allergies);
@@ -196,7 +196,7 @@ $(".show-details-5").click(function (event) {
         $.ajax({
             url: 'get_patient_details',
             type: 'POST',
-            data: { resId: resId, type: 'past'},
+            data: { Id: resId, type: 'past'},
             success: function(response) {
                 var data = JSON.parse(response);
                 showAppointmentPopup4(data.Name, data.Gender, data.Age, data.Blood_Group, data.Allergies, data.Remarks);
