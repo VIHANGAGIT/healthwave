@@ -152,8 +152,16 @@
                             <select required>
                                 <option disabled selected>Select Reigon</option>
                                 <option>Colombo</option>
-                                <option>Gampaha</option>
-                                <option>Kaluthara</option>
+                                <option>Kandy</option>
+                                <option>Galle</option>
+                                <option>Matara</option>
+                                <option>Kurunegala</option>
+                                <option>Badulla</option>
+                                <option>Anuradhapura</option>
+                                <option>Polonnaruwa</option>
+                                <option>Trincomalee</option>
+                                <option>Jaffna</option>
+                                <option>Other</option>
                             </select>
                         </div>
                       </td>
