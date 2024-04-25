@@ -180,6 +180,12 @@
             <div class="table-container">
             <h1>Lab Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_test'><button class='button'>Add Test</button></a></span></h1>
             <hr><br>
+                <?php if (empty($data['tests'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No tests are available</p>
+                    </div>
+                <?php else: ?>
                 <table id="myTable" class="table">
                     <thead>
                         <tr>
@@ -196,7 +202,7 @@
                           <td style="text-align: center;"><?php echo $test->Test_ID; ?></td>
                           <td style="text-align: center;"><?php echo $test->Test_Name; ?></td>
                           <td style="text-align: center;"><?php echo $test->Test_Type; ?></td>
-                          <td style="text-align: center;"><a href="update_test?test_id=<?php echo $test->Test_ID; ?>"><button class="button">Edit</button></a></td>
+                          <td style="text-align: center;"><a href="edit_test?test_id=<?php echo $test->Test_ID; ?>"><button class="button">Edit</button></a></td>
                           <td style="text-align: center;">
                           <a href='remove_test?test_id=<?php echo $test->Test_ID; ?>' onclick="confirmRemove(event)">
                               <button class='button red'>Remove</button>
@@ -206,6 +212,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section><br>
     </div>

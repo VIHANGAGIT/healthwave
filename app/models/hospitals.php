@@ -29,5 +29,35 @@ class Hospitals{
         }
     }
 
+    public function findHospitalByName($name){
+        $this->db->query('SELECT * FROM hospital WHERE Hospital_Name = :name');
+
+        // Binding parameters for the prepaired statement
+        $this->db->bind(':name', $name);
+        $hospital = $this->db->singleRow();
+
+        // Execute query
+        if($this->db->execute()){
+            return $hospital;
+        } else{
+            return false;
+        }
+    }
+
+    public function findHospitalByAddress($address){
+        $this->db->query('SELECT * FROM hospital WHERE Address = :address');
+
+        // Binding parameters for the prepaired statement
+        $this->db->bind(':address', $address);
+        $hospital = $this->db->singleRow();
+
+        // Execute query
+        if($this->db->execute()){
+            return $hospital;
+        } else{
+            return false;
+        }
+    }
+
 
 }

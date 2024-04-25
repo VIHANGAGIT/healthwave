@@ -176,7 +176,13 @@
             <div class="table-container">
             <h1>Doctor Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_doctor'><button class='button'>Add Doctor</button></a></span></h1>
             <hr><br>
-            <table  id="myTable" class="table">
+                <?php if (empty($data['doctors'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No doctors are available</p>
+                    </div>
+                <?php else: ?>
+                <table  id="myTable" class="table">
                     <thead>
                         <tr>
                             <th style="text-align: center;">Doctor ID</th>
@@ -205,6 +211,7 @@
                     <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
     </div>
