@@ -169,4 +169,17 @@ class Tests{
             return false;
         }
     }
+
+    public function findTestByName($testName){
+        $this->db->query('SELECT * FROM test WHERE Test_Name = :testName');
+
+        $this->db->bind(':testName', $testName);
+        $test = $this->db->singleRow();
+
+        if($this->db->execute()){
+            return $test;
+        } else{
+            return false;
+        }
+    }
 }

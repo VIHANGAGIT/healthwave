@@ -7,6 +7,7 @@
             $this->adminModel = $this->model('admins');
             $this->userModel = $this->model('user');
             $this->doctorModel = $this->model('doctors');
+            $this->testModel = $this->model('tests');
         }
         public function index(){
             $data = [];
@@ -175,11 +176,37 @@
         }
 
         public function hospital_management(){
-            $data = [
-                'hospitals' => $this->adminModel->getHospitals()
 
-            ];
-            $this->view('admin/hospital_management', $data);
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                $data = [
+                    'H_name' => $_POST['H_name'],
+                    'H_ID' => $_POST['H_ID'],
+                    'Region' => trim($_POST['H_region']),
+                    'hospitals' => ''
+                ];
+
+                if(empty($data['H_name']) && empty($data['H_ID']) && empty($data['Region'])){
+                    $data['hospitals'] = $this->adminModel->getHospitals();
+                    $this->view('admin/hospital_management', $data);
+                }else{
+                    $data['hospitals'] = $this->adminModel->searchHospitals($data);
+                    $this->view('admin/hospital_management', $data);
+                }
+
+            }else{
+            
+                $data = [
+                'hospitals' => $this->adminModel->getHospitals(),
+                'H_ID' => '',
+                'H_name' => '',
+                'Region' => ''
+
+                ];
+                $this->view('admin/hospital_management', $data);
+            }
         }
 
         public function reservations(){
@@ -188,104 +215,108 @@
         }
 
         public function add_hospital(){
-             // Check for POST request
-             if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            // Check for POST request
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-                // Sanitize strings
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+               // Sanitize strings
+               $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                // Register user
-                $data = [
-                    'H_name' => trim($_POST['hname']),
-                    'H_address' => trim($_POST['haddress']),
-                    'Region' => trim($_POST['region']),
-                    'H_charge' => trim($_POST['hcharge']),
-                    'M_ID' => trim($_POST['managerid']),
-                    'C_num' => trim($_POST['cnum']),
-                    'H_name_err' => '',
-                    'H_address_err' => '',
-                    'Region_err' => '',
-                    'H_charge_err' => '',
-                    'M_ID_err' => '',
-                    'C_num_err' => ''
-                ];
+               // Register user
+               $data = [
+                   'H_name' => $_POST['hname'],
+                   'H_address' => $_POST['haddress'],
+                   'Region' => trim($_POST['region']),
+                   'H_charge' => trim($_POST['hcharge']),
+                   //'M_ID' => trim($_POST['managerid']),
+                   'C_num' => trim($_POST['cnum']),
+                   'H_name_err' => '',
+                   'H_address_err' => '',
+                   'Region_err' => '',
+                   'H_charge_err' => '',
+                   'M_ID_err' => '',
+                   'C_num_err' => ''
+               ];
 
-                // Validate Hospital Name
-                if(empty($data['H_name'])){
-                    $data['H_name_err'] = 'Please enter hospital name';
-                }
+               // Validate Hospital Name
+               if (empty($data['H_name'])) {
+                   $data['H_name_err'] = 'Please enter hospital name';
+               } else {
+                   // Check for duplicate hospital names
+                   if ($this->adminModel->findHospitalByName($data['H_name'])) {
+                       $data['H_name_err'] = 'Hospital name already exists';
+                   }
+               }
 
-                // Validate Hospital Address
-                if(empty($data['H_address'])){
-                    $data['H_address_err'] = 'Please enter hospital address';
-                }
+               // Validate Hospital Address
+               if (empty($data['H_address'])) {
+                   $data['H_address_err'] = 'Please enter hospital address';
+               } else {
+                   // Check if the hospital address already exists in the database
+                   if ($this->adminModel->findHospitalByAddress($data['H_address'])) {
+                       $data['H_address_err'] = 'This hospital address is already taken';
+                   }
+               }
 
-                // Validate Region
-                if(empty($data['Region'])){
-                    $data['Region_err'] = 'Please enter region';
-                }
+               // Validate Region
+               if(empty($data['Region'])){
+                   $data['Region_err'] = 'Please enter region';
+               }
 
-                // Validate Hospital Charge
-                if(empty($data['H_charge'])){
-                    $data['H_charge_err'] = 'Please enter hospital charge';
-                }
+               // Validate Hospital Charge
+               if(empty($data['H_charge'])){
+                   $data['H_charge_err'] = 'Please enter hospital charge';
+               }
 
-                // Validate Manager ID
-                if(empty($data['M_ID'])){
-                    $data['M_ID_err'] = 'Please enter manager ID';
-                }
+               // Validate Contact Number
+               if(empty($data['C_num'])){
+                   $data['C_num_err'] = 'Please enter contact number';
+               } else {
+                   // Remove any non-numeric characters from the input
+                   $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
 
-                // Validate Contact Number
-                if(empty($data['C_num'])){
-                    $data['C_num_err'] = 'Please enter contact number';
-                } else {
-                    // Remove any non-numeric characters from the input
-                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
+                   // Check if the cleaned number is not exactly 10 digits long
+                   if(strlen($cleaned_number) !== 10){
+                       $data['C_num_err'] = 'Invalid Number';
+                   } else {
+                       // Proceed with other validations if needed
+                   }
+               }
 
-                    // Check if the cleaned number is not exactly 10 digits long
-                    if(strlen($cleaned_number) !== 10){
-                        $data['C_num_err'] = 'Invalid Number';
-                    } else {
-                        // Proceed with other validations if needed
-                    }
-                }
 
-                // Check whether errors are empty
-                if(empty($data['H_name_err']) && empty($data['H_address_err']) && empty($data['Region_err']) && empty($data['H_charge_err']) && empty($data['M_ID_err']) && empty($data['C_num_err'])){
-                    // Register user
-                    if($this->adminModel->add_hospital($data)){
-                        redirect('admin/hospital_management');
-                    } else{
-                        die("Couldn't register the hospital! ");
-                    }
-                } else {
-                    // Load view with errors
-                    $this->view('admin/add_hospital', $data);
-                }
+               // Check whether errors are empty
+               if(empty($data['H_name_err']) && empty($data['H_address_err']) && empty($data['Region_err']) && empty($data['H_charge_err']) && empty($data['C_num_err'])){
+                   // Register user
+                   if($this->adminModel->add_hospital($data)){
+                       redirect('admin/hospital_management');
+                   } else{
+                       die("Couldn't register the hospital! ");
+                   }
+               } else {
+                   // Load view with errors
+                   $this->view('admin/add_hospital', $data);
+               }
 
-            }else{
-                // Get data
-                $data = [
-                    'H_name' => '',
-                    'H_address' => '',
-                    'Region' => '',
-                    'H_charge' => '',
-                    'M_ID' => '',
-                    'C_num' => '',
-                    'H_name_err' => '',
-                    'H_address_err' => '',
-                    'Region_err' => '',
-                    'H_charge_err' => '',
-                    'M_ID_err' => '',
-                    'C_num_err' => ''
-                ];
+           }else{
+               // Get data
+               $data = [
+                   'H_name' => '',
+                   'H_address' => '',
+                   'Region' => '',
+                   'H_charge' => '',
+                   //'M_ID' => '',
+                   'C_num' => '',
+                   'H_name_err' => '',
+                   'H_address_err' => '',
+                   'Region_err' => '',
+                   'H_charge_err' => '',
+                   'M_ID_err' => '',
+                   'C_num_err' => ''
+               ];
 
-                // Load view
-                $this->view('admin/add_hospital', $data);
-            }
-
-        }
-
+               // Load view
+               $this->view('admin/add_hospital', $data);
+           }
+       }
         public function add_doctor(){
             // Check for POST request
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -496,6 +527,11 @@
             // Validate Test Name
             if(empty($data['T_name'])){
                 $data['T_name_err'] = 'Please enter test name';
+            }else{
+                // Check for duplicate test names
+                if($this->testModel->findTestByName($data['T_name'])){
+                    $data['T_name_err'] = 'Test already exists';
+                }
             }
 
             // Validate Test Type
@@ -601,7 +637,7 @@
                     'H_address' => trim($_POST['haddress']),
                     'Region' => trim($_POST['region']),
                     'H_charge' => trim($_POST['hcharge']),
-                    'M_ID' => trim($_POST['managerid']),
+                    //'M_ID' => trim($_POST['managerid']),
                     'C_num' => trim($_POST['cnum']),
                     'H_name_err' => '',
                     'H_address_err' => '',
@@ -632,9 +668,9 @@
                 }
 
                 // Validate Manager ID
-                if(empty($data['M_ID'])){
-                    $data['M_ID_err'] = 'Please enter manager ID';
-                }
+                // if(empty($data['M_ID'])){
+                //     $data['M_ID_err'] = 'Please enter manager ID';
+                // }
 
                  // Validate Contact Number
                  if(empty($data['C_num'])){
@@ -652,7 +688,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['H_name_err']) && empty($data['H_address_err']) && empty($data['Region_err']) && empty($data['H_charge_err']) && empty($data['M_ID_err']) && empty($data['C_num_err'])){
+                if(empty($data['H_name_err']) && empty($data['H_address_err']) && empty($data['Region_err']) && empty($data['H_charge_err']) && empty($data['C_num_err'])){
                     // Register user
                     if($this->adminModel->edit_hospital($data)){
                         redirect('admin/hospital_management');
@@ -676,14 +712,20 @@
                     'H_address' => $hospital_data->Address,
                     'Region' => $hospital_data->Region,
                     'H_charge' => $hospital_data->Charge,
-                    'M_ID' => $hospital_data->Mng_ID,
-                    'C_num' => $hospital_data->Contact_No
+                    //'M_ID' => $hospital_data->Mng_ID,
+                    'C_num' => $hospital_data->Contact_No,
+                    'C_num_err' => '',
+                    'H_name_err' => '',
+                    'H_address_err' => '',
+                    'Region_err' => '',
+                    'H_charge_err' => '',
+                    'M_ID_err' => '',
+
                 ];
                 
                 // Load view
                 $this->view('admin/edit_hospital', $data);
             }
-         
         }
            
         public function remove_test(){
@@ -711,5 +753,15 @@
             } else{
                 die("Couldn't remove the hospital! ");
             }    
+        }
+
+        public function edit_appointments(){
+            $data = [];
+            $this->view('admin/edit_appointments', $data);
+        }
+
+        public function edit_test_appointments(){
+            $data = [];
+            $this->view('admin/edit_test_appointments', $data);
         }
     }
