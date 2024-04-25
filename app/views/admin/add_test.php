@@ -50,10 +50,10 @@
             </div>
 
             <div class="buttons">
-            <button type="reset" style="width: calc(50% - 10px);">
-                        <span class="btnText">Clear</span>
+            <button type="reset" onclick="window.history.back()" >
+                        <span class="btnText">Back</span>
                     </button>
-                <button class="submit" style="width: calc(50% - 10px);  margin-left: 15px;">
+                <button class="submit">
                     <span class="btnText">Add</span>
                 </button>
             </div>

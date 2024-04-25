@@ -119,8 +119,8 @@
                         
                     </div>
                     <div class="buttons">
-                    <button type="reset">
-                        <span class="btnText">Clear</span>
+                    <button type="reset" onclick="window.history.back()">
+                        <span class="btnText">Back</span>
                     </button>
 
                         

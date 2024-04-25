@@ -585,6 +585,12 @@
                 // Validate Test Name
                 if(empty($data['T_name'])){
                     $data['Test_Name_err'] = 'Please enter test name';
+                }else{
+                    // Check for duplicate test names
+                    $existing_test = $this->testModel->findTestByName($data['T_name']);
+                    if($existing_test && $data['T_type'] && $existing_test->Test_Type == $data['T_type']){
+                        $data['T_name_err'] = 'Test already exists';
+                    }
                 }
 
                 // Validate Test Type
@@ -593,7 +599,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Test_Name_err']) && empty($data['T_type_err'])){
+                if(empty($data['T_name_err']) && empty($data['T_type_err'])){
                     // Register user
                     if($this->adminModel->update_test($data)){
                         redirect('admin/test_management');
@@ -613,7 +619,9 @@
                 $data = [
                     'ID' => $test_data->Test_ID,
                     'T_name' => $test_data->Test_Name,
-                    'T_type' => $test_data->Test_Type
+                    'T_type' => $test_data->Test_Type,
+                    'T_name_err' => '',
+                    'T_type_err' => ''
                 ];
                 
                 // Load view
