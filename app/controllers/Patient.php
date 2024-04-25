@@ -77,12 +77,12 @@ class Patient extends Controller
         //$doctors = $doctor->getAllDoctors();
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
             // Get search parameters from the form
-            $testId = isset($_POST['test_name']) ? $_POST['test_name'] : null;
+            $testName = isset($_POST['test_name']) ? $_POST['test_name'] : null;
             $hospitalId = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
             $testType = isset($_POST['test_type']) ? $_POST['test_type'] : null;
     
             // Perform the search based on the parameters
-            $searchTests = $this->testModel->search_tests($testId, $hospitalId, $testType);
+            $searchTests = $this->testModel->search_tests($testName, $hospitalId, $testType);
     
         } else {
             $searchTests = $this->testModel->get_all_available_tests();

@@ -125,12 +125,7 @@
                       <td>
                         <div class="input-field">
                             <label>Test Name</label>
-                            <select name="test_name">
-                                <option disabled selected>Select Test</option>
-                                <?php foreach ($data['tests'] as $test): ?>
-                                    <option value="<?php echo $test->Test_ID; ?>"><?php echo $test->Test_Name; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <input type="text" name="test_name" placeholder="Enter Test Name" style="margin: 0%;">
                         </div>
                       </td>
                       <td>

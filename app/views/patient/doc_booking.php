@@ -125,12 +125,7 @@
                       <td>
                         <div class="input-field">
                             <label>Doctor Name</label>
-                            <select name="doctor_name">
-                                <option disabled selected>Select Doctor Name</option>
-                                <?php foreach ($data['doctors'] as $doctor_search): ?>
-                                    <option value="<?php echo $doctor_search->Doctor_ID; ?>"><?php echo $doctor_search->First_Name . " " .  $doctor_search->Last_Name;?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <input type="text" name="doctor_name" placeholder="Enter Doctor Name" style="margin: 0%;">
                         </div>
                       </td>
                       <td>

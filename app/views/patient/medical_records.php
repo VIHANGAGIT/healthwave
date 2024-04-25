@@ -131,7 +131,7 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Past Consultancies</h1>
+                <h1>Past Consultations</h1>
                 <hr>
                 <?php if (empty($data['doc_consultations'])): ?>
                   <br>

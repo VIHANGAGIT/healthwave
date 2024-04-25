@@ -38,14 +38,18 @@ class Tests{
         }
     }
 
-    public function search_tests($testId, $hospitalId, $testType){
+    public function search_tests($testName, $hospitalId, $testType){
         $this->db->query('SELECT DISTINCT test.Test_ID, test.Test_Name, test.Test_Type FROM test
         INNER JOIN hospital_test ON hospital_test.Test_ID = test.Test_ID
-        WHERE hospital_test.Test_ID LIKE :testId AND test.Test_Type LIKE :testType AND hospital_test.Hospital_ID LIKE :hospitalId');
+        WHERE test.Test_Name LIKE :testName AND test.Test_Type LIKE :testType AND hospital_test.Hospital_ID LIKE :hospitalId');
 
-        $this->db->bind(':testId', $testId === null ? '%' : $testId);
-        $this->db->bind(':testType', $testType === null ? '%' : $testType);
-        $this->db->bind(':hospitalId', $hospitalId === null ? '%' : $hospitalId);
+        $testName = ($testName === null) ? '%' : '%' . $testName . '%';
+        $testType = ($testType === null) ? '%' : $testType;
+        $hospitalId = ($hospitalId === null) ? '%' : $hospitalId;
+
+        $this->db->bind(':testName', $testName);
+        $this->db->bind(':testType', $testType);
+        $this->db->bind(':hospitalId', $hospitalId);
 
         $tests = $this->db->resultSet();
 

@@ -43,22 +43,28 @@ class Doctors{
         }
     }
 
-    public function search_doctors($doctorId, $hospitalId, $specialization){
+    public function search_doctors($doctorName, $hospitalId, $specialization){
         if($hospitalId === null){
             $this->db->query('SELECT doctor.* FROM doctor
-            WHERE doctor.Doctor_ID LIKE :doctorId AND doctor.Specialization LIKE :specialization');
+            WHERE (doctor.First_Name LIKE :doctor_name OR doctor.Last_Name LIKE :doctor_name) AND doctor.Specialization LIKE :specialization');
 
-            $this->db->bind(':doctorId', $doctorId === null ? '%' : $doctorId);
-            $this->db->bind(':specialization', $specialization === null ? '%' : $specialization);
+            $doctorNameValue = ($doctorName === null) ? '%' : '%' . $doctorName . '%';
+            $specialization = ($specialization === null) ? '%' : $specialization;
+
+            $this->db->bind(':doctor_name', $doctorNameValue);
+            $this->db->bind(':specialization', $specialization);
 
         }else{
             $this->db->query('SELECT DISTINCT doctor.* FROM doctor
             INNER JOIN schedule ON doctor.Doctor_ID = schedule.Doctor_ID
-            WHERE schedule.Doctor_ID LIKE :doctorId AND doctor.Specialization LIKE :specialization AND schedule.Hospital_ID = :hospitalId');
+            WHERE (doctor.First_Name LIKE :doctor_name OR doctor.Last_Name LIKE :doctor_name) AND doctor.Specialization LIKE :specialization AND schedule.Hospital_ID = :hospitalId');
             
-            $this->db->bind(':doctorId', $doctorId === null ? '%' : $doctorId);
-            $this->db->bind(':specialization', $specialization === null ? '%' : $specialization);
-            $this->db->bind(':hospitalId', $hospitalId === null ? '%' : $hospitalId);
+            $doctorNameValue = ($doctorName === null) ? '%' : '%' . $doctorName . '%';
+            $specialization = ($specialization === null) ? '%' : $specialization;
+
+            $this->db->bind(':doctor_name', $doctorNameValue);
+            $this->db->bind(':specialization', $specialization);
+            $this->db->bind(':hospitalId', $hospitalId);
         }
 
 
