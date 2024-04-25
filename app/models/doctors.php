@@ -389,5 +389,20 @@ class Doctors{
         }
     }
 
+    public function findDoctorBySLMC($slmc){
+        $this->db->query('SELECT * FROM doctor WHERE SLMC_Reg_No = :slmc');
+
+        // Binding parameters for the prepaired statement
+        $this->db->bind(':slmc', $slmc);
+        $doctorRow = $this->db->singleRow();
+
+        // Execute query
+        if($this->db->execute()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
 
 }

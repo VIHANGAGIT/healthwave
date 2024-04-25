@@ -22,12 +22,12 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>First Name*</label>
-                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['F_name'] ?>" required>
+                            <input type="text" placeholder="Enter first name" name="fname" value="<?php echo $data['F_name'] ?>" required>
                         </div>
 
                         <div class="input-field">
                             <label>Last Name*</label>
-                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['L_name'] ?>" required>
+                            <input type="text" placeholder="Enter last name" name="lname" value="<?php echo $data['L_name'] ?>" required>
                         </div>
 
                         <div class="input-field">
@@ -41,18 +41,18 @@
 
                         <div class="input-field">
                             <label>Date of Birth*</label>
-                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>" required>
+                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>" class="<?php echo (!empty($data['DOB_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['DOB_err'] ?></span>
                         </div>
 
                         <div class="input-field">
                             <label>NIC Number*</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" class="<?php echo (!empty($data['NIC_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['NIC_err'] ?></span>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
-                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
+                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" class="<?php echo (!empty($data['C_num_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['C_num_err'] ?></span>
                         </div>
                     </div>
@@ -83,12 +83,12 @@
 
                         <div class="input-field">
                             <label>SLMC Regisration Number*</label>
-                            <input type="number" placeholder="Enter SLMC regisration number" name="slmc" value="<?php echo $data['SLMC'] ?>" required>
+                            <input type="number" placeholder="Enter SLMC regisration number" name="slmc" value="<?php echo $data['SLMC'] ?>" class="<?php echo (!empty($data['SLMC_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['SLMC_err']; ?></span>
                         </div>
                         <div class="input-field">
                             <label>Appointment Charges*</label>
-                            <input type="number" step="0.01" placeholder="Enter appointment charges" name="charges" value="<?php echo $data['Charges'] ?>" required>
+                            <input type="number" step="0.01" placeholder="Enter appointment charges" name="charges" value="<?php echo $data['Charges'] ?>" class="<?php echo (!empty($data['Char_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['Char_err']; ?></span>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Email*</label>
-                            <input type="email" placeholder="Enter your email" name="email" value="" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>">
+                            <input type="email" placeholder="Enter an email" name="email" value="" class="<?php echo (!empty($data['Uname_err'])) ? 'error' : '' ?>">
                             <span class="err-msg"><?php echo $data['Uname_err'] . "\u{200B}"; ?></span>
                         </div>
                         
@@ -113,27 +113,22 @@
 
                         <div class="input-field" style="margin-bottom: 0;" >
                             <label>Confirm Password*</label>
-                            <input type="password" placeholder="Enter your password again" name="cpass" value="" class="<?php echo (!empty($data['C_pass_err'])) ? 'error' : '' ?>" >
+                            <input type="password" placeholder="Enter the password again" name="cpass" value="" class="<?php echo (!empty($data['C_pass_err'])) ? 'error' : '' ?>" >
                             <span class="err-msg"><?php echo $data['C_pass_err'] . "\u{200B}"; ?></span>
                         </div>
                         
                     </div>
                     <div class="buttons">
                     <button type="reset">
-                     <span class="btnText">Clear</span>
+                        <span class="btnText">Clear</span>
                     </button>
 
                         
-                        <button class="sumbit">
-                            <span class="btnText">Add</span>
-                        </button>
+                    <button class="sumbit">
+                        <span class="btnText">Add</span>
+                    </button>
                     </div>
                 </div>
-                    <!--<div class="login-signup" style="margin-top: -20px; font-size: 14px;" ">
-                        <span class="text">Already have an account?
-                            <a href="<?php //echo URLROOT; ?>/users/login" class="text login-link">Login Now</a>
-                        </span>
-                    </div>-->
                 </div>
                 
             </div>

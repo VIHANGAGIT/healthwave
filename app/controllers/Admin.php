@@ -6,6 +6,7 @@
             }
             $this->adminModel = $this->model('admins');
             $this->userModel = $this->model('user');
+            $this->doctorModel = $this->model('doctors');
         }
         public function index(){
             $data = [];
@@ -341,6 +342,9 @@
                     $slmc = $data['SLMC'];
                     if (strlen($slmc) < 4 || strlen($slmc) > 5) {
                         $data['SLMC_err'] = 'SLMC registration number must be between 4 and 5 digits';
+                    }
+                    if($this->doctorModel->findDoctorBySLMC($slmc)){
+                        $data['SLMC_err'] = 'Another doctor already has this SLMC';
                     }
                 }
 
