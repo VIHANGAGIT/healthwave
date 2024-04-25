@@ -11,28 +11,28 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title><?php echo SITENAME;?>: Add Hospital</title>
+   <title><?php echo SITENAME;?>: Edit Hospital</title>
 </head>
 <body>
     <div class="container-signup" style="height: 420px; overflow: hidden;" >
-        <header>Add Hospital</header>
+        <header>Edit Hospital</header>
 
-        <form action="<?php echo URLROOT; ?>/admin/add_hospital" method="POST" style="height: 600px;">
+        <form action="<?php echo URLROOT; ?>/admin/edit_hospital" method="POST" style="height: 600px;">
             <div class="form first" >
                 <div class="details personal">
                     <span class="title">Hospital Details</span>
 
+                    <input type="hidden" name="hid" value="<?php echo $data['H_ID'] ?>">
+
                     <div class="fields">
                         <div class="input-field">
                             <label>Hospital Name*</label>
-                            <input type="text" placeholder="Enter hospital name" name="hname" value="<?php echo $data['H_name'] ?>" class="<?php echo (!empty($data['H_name_err'])) ? 'error' : '' ?>" required>
-                            <span class="err-msg"><?php echo $data['H_name_err'] ?></span>
+                            <input type="text" placeholder="Enter hospital name" name="hname" value="<?php echo $data['H_name'] ?>" required>
                         </div>
 
                         <div class="input-field">
                             <label>Address*</label>
-                            <input type="text" placeholder="Enter hospital adress" name="haddress" value="<?php echo $data['H_address'] ?>" class="<?php echo (!empty($data['H_address_err'])) ? 'error' : '' ?>" required>
-                            <span class="err-msg"><?php echo $data['H_address_err'] ?></span>
+                            <input type="text" placeholder="Enter hospital adress" name="haddress" value="<?php echo $data['H_address'] ?>" required>
                         </div>
 
                         <div class="input-field">
@@ -57,7 +57,7 @@
 
                         <div class="input-field">
                             <label>Hospital Charge*</label>
-                            <input type="number" placeholder="Enter hospital charge" name="hcharge" value="<?php echo $data['H_charge'] ?>" class="<?php echo (!empty($data['H_charge_err'])) ? 'error' : '' ?>"  required>
+                            <input type="text" placeholder="Enter hospital charge" name="hcharge" value="<?php echo $data['H_charge'] ?>" class="<?php echo (!empty($data['H_charge_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['H_charge_err'] ?></span>
                         </div>
 
@@ -69,18 +69,18 @@
                         </div>
                         <div class="input-field">
                             <input type="hidden">
-                            
+
                         </div>
                     </div>
                 </div>
 
                 <div class="buttons">
-                    <button type = "reset" onclick="window.history.back()">
-                    <span class="btnText">Back</span>
+                    <button type="button" onclick="window.history.back()" >
+                        <span class="btnText">Back</span>
                     </button>
-
+                    
                     <button class="sumbit">
-                        <span class="btnText">Add</span>
+                        <span class="btnText">Sumbit</span>
                     </button>
                 </div>
             </div>
@@ -88,21 +88,5 @@
     </div>
 
     <script src="<?php echo URLROOT; ?>/js/signup.js"></script>
-    <!--<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const clearButton = document.getElementById('clearButton');
-        const hospitalRegistrationForm = document.getElementById('hospitalRegistrationForm');
-
-        // Add click event listener to the Clear button
-        clearButton.addEventListener('click', function(event) {
-            // Prevent the default form submission behavior
-            event.preventDefault();
-
-            // Reset the form
-            hospitalRegistrationForm.reset();
-        });
-    });
-</script> -->
-
-    </body>
+</body>
 </html>

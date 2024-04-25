@@ -647,13 +647,11 @@
                     'H_address' => trim($_POST['haddress']),
                     'Region' => trim($_POST['region']),
                     'H_charge' => trim($_POST['hcharge']),
-                    //'M_ID' => trim($_POST['managerid']),
                     'C_num' => trim($_POST['cnum']),
                     'H_name_err' => '',
                     'H_address_err' => '',
                     'Region_err' => '',
                     'H_charge_err' => '',
-                    'M_ID_err' => '',
                     'C_num_err' => ''
                 ];
 
@@ -675,12 +673,11 @@
                 // Validate Hospital Charge
                 if(empty($data['H_charge'])){
                     $data['H_charge_err'] = 'Please enter hospital charge';
+                }else{
+                    if($data['H_charge'] > 25000){
+                        $data['H_charge_err'] = 'Charge must be less than 25000';
+                    }
                 }
-
-                // Validate Manager ID
-                // if(empty($data['M_ID'])){
-                //     $data['M_ID_err'] = 'Please enter manager ID';
-                // }
 
                  // Validate Contact Number
                  if(empty($data['C_num'])){
@@ -689,11 +686,12 @@
                     // Remove any non-numeric characters from the input
                     $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
 
-                    // Check if the cleaned number is not exactly 10 digits long
                     if(strlen($cleaned_number) !== 10){
                         $data['C_num_err'] = 'Invalid Number';
                     } else {
-                        // Proceed with other validations if needed
+                        if(substr($cleaned_number, 0, 1) != '0'){
+                            $data['C_num_err'] = 'Invalid Number';
+                        }
                     }
                 }
 

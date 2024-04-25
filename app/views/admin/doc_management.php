@@ -157,8 +157,6 @@
                           </td>
                           <td>
                           <div class="input-field">
-                                <label>Date</label>
-                                <input type="date" name="search_text" placeholder="Date" style="margin: 0%;">
                             </div>
                           </td>
                           <td>
