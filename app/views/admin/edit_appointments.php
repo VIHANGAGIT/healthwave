@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/style.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Appointments Update</title>
+   <title>Edit Appointments</title>
 </head>
 <body>
     <div class="container-signup" style="height: 620px; overflow: hidden;">
-        <header>Appointments Update</header>
+        <header>Edit Appointments</header>
 
         <form action="<?php echo URLROOT; ?>/admin/edit_appointments" method="POST" style="height: 600px;">
             <div class="form first">
@@ -43,7 +43,7 @@
                         <div class="input-field">
                             <label>Date*</label>
                             <div class="radio-container">
-                                <label><input type="radio" name="appointment_date" value="2024-04-25" required> April 25, 2024</label>
+                               <input type="radio" name="appointment_date" value="2024-04-25" required> 2024-04-25
                                 
                                 <!-- Add more radio buttons for other dates as needed -->
                             </div>
@@ -72,7 +72,7 @@
 
                         <div class="input-field">
                             <label>Start Time*</label>
-                            <input type="time" placeholder="Enter appointment number" name="" value="<?php //echo $data['C_num'] ?>" required>
+                            <input type="time" step="900" placeholder="Enter appointment number" name="" value="<?php //echo $data['C_num'] ?>"  required>
                         </div>
 
                         <div class="input-field">
