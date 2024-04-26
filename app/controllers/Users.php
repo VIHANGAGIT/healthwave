@@ -32,7 +32,9 @@
                     'C_pass_err' => '',
                     'DOB_err' => '',
                     'NIC_err' => '',
-                    'C_num_err' => ''
+                    'C_num_err' => '',
+                    'Height_err' => '',
+                    'Weight_err' => ''
                 ];
 
 
@@ -86,6 +88,29 @@
                     }
                 }
 
+                //validate height
+                if(empty($data['Height'])){
+                    $data['Height_err'] = 'Please enter your height';
+                } else{
+                    // Check if height is within a reasonable range (e.g., between 50 cm and 300 cm)
+                    $height = intval($data['Height']); // Convert to integer for comparison
+                    if($height < 50 || $height > 300){
+                        $data['Height_err'] = 'Height should be between 50 cm and 300 cm';
+                    }
+                }
+
+                //validate weight
+                if(empty($data['Weight'])){
+                    $data['Weight_err'] = 'Please enter your weight';
+                } else{
+                    // Check if weight is within a reasonable range (e.g., between 10 kg and 500 kg)
+                    $weight = intval($data['Weight']); // Convert to integer for comparison
+                    if($weight < 20 || $weight > 500){
+                        $data['Weight_err'] = 'Weight should be between 20 kg and 500 kg';
+                    }
+                }
+
+
 
                 // Validate Email
                 if(empty($data['Uname'])){
@@ -135,7 +160,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err']) && empty($data['DOB_err'])&& empty($data['NIC_err'])&& empty($data['C_num_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err']) && empty($data['DOB_err'])&& empty($data['NIC_err'])&& empty($data['C_num_err'])&& empty($data['Height_err'])&& empty($data['Weight_err'])){
                     
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
@@ -173,7 +198,9 @@
                     'C_pass_err' => '',
                     'DOB_err' => '',
                     'NIC_err' => '',
-                    'C_num_err' => ''
+                    'C_num_err' => '',
+                    'Height_err' => '',
+                    'Weight_err' => ''
                 ];
 
                 // Load view

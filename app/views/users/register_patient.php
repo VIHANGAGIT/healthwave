@@ -68,11 +68,13 @@
                         <div class="input-field">
                             <label>Height (in cm)</label>
                             <input type="number" placeholder="Enter your height" name="height" value="<?php echo $data['Height'] ?>" required>
+                            <span class="err-msg"><?php echo $data['Height_err'] ; ?></span>
                         </div>
 
                         <div class="input-field">
                             <label>Weight (in kg)</label>
                             <input type="number" placeholder="Enter your weight" name="weight" value="<?php echo $data['Weight'] ?>" required>
+                            <span class="err-msg"><?php echo $data['Weight_err'] ; ?></span>
                         </div>
                         <div class="input-field">
                             <label>Blood Group</label>
