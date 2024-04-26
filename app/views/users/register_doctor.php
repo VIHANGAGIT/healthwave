@@ -45,6 +45,7 @@
                           <div class="input-field">
                             <label>NIC Number*</label>
                             <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
+                            <span class="err-msg"><?php echo $data['NIC_err']; ?></span>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
@@ -52,7 +53,7 @@
                             <span class="err-msg"><?php echo $data['C_num_err']; ?></span>
                         </div>
                          <div class="input-field">
-                            <input type="hidden" placeholder="" name="" value="<?php //echo $data['DOB'] ?>" required>
+                            <input type="hidden" placeholder="" name="" value="<?php //echo $data['DOB'] ?>">
                         </div>
                     </div>
                 </div>
@@ -88,6 +89,7 @@
                         <div class="input-field">
                             <label>Charges*</label>
                             <input type="number" step="0.01" placeholder="Enter Doctor Charges" name="charges" value="<?php echo $data['Charges'] ?>" required>
+                            <span class="err-msg"><?php echo $data['Char_err']; ?></span>
                         </div>
                     </div>
                     <div class="details account">

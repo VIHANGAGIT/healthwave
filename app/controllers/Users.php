@@ -222,7 +222,6 @@
                     'Gender' => trim($_POST['gender']),
                     'NIC' => trim($_POST['nic']),
                     'C_num' => $_POST['cnum'],
-                    // 'DOB' => $_POST['dob'],
                     'Spec' => $_POST['spec'],
                     'SLMC' => $_POST['slmc'],
                     'Charges' => $_POST['charges'],
@@ -234,8 +233,9 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => '',
-                    'SLMC_err' => ''
+                    'SLMC_err' => '',
+                    'NIC_err' => '',
+                    'Char_err' => ''
                 ];
 
                 // Validate Contact Number
@@ -251,14 +251,30 @@
                     }
                 }
 
-                //validate date of birth
-                // $dob = $data['DOB'];
-                // $today = date("Y-m-d");
-                // $diff = date_diff(date_create($dob), date_create($today));
-                // if($diff->format('%y') < 18){
-                //     $data['DOB_err'] = 'Doctor must be atleast 18 years old';
-                // }
+                //validate NIC
+                if (empty($data['NIC'])) {
+                    $data['NIC_err'] = 'Please enter NIC number';
+                } else {
+                    $nic = $data['NIC'];
+                    if (strlen($nic)!=10 && strlen($nic)!=12){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                    if (strlen($nic) == 10){
+                        $lastChar = strtoupper(substr($nic, 9, 1)); // Get the last character and convert to uppercase
 
+                        if ($lastChar !== 'V') {
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                        if(!is_numeric(substr($nic, 0, 9))){
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                    }
+                    // }
+                    if (strlen($nic) == 12 && !is_numeric($nic)){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                }
+                // Validate SLMC
                 if (empty($data['SLMC'])) {
                     $data['SLMC_err'] = 'Please enter SLMC registration number';
                 } else {
@@ -267,6 +283,17 @@
                         $data['SLMC_err'] = 'SLMC registration number must be between 4 and 5 digits';
                     }
                 }
+
+                //validate charges
+                if (empty($data['Charges'])) {
+                    $data['Char_err'] = 'Please enter charges';
+                } else {
+                    $charge = $data['Charges'];
+                    if ($charge > 25000 ) {
+                        $data['Char_err'] = 'Charges must be less than 25000';
+                    }
+                }
+         
                 // Validate Email
                 if(empty($data['Uname'])){
                     $data['Uname_err'] = 'Please enter your email';
@@ -315,7 +342,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['NIC_err'])&& empty($data['C_num_err'])&& empty($data['SLMC_err'])&& empty($data['Char_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 
@@ -337,7 +364,6 @@
                     'F_name' => '',
                     'L_name' => '',
                     'Gender' => '',
-                    // 'DOB' => '',
                     'NIC' => '',
                     'C_num' => '',
                     'Spec' => '',
@@ -351,8 +377,9 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => '',
-                    'SLMC_err' => ''
+                    'SLMC_err' => '',
+                    'NIC_err' => '',
+                    'Char_err' => ''
                 ];
 
                 // Load view
