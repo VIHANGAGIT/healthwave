@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Doctor Management</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -45,12 +45,11 @@
                 <span>Home</span>
               </a>
             </li>
-            <!-- <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
-              </a>
-            </li> -->
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
             <li class="item">
               <a href="../admin/dashboard" class="link flex">
                 <i class="uil uil-chart-line"></i>
@@ -87,6 +86,11 @@
                 <span>Reservations</span>
               </a>
             </li>
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
             <li class="item">
               <a href="../admin/profile" class="link flex">
                 <i class="uil uil-user"></i>
@@ -115,62 +119,72 @@
     </nav>
 
     <div class="content">
-    <section class="table-wrap" >
-    <div class="content-search">
-          <div class="search">
-            <h2>Doctor Search</h2>
-              <form style="width: 100%;" method="POST">
-                <div class="fields">
-                  <table style="width: 95%;">
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                            <label>Doctor Name</label>
-                            <input type="text" name="search_text" placeholder="Doctor Name">
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-field">
-                          <label>Hospital Name</label>
-                          <select required>
-                              <option disabled selected>Select Hospital</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td>
-                        <input type="submit" class="button" value="Search" name="search" >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                            <label>Specialization</label>
-                            <input type="text" name="search_text" placeholder="Specialization">
-                        </div>
-                      </td>
-                      <td>
-                      <div class="input-field">
-                            <label>Date</label>
-                            <input type="date" name="search_text" placeholder="Date">
-                        </div>
-                      </td>
-                      <td>
-                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </form>
-              
-          </div>
-        </div>
-    </section><br>
-    <section class="table-wrap" >
+      <section class="table-wrap" >
+        <div class="content-search">
+              <div class="search">
+                <h2>Doctor Search</h2>
+                  <form style="width: 100%;" method="POST">
+                    <div class="fields">
+                      <table style="width: 95%;">
+                        <tr>
+                          <td>
+                            <div class="input-field">
+                                <label>Doctor Name</label>
+                                <input type="text" name="doctor_name" placeholder="Doctor Name" style="margin: 0%;" >
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-field">
+                              <label>Hospital Name</label>
+                              <select name="hospital_name" >
+                                <option disabled selected>Select Hospital</option>
+                                <?php foreach ($data['hospitals'] as $hospital): ?>
+                                  <option value="<?php echo $hospital->Hospital_ID; ?>"><?php echo $hospital->Hospital_Name; ?></option>
+                                <?php endforeach; ?> 
+                              </select>
+                            </div>
+                          </td>
+                          <td>
+                            <input type="submit" class="button" value="Search" name="search" >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="input-field">
+                                <label>Specialization</label>
+                                <select name="specialization" >
+                                  <option disabled selected>Select Specialization</option>
+                                  <?php foreach ($data['specializations'] as $specialization): ?>
+                                    <option value="<?php echo $specialization; ?>"><?php echo $specialization; ?></option>
+                                  <?php endforeach; ?>
+                                </select>
+                            </div>
+                          </td>
+                          <td>
+                          <div class="input-field">
+                            </div>
+                          </td>
+                          <td>
+                            <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </form>
+                  
+              </div>
+            </div>
+        </section><br>
+        <section class="table-wrap" >
             <div class="table-container">
-                <h1>Doctor Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_doctor'><button class='button'>Add Doctor</button></a></span></h1>
+            <h1>Doctor Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_doctor'><button class='button'>Add Doctor</button></a></span></h1>
+            <hr><br>
+                <?php if (empty($data['doctors'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No doctors are available</p>
+                    </div>
+                <?php else: ?>
                 <table  id="myTable" class="table">
                     <thead>
                         <tr>
@@ -184,23 +198,23 @@
                     </thead>
                     <tbody>
                     <?php foreach($data['doctors'] as $doctor): ?>
-      <tr>
-        <td style="text-align: center;"><?php echo $doctor->Doctor_ID; ?></td>
-        <td style="text-align: center;"><?php echo $doctor->First_Name . " " . $doctor->Last_Name; ?></td>
-        <td style="text-align: center;"><?php echo $doctor->Specialization; ?></td>
-        <td style="text-align: center;"><?php echo $doctor->NIC; ?></td>
-        <td style="text-align: center;"><?php echo $doctor->SLMC_Reg_No; ?></td>
-        <td style="text-align: center;">
-        <a href="#" onclick="confirmRemove('<?php echo $doctor->Doctor_ID; ?>')">
-          <button class='button' style='background-color: red;'>Remove</button>
-        </a>
-      </td>
+                      <tr>
+                        <td style="text-align: center;"><?php echo $doctor->Doctor_ID; ?></td>
+                        <td style="text-align: center;"><?php echo $doctor->First_Name . " " . $doctor->Last_Name; ?></td>
+                        <td style="text-align: center;"><?php echo $doctor->Specialization; ?></td>
+                        <td style="text-align: center;"><?php echo $doctor->NIC; ?></td>
+                        <td style="text-align: center;"><?php echo $doctor->SLMC_Reg_No; ?></td>
+                        <td style="text-align: center;">
+                        <a href="#" onclick="confirmRemove('<?php echo $doctor->Doctor_ID; ?>')">
+                          <button class='button red' <?php echo ($doctor->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
+                        </a>
+                      </td>
 
-      </tr>
-    <?php endforeach; ?>
-
+                      </tr>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
     </div>
@@ -219,19 +233,16 @@
           } );
       } );
     </script> 
-
-<script>
-  function confirmRemove(doctorId) {
-    if (confirm('Are you sure you want to remove?')) {
-      // If user confirms, redirect to the remove doctor page
-      window.location.href = 'remove_doctor?doc_id=' + doctorId;
-    } else {
-      // If user cancels, do nothing
-      return false;
-    }
-  }
-</script>
-
-
+    <script>
+      function confirmRemove(doctorId) {
+        if (confirm('Are you sure you want to remove?')) {
+          // If user confirms, redirect to the remove doctor page
+          window.location.href = 'remove_doctor?doc_id=' + doctorId;
+        } else {
+          // If user cancels, do nothing
+          return false;
+        }
+      }
+    </script>
   </body>
 </html>

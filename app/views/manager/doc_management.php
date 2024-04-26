@@ -94,7 +94,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="../manager/profile" class="link flex">
+              <a href="#" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>

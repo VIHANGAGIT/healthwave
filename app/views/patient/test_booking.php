@@ -1,5 +1,4 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Patient'){
     redirect("users/login");
   }
@@ -11,7 +10,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Test Booking</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -45,12 +44,6 @@
                 <span>Home</span>
               </a>
             </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
-              </a>
-            </li>
           </ul>
 
           <ul class="menu_item">
@@ -78,7 +71,7 @@
             <li class="item">
               <a href="../patient/medical_records" class="link flex">
                 <i class="uil uil-file-alt"></i>
-                <span>Medical Records</span>
+                <span>Medical History</span>
               </a>
             </li>
           </ul>
@@ -126,18 +119,18 @@
                       <td>
                         <div class="input-field">
                             <label>Test Name</label>
-                            <input type="text" name="search_text" placeholder="Test Name">
+                            <input type="text" name="test_name" placeholder="Enter Test Name" style="margin: 0%;">
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
                           <label>Hospital Name</label>
-                          <select required>
-                              <option disabled selected>Select Hospital</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                          </select>
+                          <select name="hospital_name">
+                                <option disabled selected>Select Hospital</option>
+                                <?php foreach ($data['hospitals'] as $hospital): ?>
+                                    <option value="<?php echo $hospital->Hospital_ID; ?>"><?php echo $hospital->Hospital_Name; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                       </td>
                       <td>
@@ -147,15 +140,16 @@
                     <tr>
                       <td>
                         <div class="input-field">
-                            <label>type</label>
-                            <input type="text" name="search_text" placeholder="Type">
+                            <label>Test Type</label>
+                            <select name="test_type">
+                                <option disabled selected>Select Test Type</option>
+                                <?php foreach ($data['types'] as $type): ?>
+                                    <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                       </td>
                       <td>
-                      <div class="input-field">
-                            <label>Date</label>
-                            <input type="date" name="search_text" placeholder="Date">
-                        </div>
                       </td>
                       <td>
                         <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
@@ -168,79 +162,36 @@
           </div>
         </div>
         <div class="detail-wrapper">
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Complete Blood Count (CBC)</p>
-                <p class='detail-comp'>Blood Test</p>
-                <!--div class='detail-details'
-                    <p><i class='uil uil-calendar-alt'></i>hh</p>
-                    <p><i class='uil uil-clock'></i>gg</p>
-                    
-                </-div-->
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class='button detail-btn'style="width:230px" >Book Now</button>
-            </div>
-          </div>
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Complete Blood Count (CBC)</p>
-                <p class='detail-comp'>Blood Test</p>
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class='button detail-btn'style="width:230px" >Book Now</button>
-            </div>
-          </div>
-
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Complete Blood Count (CBC)</p>
-                <p class='detail-comp'>Blood Test</p>
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class='button detail-btn'style="width:230px" >Book Now</button>
-            </div>
-          </div>
-
-          <div class='detail-card'>
-            <div class='detail-card-content'>
-                <p class="detail-title">Complete Blood Count (CBC)</p>
-                <p class='detail-comp'>Blood Test</p>
-            </div>
-            <div class='detail-card-sub'>
-            <hr class="vertical-line">
-                <div class='detail-card-info'>
-                    <p>Available at :</p>
-                    <p class="detail-location" >4 locations</p>
-                </div>
-            </div>
-            <div class='detail-view'>
-              <button class='button detail-btn'style="width:230px" >Book Now</button>
-            </div>
-          </div>
-
-          
+          <?php if (empty($data['searchTests'])): ?>
+              <div class="error-msg">
+                  <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                  <p>Could not find results for your search query.</p>
+              </div>
+          <?php else: ?>
+              <?php foreach ($data['searchTests'] as $test): ?>
+                  <div class='detail-card'>
+                      <div class='detail-card-content'>
+                          <p class="detail-title"><?php echo $test->Test_Name; ?></p> 
+                          <p class='detail-comp'><?php echo $test->Test_Type; ?></p>
+                      </div>
+                      <div class='detail-card-sub'>
+                          <hr class="vertical-line">
+                          <div class='detail-card-info'>
+                              <p>Available at :</p>
+                              <p class="detail-location">
+                                  <?php
+                                  $noOfHospitals = $data['no_of_hospitals'][$test->Test_ID]->NoOfHospitals;
+                                  echo $noOfHospitals . ($noOfHospitals == 1 ? ' Location' : ' Locations');
+                                  ?>
+                              </p>
+                          </div>
+                      </div>
+                      <div class='detail-view'>
+                      <a href="/healthwave/patient/test_booking_details?test_id=<?php echo $test->Test_ID; ?>"><button class='button detail-btn' >Book Now</button></a>
+                      </div>
+                  </div>
+              <?php endforeach; ?>
+          <?php endif; ?>
         </div>
         
     </div>

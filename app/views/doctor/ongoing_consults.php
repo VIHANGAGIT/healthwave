@@ -9,13 +9,67 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Ongoing Consultations</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
+
+    <div class="popup-container-4">
+        <div class="popup-box-4">
+            <h1>Consultation Details</h1><br>
+            <hr>
+            <table style="width: 95%;">
+              
+              <tr>
+                <td class="popup-data">
+                  <br>
+                  <span class="category" >Patient Name: </span><span id="patient-name-popup-4"></span>
+                  <br>
+                  <span class="category">Gender: </span> <span id="patient-gender-popup-4"></span>
+                  <br>
+                  <span class="category">Age: </span> <span id="patient-age-popup-4"></span>
+                  <br>
+                </td>
+                <td class="popup-data">
+                  <span class="category">Blood Group: </span> <span id="patient-blood-popup-4"></span>
+                  <br>
+                  <span class="category">Allergies: </span> <span id="patient-allergies-popup-4"></span>
+                  <br>
+                  </td>
+              </tr>
+              <tr>
+                <td class="popup-data" colspan="2">
+                    <br><button class="close-btn btn" id="add_presc" >Add Prescription</button>
+                </td>
+              </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="popup-container-6">
+        <div class="popup-box-6">
+            <h1>Complete without Prescription</h1><br>
+            <hr>
+            <table style="width: 95%;">
+              <tr>
+                <td class="popup-data">
+                  <br>
+                  <form action="" method="POST">
+                    <span class="category" >Comments: </span><br>
+                    <textarea name="comments" id="comments" rows="4" placeholder="Add comments here" required></textarea>
+                    <br><br>
+                    <button class="close-btn btn" id="add_consult" >Complete</button>
+                  </form>
+                </td>
+              </tr>
+            </table>
+        </div>
+    </div>
+
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -41,12 +95,6 @@
               <a href="" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
               </a>
             </li>
           </ul>
@@ -110,108 +158,36 @@
       </div>
     </nav>
 
-    <!--<div class="content">
-    <section class="table-wrap" >
-            <div class="table-container">
-                <h1>Hospital Statistics :<span class="dashboard-stat" style="font-size: 25px;" >Asiri Hospitals - Kirula Rd.</span></h1>
-                <table class="table-dashboard">
-                    <tbody>
-                        <tr class="dashboard-row">
-                            <td class="dashboard-content">
-                                <p class="dashboard-stat-title">Total Number<br>of Patients :</p>
-                                <p class="dashboard-stat">693</p>
-                            </td>
-                            
-                            <td class="dashboard-content">
-                                <p class="dashboard-stat-title">Total Number<br>of Doctors :</h2>
-                                <p class="dashboard-stat">35</p>
-                            </td>
-                            <td class="dashboard-content">
-                                <p class="dashboard-stat-title">Total Number<br>of Appointments :</h2>
-                                <p class="dashboard-stat">1822</p>
-                            </td>
-                            <td class="dashboard-content">
-                                <p class="dashboard-stat-title">Avg. Appointments<br>per Month :</h2>
-                                <p class="dashboard-stat">184.5</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section><br>
-        <section class="table-wrap" >
-            <div class="table-container">
-                <h1>Data Visualizations</h1>
-                <table class="table-dashboard">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="visualization" >
-                                    <canvas id="myChart"></canvas>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="dashboard-types">
-                                    <h2>Other Visulaizations</h2><br>
-                                    <button class='button' style="width: 200px;" >Doctors by Spec.</button><br>
-                                    <button class='button' style="width: 200px;" >Patients by Month</button><br>
-                                    <button class='button' style="width: 200px;" >Lab Tests by Month</button><br>
-                                    <button class='button' style="width: 200px;" >Lab Tests by Type</button><br>
-                                    <button class='button' style="width: 200px;" >Earnings by Month</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </div>
-    <script>
-        const ctx = document.getElementById('myChart');
-
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-            datasets: [{
-                label: 'No of Patients',
-                data: [156, 268, 123, 234, 268, 146],
-                borderWidth: 1
-            }]
-            },
-            options: {
-            scales: {
-                y: {
-                beginAtZero: true
-                }
-            }
-            }
-        });
-    </script>-->
-
     <div class="content">
     <section class="table-wrap" >
       <div class="table-container">
-        <h1>Hospital :<span class="dashboard-stat" style="font-size: 25px;" >Asiri Hospitals - Kirula Rd.</span></h1>
+        <?php if (empty($data['schedule'])): ?>
+            <br>
+            <div class="error-msg">
+                <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                <p>No ongoing sessions available at the moment</p>
+            </div>
+        <?php else: ?>
+        <h1>Hospital :<span class="dashboard-stat" style="font-size: 25px;" ><?php echo $data['schedule']->Hospital_Name?></span></h1>
         <table class="table-dashboard">
             <tbody>
                 <tr class="dashboard-row">
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Session<br> Date :</p>
-                        <p class="dashboard-stat">2024/04/12</p>
+                        <p class="dashboard-stat"><?php echo $data['schedule']->Date?></p>
                     </td>
                     
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Session <br> Duration :</h2>
-                        <p class="dashboard-stat">12:00 - 14:00</p>
+                        <p class="dashboard-stat"><?php echo $data['schedule']->Time_Start. " - " . $data['schedule']->Time_End?></p>
                     </td>
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Remaining Number<br>of Patients :</h2>
-                        <p class="dashboard-stat">12</p>
+                        <p class="dashboard-stat"><?php echo $data['remaining_patients']?></p>
                     </td>
                     <td class="dashboard-content">
                         <p class="dashboard-stat-title">Total Number<br> of Patients :</h2>
-                        <p class="dashboard-stat">30</p>
+                        <p class="dashboard-stat"><?php echo $data['total_patients']->NoOfReservations?></p>
                     </td>
                 </tr>
             </tbody>
@@ -220,92 +196,65 @@
     </section><br>
     <section class="table-wrap" >
       <div class="table-container">
-        <h1>Ongoing Consultations</h1>
+        <h1>Patient Queue</h1>
+        <hr><br>
+        <?php if (empty($data['reservations'])): ?>
+        <br>
+            <div class="error-msg">
+                <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                <p>No reservations available for current session</p>
+            </div>
+        <?php else: ?>
         <section class="table-wrap" >
-            <table class="table">
+            <table class="table" id="ongoing-consults-table">
                 <thead>
                     <tr>
-                        <th>Reservation ID</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Details</th>
-                        <th>Prescription</th>
+                        <th style="text-align: center;">Appointment No</th>
+                        <th style="text-align: center;">Patient Name</th>
+                        <th style="text-align: center;">Gender</th>
+                        <th style="text-align: center;">Age</th>
+                        <th style="text-align: center;">Time Slot</th>
+                        <th style="text-align: center;">Prescription</th>
+                        <th style="text-align: center;">Complete</th>
+                        <th style="text-align: center;">Details</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>12223</td>
-                        <td>Lanka Hospitals - Kiribathgoda</td>
-                        <td>2023/10/12</td>
-                        <td>10:30 AM</td>
-                        <td><a href='onpatient_details'><button class='button'>Details</button></a></td>
-                        <td><a href='addprescription'><button class='button' style="width: 50px;"><i class="uil uil-plus"></i>
-
-                        </button></a></td>
+                    <?php foreach ($data['reservations'] as $reservation): ?>
+                            <tr>
+                            <td style="text-align: center;"><?php echo $reservation->Appointment_No?></td>
+                            <td style="text-align: center;"><?php echo $reservation->First_Name. " " . $reservation->Last_Name?></td>
+                            <td style="text-align: center;"><?php echo $reservation->Gender?></td>
+                            <td style="text-align: center;"><?php echo $reservation->Age?></td>
+                            <td style="text-align: center;"><?php echo $reservation->Start_Time. " - " . $reservation->End_Time?></td>
+                            <td style="text-align: center;"><a href="prescription?patient_id=<?php echo $reservation->Patient_ID;?>&res_id=<?php echo $reservation->Doc_Res_ID?>"><button class="button" style="width: 50px;"><i class="uil uil-plus"></i></button></a></td>
+                            <td style="text-align: center;"><button class="button show-details-6" data-res-id="<?php echo $reservation->Doc_Res_ID; ?>" style="width: 50px;"><i class="uil uil-check"></i></button></td>
+                            <td style="text-align: center;"><button class="button show-details-4" data-patient-id="<?php echo $reservation->Patient_ID; ?>">Details</button></td>
+                            </tr>
+                    <?php endforeach; ?>
+                    
                     </tr>
-                    <tr>
-                        <td>12223</td>
-                        <td>Lanka Hospitals - Kiribathgoda</td>
-                        <td>2023/10/12</td>
-                        <td>10:30 AM</td>
-                        <td><a href=''><button class='button'>Details</button></a></td>
-                        <td><a href=''><button class='button' style="width: 50px;"><i class="uil uil-plus"></i>
-
-                        </button></a></td>
-                    </tr>
-                   <!-- <tr>
-                        <td>12223</td>
-                        <td>Lanka Hospitals - Kiribathgoda</td>
-                        <td>2023/10/12</td>
-                        <td>10:30 AM</td>
-                        <td><a href=''><button class='button'>Details</button></a></td>
-                        <td><a href=''><button class='button'>Prescription</button></a></td>
-                    </tr>
-                    <tr>
-                        <td>12223</td>
-                        <td>Lanka Hospitals - Kiribathgoda</td>
-                        <td>2023/10/12</td>
-                        <td>10:30 AM</td>
-                        <td><a href=''><button class='button'>Details</button></a></td>
-                        <td><a href=''><button class='button'>Prescription</button></a></td>
-                    </tr>
-                    <tr>
-                        <td>12223</td>
-                        <td>Lanka Hospitals - Kiribathgoda</td>
-                        <td>2023/10/12</td>
-                        <td>10:30 AM</td>
-                        <td><a href=''><button class='button'>Details</button></a></td>
-                        <td><a href=''><button class='button'>Prescription</button></a></td>
-                    </tr>
-                    <tr>
-                        <td>12223</td>
-                        <td>Lanka Hospitals - Kiribathgoda</td>
-                        <td>2023/10/12</td>
-                        <td>10:30 AM</td>
-                        <td><a href=''><button class='button'>Details</button></a></td>
-                        <td><a href=''><button class='button'>Prescription</button></a></td>
-                    </tr>
-                    <tr>
-                        <td>12223</td>
-                        <td>Lanka Hospitals - Kiribathgoda</td>
-                        <td>2023/10/12</td>
-                        <td>10:30 AM</td>
-                        <td><a href=''><button class='button'>Details</button></a></td>
-                        <td><a href=''><button class='button'>Prescription</button></a></td>
-                    </tr>
-                    <tr>
-                        <td>12223</td>
-                        <td>Lanka Hospitals - Kiribathgoda</td>
-                        <td>2023/10/12</td>
-                        <td>10:30 AM</td>
-                        <td><a href=''><button class='button'>Details</button></a></td>
-                        <td><a href=''><button class='button'>Prescription</button></a></td>
-                    </tr>-->
                 </tbody>
             </table>
         </div>
+        <?php endif; ?>
     </section>
-</div>
+    <?php endif; ?>
+    </div>
+    <script src="<?php echo URLROOT;?>/js/popup.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#ongoing-consults-table').dataTable( {
+              "bPaginate": false,
+              "bFilter": false,
+              "bInfo": false,
+              "columnDefs": [
+                  { "orderable": false, "targets": [5,6,7] }
+              ]
+          } );
+      } );
+    </script> 
   </body>
 </html>

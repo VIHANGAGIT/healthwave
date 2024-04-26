@@ -78,7 +78,7 @@
         }
    
         public function add_doctor($data){
-            $this->db->query('INSERT INTO doctor (First_Name, Last_Name, Gender, NIC, Contact_No, SLMC_Reg_No, Specialization, Availability, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :SLMC, :Spec, :Avail, :Uname, :Pass)');
+            $this->db->query('INSERT INTO doctor (First_Name, Last_Name, Gender, NIC, Contact_No, SLMC_Reg_No, Specialization, Availability, Charges, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :SLMC, :Spec, :Avail, :Charges, :Uname, :Pass)');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':F_name', $data['F_name']);
@@ -89,6 +89,7 @@
             $this->db->bind(':SLMC', $data['SLMC']);
             $this->db->bind(':Spec', $data['Spec']);
             $this->db->bind(':Avail', $data['Avail']);
+            $this->db->bind(':Charges', $data['Charges']);
             $this->db->bind(':Uname', $data['Uname']);
             $this->db->bind(':Pass', $data['Pass']);
 
@@ -101,14 +102,13 @@
         }
 
         public function add_hospital($data){
-            $this->db->query('INSERT INTO hospital (Hospital_Name, Address, Region, Charge,Contact_No) VALUES (:H_name, :H_address, :Region, :H_charge, :C_num)');
+            $this->db->query('INSERT INTO hospital (Hospital_Name, Address, Region, Charge, Contact_No) VALUES (:H_name, :H_address, :Region, :H_charge, :C_num)');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':H_name', $data['H_name']);
             $this->db->bind(':H_address', $data['H_address']);
             $this->db->bind(':Region', $data['Region']);
             $this->db->bind(':H_charge', $data['H_charge']);
-            //$this->db->bind(':M_ID', $data['M_ID']);
             $this->db->bind(':C_num', $data['C_num']);
 
             // Execute query
@@ -134,21 +134,6 @@
             }
         }
 
-        // Check for duplicate Username entries
-        public function findUserByUname($uname){
-            $this->db->query('SELECT Username FROM patient WHERE Username = :uname UNION SELECT Username FROM doctor WHERE Username = :uname UNION SELECT Username FROM admin WHERE Username = :uname UNION SELECT Username FROM hospital_staff WHERE Username = :uname');
-            
-             // Binding parameters for the prepaired statement
-            $this->db->bind(':uname', $uname);
-
-            $row = $this->db->singleRow();
-
-            if($this->db->rowCount() > 0){
-                return true;
-            } else{
-                return false;
-            }
-        }
       
         public function test_data_fetch($id){
             $this->db->query('SELECT * FROM test WHERE Test_ID = :id');
@@ -204,13 +189,46 @@
             $this->db->bind(':H_address', $data['H_address']);
             $this->db->bind(':Region', $data['Region']);
             $this->db->bind(':H_charge', $data['H_charge']);
-            //$this->db->bind(':M_ID', $data['M_ID']);
             $this->db->bind(':H_ID', $data['H_ID']);
             $this->db->bind(':C_num', $data['C_num']);
 
             // Execute query
             if($this->db->execute()){
                 return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_appointments($doc_id){
+            $this->db->query('SELECT doctor_reservation.Doc_Res_ID FROM doctor_reservation 
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            WHERE schedule.Doctor_ID = :doc_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.End_Time >= CURTIME()');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':doc_id', $doc_id);
+            $appointments = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $appointments;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_appointments_hospital($hospital_id){
+            $this->db->query('SELECT doctor_reservation.Doc_Res_ID FROM doctor_reservation 
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            WHERE schedule.Hospital_ID = :hospital_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.End_Time >= CURTIME()');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $appointments = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $appointments;
             } else{
                 return false;
             }
@@ -257,64 +275,4 @@
                 return false;
             }
         }
-
-        public function findHospitalByName()
-        {
-            $this->db->query('SELECT Hospital_Name FROM hospital WHERE Hospital_Name = :H_name');
-            $this->db->bind(':H_name', $_POST['hname']);
-            $row = $this->db->singleRow();
-
-            if($this->db->rowCount() > 0){
-                return true;
-            } else{
-                return false;
-            }
-        }
-
-        public function findHospitalByAddress()
-        {
-            $this->db->query('SELECT Address FROM hospital WHERE Address = :H_address');
-            $this->db->bind(':H_address', $_POST['haddress']);
-            $row = $this->db->singleRow();
-
-            if($this->db->rowCount() > 0){
-                return true;
-            } else{
-                return false;
-            }
-        }
-
-        public function searchHospitals($data)
-        {
-            $hospitalName = $data['H_name'] ?? null;
-            $region = $data['Region'] ?? null;
-            $hospitalID = $data['H_ID'] ?? null;
-
-            $query = 'SELECT * FROM hospital WHERE  ';
-
-            if($hospitalName != null){
-                
-                $query .= "Hospital_Name LIKE  '%$hospitalName%'";
-            }
-
-            if($region != null){
-                if($hospitalName != null){
-                    $query .= "AND Region LIKE '%$region%'";
-                }
-                $query .= "Region LIKE '%$region%'";
-            }
-
-            if($hospitalID != null){
-                if($hospitalName != null || $region != null){
-                    $query .= "AND Hospital_ID = $hospitalID";
-                }
-                $query .= "Hospital_ID = $hospitalID";
-            }        
-
-            $this->db->query($query);
-            $hospitals = $this->db->resultSet();
-            return $hospitals;
-           
-        }
-
     }        

@@ -11,11 +11,11 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Hospital Update</title>
+   <title><?php echo SITENAME;?>: Edit Hospital</title>
 </head>
 <body>
-    <div class="container-signup" style="height: 720px;" >
-        <header>Hospital Update</header>
+    <div class="container-signup" style="height: 420px; overflow: hidden;" >
+        <header>Edit Hospital</header>
 
         <form action="<?php echo URLROOT; ?>/admin/edit_hospital" method="POST" style="height: 600px;">
             <div class="form first" >
@@ -57,39 +57,35 @@
 
                         <div class="input-field">
                             <label>Hospital Charge*</label>
-                            <input type="text" placeholder="Enter hospital charge" name="hcharge" value="<?php echo $data['H_charge'] ?>" required>
+                            <input type="text" placeholder="Enter hospital charge" name="hcharge" value="<?php echo $data['H_charge'] ?>" class="<?php echo (!empty($data['H_charge_err'])) ? 'error' : '' ?>" required>
+                            <span class="err-msg"><?php echo $data['H_charge_err'] ?></span>
                         </div>
 
                         <div class="input-field">
                             <label>Contact Number*</label>
-                            <input type="text" placeholder="Enter hospital contact number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
+                            <input type="text" placeholder="Enter hospital contact number" name="cnum" value="<?php echo $data['C_num'] ?>" class="<?php echo (!empty($data['C_num_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['C_num_err'] ?></span>
 
                         </div>
                         <div class="input-field">
-                            <label></label>
-                            <input type="hidden" placeholder="" name="" value="<?php //echo $data['C_num'] ?>" required>
+                            <input type="hidden">
 
                         </div>
                     </div>
                 </div>
 
-                    <div class="buttons">
-                        <button type="button" onclick="window.history.back()" >
-                            <span class="btnText">Back</span>
-                        </button>
-                        
-                        <button class="sumbit">
-                            <span class="btnText">Sumbit</span>
-                        </button>
-                    </div>
+                <div class="buttons">
+                    <button type="button" onclick="window.history.back()" >
+                        <span class="btnText">Back</span>
+                    </button>
+                    
+                    <button class="sumbit">
+                        <span class="btnText">Sumbit</span>
+                    </button>
                 </div>
-                   
-                </div>
-                
             </div>
         </form>
-</div>
+    </div>
 
     <script src="<?php echo URLROOT; ?>/js/signup.js"></script>
 </body>

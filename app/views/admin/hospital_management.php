@@ -1,5 +1,4 @@
 <?php 
- 
   if(($_SESSION['userType']) != 'Admin'){
     redirect("users/login");
   }
@@ -10,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Hospital Management</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -46,12 +45,11 @@
                 <span>Home</span>
               </a>
             </li>
-            <!-- <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
-              </a>
-            </li> -->
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
             <li class="item">
               <a href="../admin/dashboard" class="link flex">
                 <i class="uil uil-chart-line"></i>
@@ -88,8 +86,13 @@
                 <span>Reservations</span>
               </a>
             </li>
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
             <li class="item">
-              <a href="../admin/profile" class="link flex">
+              <a href="#" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -127,20 +130,13 @@
                       <td>
                         <div class="input-field">
                             <label>Hospital ID</label>
-                            <input type="text" name="H_ID" placeholder="Enter hospital ID" value="<?php echo $data['H_ID'];?>" >
+                            <input type="text" name="H_ID" placeholder="Enter Hospital ID" style="margin: 0%;" >
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
                           <label>Hospital Name</label>
-                          <select name="H_name" >
-                              <option value="" selected>Select Hospital</option>
-                              <?php foreach($data['hospitals'] as $hospital): ?>
-                              <option value="<?php echo $hospital->Hospital_Name?>" <?php if($hospital->Hospital_Name == $data['H_name']) echo 'selected'; ?> >
-                                <?php echo $hospital->Hospital_Name?>
-                              </option>
-                              <?php endforeach; ?>
-                          </select>
+                          <input type="text" name="H_name" placeholder="Enter Hospital Name" style="margin: 0%;">
                         </div>
                       </td>
                       <td>
@@ -153,25 +149,13 @@
                             <label>Reigon</label>
                             <select name="H_region" >
                                 <option  selected value="">Select Reigon</option>
-                                <option value="Colombo">Colombo</option>
-                                <option>Kandy</option>
-                                <option>Galle</option>
-                                <option>Matara</option>
-                                <option>Kurunegala</option>
-                                <option>Badulla</option>
-                                <option>Anuradhapura</option>
-                                <option>Polonnaruwa</option>
-                                <option>Trincomalee</option>
-                                <option>Jaffna</option>
-                                <option>Other</option>
+                                <?php foreach ($data['regions'] as $region): ?>
+                                    <option value="<?php echo $region; ?>"><?php echo $region; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                       </td>
                       <td>
-                      <!--<div class="input-field">
-                            <label>Date</label>
-                            <input type="date" name="search_text" placeholder="Date">
-                        </div>-->
                       </td>
                       <td>
                         <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
@@ -180,14 +164,20 @@
                   </table>
                 </div>
               </form>
-              
           </div>
         </div>
     </section><br>
-    <section class="table-wrap" >
-    <div class="table-container">
-                <h1>Hospitals Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_hospital'><button class='button'>Add Hospital</button></a></span></h1> 
-                <table  id="myTable" class="table">
+        <section class="table-wrap" >
+            <div class="table-container">
+            <h1>Hospitals Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_hospital'><button class='button'>Add Hospital</button></a></span></h1> 
+            <hr><br>
+                <?php if (empty($data['hospitals'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No hospitals are available</p>
+                    </div>
+                <?php else: ?>
+                <table  id="hospital-table" class="table">
                     <thead>
                         <tr>
                             <th style="text-align: center;">Hospital ID</th>
@@ -200,25 +190,22 @@
                     </thead>
                     <tbody>
                     <?php foreach($data['hospitals'] as $hospital): ?>
-    <tr>
-        <td style="text-align: center;"><?php echo $hospital->Hospital_ID; ?></td>
-        <td style="text-align: center;"><?php echo $hospital->Hospital_Name; ?></td>
-        <td style="text-align: center;"><?php echo $hospital->Address; ?></td>
-        <td style="text-align: center;"><?php echo $hospital->Region; ?></td>
-        <td style="text-align: center;"><a href='edit_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
-        <td style="text-align: center;">
-        <a href='remove_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>' onclick="confirmRemove(event)">
-            <button class='button red'>Remove</button>
-        </a>
-    </td>
-    </tr>
-<?php endforeach; ?>
-
-
-
+                        <tr>
+                            <td style="text-align: center;"><?php echo $hospital->Hospital_ID; ?></td>
+                            <td style="text-align: center;"><?php echo $hospital->Hospital_Name; ?></td>
+                            <td style="text-align: center;"><?php echo $hospital->Address; ?></td>
+                            <td style="text-align: center;"><?php echo $hospital->Region; ?></td>
+                            <td style="text-align: center;"><a href='edit_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
+                            <td style="text-align: center;">
+                            <a href='remove_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>' onclick="confirmRemove(event)">
+                                <button class='button red' <?php echo ($hospital->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
+                            </a>
+                            </td>
                         </tr>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
     </div>
@@ -226,7 +213,7 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script>
       $(document).ready(function() {
-            $('#myTable').dataTable({
+            $('#hospital-table').dataTable({
                 "bPaginate": false, // Disable pagination
                 "bFilter": false, // Disable search/filtering
                 "bInfo": false, // Disable info text
@@ -237,19 +224,17 @@
         });
     </script> 
     <script>
-    function confirmRemove(event) {
-        event.preventDefault(); // Prevent the default action of the link
-        
-        // Display a confirmation dialog
-        if (window.confirm('Are you sure you want to remove?')) {
-            // If confirmed, proceed with the removal action
-            window.location.href = event.target.closest('a').href;
-        } else {
-            // If not confirmed, do nothing
-            return false;
-        }
-    }
-</script>
-
+      function confirmRemove(event) {
+          event.preventDefault();
+          
+          // Display a confirmation dialog
+          if (window.confirm('Are you sure you want to remove?')) {
+              // If confirmed, proceed with the removal action
+              window.location.href = event.target.closest('a').href;
+          } else {
+              return false;
+          }
+      }
+    </script>
   </body>
 </html>

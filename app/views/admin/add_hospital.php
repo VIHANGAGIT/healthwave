@@ -11,11 +11,11 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Hospital Registration</title>
+   <title><?php echo SITENAME;?>: Add Hospital</title>
 </head>
 <body>
-    <div class="container-signup" style="height: 720px;" >
-        <header>Hospital Registration</header>
+    <div class="container-signup" style="height: 420px; overflow: hidden;" >
+        <header>Add Hospital</header>
 
         <form action="<?php echo URLROOT; ?>/admin/add_hospital" method="POST" style="height: 600px;">
             <div class="form first" >
@@ -25,13 +25,13 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Hospital Name*</label>
-                            <input type="text" placeholder="Enter hospital name" name="hname" value="<?php echo $data['H_name'] ?>" required>
+                            <input type="text" placeholder="Enter hospital name" name="hname" value="<?php echo $data['H_name'] ?>" class="<?php echo (!empty($data['H_name_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['H_name_err'] ?></span>
                         </div>
 
                         <div class="input-field">
                             <label>Address*</label>
-                            <input type="text" placeholder="Enter hospital adress" name="haddress" value="<?php echo $data['H_address'] ?>" required>
+                            <input type="text" placeholder="Enter hospital adress" name="haddress" value="<?php echo $data['H_address'] ?>" class="<?php echo (!empty($data['H_address_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['H_address_err'] ?></span>
                         </div>
 
@@ -57,39 +57,35 @@
 
                         <div class="input-field">
                             <label>Hospital Charge*</label>
-                            <input type="text" placeholder="Enter hospital charge" name="hcharge" value="<?php echo $data['H_charge'] ?>" required>
+                            <input type="number" placeholder="Enter hospital charge" name="hcharge" value="<?php echo $data['H_charge'] ?>" class="<?php echo (!empty($data['H_charge_err'])) ? 'error' : '' ?>"  required>
+                            <span class="err-msg"><?php echo $data['H_charge_err'] ?></span>
                         </div>
 
                         <div class="input-field">
                             <label>Contact Number*</label>
-                            <input type="text" placeholder="Enter hospital contact number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
+                            <input type="text" placeholder="Enter hospital contact number" name="cnum" value="<?php echo $data['C_num'] ?>" class="<?php echo (!empty($data['C_num_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['C_num_err'] ?></span>
 
                         </div>
                         <div class="input-field">
-                            <label></label>
-                            <input type="hidden" placeholder="" name="" value="<?php //echo $data['C_num'] ?>" required>
+                            <input type="hidden">
+                            
                         </div>
                     </div>
                 </div>
 
-                    <div class="buttons">
-                    <button type = "reset">
-                    <span class="btnText">Clear</span>
+                <div class="buttons">
+                    <button type = "reset" onclick="window.history.back()">
+                    <span class="btnText">Back</span>
                     </button>
 
-                        
-                        <button class="sumbit">
-                            <span class="btnText">Add</span>
-                        </button>
-                    </div>
+                    <button class="sumbit">
+                        <span class="btnText">Add</span>
+                    </button>
                 </div>
-                   
-                </div>
-                
             </div>
         </form>
-</div>
+    </div>
 
     <script src="<?php echo URLROOT; ?>/js/signup.js"></script>
     <!--<script>
@@ -108,5 +104,5 @@
     });
 </script> -->
 
-</body>
+    </body>
 </html>

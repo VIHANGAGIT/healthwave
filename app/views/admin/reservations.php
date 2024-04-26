@@ -43,12 +43,11 @@
                 <span>Home</span>
               </a>
             </li>
-            <!-- <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
-              </a>
-            </li> -->
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
             <li class="item">
               <a href="../admin/dashboard" class="link flex">
                 <i class="uil uil-chart-line"></i>
@@ -85,8 +84,13 @@
                 <span>Reservations</span>
               </a>
             </li>
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
             <li class="item">
-              <a href="../admin/profile" class="link flex">
+              <a href="#" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -113,98 +117,47 @@
     </nav>
 
     <div class="content">
-    <section class="table-wrap" >
-    <div class="content-search">
-          <div class="search">
-            <h2>Appointment Search</h2>
-              <form style="width: 100%;" method="POST">
-                <div class="fields">
-                  <table style="width: 95%;">
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                            <label>Patient Name</label>
-                            <input type="text" name="search_text" placeholder="Patient Name">
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-field">
-                          <label>Doctor Name</label>
-                          <input type="text" name="search_text" placeholder="Doctor Name">                        
-                        </div>
-                      </td>
-                      <td>
-                        <input type="submit" class="button" value="Search" name="search" >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                        <label>Hospital Name</label>
-                          <select required>
-                              <option disabled selected>Select Hospital</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td>
-                      <div class="input-field">
-                            <label>Date</label>
-                            <input type="date" name="search_text" placeholder="Date">
-                        </div>
-                      </td>
-                      <td>
-                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </form>
-              
-          </div>
-        </div>
-    </section><br>
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Doctor Appointments Management</h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Reservation ID</th>
                             <th>Patient Name</th>
                             <th>Doctor Name</th>
                             <th>Location</th>
                             <th>Date</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
+                            <th>Time</th>
                             <th>Edit</th>
                             <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
                             <td>A.V. Tony Stark</td>
                             <td>Dr. M.S. Perera</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>10:30 AM</td>
-                            <td>11:30 AM</td>
-                            <td><a href='edit_appointments'><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
-
                         <tr>
-                            <td>2</td>
                             <td>A.V. Tony Stark</td>
                             <td>Dr. M.S. Perera</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>10:30 AM</td>
-                            <td>11:30 AM</td>
-                            <td><a href='edit_appointments'><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>A.V. Tony Stark</td>
+                            <td>Dr. M.S. Perera</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
                     </tbody>
@@ -213,100 +166,49 @@
         </section>
         <br>
         <section class="table-wrap" >
-    <div class="content-search">
-          <div class="search">
-            <h2>Test Search</h2>
-              <form style="width: 100%;" method="POST">
-                <div class="fields">
-                  <table style="width: 95%;">
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                            <label>Patient Name</label>
-                            <input type="text" name="search_text" placeholder="Patient Name">
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-field">
-                          <label>Test Name</label>
-                          <input type="text" name="search_text" placeholder="Test Name">                        
-                        </div>
-                      </td>
-                      <td>
-                        <input type="submit" class="button" value="Search" name="search" >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                        <label>Hospital Name</label>
-                          <select required>
-                              <option disabled selected>Select Hospital</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                              <option>Lanka Hospitals - Kiribathgoda</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td>
-                      <div class="input-field">
-                            <label>Date</label>
-                            <input type="date" name="search_text" placeholder="Date">
-                        </div>
-                      </td>
-                      <td>
-                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </form>
-              
-          </div>
-        </div>
-    </section><br>
-        <section class="table-wrap" >
             <div class="table-container">
                 <h1>Test Appointments Management</h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Res ID</th>
                             <th>Patient Name</th>
                             <th>Test Name</th>
                             <th>Location</th>
                             <th>Date</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
+                            <th>Time</th>
                             <th>Edit</th>
                             <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
                             <td>L.A. Peter Parker</td>
                             <td>HBLR</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>14:00 PM</td>
-                            <td>15:00 PM</td>
-                            <td><a href='edit_test_appointments'><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
-
                         <tr>
-                            <td>2</td>
                             <td>L.A. Peter Parker</td>
                             <td>HBLR</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>14:00 PM</td>
-                            <td>15:00 PM</td>
-                            <td><a href='edit_test_appointments'><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
-                   </tbody>
+                        <tr>
+                            <td>L.A. Peter Parker</td>
+                            <td>HBLR</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>14:00 PM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Remove</button></a></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </section>

@@ -147,16 +147,48 @@
                     'DOB' => $_POST['dob'],
                     'Spec' => $_POST['spec'],
                     'SLMC' => $_POST['slmc'],
+                    'Charges' => $_POST['charges'],
                     'Avail' => 1,
                     'Uname' => trim($_POST['email']),
                     'Pass' => trim($_POST['pass']),
                     'C_pass' => trim($_POST['cpass']),
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'C_num_err' => '',
+                    'DOB_err' => '',
+                    'SLMC_err' => ''
                 ];
 
+                // Validate Contact Number
+                if(empty($data['C_num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
 
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
+                    }
+                }
+
+                //validate date of birth
+                $dob = $data['DOB'];
+                $today = date("Y-m-d");
+                $diff = date_diff(date_create($dob), date_create($today));
+                if($diff->format('%y') < 18){
+                    $data['DOB_err'] = 'Doctor must be atleast 18 years old';
+                }
+
+                if (empty($data['SLMC'])) {
+                    $data['SLMC_err'] = 'Please enter SLMC registration number';
+                } else {
+                    $slmc = $data['SLMC'];
+                    if (strlen($slmc) < 4 || strlen($slmc) > 5) {
+                        $data['SLMC_err'] = 'SLMC registration number must be between 4 and 5 digits';
+                    }
+                }
                 // Validate Email
                 if(empty($data['Uname'])){
                     $data['Uname_err'] = 'Please enter your email';
@@ -232,13 +264,17 @@
                     'C_num' => '',
                     'Spec' => '',
                     'SLMC' => '',
+                    'Charges' => '',
                     'Avail' => '',
                     'Uname' => '',
                     'Pass' => '',
                     'C_pass' => '',
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'C_num_err' => '',
+                    'DOB_err' => '',
+                    'SLMC_err' => ''
                 ];
 
                 // Load view
@@ -247,6 +283,7 @@
         }
 
         public function register_hospital_staff(){
+
             // Check for POST request
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -266,8 +303,6 @@
                     'Uname' => trim($_POST['email']),
                     'Pass' => trim($_POST['pass']),
                     'C_pass' => trim($_POST['cpass']),
-                    'Employment_Date' => trim($_POST['employed_date']),
-                    'Staff_ID' => trim($_POST['staffid']),
                     'Uname_err' => '',
                     'Pass_err' => '',
                     'C_pass_err' => ''
@@ -352,16 +387,16 @@
                     'Uname' => '',
                     'Pass' => '',
                     'C_pass' => '',
-                    'Employment_Date' => '',
-                    'Staff_ID' => '',
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'hospitalNames' => $this->userModel->getHospitalNames()
                 ];
-
-                // Load view
+                
+                // Load the view with the fetched data
                 $this->view('users/register_hospital_staff', $data);
             }
+            
         }
 
         public function login(){
@@ -449,10 +484,10 @@
                 case 'Manager':
                     $_SESSION['userID'] = $userData->HS_ID;
                     break;
-                case 'Pharmacist':                
+                case 'Lab Assistant':
                     $_SESSION['userID'] = $userData->HS_ID;
                     break;
-                case 'Lab Assistant':
+                case 'Pharmacist':
                     $_SESSION['userID'] = $userData->HS_ID;
                     break;
                 case 'Admin':
@@ -481,9 +516,7 @@
             session_start();
             // Remove session variables
             session_unset();
-            // Destroy session
             session_destroy();
-            // Redirect to login page
             redirect('users/login');
         }
 

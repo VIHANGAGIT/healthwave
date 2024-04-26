@@ -1,5 +1,4 @@
 <?php 
-
   if(($_SESSION['userType']) != 'Admin'){
     redirect("users/login");
   }
@@ -44,12 +43,11 @@
                 <span>Home</span>
               </a>
             </li>
-            <!-- <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
-              </a>
-            </li> -->
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
             <li class="item">
               <a href="../admin/dashboard" class="link flex">
                 <i class="uil uil-chart-line"></i>
@@ -86,8 +84,13 @@
                 <span>Reservations</span>
               </a>
             </li>
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="line"></span>
+            </div>
             <li class="item">
-              <a href="../admin/profile" class="link flex">
+              <a href="#" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -160,7 +163,7 @@
         <br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Hospital Manager Approvals</h1>
+                <h1>Hospital Approvals</h1>
                 <table class="table">
                     <thead>
                         <tr>
