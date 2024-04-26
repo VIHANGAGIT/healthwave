@@ -25,17 +25,17 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>First Name*</label>
-                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['F_name'] ?>">
+                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['F_name'] ?>" required >
                         </div>
 
                         <div class="input-field">
                             <label>Last Name*</label>
-                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['L_name'] ?>">
+                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['L_name'] ?>" required>
                         </div>
 
                         <div class="input-field">
                             <label>Gender*</label>
-                            <select name="gender">
+                            <select name="gender" required>
                             <option selected value="<?php echo $data['Gender'] ?>" > <?php echo ($data['Gender'] == '') ? 'Select gender' : $data['Gender'] ?></option>
                                 <option>Male</option>
                                 <option>Female</option>
@@ -44,18 +44,18 @@
 
                         <div class="input-field">
                             <label>Date of Birth*</label>
-                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>">
+                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>" required>
                             <span class="err-msg"><?php echo $data['DOB_err'] ; ?></span>
                         </div>
 
                         <div class="input-field">
                             <label>NIC Number</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>">
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
                             <span class="err-msg"><?php echo $data['NIC_err'] ; ?></span>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
-                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>">
+                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
                             <span class="err-msg"><?php echo $data['C_num_err'] ; ?></span>
                         </div>
                     </div>
@@ -67,12 +67,12 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Height (in cm)</label>
-                            <input type="number" placeholder="Enter your height" name="height" value="<?php echo $data['Height'] ?>">
+                            <input type="number" placeholder="Enter your height" name="height" value="<?php echo $data['Height'] ?>" required>
                         </div>
 
                         <div class="input-field">
                             <label>Weight (in kg)</label>
-                            <input type="number" placeholder="Enter your weight" name="weight" value="<?php echo $data['Weight'] ?>">
+                            <input type="number" placeholder="Enter your weight" name="weight" value="<?php echo $data['Weight'] ?>" required>
                         </div>
                         <div class="input-field">
                             <label>Blood Group</label>
@@ -98,7 +98,7 @@
                     <button class="nextBtn" onclick="event.preventDefault();">
                         <span class="btnText">Next</span>
                     </button>
-                    <div class="login-signup" style="margin-top: -20px; font-size: 14px;" ">
+                    <div class="login-signup" style="margin-top: -20px; font-size: 14px;" >
                         <span class="text">Already have an account?
                             <a href="<?php echo URLROOT; ?>/users/login" class="text login-link">Login Now</a>
                         </span>
