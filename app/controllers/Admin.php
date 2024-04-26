@@ -887,6 +887,15 @@
             }    
         }
 
+        public function remove_reservation(){
+            $res_id = $_GET['res_id'];
+            if($this->doctorModel->delete_reservation($res_id)){
+                redirect('admin/doc_reservations');
+            } else{
+                die("Couldn't remove the reservation! ");
+            }    
+        }
+
         public function edit_reservation(){
             //check for POST request
             if($_SERVER['REQUEST_METHOD'] == 'POST'){

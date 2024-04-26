@@ -462,8 +462,6 @@ class Patient extends Controller
     public function delete_test_reservation(){
         $Reservation_ID = $_POST['reservation_id'];
 
-        echo $Reservation_ID . 'kk';
-
         if ($this->testModel->delete_reservation($Reservation_ID)) {
             echo json_encode('Reservation deleted successfully');
         } else {
@@ -473,8 +471,6 @@ class Patient extends Controller
 
     public function delete_doc_reservation(){
         $Reservation_ID = $_POST['reservation_id'];
-
-        echo $Reservation_ID . 'kk';
 
         if ($this->doctorModel->delete_reservation($Reservation_ID)) {
             echo json_encode('Reservation deleted successfully');

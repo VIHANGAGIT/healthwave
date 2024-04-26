@@ -202,8 +202,8 @@
                                     <td style="text-align: center;" ><?php echo $appointment->Hospital_Name; ?></td>
                                     <td style="text-align: center;" ><?php echo $appointment->Date; ?></td>
                                     <td style="text-align: center;" ><?php echo $appointment->Start_Time. ' - ' . $appointment->End_Time; ?></td>
-                                    <td style="text-align: center;" ><a href=''><button class='button' style="width: 60px;"><i class="uil uil-pen"></i></button></a></td>
-                                    <td style="text-align: center;" ><a href=''><button class='button remove'style="width: 60px;"><i class="uil uil-trash-alt"></i></button></a></td>
+                                    <td style="text-align: center;" ><a href='edit_test_reservation?res_id=<?php echo $appointment->Doc_Res_ID; ?>'><button class='button' style="width: 60px;"><i class="uil uil-pen"></i></button></a></td>
+                                    <td style="text-align: center;" ><a href='remove_test_reservation?res_id=<?php echo $appointment->Doc_Res_ID; ?>' onclick="confirmRemove(event)" ><button class='button remove'style="width: 60px;"><i class="uil uil-trash-alt"></i></button></a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -221,10 +221,21 @@
                 "bFilter": false, // Disable search/filtering
                 "bInfo": false, // Disable info text
                 "columnDefs": [
-                    { "targets": [6, 7], "orderable": false } // Disable ordering on columns 5 and 6
+                    { "targets": [6, 7], "orderable": false }
                 ]
             });
         });
     </script> 
+    <script>
+      function confirmRemove(event) {
+          event.preventDefault();
+          
+          if (window.confirm('Are you sure you want to remove this reservation?')) {
+              window.location.href = event.target.closest('a').href;
+          } else {
+              return false;
+          }
+      }
+    </script>
   </body>
 </html>

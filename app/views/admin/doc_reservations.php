@@ -232,7 +232,7 @@
           event.preventDefault();
           
           // Display a confirmation dialog
-          if (window.confirm('Are you sure you want to remove?')) {
+          if (window.confirm('Are you sure you want to remove this appointment?')) {
               // If confirmed, proceed with the removal action
               window.location.href = event.target.closest('a').href;
           } else {
