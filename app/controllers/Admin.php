@@ -273,6 +273,47 @@
 
         public function reservations(){
             $data = [];
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if(isset($_POST['app_search'])){
+                    // Get search parameters from the form
+                    $patient_name = isset($_POST['patient_name']) ? $_POST['patient_name'] : null;
+                    $doctor_name = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
+                    $hospital_name = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+                    $date = isset($_POST['date']) ? $_POST['date'] : null;
+
+                    // Perform the search based on the parameters
+                    $doc_appointments = $this->adminModel->search_doc_appointments($patient_name, $doctor_name, $hospital_name, $date);
+
+                    foreach ($doc_appointments as $key => $appointment) {
+                        if ($appointment->Date == date('Y-m-d') && $appointment->Start_Time > $appointment->Time_Start) {
+                            unset($doc_appointments[$key]);
+                        }
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+
+                    $data = [
+                        'doc_appointments' => $doc_appointments
+                    ];
+                    $this->view('admin/reservations', $data);
+
+                }elseif(isset($_POST['test_search'])){
+                    // Get search parameters from the form
+                    $H_name = isset($_POST['H_name']) ? $_POST['H_name'] : null;
+                    $H_ID = isset($_POST['H_ID']) ? $_POST['H_ID'] : null;
+                    $H_region = isset($_POST['H_region']) ? $_POST['H_region'] : null;
+            
+                    // Perform the search based on the parameters
+                    $test_appointments = $this->adminModel->search_test_appointments($H_name, $H_ID, $H_region);
+                    $data = [
+                        'test_appointments' => $test_appointments
+                    ];
+                    $this->view('admin/reservations', $data);
+                }
+                
+            } else {
+                $this->view('admin/reservations', $data);
+            }
             $this->view('admin/reservations', $data);
         }
 

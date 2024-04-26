@@ -250,6 +250,40 @@
             }
         }
 
+        public function search_doc_appointments($patient_name, $doctor_name, $hospital_name, $date){
+            $this->db->query('SELECT doctor_reservation.*, patient.First_Name, patient.Last_Name, 
+            doctor.First_Name AS Doc_First_Name, doctor.Last_Name AS Doc_Last_Name, 
+            doctor.Specialization, hospital.Hospital_Name, schedule.Time_Start, schedule.Time_End
+            FROM doctor_reservation 
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
+            INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+            INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
+            WHERE (patient.First_Name LIKE :patient_name OR patient.Last_Name LIKE :patient_name) 
+            AND (doctor.First_Name LIKE :doctor_name OR doctor.Last_Name LIKE :doctor_name) 
+            AND hospital.Hospital_Name LIKE :hospital_name AND doctor_reservation.Date LIKE :date
+            AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.Status = "Pending"');
+  
+            // Sanitize and set default values for parameters
+            $patient_name = ($patient_name === null) ? "%" : "%" . $patient_name . "%";
+            $doctor_name = ($doctor_name === null) ? "%" : "%" . $doctor_name . "%";
+            $hospital_name = ($hospital_name === null) ? "%" : "%" . $hospital_name . "%"; 
+            $date = ($date == null) ? "%" : $date;
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':patient_name', $patient_name);
+            $this->db->bind(':doctor_name', $doctor_name);
+            $this->db->bind(':hospital_name', $hospital_name);
+            $this->db->bind(':date', $date);
+            $appointments = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $appointments;
+            } else{
+                return false;
+            }
+        }
 
 
         public function remove_test(){

@@ -161,7 +161,7 @@
                             </div>
                           </td>
                           <td>
-                          <div class="input-field">
+                            <div class="input-field">
                             </div>
                           </td>
                           <td>
@@ -171,7 +171,6 @@
                       </table>
                     </div>
                   </form>
-                  
               </div>
             </div>
         </section><br>
