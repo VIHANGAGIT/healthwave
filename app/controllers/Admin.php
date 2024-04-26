@@ -1033,6 +1033,126 @@
 
         public function edit_test_reservation(){
             $data = [];
+
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Sanitize POST array
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                //add test
+                $data = [
+                    'res_id' => $_POST['res_id'],
+                    'date' => $_POST['date'],
+                    'time' => $_POST['time'],
+                    'test_date_err' => ''
+                ];
+
+                $data['start_time'] = substr($data['time'], 0, 5). ':00';
+                $data['end_time'] = substr($data['time'], 8, 5). ':00';
+
+
+
+                // Validate Test Date
+                if(empty($data['date'])){
+                    $data['test_date_err'] = 'Please enter test date';
+                }else{
+                    $today = date('Y-m-d');
+                    if($data['date'] <= $today){
+                        $data['test_date_err'] = 'Test date must be after today';
+                    }
+                    if(date_diff(date_create($data['date']), date_create($today))->format('%a') > 30){
+                        $data['test_date_err'] = 'Test date must be within 30 days from today';
+                    }
+                }
+
+                if(empty($data['test_date_err'])){
+                    if($this->adminModel->edit_test_reservation($data)){
+                        redirect('admin/test_reservations');
+                    }else{
+                        die("Couldn't edit the reservation! ");
+                    }
+                }else{
+                    $reservation_data = $this->adminModel->test_reservation_data_fetch($data['res_id']);
+                    $data['patient_name'] = $reservation_data->First_Name. ' '. $reservation_data->Last_Name;
+                    $data['nic'] = $reservation_data->NIC;
+                    $data['hospital_id'] = $reservation_data->Hospital_ID;
+                    $this->view('admin/edit_test_reservation', $data);
+                }
+            }else{
+                    
+                $res_id = $_GET['res_id'];
+
+                $reservation_data = $this->adminModel->test_reservation_data_fetch($res_id);
+
+                // $nextDates = array();
+
+                // $Date = $reservation_data->Date;
+                // $Date = new DateTime($Date);
+
+                // for ($i=0; $i < 7; $i++) { 
+                //     $nextDate = $Date->modify("+1 day");
+                //     $nextDateFormatted = $nextDate->format('Y-m-d');
+                //     $nextDates[] = $nextDateFormatted;
+                // } 
+
+
+                $data = [
+                    'res_id' => $reservation_data->Test_Res_ID,
+                    'patient_name' => $reservation_data->First_Name. ' '. $reservation_data->Last_Name,
+                    'nic' => $reservation_data->NIC,
+                    'date' => $reservation_data->Date,
+                    'time' => $reservation_data->Start_Time. ' - '. $reservation_data->End_Time,
+                    'hospital_id' => $reservation_data->Hospital_ID,
+                    'test_id' => $reservation_data->Test_ID,
+                    'test_date_err' => '',
+                    // 'next_dates' => $nextDates
+                ];
+
+            }
+
+    
+                    
             $this->view('admin/edit_test_reservation', $data);
         }
+
+        public function get_reservation_times(){
+            $seleted_date = $_POST['date'];
+            $hospital_id = $_POST['hospital_id'];
+
+            $startTime1 = strtotime('9:00');
+            $endTime1 = strtotime('12:00');
+            $startTime2 = strtotime('13:00');
+            $endTime2 = strtotime('15:00');
+
+            $timeSlots = array();
+
+            // Loop to generate time slots
+            while ($startTime1 < $endTime1) {
+                $slotStart = date('H:i', $startTime1);
+                $startTime1 += (900); // Add 15 minutes
+                $slotEnd = date('H:i', $startTime1);
+                $timeSlots[] = array('start_time' => $slotStart, 'end_time' => $slotEnd);
+            }
+
+            while ($startTime2 < $endTime2) {
+                $slotStart = date('H:i', $startTime2);
+                $startTime2 += (900); // Add 15 minutes
+                $slotEnd = date('H:i', $startTime2);
+                $timeSlots[] = array('start_time' => $slotStart, 'end_time' => $slotEnd);
+            }
+
+
+            $bookedSlots = $this->testModel->fetch_booked_slots($hospital_id, $seleted_date);
+            
+            foreach ($bookedSlots as $bookedSlot) {
+                foreach ($timeSlots as $key => $timeSlot) {
+                    if ($timeSlot['start_time'] == $bookedSlot->Start_Time && $timeSlot['end_time'] == $bookedSlot->End_Time) {
+                            unset($timeSlots[$key]);
+                    }
+                }
+            }
+
+            // Send JSON response with schedule data
+            echo json_encode($timeSlots);
+        }
+
     }

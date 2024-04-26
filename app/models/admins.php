@@ -380,6 +380,41 @@
             }
         }
 
+        public function test_reservation_data_fetch($res_id){
+            $this->db->query('SELECT test_reservation.*, patient.First_Name, patient.Last_Name, patient.NIC, hospital.Hospital_ID FROM test_reservation 
+            INNER JOIN patient ON test_reservation.Patient_ID = patient.Patient_ID
+            INNER JOIN hospital ON test_reservation.Hospital_ID = hospital.Hospital_ID
+            WHERE test_reservation.Test_Res_ID = :res_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':res_id', $res_id);
+            $reservationRow = $this->db->singleRow();
+
+            // Execute query
+            if($this->db->execute()){
+                return $reservationRow;
+            } else{
+                return false;
+            }
+        }
+
+        public function edit_test_reservation($data){
+            $this->db->query('UPDATE test_reservation SET Date = :date, Start_Time = :start_time, End_Time = :end_time WHERE Test_Res_ID = :res_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':date', $data['date']);
+            $this->db->bind(':start_time', $data['start_time']);
+            $this->db->bind(':end_time', $data['end_time']);
+            $this->db->bind(':res_id', $data['res_id']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
 
         public function remove_test(){
             $this->db->query('DELETE FROM test WHERE Test_ID = :id');

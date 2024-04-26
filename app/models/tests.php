@@ -122,8 +122,8 @@ class Tests{
         $booked_slots = $this->db->resultSet();
 
         foreach($booked_slots as $slot){
-            $slot->Start_Time = date('h:i', strtotime($slot->Start_Time));
-            $slot->End_Time = date('h:i', strtotime($slot->End_Time));
+            $slot->Start_Time = date('H:i', strtotime($slot->Start_Time));
+            $slot->End_Time = date('H:i', strtotime($slot->End_Time));
         }
 
         if($this->db->execute()){
