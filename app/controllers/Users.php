@@ -461,13 +461,6 @@
                         $data['C_num_err'] = 'Invalid Number';
                     }
                 }
-
-
-
-
-
-                
-                
                 
                 // Validate Password
                 $length = strlen($data['Pass']);
