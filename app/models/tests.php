@@ -61,6 +61,28 @@ class Tests{
         
     }
 
+    public function search_tests_with_id($testName, $testId, $testType){
+        $this->db->query('SELECT DISTINCT Test_ID, Test_Name, Test_Type FROM test
+        WHERE Test_Name LIKE :testName AND Test_Type LIKE :testType AND Test_ID LIKE :testId');
+
+        $testName = ($testName == null) ? '%' : '%' . $testName . '%';
+        $testType = ($testType == null) ? '%' : $testType;
+        $testId = ($testId == null) ? '%' : $testId;
+
+        $this->db->bind(':testName', $testName);
+        $this->db->bind(':testType', $testType);
+        $this->db->bind(':testId', $testId);
+
+        $tests = $this->db->resultSet();
+
+        if($this->db->rowCount()>0){
+            return $tests;
+        } else{
+            return false;
+        }
+        
+    }
+
     public function test_schedule_hospital($id){
         $this->db->query('SELECT DISTINCT hospital_test.Hospital_ID, hospital.Hospital_Name, hospital_test.Price FROM hospital_test
         INNER JOIN hospital ON hospital_test.Hospital_ID = hospital.Hospital_ID

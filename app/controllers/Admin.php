@@ -200,9 +200,37 @@
         }
 
         public function test_management(){
-            $tests = $this->adminModel->getTests();
+
+            $data = [];
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+                // Get search parameters from the form
+                $T_Name = isset($_POST['T_Name']) ? $_POST['T_Name'] : null;
+                $T_ID = isset($_POST['T_ID']) ? $_POST['T_ID'] : null;
+                $T_Type = isset($_POST['T_Type']) ? $_POST['T_Type'] : null;
+        
+                // Perform the search based on the parameters
+                $tests = $this->testModel->search_tests_with_id($T_Name, $T_ID, $T_Type);
+        
+            } else {
+                $tests = $this->testModel->get_all_tests();
+
+            }
+
+            $types = [];
+
+            foreach ($tests as $test) {
+                if (!in_array($test->Test_Type, $types)) {
+                    $types[] = $test->Test_Type;
+                }
+                if($this->adminModel->get_appointments_test($test->Test_ID)){
+                    $test->Cancel = 'Not allowed';
+                }else{
+                    $test->Cancel = 'Allowed';
+                }
+            }
             $data = [
-                'tests' => $tests
+                'tests' => $tests,
+                'types' => $types
             ];
             $this->view('admin/test_management', $data);
         }
@@ -240,37 +268,7 @@
                 'regions' => $regions
             ];
             $this->view('admin/hospital_management', $data);
-
-            // if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-            //     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-            //     $data = [
-            //         'H_name' => $_POST['H_name'],
-            //         'H_ID' => $_POST['H_ID'],
-            //         'Region' => trim($_POST['H_region']),
-            //         'hospitals' => ''
-            //     ];
-
-            //     if(empty($data['H_name']) && empty($data['H_ID']) && empty($data['Region'])){
-            //         $data['hospitals'] = $this->adminModel->getHospitals();
-            //         $this->view('admin/hospital_management', $data);
-            //     }else{
-            //         $data['hospitals'] = $this->adminModel->searchHospitals($data);
-            //         $this->view('admin/hospital_management', $data);
-            //     }
-
-            // }else{
             
-            //     $data = [
-            //     'hospitals' => $this->adminModel->getHospitals(),
-            //     'H_ID' => '',
-            //     'H_name' => '',
-            //     'Region' => ''
-
-            //     ];
-            //     $this->view('admin/hospital_management', $data);
-            // }
         }
 
         public function reservations(){

@@ -198,7 +198,7 @@
                             <td style="text-align: center;"><a href='edit_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
                             <td style="text-align: center;">
                             <a href='remove_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>' onclick="confirmRemove(event)">
-                                <button class='button red' <?php echo ($hospital->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
+                                <button class='button red remove' <?php echo ($hospital->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
                             </a>
                             </td>
                         </tr>

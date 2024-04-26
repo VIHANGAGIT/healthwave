@@ -1075,6 +1075,15 @@ body.dark {
   padding-bottom: 20px;
 }
 
+.table button.remove{
+  background-color: red;
+  color: #ffffff;
+}
+
+.table button.remove:hover{
+  background-color: rgb(193, 0, 0);
+}
+
 .table button:disabled{
   background-color: #b6b6b6;
   color: #e8e8e8;
@@ -1083,6 +1092,7 @@ body.dark {
 .table button:disabled:hover{
   background-color: #aaaaaa;
   color: #e8e8e8;
+  cursor: not-allowed;
 }
 
 .detail-card{

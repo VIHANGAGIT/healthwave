@@ -206,7 +206,7 @@
                         <td style="text-align: center;"><?php echo $doctor->SLMC_Reg_No; ?></td>
                         <td style="text-align: center;">
                         <a href="#" onclick="confirmRemove('<?php echo $doctor->Doctor_ID; ?>')">
-                          <button class='button red' <?php echo ($doctor->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
+                          <button class='button red remove' <?php echo ($doctor->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
                         </a>
                       </td>
 

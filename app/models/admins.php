@@ -234,6 +234,24 @@
             }
         }
 
+        public function get_appointments_test($test_id){
+            $this->db->query('SELECT Test_Res_ID FROM test_reservation 
+            WHERE Test_ID = :test_id AND Date >= CURDATE() AND End_Time >= CURTIME()');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':test_id', $test_id);
+            $appointments = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $appointments;
+            } else{
+                return false;
+            }
+        }
+
+
+
         public function remove_test(){
             $this->db->query('DELETE FROM test WHERE Test_ID = :id');
 

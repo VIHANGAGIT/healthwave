@@ -130,27 +130,16 @@
                       <td>
                         <div class="input-field">
                         <label>Test ID</label>
-                        <input type="text" name="search_text" placeholder="Enter Test ID" style="margin: 0%;" >
+                        <input type="text" name="T_ID" placeholder="Enter Test ID" style="margin: 0%;" >
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
-                          <label>Test Type</label>
-                          <select required>
-                              <option disabled selected>Select Test Type</option>
-                              <option>Blood Test</option>
-                                <option>CT Scan</option>
-                                <option>Urine Test</option>
-                                <option>MRI Scan</option>
-                                <option>ECG</option>
-                                <option>Endoscopy</option>
-                                <option>Colonoscopy</option>
-                                <option>Biopsy</option>
-                                <option>Ultrasound</option>
-                                <option>X-Ray</option>
-                          </select>
+                        <label>Test Name</label>
+                        <input type="text" name="T_Name" placeholder="Enter Test Name" style="margin: 0%;">
                         </div>
                       </td>
+                      
                       <td>
                         <input type="submit" class="button" value="Search" name="search" >
                       </td>
@@ -158,12 +147,16 @@
                     <tr>
                       <td>
                         <div class="input-field">
-                        <label>Test Name</label>
-                        <input type="text" name="search_text" placeholder="Enter Test Name" style="margin: 0%;">
+                          <label>Test Type</label>
+                          <select name="T_Type" required>
+                              <option disabled selected>Select Test Type</option>
+                              <?php foreach($data['types'] as $testType) : ?>
+                                  <option value="<?php echo $testType; ?>"><?php echo $testType; ?></option>
+                              <?php endforeach; ?>
+                          </select>
                         </div>
                       </td>
                       <td>
-                     
                       </td>
                       <td>
                         <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
@@ -205,7 +198,7 @@
                           <td style="text-align: center;"><a href="edit_test?test_id=<?php echo $test->Test_ID; ?>"><button class="button">Edit</button></a></td>
                           <td style="text-align: center;">
                           <a href='remove_test?test_id=<?php echo $test->Test_ID; ?>' onclick="confirmRemove(event)">
-                              <button class='button red'>Remove</button>
+                              <button class='button red remove' <?php echo ($test->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
                           </a>
                           </td>
                         </tr>
