@@ -317,6 +317,69 @@
             }
         }
 
+        public function reservation_data_fetch($res_id){
+            $this->db->query('SELECT doctor_reservation.*, patient.First_Name, patient.Last_Name, patient.NIC, schedule.Doctor_ID, hospital.Hospital_ID FROM doctor_reservation 
+            INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+            WHERE doctor_reservation.Doc_Res_ID = :res_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':res_id', $res_id);
+            $reservationRow = $this->db->singleRow();
+
+            // Execute query
+            if($this->db->execute()){
+                return $reservationRow;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_schedule_days($Doctor_ID, $Hospital_ID){
+            $this->db->query('SELECT Day_of_Week FROM schedule WHERE Doctor_ID = :doc_id AND Hospital_ID = :hospital_id');
+            $this->db->bind(':doc_id', $Doctor_ID);
+            $this->db->bind(':hospital_id', $Hospital_ID);
+            $days = $this->db->resultSet();
+            if ($this->db->rowCount() > 0) {
+                return $days;
+            } else {
+                false;
+            }
+        }
+
+        public function get_appointment_data($schedule_id, $date){
+            $this->db->query('SELECT doctor_reservation.Appointment_No, schedule.Time_Start, schedule.Time_End FROM doctor_reservation 
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            WHERE Schedule_ID = :schedule_id AND Date = :date');
+            $this->db->bind(':schedule_id', $schedule_id);
+            $this->db->bind(':date', $date);
+            $appointments = $this->db->resultSet();
+            if ($this->db->rowCount() > 0) {
+                return $appointments;
+            } else {
+                false;
+            }
+        }
+
+        public function edit_reservation($data){
+            $this->db->query('UPDATE doctor_reservation SET Date = :date, Start_Time = :start_time, End_Time = :end_time, Appointment_No = :app_no WHERE Doc_Res_ID = :res_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':date', $data['date']);
+            $this->db->bind(':start_time', $data['start_time']);
+            $this->db->bind(':end_time', $data['end_time']);
+            $this->db->bind(':app_no', $data['app_no']);
+            $this->db->bind(':res_id', $data['res_id']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
 
         public function remove_test(){
             $this->db->query('DELETE FROM test WHERE Test_ID = :id');

@@ -202,8 +202,8 @@
                                     <td style="text-align: center;" ><?php echo $appointment->Hospital_Name; ?></td>
                                     <td style="text-align: center;" ><?php echo $appointment->Date; ?></td>
                                     <td style="text-align: center;" ><?php echo $appointment->Appointment_No ?></td>
-                                    <td style="text-align: center;" ><a href=''><button class='button' style="width: 60px;"><i class="uil uil-pen"></i></button></a></td>
-                                    <td style="text-align: center;" ><a href=''><button class='button remove'style="width: 60px;"><i class="uil uil-trash-alt"></i></button></a></td>
+                                    <td style="text-align: center;" ><a href='edit_reservation?res_id=<?php echo $appointment->Doc_Res_ID; ?>'><button class='button' style="width: 60px;"><i class="uil uil-pen"></i></button></a></td>
+                                    <td style="text-align: center;" ><a href='remove_reservation?res_id=<?php echo $appointment->Doc_Res_ID; ?>' onclick="confirmRemove(event)"><button class='button remove'style="width: 60px;"><i class="uil uil-trash-alt"></i></button></a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -227,5 +227,18 @@
             });
         });
     </script> 
+    <script>
+      function confirmRemove(event) {
+          event.preventDefault();
+          
+          // Display a confirmation dialog
+          if (window.confirm('Are you sure you want to remove?')) {
+              // If confirmed, proceed with the removal action
+              window.location.href = event.target.closest('a').href;
+          } else {
+              return false;
+          }
+      }
+    </script>
   </body>
 </html>

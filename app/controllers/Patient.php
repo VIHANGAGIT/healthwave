@@ -307,7 +307,7 @@ class Patient extends Controller
 
         foreach ($scheduleData as $schedule) {
             // Fetch booked slots for the current schedule
-            $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID);
+            $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID, $formatted_date);
 
             // Initialize variables to track available slots and appointment number
             $availableSlots = array();

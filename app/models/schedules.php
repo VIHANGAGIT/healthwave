@@ -37,7 +37,7 @@ class Schedules{
         }
     }
 
-    public function fetch_booked_slots($schedule_id){
+    public function fetch_booked_slots($schedule_id, $date){
         $this->db->query('SELECT Time_Start, Time_End FROM schedule
         WHERE Schedule_ID = :schedule_id');
         $this->db->bind(':schedule_id', $schedule_id);
@@ -50,13 +50,14 @@ class Schedules{
             // date_default_timezone_set('Asia/Colombo');
             $todayDate = date('Y-m-d');
             $this->db->query('SELECT doctor_reservation.Start_Time, doctor_reservation.Date, doctor_reservation.Appointment_No FROM doctor_reservation
-            WHERE DATE(doctor_reservation.Date) >= :todayDate
+            WHERE DATE(doctor_reservation.Date) >= :todayDate AND doctor_reservation.Date = :date
             AND doctor_reservation.Start_Time BETWEEN :startTime AND :endTime');
 
             // Binding parameters for the prepared statement
             $this->db->bind(':todayDate', $todayDate);
             $this->db->bind(':startTime', $startTime);
             $this->db->bind(':endTime', $endTime);
+            $this->db->bind(':date', $date);
             $booked_slots = $this->db->resultSet();
 
             

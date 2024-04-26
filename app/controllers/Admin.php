@@ -9,6 +9,7 @@
             $this->doctorModel = $this->model('doctors');
             $this->testModel = $this->model('tests');
             $this->hospitalModel = $this->model('hospitals');
+            $this->scheduleModel = $this->model('schedules');
         }
         public function index(){
             $data = [];
@@ -886,13 +887,143 @@
             }    
         }
 
-        public function edit_reservations(){
-            $data = [];
-            $this->view('admin/edit_reservations', $data);
+        public function edit_reservation(){
+            //check for POST request
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Sanitize POST array
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                //add test
+                $data = [
+                    'res_id' => $_POST['res_id'],
+                    'date' => $_POST['date'],
+                    'app_no' => $_POST['app_no'],
+                    'time' => $_POST['time']
+                ];
+
+                $data['start_time'] = substr($data['time'], 0, 8);
+                $data['end_time'] = substr($data['time'], 11, 8);
+                
+                if($this->adminModel->edit_reservation($data)){
+                    redirect('admin/doc_reservations');
+                }else{
+                    die("Couldn't edit the reservation! ");
+                }
+
+            }else{
+                
+                $res_id = $_GET['res_id'];
+
+                $reservation_data = $this->adminModel->reservation_data_fetch($res_id);
+                $schedule_data = $this->adminModel->get_schedule_days($reservation_data->Doctor_ID, $reservation_data->Hospital_ID);
+
+                $nextDates = array();
+
+
+                foreach ($schedule_data as $dayObj) {
+                    $dayOfWeek = $dayObj->Day_of_Week;
+                
+                    $today = new DateTime();
+                
+                    // Get the current day of the week (numeric representation, 0 for Sunday, 6 for Saturday)
+                    $currentDayOfWeek = $today->format('w');
+                
+                    $providedDayOfWeek = date('w', strtotime($dayOfWeek));
+                
+                    // Calculate the difference between the current day of the week and the provided day
+                    $difference = ($providedDayOfWeek - $currentDayOfWeek + 7) % 7;
+                
+                    // Modify the date based on the difference
+                    $nextDate = $today->modify("+$difference days");
+                   
+                    $nextDateFormatted = $nextDate->format('Y-m-d');
+
+                    if($nextDateFormatted != $reservation_data->Date){
+                        $nextDates[] = $nextDateFormatted;
+                    }
+                }
+                
+                
+                $data = [
+                    'res_id' => $reservation_data->Doc_Res_ID,
+                    'patient_name' => $reservation_data->First_Name. ' '. $reservation_data->Last_Name,
+                    'nic' => $reservation_data->NIC,
+                    'date' => $reservation_data->Date,
+                    'app_no' => $reservation_data->Appointment_No,
+                    'time' => $reservation_data->Start_Time. ' - '. $reservation_data->End_Time,
+                    'next_dates' => $nextDates,
+                    'hospital_id' => $reservation_data->Hospital_ID,
+                    'doctor_id' => $reservation_data->Doctor_ID
+                ];
+                
+                // Load view
+                $this->view('admin/edit_reservation', $data);
+            }
         }
 
-        public function edit_test_reservations(){
+        public function get_appointment_data(){
+            $hospital_id = $_POST['hospital_id'];
+            $doctor_id = $_POST['doctor_id'];
+            $date = $_POST['date'];
+            
+            $scheduleData = $this->scheduleModel->get_schedule_by_hospital_doctor($hospital_id, $doctor_id);
+
+    
+            $responseData = array();
+    
+            foreach ($scheduleData as $schedule) {
+                if ($schedule->Day_of_Week != date('D', strtotime($date))) {
+                    continue;
+                }
+
+                // Fetch booked slots for the current schedule
+                $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID, $date);
+    
+                $lastBookedAppointmentNumber = 0;
+    
+                // Determine the last booked appointment number
+                foreach ($bookedSlots as $bookedSlot) {
+                    $lastBookedAppointmentNumber = max($lastBookedAppointmentNumber, $bookedSlot->Appointment_No);
+                }
+    
+                // Generate time slots with 15-minute intervals
+                $startTime = strtotime($schedule->Time_Start);
+                $endTime = strtotime($schedule->Time_End);
+                $timeSlots = array();
+                while ($startTime < $endTime) {
+                    $timeSlots[] = array(
+                        'start_time' => date('H:i:s', $startTime),
+                        'end_time' => date('H:i:s', $startTime + 900),
+                    );
+                    $startTime += 900;
+                }
+                $nextAppointmentNumber = $lastBookedAppointmentNumber + 1; 
+    
+                $slotIndex = ceil($nextAppointmentNumber / 2); 
+    
+                if ($slotIndex <= count($timeSlots)) {
+                    $nextTimeSlot = $timeSlots[$slotIndex - 1]; 
+                } else {
+                    $nextTimeSlot = null;
+                }
+
+                $time = $nextTimeSlot['start_time']. ' - '. $nextTimeSlot['end_time'];
+    
+    
+                // Add data to responseData
+                $responseData[] = array(
+                    'time' => $time,
+                    'app_no' => $nextAppointmentNumber
+                );
+            }
+    
+            // Send JSON response with schedule data
+            echo json_encode($responseData);
+            
+        }
+
+        public function edit_test_reservation(){
             $data = [];
-            $this->view('admin/edit_test_reservations', $data);
+            $this->view('admin/edit_test_reservation', $data);
         }
     }
