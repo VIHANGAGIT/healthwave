@@ -76,14 +76,20 @@
             </li>
             <li class="item">
               <a href="../admin/hospital_management" class="link flex">
-                <i class="uil uil-stethoscope"></i>
+                <i class="uil uil-hospital-square-sign"></i>
                 <span>Hospital Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="../admin/reservations" class="link flex">
+              <a href="../admin/doc_reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+                <span>Doctor Reservations</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="../admin/test_reservations" class="link flex">
+                <i class="uil uil-calendar-alt"></i>
+                <span>Test Reservations</span>
               </a>
             </li>
           </ul>
@@ -95,12 +101,6 @@
               <a href="../admin/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
               </a>
             </li>
           </ul>

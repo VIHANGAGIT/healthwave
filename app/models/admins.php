@@ -285,6 +285,38 @@
             }
         }
 
+        public function search_test_appointments($patient_name, $test_name, $hospital_name, $date){
+            $this->db->query('SELECT test_reservation.*, patient.First_Name, patient.Last_Name, 
+            test.Test_Name, hospital.Hospital_Name
+            FROM test_reservation 
+            INNER JOIN test ON test_reservation.Test_ID = test.Test_ID
+            INNER JOIN hospital ON test_reservation.Hospital_ID = hospital.Hospital_ID
+            INNER JOIN patient ON test_reservation.Patient_ID = patient.Patient_ID
+            WHERE (patient.First_Name LIKE :patient_name OR patient.Last_Name LIKE :patient_name) 
+            AND test.Test_Name LIKE :test_name AND hospital.Hospital_Name LIKE :hospital_name 
+            AND test_reservation.Date LIKE :date AND test_reservation.Date >= CURDATE() AND test_reservation.Status = "Pending"');
+  
+            // Sanitize and set default values for parameters
+            $patient_name = ($patient_name === null) ? "%" : "%" . $patient_name . "%";
+            $test_name = ($test_name === null) ? "%" : "%" . $test_name . "%";
+            $hospital_name = ($hospital_name === null) ? "%" : "%" . $hospital_name . "%"; 
+            $date = ($date == null) ? "%" : $date;
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':patient_name', $patient_name);
+            $this->db->bind(':test_name', $test_name);
+            $this->db->bind(':hospital_name', $hospital_name);
+            $this->db->bind(':date', $date);
+            $appointments = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $appointments;
+            } else{
+                return false;
+            }
+        }
+
 
         public function remove_test(){
             $this->db->query('DELETE FROM test WHERE Test_ID = :id');

@@ -271,7 +271,7 @@
             
         }
 
-        public function reservations(){
+        public function doc_reservations(){
             $data = [];
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if(isset($_POST['app_search'])){
@@ -285,7 +285,7 @@
                     $doc_appointments = $this->adminModel->search_doc_appointments($patient_name, $doctor_name, $hospital_name, $date);
 
                     foreach ($doc_appointments as $key => $appointment) {
-                        if ($appointment->Date == date('Y-m-d') && $appointment->Start_Time > $appointment->Time_Start) {
+                        if ($appointment->Date == date('Y-m-d') && $appointment->Time_End < date('H:i:s')) {
                             unset($doc_appointments[$key]);
                         }
                         $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
@@ -295,26 +295,47 @@
                     $data = [
                         'doc_appointments' => $doc_appointments
                     ];
-                    $this->view('admin/reservations', $data);
+                    $this->view('admin/doc_reservations', $data);
 
-                }elseif(isset($_POST['test_search'])){
+                 }
+                
+            } else {
+                $this->view('admin/doc_reservations', $data);
+            }
+            $this->view('admin/doc_reservations', $data);
+        }
+
+        public function test_reservations(){
+            $data = [];
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if(isset($_POST['test_search'])){
                     // Get search parameters from the form
-                    $H_name = isset($_POST['H_name']) ? $_POST['H_name'] : null;
-                    $H_ID = isset($_POST['H_ID']) ? $_POST['H_ID'] : null;
-                    $H_region = isset($_POST['H_region']) ? $_POST['H_region'] : null;
+                    $patient_name = isset($_POST['patient_name']) ? $_POST['patient_name'] : null;
+                    $test_name = isset($_POST['test_name']) ? $_POST['test_name'] : null;
+                    $hospital_name = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+                    $date = isset($_POST['date']) ? $_POST['date'] : null;
             
                     // Perform the search based on the parameters
-                    $test_appointments = $this->adminModel->search_test_appointments($H_name, $H_ID, $H_region);
+                    $test_appointments = $this->adminModel->search_test_appointments($patient_name, $test_name, $hospital_name, $date);
+
+                    foreach ($test_appointments as $key => $appointment) {
+                        if ($appointment->Date == date('Y-m-d') && $appointment->Start_Time > date('H:i:s')) {
+                            unset($test_appointments[$key]);
+                        }
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+
                     $data = [
                         'test_appointments' => $test_appointments
                     ];
-                    $this->view('admin/reservations', $data);
+                    $this->view('admin/test_reservations', $data);
                 }
                 
             } else {
-                $this->view('admin/reservations', $data);
+                $this->view('admin/test_reservations', $data);
             }
-            $this->view('admin/reservations', $data);
+            $this->view('admin/test_reservations', $data);
         }
 
         public function add_hospital(){

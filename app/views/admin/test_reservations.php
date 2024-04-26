@@ -74,14 +74,20 @@
             </li>
             <li class="item">
               <a href="../admin/hospital_management" class="link flex">
-                <i class="uil uil-stethoscope"></i>
+                <i class="uil uil-hospital-square-sign"></i>
                 <span>Hospital Management</span>
               </a>
             </li>
-            <li class="item active">
-              <a href="../admin/reservations" class="link flex">
+            <li class="item">
+              <a href="../admin/doc_reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+                <span>Doctor Reservations</span>
+              </a>
+            </li>
+            <li class="item active">
+              <a href="../admin/test_reservations" class="link flex">
+                <i class="uil uil-calendar-alt"></i>
+                <span>Test Reservations</span>
               </a>
             </li>
           </ul>
@@ -93,12 +99,6 @@
               <a href="../admin/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
               </a>
             </li>
           </ul>
@@ -117,10 +117,10 @@
     </nav>
 
     <div class="content">
-      <section class="table-wrap" >
+        <section class="table-wrap" >
         <div class="content-search">
           <div class="search">
-            <h2>Appointment Search</h2>
+            <h2>Test Search</h2>
               <form style="width: 100%;" method="POST">
                 <div class="fields">
                   <table style="width: 95%;">
@@ -128,17 +128,17 @@
                       <td>
                         <div class="input-field">
                             <label>Patient Name</label>
-                            <input type="text" name="patient_name" placeholder="Enter Patient Name" style="margin: 0%;" >
+                            <input type="text" name="patient_name" placeholder="Enter Patient Name" style="margin: 0%;">
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
-                          <label>Doctor Name</label>
-                          <input type="text" name="doctor_name" placeholder="Enter Doctor Name" style="margin: 0%;">                        
+                          <label>Test Name</label>
+                          <input type="text" name="test_name" placeholder="Enter Test Name" style="margin: 0%;">                        
                         </div>
                       </td>
                       <td>
-                        <input type="submit" class="button" value="Search" name="app_search" >
+                        <input type="submit" class="button" value="Search" name="test_search" >
                       </td>
                     </tr>
                     <tr>
@@ -161,22 +161,22 @@
                   </table>
                 </div>
               </form>
+            </div>
           </div>
-        </div>
-      </section><br>
+        </section><br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Doctor Appointments Management</h1>
+                <h1>Test Reservations Management</h1>
                 <hr><br>
-                <?php if (!isset($data['doc_appointments'])): ?>
+                <?php if (!isset($data['test_appointments'])): ?>
                     <div class="error-msg">
                         <div class="error-icon"><i class="uil uil-search"></i></div>
-                        <p>Please search to find appointments</p>
+                        <p>Please search to find test reservations</p>
                     </div>
-                <?php elseif (empty($data['doc_appointments'])): ?>
+                <?php elseif (empty($data['test_appointments'])): ?>
                     <div class="error-msg">
                         <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
-                        <p>Could not find appointments for your search query.</p>
+                        <p>Could not find reservations for your search query.</p>
                     </div>
                 <?php else: ?>
                     <table class="table">
@@ -184,126 +184,30 @@
                             <tr>
                                 <th>Res. ID</th>
                                 <th>Patient Name</th>
-                                <th>Doctor Name</th>
+                                <th>Test Name</th>
                                 <th>Hospital</th>
                                 <th>Date</th>
-                                <th>Appt. No</th>
+                                <th>Time Slot</th>
                                 <th>Edit</th>
                                 <th>Remove</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($data['doc_appointments'] as $appointment): ?>
+                            <?php foreach($data['test_appointments'] as $appointment): ?>
                                 <tr>
-                                    <td><?php echo $appointment->Doc_Res_ID; ?></td>
+                                    <td><?php echo $appointment->Test_Res_ID; ?></td>
                                     <td><?php echo $appointment->First_Name. ' ' . $appointment->Last_Name; ?></td>
-                                    <td><?php echo $appointment->Doc_First_Name. ' ' . $appointment->Doc_Last_Name; ?></td>
+                                    <td><?php echo $appointment->Test_Name; ?></td>
                                     <td><?php echo $appointment->Hospital_Name; ?></td>
                                     <td><?php echo $appointment->Date; ?></td>
-                                    <td><?php echo $appointment->Appointment_No ?></td>
-                                    <td><a href=''><button class='button'>Edit</button></a></td>
-                                    <td><a href=''><button class='button red'>Remove</button></a></td>
+                                    <td><?php echo $appointment->Start_Time. ' - ' . $appointment->End_Time; ?></td>
+                                    <td><a href=''><button class='button' style="width: 60px;"><i class="uil uil-pen"></i></button></a></td>
+                                    <td><a href=''><button class='button remove'style="width: 60px;"><i class="uil uil-trash-alt"></i></button></a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 <?php endif; ?>
-            </div>
-        </section>
-        <br>
-        <section class="table-wrap" >
-        <div class="content-search">
-          <div class="search">
-            <h2>Test Search</h2>
-              <form style="width: 100%;" method="POST">
-                <div class="fields">
-                  <table style="width: 95%;">
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                            <label>Patient Name</label>
-                            <input type="text" name="search_text" placeholder="Enter Patient Name" style="margin: 0%;">
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-field">
-                          <label>Test Name</label>
-                          <input type="text" name="search_text" placeholder="Enter Test Name" style="margin: 0%;">                        
-                        </div>
-                      </td>
-                      <td>
-                        <input type="submit" class="button" value="Search" name="test_search" >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                          <label>Hospital Name</label>
-                          <input type="text" name="search_text" placeholder="Enter Hospital Name" style="margin: 0%;">
-                        </div>
-                      </td>
-                      <td>
-                      <div class="input-field">
-                            <label>Date</label>
-                            <input type="date" name="search_text" placeholder="Date" style="margin: 0%;">
-                        </div>
-                      </td>
-                      <td>
-                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </form>
-            </div>
-          </div>
-        </section><br>
-        <section class="table-wrap" >
-            <div class="table-container">
-                <h1>Test Appointments Management</h1>
-                <hr><br>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Patient Name</th>
-                            <th>Test Name</th>
-                            <th>Hospital</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Edit</th>
-                            <th>Remove</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>HBLR</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>HBLR</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>HBLR</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </section>
     </div>
