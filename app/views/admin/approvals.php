@@ -120,6 +120,7 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Doctor Approvals</h1>
+                <hr>
                 <table class="table">
                     <thead>
                         <tr>
@@ -163,7 +164,8 @@
         <br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Hospital Approvals</h1>
+                <h1>Hospital Manager Approvals</h1>
+                <hr>
                 <table class="table">
                     <thead>
                         <tr>

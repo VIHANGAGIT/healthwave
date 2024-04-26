@@ -886,13 +886,13 @@
             }    
         }
 
-        public function edit_appointments(){
+        public function edit_reservations(){
             $data = [];
-            $this->view('admin/edit_appointments', $data);
+            $this->view('admin/edit_reservations', $data);
         }
 
-        public function edit_test_appointments(){
+        public function edit_test_reservations(){
             $data = [];
-            $this->view('admin/edit_test_appointments', $data);
+            $this->view('admin/edit_test_reservations', $data);
         }
     }

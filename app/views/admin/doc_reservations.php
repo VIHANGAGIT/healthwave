@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
@@ -179,30 +180,30 @@
                         <p>Could not find appointments for your search query.</p>
                     </div>
                 <?php else: ?>
-                    <table class="table">
+                    <table class="table" id="appointment-table" >
                         <thead>
                             <tr>
-                                <th>Res. ID</th>
-                                <th>Patient Name</th>
-                                <th>Doctor Name</th>
-                                <th>Hospital</th>
-                                <th>Date</th>
-                                <th>Appt. No</th>
-                                <th>Edit</th>
-                                <th>Remove</th>
+                                <th style="text-align: center;" >Res. ID</th>
+                                <th style="text-align: center;" >Patient Name</th>
+                                <th style="text-align: center;" >Doctor Name</th>
+                                <th style="text-align: center;" >Hospital</th>
+                                <th style="text-align: center;" >Date</th>
+                                <th style="text-align: center;" >Appt. No</th>
+                                <th style="text-align: center;" >Edit</th>
+                                <th style="text-align: center;" >Remove</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach($data['doc_appointments'] as $appointment): ?>
                                 <tr>
-                                    <td><?php echo $appointment->Doc_Res_ID; ?></td>
-                                    <td><?php echo $appointment->First_Name. ' ' . $appointment->Last_Name; ?></td>
-                                    <td><?php echo $appointment->Doc_First_Name. ' ' . $appointment->Doc_Last_Name; ?></td>
-                                    <td><?php echo $appointment->Hospital_Name; ?></td>
-                                    <td><?php echo $appointment->Date; ?></td>
-                                    <td><?php echo $appointment->Appointment_No ?></td>
-                                    <td><a href=''><button class='button' style="width: 60px;"><i class="uil uil-pen"></i></button></a></td>
-                                    <td><a href=''><button class='button remove'style="width: 60px;"><i class="uil uil-trash-alt"></i></button></a></td>
+                                    <td style="text-align: center;" ><?php echo $appointment->Doc_Res_ID; ?></td>
+                                    <td style="text-align: center;" ><?php echo $appointment->First_Name. ' ' . $appointment->Last_Name; ?></td>
+                                    <td style="text-align: center;" ><?php echo $appointment->Doc_First_Name. ' ' . $appointment->Doc_Last_Name; ?></td>
+                                    <td style="text-align: center;" ><?php echo $appointment->Hospital_Name; ?></td>
+                                    <td style="text-align: center;" ><?php echo $appointment->Date; ?></td>
+                                    <td style="text-align: center;" ><?php echo $appointment->Appointment_No ?></td>
+                                    <td style="text-align: center;" ><a href=''><button class='button' style="width: 60px;"><i class="uil uil-pen"></i></button></a></td>
+                                    <td style="text-align: center;" ><a href=''><button class='button remove'style="width: 60px;"><i class="uil uil-trash-alt"></i></button></a></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -211,5 +212,20 @@
             </div>
         </section>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+      $(document).ready(function() {
+            $('#appointment-table').dataTable({
+                "bPaginate": false, // Disable pagination
+                "bFilter": false, // Disable search/filtering
+                "bInfo": false, // Disable info text
+                "columnDefs": [
+                    { "targets": [6, 7], "orderable": false } // Disable ordering on columns 5 and 6
+                ]
+            });
+        });
+    </script> 
   </body>
 </html>
