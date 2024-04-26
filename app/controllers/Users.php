@@ -144,7 +144,7 @@
                     'Gender' => trim($_POST['gender']),
                     'NIC' => trim($_POST['nic']),
                     'C_num' => $_POST['cnum'],
-                    'DOB' => $_POST['dob'],
+                    // 'DOB' => $_POST['dob'],
                     'Spec' => $_POST['spec'],
                     'SLMC' => $_POST['slmc'],
                     'Charges' => $_POST['charges'],
@@ -174,12 +174,12 @@
                 }
 
                 //validate date of birth
-                $dob = $data['DOB'];
-                $today = date("Y-m-d");
-                $diff = date_diff(date_create($dob), date_create($today));
-                if($diff->format('%y') < 18){
-                    $data['DOB_err'] = 'Doctor must be atleast 18 years old';
-                }
+                // $dob = $data['DOB'];
+                // $today = date("Y-m-d");
+                // $diff = date_diff(date_create($dob), date_create($today));
+                // if($diff->format('%y') < 18){
+                //     $data['DOB_err'] = 'Doctor must be atleast 18 years old';
+                // }
 
                 if (empty($data['SLMC'])) {
                     $data['SLMC_err'] = 'Please enter SLMC registration number';
@@ -259,7 +259,7 @@
                     'F_name' => '',
                     'L_name' => '',
                     'Gender' => '',
-                    'DOB' => '',
+                    // 'DOB' => '',
                     'NIC' => '',
                     'C_num' => '',
                     'Spec' => '',
