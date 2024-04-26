@@ -29,7 +29,10 @@
                     'C_pass' => trim($_POST['cpass']),
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'DOB_err' => '',
+                    'NIC_err' => '',
+                    'C_num_err' => ''
                 ];
 
 
@@ -37,6 +40,51 @@
                 $currentDate = new DateTime();
                 $birthDate = new DateTime($data['DOB']);
                 $data['Age'] = $currentDate->diff($birthDate)->y;
+
+                // Validate DOB
+                $dob = $data['DOB'];
+                $today = date("Y-m-d");
+                $diff = date_diff(date_create($dob), date_create($today));
+                if($diff->format('%y') < 16){
+                    $data['DOB_err'] = 'Patient must be atleast 16 years old';
+                }
+
+                //validate NIC
+                if (empty($data['NIC'])) {
+                    $data['NIC_err'] = 'Please enter NIC number';
+                } else {
+                    $nic = $data['NIC'];
+                    if (strlen($nic)!=10 && strlen($nic)!=12){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                    if (strlen($nic) == 10){
+                        $lastChar = strtoupper(substr($nic, 9, 1)); // Get the last character and convert to uppercase
+
+                        if ($lastChar !== 'V') {
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                        if(!is_numeric(substr($nic, 0, 9))){
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                    }
+                    // }
+                    if (strlen($nic) == 12 && !is_numeric($nic)){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                }
+
+                // Validate Contact Number
+                if(empty($data['C_num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
+
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
+                    }
+                }
 
 
                 // Validate Email
@@ -87,7 +135,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err']) && empty($data['DOB_err'])&& empty($data['NIC_err'])&& empty($data['C_num_err'])){
                     
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
@@ -122,7 +170,10 @@
                     'C_pass' => '',
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'DOB_err' => '',
+                    'NIC_err' => '',
+                    'C_num_err' => ''
                 ];
 
                 // Load view

@@ -45,15 +45,18 @@
                         <div class="input-field">
                             <label>Date of Birth*</label>
                             <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>">
+                            <span class="err-msg"><?php echo $data['DOB_err'] ; ?></span>
                         </div>
 
                         <div class="input-field">
                             <label>NIC Number</label>
                             <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>">
+                            <span class="err-msg"><?php echo $data['NIC_err'] ; ?></span>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
                             <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>">
+                            <span class="err-msg"><?php echo $data['C_num_err'] ; ?></span>
                         </div>
                     </div>
                 </div>
