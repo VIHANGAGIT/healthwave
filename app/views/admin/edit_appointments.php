@@ -39,45 +39,60 @@
                             <input type="text" placeholder="" name="" value="<?php //echo $data['H_address'] ?>" required disabled>
                         </div>
 
-                        <!-- Radio buttons for Date -->
                         <div class="input-field">
                             <label>Date*</label>
-                            <div class="radio-container">
-                               <input type="radio" name="appointment_date" value="2024-04-25" required> 2024-04-25
-                                
-                                <!-- Add more radio buttons for other dates as needed -->
-                            </div>
+
+                            <select name="date" required>
+                            <option selected value=""></option>
+                                <option>2024-04-25</option>
+                                <option>2024-04-26</option>
+                                <option>2024-04-27</option>
+                                <option>2024-04-28</option>
+                                <option>2024-04-29</option>
+                                <option>2024-04-30</option>
+                              
+
+                            </select>
                         </div>
 
                         <div class="input-field">
-                            <label>Date</label>
+                            <!-- <label>Date</label> -->
                             <div class="radio-container">
-                            <label><input type="radio" name="appointment_date" value="2024-04-25" required> April 25, 2024</label>
+                            <!-- <label><input type="radio" name="appointment_date" value="2024-04-25" required> April 25, 2024</label> -->
                               
                             </div>
                         </div>
 
                         <div class="input-field">
-                            <label>Date*</label>
+                            <!-- <label>Date*</label> -->
                             <div class="radio-container">
-                            <label><input type="radio" name="appointment_date" value="2024-04-25" required> April 25, 2024</label>
+                            <!-- <label><input type="radio" name="appointment_date" value="2024-04-25" required> April 25, 2024</label> -->
                                
                             </div>
                         </div>
 
                         <div class="input-field">
                             <label>Appointment Number*</label>
-                            <input type="text" placeholder="Enter appointment number" name="" value="<?php //echo $data['C_num'] ?>" required>
+                            <input type="text" placeholder="Enter appointment number" name="" value="<?php //echo $data['C_num'] ?>" required disabled>
                         </div>
 
                         <div class="input-field">
-                            <label>Start Time*</label>
-                            <input type="time" step="900" placeholder="Enter appointment number" name="" value="<?php //echo $data['C_num'] ?>"  required>
+                            <label>Time*</label>
+                            <select name="time" required>
+                            <option selected value=""></option>
+                                <option>08:00</option>
+                                <option>08:30</option>
+                                <option>09:00</option>
+                                <option>09:30</option>
+                                <option>10:00</option>
+                                <option>10:30</option>
+
+                            </select>
                         </div>
 
                         <div class="input-field">
-                            <label>End Time*</label>
-                            <input type="time" placeholder="" name="" value="<?php //echo $data['C_num'] ?>" required>
+                            <!-- <label>End Time*</label>
+                            <input type="time" placeholder="" name="" value="<?php //echo $data['C_num'] ?>" required> -->
                         </div>
                     </div>
                 </div>
