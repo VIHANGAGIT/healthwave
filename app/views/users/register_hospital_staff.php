@@ -41,12 +41,6 @@
                                 <option>Female</option>
                             </select>
                         </div>
-
-                        <div class="input-field">
-                            <label>Date of Birth*</label>
-                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>" required>
-                        </div>
-
                         <div class="input-field">
                             <label>NIC Number*</label>
                             <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
@@ -54,6 +48,9 @@
                         <div class="input-field">
                             <label>Mobile Number*</label>
                             <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
+                        </div>
+                        <div class="input-field">
+                            <input type="hidden" placeholder="" name="" value="<?php //echo $data['DOB'] ?>" required>
                         </div>
                     </div>
                 </div>
