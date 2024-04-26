@@ -396,7 +396,7 @@
                     'Gender' => trim($_POST['gender']),
                     'NIC' => trim($_POST['nic']),
                     'C_num' => $_POST['cnum'],
-                    'DOB' => $_POST['dob'],
+                    // 'DOB' => $_POST['dob'],
                     'Spec' => $_POST['spec'],
                     'SLMC' => $_POST['slmc'],
                     'Avail' => 1,
@@ -427,12 +427,12 @@
                 }
 
                 //validate date of birth
-                $dob = $data['DOB'];
-                $today = date("Y-m-d");
-                $diff = date_diff(date_create($dob), date_create($today));
-                if($diff->format('%y') < 18){
-                    $data['DOB_err'] = 'Doctor must be atleast 18 years old';
-                }
+                // $dob = $data['DOB'];
+                // $today = date("Y-m-d");
+                // $diff = date_diff(date_create($dob), date_create($today));
+                // if($diff->format('%y') < 18){
+                //     $data['DOB_err'] = 'Doctor must be atleast 18 years old';
+                // }
 
                 if (empty($data['SLMC'])) {
                     $data['SLMC_err'] = 'Please enter SLMC registration number';
@@ -527,7 +527,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['DOB_err'])&& empty($data['SLMC_err'])&& empty($data['Char_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['SLMC_err'])&& empty($data['Char_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 
@@ -548,7 +548,7 @@
                     'F_name' => '',
                     'L_name' => '',
                     'Gender' => '',
-                    'DOB' => '',
+                    // 'DOB' => '',
                     'NIC' => '',
                     'C_num' => '',
                     'Spec' => '',
