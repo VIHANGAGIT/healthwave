@@ -207,24 +207,6 @@
                             <td><a href='edit_appointments'><button class='button'>Edit</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
-                        <!-- <tr>
-                            <td>A.V. Tony Stark</td>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>A.V. Tony Stark</td>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -324,25 +306,7 @@
                             <td><a href='edit_test_appointments'><button class='button'>Edit</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
                         </tr>
-                        <!-- <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>HBLR</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>HBLR</td>
-                            <td>Lanka Hospitals - Kiribathgoda</td>
-                            <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr> -->
-                    </tbody>
+                   </tbody>
                 </table>
             </div>
         </section>
