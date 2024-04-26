@@ -44,13 +44,15 @@
                         <div class="input-field">
                             <label>NIC Number*</label>
                             <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
+                            <span class="err-msg"><?php echo $data['NIC_err']; ?></span>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
                             <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
+                            <span class="err-msg"><?php echo $data['C_num_err']; ?></span>
                         </div>
                         <div class="input-field">
-                            <input type="hidden" placeholder="" name="" value="<?php //echo $data['DOB'] ?>" required>
+                            <input type="hidden" placeholder="" name="" value="<?php //echo $data['DOB'] ?>">
                         </div>
                     </div>
                 </div>

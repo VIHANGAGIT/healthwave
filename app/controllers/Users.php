@@ -402,7 +402,6 @@
                     'Gender' => trim($_POST['gender']),
                     'NIC' => trim($_POST['nic']),
                     'C_num' => $_POST['cnum'],
-                    // 'DOB' => $_POST['dob'],
                     'Hospital' => $_POST['hospital'],
                     'Role' => $_POST['role'],
                     'Uname' => trim($_POST['email']),
@@ -410,7 +409,9 @@
                     'C_pass' => trim($_POST['cpass']),
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'NIC_err' => '',
+                    'C_num_err' => ''
                 ];
 
 
@@ -424,6 +425,50 @@
                     }
                 }
 
+                //validate NIC
+                if (empty($data['NIC'])) {
+                    $data['NIC_err'] = 'Please enter NIC number';
+                } else {
+                    $nic = $data['NIC'];
+                    if (strlen($nic)!=10 && strlen($nic)!=12){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                    if (strlen($nic) == 10){
+                        $lastChar = strtoupper(substr($nic, 9, 1)); // Get the last character and convert to uppercase
+
+                        if ($lastChar !== 'V') {
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                        if(!is_numeric(substr($nic, 0, 9))){
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                    }
+                    // }
+                    if (strlen($nic) == 12 && !is_numeric($nic)){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                }
+
+                // Validate Contact Number
+                if(empty($data['C_num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
+
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
+                    }
+                }
+
+
+
+
+
+                
+                
+                
                 // Validate Password
                 $length = strlen($data['Pass']);
                 $uppercase = preg_match('@[A-Z]@', $data['Pass']);
@@ -462,7 +507,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['NIC_err'])&& empty($data['C_num_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 
@@ -484,7 +529,6 @@
                     'F_name' => '',
                     'L_name' => '',
                     'Gender' => '',
-                    // 'DOB' => '',
                     'NIC' => '',
                     'C_num' => '',
                     'Hospital' => '',
@@ -495,6 +539,8 @@
                     'Uname_err' => '',
                     'Pass_err' => '',
                     'C_pass_err' => '',
+                    'NIC_err' => '',
+                    'C_num_err' => '',
                     'hospitalNames' => $this->userModel->getHospitalNames()
                 ];
                 
