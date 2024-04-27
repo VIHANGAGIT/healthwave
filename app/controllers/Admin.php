@@ -158,8 +158,141 @@
         }
         public function approvals(){
             $data = [];
+            $doctors = $this->adminModel->get_pending_doctors();
+            $managers = $this->adminModel->get_pending_managers();
+
+            foreach ($managers as $manager) {
+                $current = $this->adminModel->get_current_manager($manager->Hospital_ID);
+                if($current){
+                    $manager->Current_Manager = $current->currentID;
+                }else{
+                    $manager->Current_Manager = '';
+                }
+            }
+
+            $data = [
+                'doctors' => $doctors,
+                'managers' => $managers
+            ];
             $this->view('admin/approvals', $data);
         }
+
+        public function approve(){
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                if (isset($_GET['id']) && isset($_GET['email']) && isset($_GET['type'])) {
+                    $id = $_GET['id'];
+                    $Email = $_GET['email'];
+                    $type = $_GET['type'];
+                    if ($type == 'doctor') {
+                        $mail_data = $this->adminModel->approve_doctor($id);
+                        $text = 'your appointments';
+                        $role = '<b>Doctor</b>';
+                    } else {
+                        $current = $_GET['current'];
+                        if ($current != null) {
+                            $this->adminModel->remove_current_manager($current);
+                        }
+                        $mail_data = $this->adminModel->approve_manager($id);
+                        $text = 'the hospital details';
+                        $role = '<b>Hospital Manager</b>';
+                    }
+                    if ($mail_data) {
+                        try {
+                            require_once APPROOT.'/helpers/Mail.php';
+                            $mail = new Mail();
+                    
+                            // Prepare the email details
+                            $to = $Email;
+                            $subject = 'Account Approval Confirmation';
+                            $body = '<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #505050; background-color: #f9f9f9; margin: 0; padding: 0;">';
+                            $body .= '<div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">';
+                            $body .= '<h1 style="text-align: center; color: #4070f4;">Hello ' . $mail_data->First_Name . ' ' . $mail_data->Last_Name . ',</h1>';
+                            $body .= '<p style="font-size: 16px; margin-bottom: 20px; text-align: center;">Your HealthWave account as a '.$role.' has been approved.</p>';
+                            $body .= '<div style="margin-bottom: 20px;">';
+                            $body .= '</div>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">You can now log in to your HealthWave account and start managing '. $text .'</p>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">Thank you for joining HealthWave!</p>';
+                            $body .= '</div>';
+                            $body .= '</body></html>';
+
+                            // Send the email
+                            $result = $mail->send($to, $subject, $body);
+                    
+                            if ($result) {
+                                $response =  'Approved. Email sent.';
+                            } else {
+                                $response = 'Failed to send email. Please contact support.';
+                            }
+                        } catch (Exception $e) {
+                            $response = 'An error occurred. Please try again later.';
+                            // Log the exception for debugging
+                            error_log($e->getMessage());
+                        }
+                        echo json_encode($response);
+                        redirect('admin/approvals');
+                    } else {
+                        die('Something went wrong');
+                    }
+                }
+            }
+        }
+
+        public function decline(){
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                if (isset($_GET['id']) && isset($_GET['email']) && isset($_GET['type'])){
+                    $id = $_GET['id'];
+                    $Email = $_GET['email'];
+                    $type = $_GET['type'];
+                    if ($type == 'doctor') {
+                        $mail_data = $this->adminModel->decline_doctor($id);
+                        $role = '<b>Doctor</b>';
+                    } else {
+                        $mail_data = $this->adminModel->decline_manager($id);
+                        $role = '<b>Hospital Manager</b>';
+                    }
+                    if ($mail_data) {
+                        try {
+                            require_once APPROOT.'/helpers/Mail.php';
+                            $mail = new Mail();
+                        
+                            // Prepare the email details
+                            $to = $Email;
+                            $subject = 'Account Declined';
+                            $body = '<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #505050; background-color: #f9f9f9; margin: 0; padding: 0;">';
+                            $body .= '<div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">';
+                            $body .= '<h1 style="text-align: center; color: #f44336;">Hello ' . $mail_data->First_Name . ' ' . $mail_data->Last_Name . ',</h1>';
+                            $body .= '<p style="font-size: 16px; margin-bottom: 20px; text-align: center;">We regret to inform you that your HealthWave account as a '.$role.' has been declined.</p>';
+                            $body .= '<div style="margin-bottom: 20px;">';
+                            $body .= '</div>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">If you believe this is a mistake or have any questions, please contact support.</p>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">Thank you for considering HealthWave.</p>';
+                            $body .= '</div>';
+                            $body .= '</body></html>';
+                        
+                            // Send the email
+                            $result = $mail->send($to, $subject, $body);
+                        
+                            if ($result) {
+                                $response = 'Declined. Email sent.';
+                            } else {
+                                $response = 'Failed to send email. Please contact support.';
+                            }
+                        } catch (Exception $e) {
+                            $response = 'An error occurred. Please try again later.';
+                            // Log the exception for debugging
+                            error_log($e->getMessage());
+                        }
+                        
+                        echo json_encode($response);
+                        redirect('admin/approvals');
+                    } else {
+                        die('Something went wrong');
+                    }
+                }
+            }
+        }
+
+        
 
         public function doc_management(){
             $data = [];

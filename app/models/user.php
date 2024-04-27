@@ -66,7 +66,7 @@
         }
 
         public function register_hospital_staff($data){
-            $this->db->query('INSERT INTO hospital_staff (First_Name, Last_Name, Gender, NIC, Contact_No, Hospital, Role, Approval, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :Hospital, :Role, :Approval, :Uname, :Pass)');
+            $this->db->query('INSERT INTO hospital_staff (First_Name, Last_Name, Gender, NIC, Contact_No, Hospital_ID, Role, Approval, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :Hospital, :Role, :Approval, :Uname, :Pass)');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':F_name', $data['F_name']);
@@ -253,7 +253,7 @@
         //------------------------------ Hospital Functions ------------------------------------//
 
         public function getHospitalNames() {
-            $this->db->query('SELECT Hospital_Name FROM hospital');
+            $this->db->query('SELECT Hospital_ID, Hospital_Name FROM hospital');
         
             // Execute query
             $this->db->execute();

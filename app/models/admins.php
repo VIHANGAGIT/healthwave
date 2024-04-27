@@ -457,4 +457,123 @@
                 return false;
             }
         }
+
+        public function get_pending_doctors(){
+            $this->db->query('SELECT First_Name, Last_Name, SLMC_Reg_No, Specialization, Doctor_ID, NIC, Contact_No, Username FROM doctor WHERE Approval = 0');
+            $doctors = $this->db->resultSet();
+
+            // Check if any rows were returned
+            if ($this->db->rowCount() > 0) {
+                return $doctors;
+            } else {
+                return false;
+            }
+        }
+
+        public function approve_doctor($id){
+            $this->db->query('UPDATE doctor SET Approval = 1 WHERE Doctor_ID = :id');
+            $this->db->bind(':id', $id);
+
+            // Execute query
+            if($this->db->execute()){
+                $this->db->query('SELECT First_Name, Last_Name FROM doctor WHERE Doctor_ID = :id');
+                $this->db->bind(':id', $id);
+                $doctor = $this->db->singleRow();
+                return $doctor;
+            } else{
+                return false;
+            }
+        }
+
+        public function approve_manager($id){
+            $this->db->query('UPDATE hospital_staff SET Approval = 1 WHERE HS_ID = :id');
+            $this->db->bind(':id', $id);
+
+            // Execute query
+            if($this->db->execute()){
+                $this->db->query('SELECT First_Name, Last_Name FROM hospital_staff WHERE HS_ID = :id');
+                $this->db->bind(':id', $id);
+                $manager = $this->db->singleRow();
+                return $manager;
+            } else{
+                return false;
+            }
+        }
+
+        public function decline_doctor($id){
+            $this->db->query('SELECT First_Name, Last_Name FROM doctor WHERE Doctor_ID = :id');
+            $this->db->bind(':id', $id);
+
+            $doctor = $this->db->singleRow();
+
+            $this->db->query('DELETE FROM doctor WHERE Doctor_ID = :id');
+
+            $this->db->bind(':id', $id);
+
+            // Execute query
+            if($this->db->execute()){
+                return $doctor;
+            } else{
+                return false;
+            }
+        }
+
+        public function decline_manager($id){
+            $this->db->query('SELECT First_Name, Last_Name FROM hospital_staff WHERE HS_ID = :id');
+            $this->db->bind(':id', $id);
+
+            $manager = $this->db->singleRow();
+
+            $this->db->query('DELETE FROM hospital_staff WHERE HS_ID = :id');
+
+            $this->db->bind(':id', $id);
+
+            // Execute query
+            if($this->db->execute()){
+                return $manager;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_pending_managers(){
+            $this->db->query('SELECT hospital_staff.First_Name, hospital_staff.Last_Name, hospital_staff.HS_ID, hospital_staff.NIC, hospital_staff.Contact_No, hospital_staff.Username, hospital.Hospital_Name, hospital.Region, hospital.Hospital_ID FROM hospital_staff
+            INNER JOIN hospital ON hospital_staff.Hospital_ID = hospital.Hospital_ID
+            WHERE hospital_staff.Approval = 0 AND hospital_staff.Role = "Manager"');
+
+
+            $managers = $this->db->resultSet();
+
+            // Check if any rows were returned
+            if ($this->db->rowCount() > 0) {
+                return $managers;
+            } else {
+                return false;
+            }
+        }
+
+        public function get_current_manager($hospital_id){
+            $this->db->query('SELECT HS_ID as currentID FROM hospital_staff WHERE Hospital_ID = :hospital_id AND Role = "Manager" AND Approval = 1');
+            $this->db->bind(':hospital_id', $hospital_id);
+            $manager = $this->db->singleRow();
+
+            // Check if any rows were returned
+            if ($this->db->rowCount() > 0) {
+                return $manager;
+            } else {
+                return false;
+            }
+        }
+
+        public function remove_current_manager($id){
+            $this->db->query('DELETE FROM hospital_staff WHERE HS_ID = :id');
+            $this->db->bind(':id', $id);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
     }        

@@ -199,7 +199,7 @@
                                                 <option value="g">g</option>
                                                 <option value="ml">ml</option>
                                                 <option value="tsp">tsp</option>
-                                                <option value="tsp">tablet</option>
+                                                <option value="tab">tablet</option>
                                             </select>
                                             <span class="err-msg"><?php echo $data['drug_err']; ?></span>
                                             <span class="err-msg"><?php echo $data['drug_min_err']; ?></span>

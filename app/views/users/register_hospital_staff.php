@@ -69,7 +69,7 @@
                                 </option>
 
                                 <?php foreach ($data['hospitalNames'] as $hospital) {
-                                    echo '<option value="' . $hospital->Hospital_Name . '">' . $hospital->Hospital_Name . '</option>';
+                                    echo '<option value="' . $hospital->Hospital_ID . '">' . $hospital->Hospital_Name . '</option>';
                                 } ?>
                             </select>
                         </div>
