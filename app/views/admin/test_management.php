@@ -179,7 +179,7 @@
                         <p>No tests are available</p>
                     </div>
                 <?php else: ?>
-                <table id="myTable" class="table">
+                <table id="test-table" class="table">
                     <thead>
                         <tr>
                             <th style="text-align: center;">Test ID</th>
@@ -213,7 +213,7 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function() {
-            $('#myTable').dataTable({
+            $('#test-table').dataTable({
                 "bPaginate": false, // Disable pagination
                 "bFilter": false, // Disable search/filtering
                 "bInfo": false, // Disable info text
@@ -225,14 +225,12 @@
     </script>
     <script>
         function confirmRemove(event) {
-            event.preventDefault(); // Prevent the default action of the link
+            event.preventDefault(); 
             
-            // Display a confirmation dialog
             if (window.confirm('Are you sure you want to remove?')) {
                 // If confirmed, proceed with the removal action
                 window.location.href = event.target.closest('a').href;
             } else {
-                // If not confirmed, do nothing
                 return false;
             }
         }
