@@ -141,7 +141,8 @@
                         }
                     }else{
                         $data = [
-                            'drug_err' => ''
+                            'drug_err' => '',
+                            'drug_min_err' => ''
                         ];
                     }
                 }

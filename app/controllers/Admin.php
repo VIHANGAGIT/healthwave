@@ -777,59 +777,59 @@
            // Check for POST request
            if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-            // Sanitize strings
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                // Sanitize strings
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            // Register user
-            $data = [
-                'T_name' => trim($_POST['testname']),
-                'T_type' => trim($_POST['testtype']),
-                'T_name_err' => '',
-                'T_type_err' => ''
-
-              ];
-
-            // Validate Test Name
-            if(empty($data['T_name'])){
-                $data['T_name_err'] = 'Please enter test name';
-            }else{
-                // Check for duplicate test names
-                if($this->testModel->findTestByName($data['T_name'])){
-                    $data['T_name_err'] = 'Test already exists';
-                }
-            }
-
-            // Validate Test Type
-            if(empty($data['T_type'])){
-                $data['T_type_err'] = 'Please enter test type';
-            }
-
-            // Check whether errors are empty
-            if(empty($data['T_name_err']) && empty($data['T_type_err'])){
                 // Register user
-                if($this->adminModel->add_test($data)){
-                    redirect('admin/test_management');
-                } else{
-                    die("Couldn't register the test! ");
+                $data = [
+                    'T_name' => trim($_POST['testname']),
+                    'T_type' => trim($_POST['testtype']),
+                    'T_name_err' => '',
+                    'T_type_err' => ''
+
+                ];
+
+                // Validate Test Name
+                if(empty($data['T_name'])){
+                    $data['T_name_err'] = 'Please enter test name';
+                }else{
+                    // Check for duplicate test names
+                    if($this->testModel->findTestByName($data['T_name'])){
+                        $data['T_name_err'] = 'Test already exists';
+                    }
                 }
-            } else {
-                // Load view with errors
+
+                // Validate Test Type
+                if(empty($data['T_type'])){
+                    $data['T_type_err'] = 'Please enter test type';
+                }
+
+                // Check whether errors are empty
+                if(empty($data['T_name_err']) && empty($data['T_type_err'])){
+                    // Register user
+                    if($this->adminModel->add_test($data)){
+                        redirect('admin/test_management');
+                    } else{
+                        die("Couldn't register the test! ");
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('admin/add_test', $data);
+                }
+                $this->view('admin/add_test', $data);
+
+            }else{
+                // Get data
+                $data = [
+                    'T_name' => '',
+                    'T_type' => '',
+                    'T_name_err' => '',
+                    'T_type_err' => ''
+                ];
+
+                // Load view
                 $this->view('admin/add_test', $data);
             }
-            $this->view('admin/add_test', $data);
-
-        }else{
-            // Get data
-            $data = [
-                'T_name' => '',
-                'T_type' => '',
-                'T_name_err' => '',
-                'T_type_err' => ''
-            ];
-
-            // Load view
-            $this->view('admin/add_test', $data);
-        }
         }
 
         public function edit_test() {

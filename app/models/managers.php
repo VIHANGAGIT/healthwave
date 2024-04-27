@@ -101,48 +101,70 @@
             }   
         }
 
-        public function add_lab_test($data) {
-            // First, insert data into the 'test' table
-            $this->db->query('INSERT INTO test (Test_Name, Type) VALUES (:Test_Name, :Type)');
-            $this->db->bind(':Test_Name', $data['Test_Name']);
-            $this->db->bind(':Type', $data['Type']);
-            
-            // Execute the first query
-            if (!$this->db->execute()) {
-                // Return false if the first query fails
-                return false;
-            }
-            
-            // Get the ID of the inserted test from the 'test' table
-            $test_id = $this->db->lastInsertId();
-            
-            // Now, insert data into the 'hospital_test' table
-            $this->db->query('INSERT INTO hospital_test (Test_ID, Hospital_ID, Price) VALUES (:Test_ID, :Hospital_ID, :Price)');
-            $this->db->bind(':Test_ID', $test_id); // Use the ID of the inserted test
-            $this->db->bind(':Hospital_ID', $data['Hospital_ID']);
-            $this->db->bind(':Price', $data['Price']);
-            
-            // Execute the second query
-            if ($this->db->execute()) {
-                // Return true if both queries are successful
+        public function add_test($data, $hospital_id){
+            $this->db->query('INSERT INTO hospital_test (Test_ID, Hospital_ID, Price) VALUES (:T_ID, :Hospital_ID, :T_Price)');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':T_ID', $data['T_ID']);
+            $this->db->bind(':Hospital_ID', $hospital_id);
+            $this->db->bind(':T_Price', $data['T_price']);
+
+            // Execute query
+            if($this->db->execute()){
                 return true;
-            } else {
-                // Roll back the first query if the second query fails
-                $this->db->query('DELETE FROM test WHERE Test_ID = :Test_ID');
-                $this->db->bind(':Test_ID', $test_id);
-                $this->db->execute();
-                
+            } else{
                 return false;
             }
         }
-        
 
-        
-        
+        public function get_test($test_id, $hospital_id){
+            $this->db->query('SELECT test.*, hospital_test.Price FROM hospital_test 
+            INNER JOIN test ON hospital_test.Test_ID = test.Test_ID
+            WHERE hospital_test.Test_ID = :test_id AND hospital_test.Hospital_ID = :hospital_id');
 
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':test_id', $test_id);
+            $this->db->bind(':hospital_id', $hospital_id);
+            $test = $this->db->singleRow();
 
+            // Execute query
+            if($this->db->execute()){
+                return $test;
+            } else{
+                return false;
+            }
+        }
 
-        
+        public function edit_test($data, $hospital_id){
+            $this->db->query('UPDATE hospital_test SET Price = :T_Price WHERE Test_ID = :T_ID AND Hospital_ID = :Hospital_ID');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':T_ID', $data['T_ID']);
+            $this->db->bind(':Hospital_ID', $hospital_id);
+            $this->db->bind(':T_Price', $data['T_price']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function remove_test($test_id, $hospital_id){
+            $this->db->query('DELETE FROM hospital_test WHERE Test_ID = :test_id AND Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':test_id', $test_id);
+            $this->db->bind(':hospital_id', $hospital_id);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
         
         
     }

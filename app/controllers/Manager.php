@@ -8,6 +8,7 @@
            
             $this->userModel = $this->model('user');
             $this->managerModel = $this->model('managers');
+            $this->testModel = $this->model('tests');
         }
         public function index(){
             
@@ -227,63 +228,160 @@
     }
 
     public function add_test() {
+        $data = [
+            'ID' => $_SESSION['userID']
+        ];
+
+        $hospital_data = $this->managerModel->hospital_data_fetch($data['ID']);
+        $hospital_id = $hospital_data->Hospital_ID;
+
+        
+        $all_tests = $this->testModel->get_all_tests();
+            
+        $hospital_tests = $this->managerModel->manager_labtest_data_fetch($hospital_id);
+
+        // Initialize an empty array to hold test data
+        $test_names_types = [];
+
+        // Iterate through all_tests to filter out unwanted tests
+        foreach ($all_tests as $key => $test) {
+            $keep_test = true;
+
+            foreach ($hospital_tests as $hospital_test) {
+                if ($test->Test_ID == $hospital_test->Test_ID) {
+                    // If found in hospital_tests, don't keep this test
+                    $keep_test = false;
+                    break; 
+                }
+            }
+
+            
+            if ($keep_test) {
+                $test_names_types[] = [
+                    'Test_Name_Test_Type' => $test->Test_Name . ' - ' . $test->Test_Type,
+                    'Test_ID' => $test->Test_ID
+                ];
+            }
+        }
         // Check for POST request
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
             // Sanitize strings
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    
-            // Prepare data array
+
+            // Register user
             $data = [
-                'Test_Name' => trim($_POST['Test_Name']),
-                'Type' => trim($_POST['Type']),
-                'Price' => trim($_POST['Price']),
-                'Test_Name_err' => '',
-                'Type_err' => '',
-                'Price_err' => ''
+                'T_ID' => $_POST['test_id'],
+                'T_price' => $_POST['test_price'],
+                'T_price_err' => ''
+
             ];
-    
-            // Validate Test Name
-            if (empty($data['Test_Name'])) {
-                $data['Test_Name_err'] = 'Please enter test name';
-            }
-    
+
             // Validate Test Type
-            if (empty($data['Type'])) {
-                $data['Type_err'] = 'Please enter test type';
+            if(empty($data['T_price'])){
+                $data['T_price_err'] = 'Please enter test price';
+            }else{
+                if($data['T_price'] > 50000){
+                    $data['T_price_err'] = 'Price should be below LKR 50,000.00';
+                }
             }
-    
-            // Validate Price
-            if (empty($data['Price'])) {
-                $data['Price_err'] = 'Please enter price';
-            }
-    
+
             // Check whether errors are empty
-            if (empty($data['Test_Name_err']) && empty($data['Type_err']) && empty($data['Price_err'])) {
-                // Add test
-                if ($this->adminModel->add_lab_test($data)) {
+            if(empty($data['T_price_err'])){
+                // Register user
+                if($this->managerModel->add_test($data, $hospital_id)){
                     redirect('manager/test_management');
-                } else {
-                    die("Couldn't add the test! ");
+                } else{
+                    die("Couldn't register the test! ");
                 }
             } else {
                 // Load view with errors
-                $this->view('manager/test_management', $data);
+                $this->view('manager/add_test', $data);
             }
-        } else {
-            // Load view with empty data
-            $data = [
-                'Test_Name' => '',
-                'Type' => '',
-                'Price' => '',
-                'Test_Name_err' => '',
-                'Type_err' => '',
-                'Price_err' => ''
-            ];
-            $this->view('manager/test_management', $data);
+            $this->view('manager/add_test', $data);
+
+        }else{
+
+
+            // Assign the test data array to $data['Tests']
+            $data['Tests'] = $test_names_types;
+            $data['T_price_err'] = '';
+            $data['T_price'] = '';
+
+
+            // Load view
+            $this->view('manager/add_test', $data);
         }
-    }       
-    
+        
     }
+    public function edit_test() {
+        $hospital_data = $this->managerModel->hospital_data_fetch($_SESSION['userID']);
+        $hospital_id = $hospital_data->Hospital_ID;
+        // Check for POST request
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            // Sanitize strings
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Register user
+            $data = [
+                'T_ID' => $_POST['test_id'],
+                'T_Name' => $_POST['test_name'],
+                'T_price' => $_POST['test_price'],
+                'T_price_err' => ''
+
+            ];
+
+            // Validate Test Type
+            if(empty($data['T_price'])){
+                $data['T_price_err'] = 'Please enter test price';
+            }else{
+                if($data['T_price'] > 50000){
+                    $data['T_price_err'] = 'Should be below LKR 50,000.00';
+                }
+            }
+
+            // Check whether errors are empty
+            if(empty($data['T_price_err'])){
+                // Register user
+                if($this->managerModel->edit_test($data, $hospital_id)){
+                    redirect('manager/test_management');
+                } else{
+                    die("Couldn't register the test! ");
+                }
+            } else {
+                // Load view with errors
+                $this->view('manager/edit_test', $data);
+            }
+            $this->view('manager/edit_test', $data);
+
+        }else{
+            $test = $this->managerModel->get_test($_GET['test_id'], $hospital_id);
+            $data = [
+                'T_ID' => $test->Test_ID,
+                'T_Name' => $test->Test_Name,
+                'T_price' => $test->Price,
+                'T_price_err' => ''
+            ];
+
+
+            // Load view
+            $this->view('manager/edit_test', $data);
+        }
+        
+    }
+    
+    public function remove_test() {
+        $hospital_data = $this->managerModel->hospital_data_fetch($_SESSION['userID']);
+        $hospital_id = $hospital_data->Hospital_ID;
+        if($this->managerModel->remove_test($_GET['test_id'], $hospital_id)){
+            redirect('manager/test_management');
+        } else{
+            die("Couldn't delete the test! ");
+        }
+    }
+    
+}
 
 
 
