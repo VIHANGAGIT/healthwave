@@ -161,14 +161,18 @@
             $doctors = $this->adminModel->get_pending_doctors();
             $managers = $this->adminModel->get_pending_managers();
 
-            foreach ($managers as $manager) {
-                $current = $this->adminModel->get_current_manager($manager->Hospital_ID);
-                if($current){
-                    $manager->Current_Manager = $current->currentID;
-                }else{
-                    $manager->Current_Manager = '';
+
+            if($managers){
+                foreach ($managers as $manager) {
+                    $current = $this->adminModel->get_current_manager($manager->Hospital_ID);
+                    if($current){
+                        $manager->Current_Manager = $current->currentID;
+                    }else{
+                        $manager->Current_Manager = '';
+                    }
                 }
             }
+            
 
             $data = [
                 'doctors' => $doctors,
