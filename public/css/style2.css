@@ -11,6 +11,8 @@
   --grey-color: #616161;
   --grey-color-dark: #505050;
   --blue-color-very-light: #c9d8ff;
+  --bg-transparent:rgba(0, 0, 0, 0.6);
+  --red-color:red;
 }
 body {
   background-color: #e7f2fd;
@@ -25,6 +27,9 @@ body.dark {
   --grey-color: #f0f0f0;
   --grey-color-dark: #fff;
   --blue-color-very-light: #103080;
+  --bg-transparent:rgba(214, 214, 214, 0.6);
+  --red-color:rgb(111, 1, 1);
+  
 }
 /* Pre css */
 .flex {
@@ -191,17 +196,6 @@ body.dark {
   transition: all 0.5s;
 }
 
-.content-appointment{
-  width: 91%;
-  margin-left: 5%;
-  padding-top: 1%;
-  background-color: var(--white-color);
-  border-radius: 10px;
-  color: var(--white-color);
-  font-size: 18px;
-  transition: all 0.5s;
-}
-
 .button{
   width: 80px;
   padding: 0px 5px;
@@ -218,7 +212,6 @@ body.dark {
 
 .button:hover{
   background-color: #1b52e8;
-  cursor: pointer;
 }
 
 .red{
@@ -287,191 +280,6 @@ body.dark {
   color: var(--grey-color-dark);
 }
 
-/*Appointment*/
-
-.appointment form .fields .input-field{
-  display: flex;
-  width: 800px;
-  flex-direction: column;
-  margin: 0.5% 0;
-  padding-right: 50px;
-  padding-left: 30px;
-}
-
-.appointment form .fields .button{
-  margin-left: 30px;
-  height: 45px;
-}
-
-.appointment form .fields .button:hover{
-  background-color: #1b52e8;
-}
-
-.appointment .input-field label{
-  font-size: 1rem;
-  font-weight: 500;
-  color: #2e2e2e;
-}
-.appointment .input-field input, select{
-  outline: none;
-  font-size: 14px;
-  font-weight: 400;
-  color: #333;
-  border-radius: 5px;
-  border: 2px solid #aaa;
-  padding: 0 15px;
-  height: 42px;
-  margin: 8px 0;
-}
-
-.appointment h2{
-  color: var(--grey-color-dark);
-  padding-left: 30px;
-}
-.appointment .input-field label{
-  color: var(--grey-color-dark);
-}
-
-.container-radio {
-  display: flex;
-  align-items: center; /* Align items vertically in the container */
-}
-
-.container-radio label {
-  display: flex;
-  align-items: center;
-  margin-right: 1em; /* Add space between radio buttons */
-}
-
-.container-radio label:last-child {
-  margin-right: 0; /* Remove margin for the last radio button */
-}
-
-.container-radio label input {
-  position: absolute;
-  left: -9999px;
-}
-
-.container-radio label input:checked + span {
-  background-color: var(--blue-color);
-  color: white;
-}
-
-.container-radio label input:checked + span:before {
-  box-shadow: inset 0 0 0 0.4375em var(--blue-color-very-light);;
-}
-
-.container-radio label span {
-  display: flex;
-  align-items: center;
-  padding: 0.375em 0.75em 0.375em 0.375em;
-  border-radius: 99em;
-  transition: 0.25s ease;
-  color: var(--grey-color);
-}
-
-.container-radio label span:hover {
-  background-color: #d6d6e5;
-}
-
-.container-radio label span:before {
-  display: flex;
-  flex-shrink: 0;
-  content: "";
-  background-color: #fff;
-  width: 1.5em;
-  height: 1.5em;
-  border-radius: 50%;
-  margin-right: 0.375em;
-  transition: 0.25s ease;
-  box-shadow: inset 0 0 0 0.125em #00005c;
-}
-
-.profile-card {
-  width: 400px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  text-align: center;
-  top: 0;
-  left: 50%;
-}
-
-.profile-photo {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.profile-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.profile-name {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333333;
-  margin-bottom: 10px;
-}
-
-.profile-specialization {
-  font-size: 18px;
-  color: #666666;
-}
-.profile-card .button{
-  width: 200px;
-  margin: 2% 9%;
-}
-.profile-card .button:hover{
-  background-color: #1b52e8;
-}
-
-.price-card {
-  width: 400px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  margin: 50px auto;
-  padding: 20px;
-  text-align: center;
-}
-
-.price-label {
-  font-size: 18px;
-  color: #333333;
-  margin-bottom: 10px;
-}
-
-.price-value {
-  font-size: 24px;
-  color: var(--blue-color);
-}
-
-.price-value-total {
-  font-size: 24px;
-  color: var(--blue-color);
-  font-weight: bold;
-}
-
-.price-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.price-item:last-child {
-  margin-bottom: 0;
-}
 
 /*detail card*/
 
@@ -878,4 +686,298 @@ table thead tr{
 .table-edit .edit-btn button{
   width: 180px;
 
+}
+
+
+/*popup lab test*/
+/*.popup{
+  background: rgba(0, 0, 0, 0.6);
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  border-radius: 6px;
+  padding: 30px;
+  margin: 0 15px;
+  top: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  /*text-align: center;
+}*/
+
+
+.popup {
+  background: var(--bg-transparent);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds viewport height */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure the popup appears on top of other content */
+}
+
+.popup-1 {
+  background: var(--bg-transparent);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds viewport height */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure the popup appears on top of other content */
+}
+
+.popup-content{
+  height: 50%;
+  width: 40%;
+  max-width: 600px;
+  background: var(--white-color);
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.close{
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: var(--white-color);
+  height: 20px;
+  width: 20px;
+  border-radius: 5rem;
+  cursor: pointer;
+}
+
+.popup-content header{
+  position: relative;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--grey-color);
+}
+
+.popup-content header::before{
+  content: "";
+  left: 0;
+  position: absolute;
+  bottom: -2px;
+  height: 3px;
+  width: 27px;
+  border-radius: 8px;
+  background-color: var(--blue-color);
+}
+
+.popup-content form{
+  position: relative;
+  margin-top: 16px;
+  min-height: 490px;
+  /*background-color: var(--blue-color-very-light);*/
+}
+
+.popup-content form .details{
+  margin-top: 10px;
+}
+
+.popup-content form .title{
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 6px 0;
+  color: var(--grey-color);
+}
+
+.popup-content form .fields{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+form .fields .input-field{
+  display: flex;
+  width: calc(100% / 2 - 15px);
+  flex-direction: column;
+  margin: 4px 0;
+}
+
+.input-field label{
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--grey-color);
+}
+
+.input-field input{
+  outline: none;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+  border-radius: 5px;
+  border: 1px solid var(--grey-color);
+  padding: 0 15px;
+  height: 42px;
+  margin: 8px 0;
+}
+
+.input-field input:is(:focus, :valid){
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
+
+}
+
+.input-field input[type="date"]{
+  color: #707070
+}
+
+.input-field input[type="date"]:valid{
+  color: #000000
+}
+
+
+/*profile card*/
+
+.profile-content{
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  margin-left: 17%;
+  margin-top: 5%;
+  transition: all .5s ease;
+  overflow-x: hidden;
+}
+
+.profile-card{
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 960px;
+  width: 100%;
+  background: var(--white-color);
+  border-radius: 24px;
+  padding: 25px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.profile-card::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30%;
+  width: 100%;
+  border-radius: 24px 24px 0 0;
+  background-color: var(--blue-color);
+}
+
+.pr-image {
+  position: relative;
+  margin: 0 auto; /* Center horizontally */
+  margin-bottom: 10px;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  background-color: var(--blue-color);
+  padding: 3px;
+}
+
+
+
+.pr-image .prof-image{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--white-color);
+}
+
+.profile-card .profile-text{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--grey-color);
+}
+
+.profile-text .profile-name{
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.profile-text .profile-role{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.profile-card .profile-btns{
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  margin-top: 25px;
+
+}
+
+.profile-btns .profile-btn{
+  color: #ffffff;
+  width: 100px;
+  height: 45px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  /*margin: 0 10px;*/
+  padding: 0px 0px;
+  text-align: center;
+  background-color: var(--blue-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-btns .profile-btn:hover{
+  background-color:#1b52e8;
+}
+
+.profile-btns .profile-delete{
+  color: #ffffff;
+  width: 100px;
+  height: 45px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  margin: 0 10px;
+  padding: 8px 24px;
+  background-color: var(--red-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-btns .profile-delete:hover{
+  background-color:rgb(152, 36, 36);
+}
+
+.profile-details {
+  color: var(--grey-color-dark);
+  font-size: 20px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  flex-wrap: wrap; /* Allow items to wrap */
+  margin-top: 20px;
+}
+
+.profile-details .profile-detail {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 45%; 
+  margin: 4px 2.5%; 
+  text-align: center; /* Center text within each detail */
 }
