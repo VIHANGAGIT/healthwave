@@ -459,20 +459,20 @@ class Patient extends Controller
         }
     }
 
-    public function delete_test_reservation(){
+    public function cancel_test_reservation(){
         $Reservation_ID = $_POST['reservation_id'];
 
-        if ($this->testModel->delete_reservation($Reservation_ID)) {
+        if ($this->testModel->cancel_reservation($Reservation_ID)) {
             echo json_encode('Reservation deleted successfully');
         } else {
             echo json_encode('Failed to delete reservation');
         }
     }
 
-    public function delete_doc_reservation(){
+    public function cancel_doc_reservation(){
         $Reservation_ID = $_POST['reservation_id'];
 
-        if ($this->doctorModel->delete_reservation($Reservation_ID)) {
+        if ($this->doctorModel->cancel_reservation($Reservation_ID)) {
             echo json_encode('Reservation deleted successfully');
         } else {
             echo json_encode('Failed to delete reservation');
@@ -631,9 +631,6 @@ class Patient extends Controller
     public function profile_delete()
     {
         $data = [
-            'Uname' => $_SESSION['userEmail'],
-            'Name' => $_SESSION['userName'],
-            'Type' => $_SESSION['userType'],
             'ID' => $_SESSION['userID']
         ];
 

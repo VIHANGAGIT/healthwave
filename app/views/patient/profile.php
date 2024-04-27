@@ -131,21 +131,24 @@
           <span class="profile-detail"><strong>Allergies: </strong><?php echo $data['Allergies'] ?></span>
         </div>
 
-          
-
-
-
         <div class="profile-btns">
           <a href='profile_update'><button class="profile-btn">Update</button></a>
-          <button class="profile-delete">Delete</button>
+          <a href='profile_delete'><button class="profile-delete" onclick="confirmRemove(event)" >Delete</button></a>
         </div>
-
-        
-
-
-
-        
       </div>
     </div>
+    <script>
+      function confirmRemove(event) {
+          event.preventDefault();
+          
+          // Display a confirmation dialog
+          if (window.confirm('Are you sure you want to remove your account? All your existing appointments will be cancelled.')) {
+              // If confirmed, proceed with the removal action
+              window.location.href = event.target.closest('a').href;
+          } else {
+              return false;
+          }
+      }
+    </script>
   </body>
 </html>

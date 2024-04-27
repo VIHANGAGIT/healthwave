@@ -2,6 +2,7 @@
     class Users extends Controller{ 
         public function __construct(){
             $this->userModel = $this->model('user');
+            $this->doctorModel = $this->model('doctors');
         }
 
         public function register_patient(){
@@ -29,7 +30,12 @@
                     'C_pass' => trim($_POST['cpass']),
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'DOB_err' => '',
+                    'NIC_err' => '',
+                    'C_num_err' => '',
+                    'Height_err' => '',
+                    'Weight_err' => ''
                 ];
 
 
@@ -37,6 +43,72 @@
                 $currentDate = new DateTime();
                 $birthDate = new DateTime($data['DOB']);
                 $data['Age'] = $currentDate->diff($birthDate)->y;
+
+                // Validate DOB
+                $dob = $data['DOB'];
+                $today = date("Y-m-d");
+                $diff = date_diff(date_create($dob), date_create($today));
+                if($diff->format('%y') < 16){
+                    $data['DOB_err'] = 'Patient must be atleast 16 years old';
+                }
+
+                //validate NIC
+                if (empty($data['NIC'])) {
+                    $data['NIC_err'] = 'Please enter NIC number';
+                } else {
+                    $nic = $data['NIC'];
+                    if (strlen($nic)!=10 && strlen($nic)!=12){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                    if (strlen($nic) == 10){
+                        $lastChar = strtoupper(substr($nic, 9, 1)); // Get the last character and convert to uppercase
+
+                        if ($lastChar !== 'V') {
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                        if(!is_numeric(substr($nic, 0, 9))){
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                    }
+                    // }
+                    if (strlen($nic) == 12 && !is_numeric($nic)){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                }
+
+                // Validate Contact Number
+                if(empty($data['C_num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
+
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
+                    }
+                }
+
+                //validate height
+                if(empty($data['Height'])){
+                    $data['Height_err'] = 'Please enter your height';
+                } else{
+                    $height = intval($data['Height']); // Convert to integer for comparison
+                    if($height < 50 || $height > 250){
+                        $data['Height_err'] = 'Should be between 50 cm and 250 cm';
+                    }
+                }
+
+                //validate weight
+                if(empty($data['Weight'])){
+                    $data['Weight_err'] = 'Please enter your weight';
+                } else{
+                    $weight = intval($data['Weight']); // Convert to integer for comparison
+                    if($weight < 20 || $weight > 250){
+                        $data['Weight_err'] = 'Should be between 20 kg and 250 kg';
+                    }
+                }
+
 
 
                 // Validate Email
@@ -87,7 +159,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err']) && empty($data['DOB_err'])&& empty($data['NIC_err'])&& empty($data['C_num_err'])&& empty($data['Height_err'])&& empty($data['Weight_err'])){
                     
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
@@ -122,7 +194,12 @@
                     'C_pass' => '',
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'DOB_err' => '',
+                    'NIC_err' => '',
+                    'C_num_err' => '',
+                    'Height_err' => '',
+                    'Weight_err' => ''
                 ];
 
                 // Load view
@@ -144,11 +221,10 @@
                     'Gender' => trim($_POST['gender']),
                     'NIC' => trim($_POST['nic']),
                     'C_num' => $_POST['cnum'],
-                    'DOB' => $_POST['dob'],
                     'Spec' => $_POST['spec'],
                     'SLMC' => $_POST['slmc'],
                     'Charges' => $_POST['charges'],
-                    'Avail' => 1,
+                    'Approval' => 0,
                     'Uname' => trim($_POST['email']),
                     'Pass' => trim($_POST['pass']),
                     'C_pass' => trim($_POST['cpass']),
@@ -156,8 +232,9 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => '',
-                    'SLMC_err' => ''
+                    'SLMC_err' => '',
+                    'NIC_err' => '',
+                    'Char_err' => ''
                 ];
 
                 // Validate Contact Number
@@ -173,14 +250,29 @@
                     }
                 }
 
-                //validate date of birth
-                $dob = $data['DOB'];
-                $today = date("Y-m-d");
-                $diff = date_diff(date_create($dob), date_create($today));
-                if($diff->format('%y') < 18){
-                    $data['DOB_err'] = 'Doctor must be atleast 18 years old';
-                }
+                //validate NIC
+                if (empty($data['NIC'])) {
+                    $data['NIC_err'] = 'Please enter NIC number';
+                } else {
+                    $nic = $data['NIC'];
+                    if (strlen($nic)!=10 && strlen($nic)!=12){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                    if (strlen($nic) == 10){
+                        $lastChar = strtoupper(substr($nic, 9, 1)); // Get the last character and convert to uppercase
 
+                        if ($lastChar !== 'V') {
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                        if(!is_numeric(substr($nic, 0, 9))){
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                    }
+                    if (strlen($nic) == 12 && !is_numeric($nic)){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                }
+                // Validate SLMC
                 if (empty($data['SLMC'])) {
                     $data['SLMC_err'] = 'Please enter SLMC registration number';
                 } else {
@@ -188,7 +280,21 @@
                     if (strlen($slmc) < 4 || strlen($slmc) > 5) {
                         $data['SLMC_err'] = 'SLMC registration number must be between 4 and 5 digits';
                     }
+                    if($this->doctorModel->findDoctorBySLMC($slmc)){
+                        $data['SLMC_err'] = 'Another doctor already has this SLMC';
+                    }
                 }
+                
+                //validate charges
+                if (empty($data['Charges'])) {
+                    $data['Char_err'] = 'Please enter charges';
+                } else {
+                    $charge = $data['Charges'];
+                    if ($charge > 25000 ) {
+                        $data['Char_err'] = 'Charges must be less than 25000';
+                    }
+                }
+
                 // Validate Email
                 if(empty($data['Uname'])){
                     $data['Uname_err'] = 'Please enter your email';
@@ -237,7 +343,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['NIC_err'])&& empty($data['C_num_err'])&& empty($data['SLMC_err'])&& empty($data['Char_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 
@@ -259,13 +365,12 @@
                     'F_name' => '',
                     'L_name' => '',
                     'Gender' => '',
-                    'DOB' => '',
                     'NIC' => '',
                     'C_num' => '',
                     'Spec' => '',
                     'SLMC' => '',
                     'Charges' => '',
-                    'Avail' => '',
+                    'Approval' => '',
                     'Uname' => '',
                     'Pass' => '',
                     'C_pass' => '',
@@ -273,8 +378,9 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => '',
-                    'SLMC_err' => ''
+                    'SLMC_err' => '',
+                    'NIC_err' => '',
+                    'Char_err' => ''
                 ];
 
                 // Load view
@@ -297,7 +403,6 @@
                     'Gender' => trim($_POST['gender']),
                     'NIC' => trim($_POST['nic']),
                     'C_num' => $_POST['cnum'],
-                    'DOB' => $_POST['dob'],
                     'Hospital' => $_POST['hospital'],
                     'Role' => $_POST['role'],
                     'Uname' => trim($_POST['email']),
@@ -305,7 +410,9 @@
                     'C_pass' => trim($_POST['cpass']),
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'NIC_err' => '',
+                    'C_num_err' => ''
                 ];
 
 
@@ -316,6 +423,43 @@
                     // Check for duplicates
                     if($this->userModel->findUserByUname($data['Uname'])){
                         $data['Uname_err'] = 'Another account already has this email';
+                    }
+                }
+
+                //validate NIC
+                if (empty($data['NIC'])) {
+                    $data['NIC_err'] = 'Please enter NIC number';
+                } else {
+                    $nic = $data['NIC'];
+                    if (strlen($nic)!=10 && strlen($nic)!=12){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                    if (strlen($nic) == 10){
+                        $lastChar = strtoupper(substr($nic, 9, 1)); // Get the last character and convert to uppercase
+
+                        if ($lastChar !== 'V') {
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                        if(!is_numeric(substr($nic, 0, 9))){
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                    }
+                    // }
+                    if (strlen($nic) == 12 && !is_numeric($nic)){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                }
+
+                // Validate Contact Number
+                if(empty($data['C_num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
+
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
                     }
                 }
 
@@ -357,7 +501,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['NIC_err'])&& empty($data['C_num_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 
@@ -379,7 +523,6 @@
                     'F_name' => '',
                     'L_name' => '',
                     'Gender' => '',
-                    'DOB' => '',
                     'NIC' => '',
                     'C_num' => '',
                     'Hospital' => '',
@@ -390,6 +533,8 @@
                     'Uname_err' => '',
                     'Pass_err' => '',
                     'C_pass_err' => '',
+                    'NIC_err' => '',
+                    'C_num_err' => '',
                     'hospitalNames' => $this->userModel->getHospitalNames()
                 ];
                 
@@ -429,8 +574,11 @@
 
                 // Look for Email
                 if(!empty($data['Uname'])){
-                    if($this->userModel->findUserByUname($data['Uname'])){
-                        // Email found and can proceed to next function
+                    $uname = $this->userModel->findUserByUname($data['Uname']);
+                    if($uname){
+                        if($uname->Approval == 0){
+                            $data['Uname_err'] = 'Your account is not approved yet';
+                        }
                     } else{
                         $data['Uname_err'] = 'No user found for this email';
                     }

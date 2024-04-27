@@ -115,7 +115,7 @@ class Tests{
     }
 
     public function fetch_booked_slots($hospital_id, $date){
-        $this->db->query('SELECT Start_Time, End_Time FROM test_reservation WHERE Hospital_ID = :hospital_id AND Date = :date');
+        $this->db->query('SELECT Start_Time, End_Time FROM test_reservation WHERE Hospital_ID = :hospital_id AND Date = :date AND Status = "Pending"');
 
         $this->db->bind(':hospital_id', $hospital_id);
         $this->db->bind(':date', $date);
@@ -182,6 +182,18 @@ class Tests{
 
     public function delete_reservation($id){
         $this->db->query('DELETE FROM test_reservation WHERE Test_Res_ID = :id');
+
+        $this->db->bind(':id', $id);
+
+        if($this->db->execute()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public function cancel_reservation($id){
+        $this->db->query('UPDATE test_reservation SET Status = "Cancelled" WHERE Test_Res_ID = :id');
 
         $this->db->bind(':id', $id);
 

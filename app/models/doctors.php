@@ -89,6 +89,18 @@ class Doctors{
         }
     }
 
+    public function cancel_reservation($id){
+        $this->db->query('UPDATE doctor_reservation SET Status = "Cancelled" WHERE Doc_Res_ID = :id');
+
+        $this->db->bind(':id', $id);
+
+        if($this->db->execute()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
     public function get_reservations($id){
                 
         $this->db->query('SELECT schedule.*, hospital.Hospital_Name, room.Room_Name FROM schedule
