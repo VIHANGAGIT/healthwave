@@ -160,7 +160,7 @@ class Tests{
         $lastRow = $this->db->singleRow();
         $payment_id = $lastRow->Payment_ID;
 
-        $this->db->query('INSERT INTO test_reservation (Patient_ID, Hospital_ID, Test_ID, Payment_ID, Date, Start_Time, End_Time, Contact_Number, Email) VALUES (:Patient_ID, :Hospital_ID, :Test_ID, :Payment_ID, :Date, :Start_Time, :End_Time, :Contact_Number, :Email)');
+        $this->db->query('INSERT INTO test_reservation (Patient_ID, Hospital_ID, Test_ID, Payment_ID, Date, Start_Time, End_Time, Contact_Number, Email, Status) VALUES (:Patient_ID, :Hospital_ID, :Test_ID, :Payment_ID, :Date, :Start_Time, :End_Time, :Contact_Number, :Email, :Status)');
         // Binding parameters for the prepaired statement
         $this->db->bind(':Patient_ID', $data['Patient_ID']);
         $this->db->bind(':Hospital_ID', $data['Hospital_ID']);
@@ -171,10 +171,23 @@ class Tests{
         $this->db->bind(':End_Time', $data['End_Time']);
         $this->db->bind(':Contact_Number', $data['Contact_No']);
         $this->db->bind(':Email', $data['Email']);
+        $this->db->bind(':Status', "Pending");
 
         // Execute query
         if($this->db->execute()){
-            return true;
+            $this->db->query('SELECT LAST_INSERT_ID() AS res_id');
+            $row = $this->db->singleRow();
+            $res_id = $row->res_id;
+
+            $this->db->query('SELECT patient.First_Name, patient.Last_Name, test.Test_Name, test.Test_Type, hospital.Hospital_Name FROM test_reservation
+            INNER JOIN patient ON test_reservation.Patient_ID = patient.Patient_ID
+            INNER JOIN test ON test_reservation.Test_ID = test.Test_ID
+            INNER JOIN hospital ON test_reservation.Hospital_ID = hospital.Hospital_ID
+            WHERE Test_Res_ID = :res_id');
+
+            $this->db->bind(':res_id', $res_id);
+            $reservation = $this->db->singleRow();
+            return $reservation;
         } else{
             return false;
         }

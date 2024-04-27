@@ -1798,6 +1798,7 @@ table thead tr{
 .profile-text .profile-name{
   font-size: 30px;
   font-weight: 800;
+  color: var(--grey-color);
 }
 
 .profile-text .profile-role{

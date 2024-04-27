@@ -7,7 +7,7 @@ class Doctors{
     }
 
     public function getAllDoctors(){
-        $this->db->query('SELECT * FROM doctor');
+        $this->db->query('SELECT * FROM doctor WHERE Approval = 1');
 
         $doctors = $this->db->resultSet();
         return $doctors;
