@@ -95,15 +95,19 @@ class Patient extends Controller
         $types = [];
         $no_of_hospitals = [];
 
-        foreach ($tests as $test) {
-            if (!in_array($test->Test_Type, $types)) {
-                $types[] = $test->Test_Type;
+        if($tests){
+            foreach ($tests as $test) {
+                if (!in_array($test->Test_Type, $types)) {
+                    $types[] = $test->Test_Type;
+                }
             }
         }
-
-        foreach ($searchTests as $test) {
-            // Get the number of hospitals for the current doctor
-            $no_of_hospitals[$test->Test_ID] = $this->testModel->get_no_of_hospitals($test->Test_ID);
+        
+        if($searchTests){
+            foreach ($searchTests as $test) {
+                // Get the number of hospitals for the current doctor
+                $no_of_hospitals[$test->Test_ID] = $this->testModel->get_no_of_hospitals($test->Test_ID);
+            }
         }
 
         $data = [

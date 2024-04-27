@@ -356,14 +356,16 @@
 
             $types = [];
 
-            foreach ($tests as $test) {
-                if (!in_array($test->Test_Type, $types)) {
-                    $types[] = $test->Test_Type;
-                }
-                if($this->adminModel->get_appointments_test($test->Test_ID)){
-                    $test->Cancel = 'Not allowed';
-                }else{
-                    $test->Cancel = 'Allowed';
+            if($tests){
+                foreach ($tests as $test) {
+                    if (!in_array($test->Test_Type, $types)) {
+                        $types[] = $test->Test_Type;
+                    }
+                    if($this->adminModel->get_appointments_test($test->Test_ID)){
+                        $test->Cancel = 'Not allowed';
+                    }else{
+                        $test->Cancel = 'Allowed';
+                    }
                 }
             }
             $data = [
