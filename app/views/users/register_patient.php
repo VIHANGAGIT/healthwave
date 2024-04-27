@@ -11,7 +11,7 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title><?php echo SITENAME; ?>: Patient Registration</title>
+   <title>Patient Regisration</title>
 </head>
 <body>
     <div class="container-signup">
@@ -25,17 +25,17 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>First Name*</label>
-                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['F_name'] ?>" required >
+                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['F_name'] ?>">
                         </div>
 
                         <div class="input-field">
                             <label>Last Name*</label>
-                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['L_name'] ?>" required>
+                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['L_name'] ?>">
                         </div>
 
                         <div class="input-field">
                             <label>Gender*</label>
-                            <select name="gender" required>
+                            <select name="gender">
                             <option selected value="<?php echo $data['Gender'] ?>" > <?php echo ($data['Gender'] == '') ? 'Select gender' : $data['Gender'] ?></option>
                                 <option>Male</option>
                                 <option>Female</option>
@@ -44,19 +44,16 @@
 
                         <div class="input-field">
                             <label>Date of Birth*</label>
-                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>" class="<?php echo (!empty($data['DOB_err'])) ? 'error' : '' ?>" required>
-                            <span class="err-msg"><?php echo $data['DOB_err'] ; ?></span>
+                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>">
                         </div>
 
                         <div class="input-field">
                             <label>NIC Number</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" class="<?php echo (!empty($data['NIC_err'])) ? 'error' : '' ?>" required>
-                            <span class="err-msg"><?php echo $data['NIC_err'] ; ?></span>
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>">
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
-                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" class="<?php echo (!empty($data['C_num_err'])) ? 'error' : '' ?>" required>
-                            <span class="err-msg"><?php echo $data['C_num_err'] ; ?></span>
+                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>">
                         </div>
                     </div>
                 </div>
@@ -67,14 +64,12 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Height (in cm)</label>
-                            <input type="number" placeholder="Enter your height" name="height" value="<?php echo $data['Height'] ?>" class="<?php echo (!empty($data['Height_err'])) ? 'error' : '' ?>" required>
-                            <span class="err-msg"><?php echo $data['Height_err'] ; ?></span>
+                            <input type="number" placeholder="Enter your height" name="height" value="<?php echo $data['Height'] ?>">
                         </div>
 
                         <div class="input-field">
                             <label>Weight (in kg)</label>
-                            <input type="number" placeholder="Enter your weight" name="weight" value="<?php echo $data['Weight'] ?>" class="<?php echo (!empty($data['Weight_err'])) ? 'error' : '' ?>" required>
-                            <span class="err-msg"><?php echo $data['Weight_err'] ; ?></span>
+                            <input type="number" placeholder="Enter your weight" name="weight" value="<?php echo $data['Weight'] ?>">
                         </div>
                         <div class="input-field">
                             <label>Blood Group</label>
@@ -100,7 +95,7 @@
                     <button class="nextBtn" onclick="event.preventDefault();">
                         <span class="btnText">Next</span>
                     </button>
-                    <div class="login-signup" style="margin-top: -20px; font-size: 14px;" >
+                    <div class="login-signup" style="margin-top: -20px; font-size: 14px;" ">
                         <span class="text">Already have an account?
                             <a href="<?php echo URLROOT; ?>/users/login" class="text login-link">Login Now</a>
                         </span>
@@ -124,14 +119,14 @@
 
                         <div class="input-field">
                             <label>Password*</label>
-                            <input type="password" placeholder="Enter a password" name="pass" value="" class="<?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" >
+                            <input type="password" placeholder="Enter a password" name="pass" value="<?php echo $data['Pass'] ?>" class="<?php echo (!empty($data['Pass_err'])) ? 'error' : '' ?>" >
                             <span class="err-msg"><?php echo $data['Pass_err'] . "\u{200B}"; ?></span>
                         </div>
                         
 
                         <div class="input-field" style="margin-bottom: 0;" >
                             <label>Confirm Password*</label>
-                            <input type="password" placeholder="Enter your password again" name="cpass" value="" class="<?php echo (!empty($data['C_pass_err'])) ? 'error' : '' ?>" >
+                            <input type="password" placeholder="Enter your password again" name="cpass" value="<?php echo $data['C_pass'] ?>" class="<?php echo (!empty($data['C_pass_err'])) ? 'error' : '' ?>" >
                             <span class="err-msg"><?php echo $data['C_pass_err'] . "\u{200B}"; ?></span>
                         </div>
                         

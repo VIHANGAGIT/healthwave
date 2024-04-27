@@ -69,7 +69,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../pharmacist/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -107,7 +107,7 @@
                       <td>
                         <div class="input-field">
                             <label>Prescription ID</label>
-                            <input type="text" name="search_text" placeholder="Reservation ID">
+                            <input type="text" name="search_text" placeholder="Prescription ID">
                         </div>
                       </td>
                       <td>
@@ -128,8 +128,30 @@
         <div class="detail-wrapper">
         <div class='detail-card'>
                 <div class='detail-card-content'>
-                    <p class="detail-title">Patient: L.A. Peter Parker</p>
+                    <p class="detail-title">Patient: L.B.Perera</p>
                     <p class='detail-comp'>Prescription ID: 12322  |  Doctor: M.S. Perera</p>
+                    <!--div class='detail-details'
+                        <p><i class='uil uil-calendar-alt'></i>hh</p>
+                        <p><i class='uil uil-clock'></i>gg</p>
+                        
+                    </-div-->
+                </div>
+                <div class='detail-card-sub'>
+                <hr class="vertical-line">
+                    <div class='detail-card-info'>
+                        <p>Status :</p>
+                        <p class="detail-location" >Not Claimed</p>
+                    </div>
+                </div>
+                <div class='detail-view'>
+                <button class="button" style="width: 50px;"><i class="uil uil-import"></i></button>
+                <button class="button detail-btn" >Completed</button>
+                </div>
+            </div>
+            <div class='detail-card'>
+                <div class='detail-card-content'>
+                    <p class="detail-title">Patient:H.M.Dharmasena </p>
+                    <p class='detail-comp'>Prescription ID: 12325  |  Doctor: S.M.Senevirathne</p>
                     <!--div class='detail-details'
                         <p><i class='uil uil-calendar-alt'></i>hh</p>
                         <p><i class='uil uil-clock'></i>gg</p>
@@ -150,8 +172,8 @@
             </div>
             <div class='detail-card'>
                 <div class='detail-card-content'>
-                    <p class="detail-title">Patient: L.A. Peter Parker</p>
-                    <p class='detail-comp'>Prescription ID: 12322  |  Doctor: M.S. Perera</p>
+                    <p class="detail-title">Patient: L.A. Rathnayake</p>
+                    <p class='detail-comp'>Prescription ID: 12326  |  Doctor: M.S. Perera</p>
                     <!--div class='detail-details'
                         <p><i class='uil uil-calendar-alt'></i>hh</p>
                         <p><i class='uil uil-clock'></i>gg</p>
@@ -172,30 +194,8 @@
             </div>
             <div class='detail-card'>
                 <div class='detail-card-content'>
-                    <p class="detail-title">Patient: L.A. Peter Parker</p>
-                    <p class='detail-comp'>Prescription ID: 12322  |  Doctor: M.S. Perera</p>
-                    <!--div class='detail-details'
-                        <p><i class='uil uil-calendar-alt'></i>hh</p>
-                        <p><i class='uil uil-clock'></i>gg</p>
-                        
-                    </-div-->
-                </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" >Not Claimed</p>
-                    </div>
-                </div>
-                <div class='detail-view'>
-                <button class="button" style="width: 50px;"><i class="uil uil-import"></i></button>
-                <button class='button detail-btn' >Completed</button>
-                </div>
-            </div>
-            <div class='detail-card'>
-                <div class='detail-card-content'>
-                    <p class="detail-title">Patient: L.A. Peter Parker</p>
-                    <p class='detail-comp'>Prescription ID: 12322  |  Doctor: M.S. Perera</p>
+                    <p class="detail-title">Patient: A.M.Jayasinghe</p>
+                    <p class='detail-comp'>Prescription ID: 12328  |  Doctor: W.A.N.Perera</p>
                     <!--div class='detail-details'
                         <p><i class='uil uil-calendar-alt'></i>hh</p>
                         <p><i class='uil uil-clock'></i>gg</p>

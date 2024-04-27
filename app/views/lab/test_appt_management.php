@@ -1,5 +1,7 @@
 <?php 
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
   if(($_SESSION['userType']) != 'Lab Assistant'){
     redirect("users/login");
   }
@@ -39,7 +41,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="" class="link flex">
+              <a href="../users/landing" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
               </a>
@@ -81,7 +83,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../lab/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -109,89 +111,86 @@
     </nav>
 
     <div class="content">
+    <div class="content-search">
+          <div class="search">
+          <h2>Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href=''><button class='button'>Add Lab Test</button></a></span></h2>
+              <form style="width: 100%;" method="POST">
+                <div class="fields">
+                  <table style="width: 95%;" >
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Patient Name</label>
+                            <input type="text" name="search_text" placeholder="Patient Name">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-field">
+                            <label>Patient ID</label>
+                            <input type="text" name="search_text" placeholder="Patient ID">
+                        </div>
+                      </td>
+                      <td>
+                        <input type="submit" class="button" value="Search" name="search" >
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </form>
+          </div>
+          
+        </div>
+        <br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Test Appointments Management</h1>
+                <!--<h1>Test Appointments Management</h1>-->
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Patient ID</th>
                             <th>Patient Name</th>
-                            <th>Test Name</th>
+                            <!--<th>Test Name</th>-->
                             <th>Date</th>
                             <th>Time</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>View</th>
+                            <!--<th>Delete</th>-->
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
+                            <td>001</td>
+                            <td>Morgan Stark</td>
+                            <!--<td>Complete Blood Count (CBC)</td>-->
                             <td>2023/10/12</td>
                             <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td><a href='lab_test_details'><button class='button'>View</button></a></td>
+                            <!--<td><a href=''><button class='button red'>Delete</button></a></td>-->
                         </tr>
                         <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
+                            <td>002</td>
+                            <td>B.H. Allen</td>
+                            <!--<td>Urine FR </td>-->
                             <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>10:40 AM</td>
+                            <td><a href='lab_test_details'><button class='button'>View</button></a></td>
+                            <!--<td><a href=''><button class='button red'>Delete</button></a></td>-->
                         </tr>
                         <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
+                            <td>003</td>
+                            <td>S.G. Rogers</td>
+                            <!--<td>Dengue Antigen</td>-->
                             <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                            <td>10:55 AM</td>
+                            <td><a href='lab_test_details'><button class='button'>View</button></a></td>
+                            <!--<td><a href=''><button class='button red'>Delete</button></a></td>-->
                         </tr>
-                        <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>L.A. Peter Parker</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>2023/10/12</td>
-                            <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
         </section>
     </div>
+    
+  
   </body>
 </html>

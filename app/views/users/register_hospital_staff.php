@@ -11,7 +11,7 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title><?php echo SITENAME; ?>: Hospital Staff Registration</title>
+   <title>Hospital Staff Regisration</title>
 </head>
 <body>
     <div class="container-signup" style="height: 720px;" >
@@ -41,18 +41,19 @@
                                 <option>Female</option>
                             </select>
                         </div>
+
+                        <div class="input-field">
+                            <label>Date of Birth*</label>
+                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>" required>
+                        </div>
+
                         <div class="input-field">
                             <label>NIC Number*</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" class="<?php echo (!empty($data['NIC_err'])) ? 'error' : '' ?>" required>
-                            <span class="err-msg"><?php echo $data['NIC_err']; ?></span>
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
-                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" class="<?php echo (!empty($data['C_num_err'])) ? 'error' : '' ?>" required>
-                            <span class="err-msg"><?php echo $data['C_num_err']; ?></span>
-                        </div>
-                        <div class="input-field">
-                            <input type="hidden" placeholder="" name="" value="<?php //echo $data['DOB'] ?>">
+                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
                         </div>
                     </div>
                 </div>
@@ -64,13 +65,9 @@
                         <div class="input-field">
                             <label>Hospital*</label>
                             <select name="hospital" required>
-                                <option selected value="<?php echo $data['Hospital'] ?>">
-                                    <?php echo ($data['Hospital'] == '') ? 'Select hospital' : $data['Hospital'] ?>
-                                </option>
-
-                                <?php foreach ($data['hospitalNames'] as $hospital) {
-                                    echo '<option value="' . $hospital->Hospital_Name . '">' . $hospital->Hospital_Name . '</option>';
-                                } ?>
+                                <option selected value="<?php echo $data['Hospital'] ?>" > <?php echo ($data['Hospital'] == '') ? 'Select hospital' : $data['Hospital'] ?></option>
+                                <option value="Asiri Hospitals - Kirula Rd">Asiri Hospitals - Kirula Rd.</option>
+                                <option value="Lanka Hospitals - Nugegoda">Lanka Hospitals - Nugegoda</option>
                             </select>
                         </div>
                         <div class="input-field">
@@ -134,7 +131,7 @@
                 
             </div>
         </form>
-    </div>
+</div>
 
     <script src="<?php echo URLROOT; ?>/js/signup.js"></script>
 </body>

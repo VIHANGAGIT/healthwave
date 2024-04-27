@@ -5,19 +5,17 @@
                 session_start(); 
             }
             $this->adminModel = $this->model('admins');
-            $this->userModel = $this->model('user');
-            $this->doctorModel = $this->model('doctors');
-            $this->testModel = $this->model('tests');
-            $this->hospitalModel = $this->model('hospitals');
-            $this->scheduleModel = $this->model('schedules');
         }
         public function index(){
+            
+            //$users = $this->userModel->getUsers();
             $data = [];
             
             $this->view('admin/dashboard', $data);
         }
 
         public function profile(){
+            // Get user data from session
             $data = [
                 'Uname' => $_SESSION['userEmail'],
                 'Name' => $_SESSION['userName'],
@@ -37,6 +35,10 @@
                 'Password' => $admin_data->Password
 
             ];
+
+
+
+            
             $this->view('admin/profile', $data);
         }
 
@@ -44,6 +46,7 @@
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
+            
             
             $data = [
                 'Uname' => $_SESSION['userEmail'],
@@ -75,6 +78,8 @@
                     'Pass_err' => '',
                     'C_pass_err' => ''
                 ];
+
+                
 
                 // Validate Email
                 if(empty($data['Email'])){
@@ -153,296 +158,154 @@
 
                 // Load view
         
-                $this->view('admin/profile_update', $data);
-            }
+            $this->view('admin/profile_update', $data);
         }
+
+        }
+        
+
         public function approvals(){
             $data = [];
             $this->view('admin/approvals', $data);
         }
 
         public function doc_management(){
-            $data = [];
-            //$doctor =  new Doctors();
-            //$doctors = $doctor->getAllDoctors();
-            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
-                // Get search parameters from the form
-                $doctorName = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
-                $hospitalName = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
-                $specialization = isset($_POST['specialization']) ? $_POST['specialization'] : null;
-        
-                // Perform the search based on the parameters
-                $doctors = $this->doctorModel->search_doctors($doctorName, $hospitalName, $specialization);
-        
-            } else {
-                $doctors = $this->doctorModel->getAllDoctors();
-
-            }
-            $hospitals = $this->adminModel->getHospitals();
-
-            $specializations = [];
-
-            foreach ($doctors as $doctor) {
-                if (!in_array($doctor->Specialization, $specializations)) {
-                    $specializations[] = $doctor->Specialization;
-                }
-                if($this->adminModel->get_appointments($doctor->Doctor_ID)){
-                    $doctor->Cancel = 'Not allowed';
-                }else{
-                    $doctor->Cancel = 'Allowed';
-                }
-            }
             $data = [
-                'doctors' => $doctors,
-                'hospitals' => $hospitals,
-                'specializations' => $specializations
+                'doctors' => $this->adminModel->getDoctors()
             ];
             $this->view('admin/doc_management', $data);
         }
 
         public function test_management(){
-
-            $data = [];
-            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
-                // Get search parameters from the form
-                $T_Name = isset($_POST['T_Name']) ? $_POST['T_Name'] : null;
-                $T_ID = isset($_POST['T_ID']) ? $_POST['T_ID'] : null;
-                $T_Type = isset($_POST['T_Type']) ? $_POST['T_Type'] : null;
-        
-                // Perform the search based on the parameters
-                $tests = $this->testModel->search_tests_with_id($T_Name, $T_ID, $T_Type);
-        
-            } else {
-                $tests = $this->testModel->get_all_tests();
-
-            }
-
-            $types = [];
-
-            foreach ($tests as $test) {
-                if (!in_array($test->Test_Type, $types)) {
-                    $types[] = $test->Test_Type;
-                }
-                if($this->adminModel->get_appointments_test($test->Test_ID)){
-                    $test->Cancel = 'Not allowed';
-                }else{
-                    $test->Cancel = 'Allowed';
-                }
-            }
             $data = [
-                'tests' => $tests,
-                'types' => $types
+                'tests' => $this->adminModel->getTests()
             ];
             $this->view('admin/test_management', $data);
         }
 
         public function hospital_management(){
-            $data = [];
-            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
-                // Get search parameters from the form
-                $H_name = isset($_POST['H_name']) ? $_POST['H_name'] : null;
-                $H_ID = isset($_POST['H_ID']) ? $_POST['H_ID'] : null;
-                $H_region = isset($_POST['H_region']) ? $_POST['H_region'] : null;
-        
-                // Perform the search based on the parameters
-                $hospitals = $this->hospitalModel->search_hospitals($H_name, $H_ID, $H_region);
-        
-            } else {
-                $hospitals = $this->hospitalModel->getAllHospitals();
-
-            }
-
-            $regions = [];
-
-            foreach ($hospitals as $hospital) {
-                if (!in_array($hospital->Region, $regions)) {
-                    $regions[] = $hospital->Region;
-                }
-                if($this->adminModel->get_appointments_hospital($hospital->Hospital_ID)){
-                    $hospital->Cancel = 'Not allowed';
-                }else{
-                    $hospital->Cancel = 'Allowed';
-                }
-            }
             $data = [
-                'hospitals' => $hospitals,
-                'regions' => $regions
+                'hospitals' => $this->adminModel->getHospitals()
+
             ];
             $this->view('admin/hospital_management', $data);
-            
         }
 
-        public function doc_reservations(){
+        public function reservations(){
             $data = [];
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                if(isset($_POST['app_search'])){
-                    // Get search parameters from the form
-                    $patient_name = isset($_POST['patient_name']) ? $_POST['patient_name'] : null;
-                    $doctor_name = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
-                    $hospital_name = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
-                    $date = isset($_POST['date']) ? $_POST['date'] : null;
-
-                    // Perform the search based on the parameters
-                    $doc_appointments = $this->adminModel->search_doc_appointments($patient_name, $doctor_name, $hospital_name, $date);
-
-                    foreach ($doc_appointments as $key => $appointment) {
-                        if ($appointment->Date == date('Y-m-d') && $appointment->Time_End < date('H:i:s')) {
-                            unset($doc_appointments[$key]);
-                        }
-                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
-                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
-                    }
-
-                    $data = [
-                        'doc_appointments' => $doc_appointments
-                    ];
-                    $this->view('admin/doc_reservations', $data);
-
-                 }
-                
-            } else {
-                $this->view('admin/doc_reservations', $data);
-            }
-            $this->view('admin/doc_reservations', $data);
-        }
-
-        public function test_reservations(){
-            $data = [];
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                if(isset($_POST['test_search'])){
-                    // Get search parameters from the form
-                    $patient_name = isset($_POST['patient_name']) ? $_POST['patient_name'] : null;
-                    $test_name = isset($_POST['test_name']) ? $_POST['test_name'] : null;
-                    $hospital_name = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
-                    $date = isset($_POST['date']) ? $_POST['date'] : null;
-            
-                    // Perform the search based on the parameters
-                    $test_appointments = $this->adminModel->search_test_appointments($patient_name, $test_name, $hospital_name, $date);
-
-                    foreach ($test_appointments as $key => $appointment) {
-                        if ($appointment->Date == date('Y-m-d') && $appointment->Start_Time > date('H:i:s')) {
-                            unset($test_appointments[$key]);
-                        }
-                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
-                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
-                    }
-
-                    $data = [
-                        'test_appointments' => $test_appointments
-                    ];
-                    $this->view('admin/test_reservations', $data);
-                }
-                
-            } else {
-                $this->view('admin/test_reservations', $data);
-            }
-            $this->view('admin/test_reservations', $data);
+            $this->view('admin/reservations', $data);
         }
 
         public function add_hospital(){
-            // Check for POST request
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+             // Check for POST request
+             if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-               // Sanitize strings
-               $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                // Sanitize strings
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-               // Register user
-               $data = [
-                   'H_name' => trim($_POST['hname']),
-                   'H_address' => trim($_POST['haddress']),
-                   'Region' => trim($_POST['region']),
-                   'H_charge' => trim($_POST['hcharge']),
-                   'C_num' => trim($_POST['cnum']),
-                   'H_name_err' => '',
-                   'H_address_err' => '',
-                   'Region_err' => '',
-                   'H_charge_err' => '',
-                   'C_num_err' => ''
-               ];
+                // Register user
+                $data = [
+                    'H_name' => $_POST['hname'],
+                    'H_address' => $_POST['haddress'],
+                    'Region' => trim($_POST['region']),
+                    'H_charge' => trim($_POST['hcharge']),
+                    //'M_ID' => trim($_POST['managerid']),
+                    'C_num' => trim($_POST['cnum']),
+                    'H_name_err' => '',
+                    'H_address_err' => '',
+                    'Region_err' => '',
+                    'H_charge_err' => '',
+                    'M_ID_err' => '',
+                    'C_num_err' => ''
+                ];
 
-               // Validate Hospital Name
-               if (empty($data['H_name'])) {
-                   $data['H_name_err'] = 'Please enter hospital name';
-               } else {
-                   // Check for duplicate hospital names
-                   if ($this->hospitalModel->findHospitalByName($data['H_name'])) {
-                       $data['H_name_err'] = 'Hospital name already exists';
-                   }
-               }
-
-               // Validate Hospital Address
-               if (empty($data['H_address'])) {
-                   $data['H_address_err'] = 'Please enter hospital address';
-               } else if ($data['H_name_err'] == ''){
-                   // Check if the hospital address already exists in the database
-                   if ($this->hospitalModel->findHospitalByAddress($data['H_address'])) {
-                       $data['H_address_err'] = 'This address is already taken';
-                   }
-               }
-
-               // Validate Region
-               if(empty($data['Region'])){
-                   $data['Region_err'] = 'Please enter region';
-               }
-
-               // Validate Hospital Charge
-               if(empty($data['H_charge'])){
-                   $data['H_charge_err'] = 'Please enter hospital charge';
-               }else{
-                   if($data['H_charge'] > 25000){
-                       $data['H_charge_err'] = 'Charge must be less than 25000';
-                   }
-               }
-
-               // Validate Contact Number
-               if(empty($data['C_num'])){
-                   $data['C_num_err'] = 'Please enter contact number';
-               } else {
-                   // Remove any non-numeric characters from the input
-                   $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
-
-                   if(strlen($cleaned_number) !== 10){
-                       $data['C_num_err'] = 'Invalid Number';
-                   }else{
-                    if(substr($cleaned_number, 0, 1) != '0'){
-                        $data['C_num_err'] = 'Invalid Number';
+                // Validate Hospital Name
+                if (empty($data['H_name'])) {
+                    $data['H_name_err'] = 'Please enter hospital name';
+                } else {
+                    // Check for duplicate hospital names
+                    if ($this->adminModel->findHospitalByName($data['H_name'])) {
+                        $data['H_name_err'] = 'Hospital name already exists';
                     }
-                   }
-               }
+                }
+
+                // Validate Hospital Address
+                if (empty($data['H_address'])) {
+                    $data['H_address_err'] = 'Please enter hospital address';
+                } else {
+                    // Check if the hospital address already exists in the database
+                    if ($this->adminModel->findHospitalByAddress($data['H_address'])) {
+                        $data['H_address_err'] = 'This hospital address is already taken';
+                    }
+                }
+
+                // Validate Region
+                if(empty($data['Region'])){
+                    $data['Region_err'] = 'Please enter region';
+                }
+
+                // Validate Hospital Charge
+                if(empty($data['H_charge'])){
+                    $data['H_charge_err'] = 'Please enter hospital charge';
+                }
+
+                // Validate Manager ID
+                // if(empty($data['M_ID'])){
+                //     $data['M_ID_err'] = 'Please enter manager ID';
+                // }
+
+                // Validate Contact Number
+                if(empty($data['C_num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
+
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
+                    } else {
+                        // Proceed with other validations if needed
+                    }
+                }
 
 
-               // Check whether errors are empty
-               if(empty($data['H_name_err']) && empty($data['H_address_err']) && empty($data['Region_err']) && empty($data['H_charge_err']) && empty($data['C_num_err'])){
-                   // Register user
-                   if($this->adminModel->add_hospital($data)){
-                       redirect('admin/hospital_management');
-                   } else{
-                       die("Couldn't register the hospital! ");
-                   }
-               } else {
-                   // Load view with errors
-                   $this->view('admin/add_hospital', $data);
-               }
+                // Check whether errors are empty
+                if(empty($data['H_name_err']) && empty($data['H_address_err']) && empty($data['Region_err']) && empty($data['H_charge_err']) && empty($data['C_num_err'])){
+                    // Register user
+                    if($this->adminModel->add_hospital($data)){
+                        redirect('admin/hospital_management');
+                    } else{
+                        die("Couldn't register the hospital! ");
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('admin/add_hospital', $data);
+                }
 
-           }else{
-               // Get data
-               $data = [
-                   'H_name' => '',
-                   'H_address' => '',
-                   'Region' => '',
-                   'H_charge' => '',
-                   'C_num' => '',
-                   'H_name_err' => '',
-                   'H_address_err' => '',
-                   'Region_err' => '',
-                   'H_charge_err' => '',
-                   'C_num_err' => ''
-               ];
 
-               // Load view
-               $this->view('admin/add_hospital', $data);
-           }
-       }
+            }else{
+                // Get data
+                $data = [
+                    'H_name' => '',
+                    'H_address' => '',
+                    'Region' => '',
+                    'H_charge' => '',
+                    //'M_ID' => '',
+                    'C_num' => '',
+                    'H_name_err' => '',
+                    'H_address_err' => '',
+                    'Region_err' => '',
+                    'H_charge_err' => '',
+                    'M_ID_err' => '',
+                    'C_num_err' => ''
+                ];
+
+                // Load view
+                $this->view('admin/add_hospital', $data);
+            }
+        }
+
         public function add_doctor(){
             // Check for POST request
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -461,7 +324,6 @@
                     'Spec' => $_POST['spec'],
                     'SLMC' => $_POST['slmc'],
                     'Avail' => 1,
-                    'Charges' => $_POST['charges'],
                     'Uname' => trim($_POST['email']),
                     'Pass' => trim($_POST['pass']),
                     'C_pass' => trim($_POST['cpass']),
@@ -471,7 +333,6 @@
                     'C_num_err' => '',
                     'DOB_err' => '',
                     'SLMC_err' => '',
-                    'Char_err' => '',
                     'NIC_err' => ''
                 ];
                 // Validate Contact Number
@@ -484,6 +345,8 @@
                     // Check if the cleaned number is not exactly 10 digits long
                     if(strlen($cleaned_number) !== 10){
                         $data['C_num_err'] = 'Invalid Number';
+                    } else {
+                        // Proceed with other validations if needed
                     }
                 }
 
@@ -495,49 +358,36 @@
                     $data['DOB_err'] = 'Doctor must be atleast 18 years old';
                 }
 
-                if (empty($data['SLMC'])) {
-                    $data['SLMC_err'] = 'Please enter SLMC registration number';
-                } else {
-                    $slmc = $data['SLMC'];
-                    if (strlen($slmc) < 4 || strlen($slmc) > 5) {
-                        $data['SLMC_err'] = 'SLMC registration number must be between 4 and 5 digits';
-                    }
-                    if($this->doctorModel->findDoctorBySLMC($slmc)){
-                        $data['SLMC_err'] = 'Another doctor already has this SLMC';
-                    }
+                //validate SLMC number
+                if(empty($data['SLMC'])){
+                    $data['SLMC_err'] = 'Please enter SLMC number';
+                }else{
+                    if (!preg_match('/^\d{5}$/', $data['SLMC'])) {
+                        // Invalid SLMC Number
+                        $data['SLMC_err'] = "SLMC number must be a 5-digit number.";
+                    } 
                 }
 
-                if (empty($data['Charges'])) {
-                    $data['Char_err'] = 'Please enter charges';
-                } else {
-                    $charge = $data['Charges'];
-                    if ($charge > 25000 ) {
-                        $data['Char_err'] = 'Charges must be less than 25000';
-                    }
-                }
-
+                // Validate NIC number
                 if (empty($data['NIC'])) {
                     $data['NIC_err'] = 'Please enter NIC number';
                 } else {
-                    $nic = $data['NIC'];
-                    if (strlen($nic)!=10 && strlen($nic)!=12){
-                        $data['NIC_err'] = 'Invalid NIC number';
-                    }
-                    if (strlen($nic) == 10){
-                        $lastChar = strtoupper(substr($nic, 9, 1)); // Get the last character and convert to uppercase
+                    // Remove any spaces or hyphens from the NIC number
+                    $nic = str_replace([' ', '-'], '', $data['NIC']);
 
-                        if ($lastChar !== 'V') {
-                            $data['NIC_err'] = 'Invalid NIC number';
-                        }
-                        if(!is_numeric(substr($nic, 0, 9))){
-                            $data['NIC_err'] = 'Invalid NIC number';
-                        }
-                    }
-                    // }
-                    if (strlen($nic) == 12 && !is_numeric($nic)){
+                    // Define regex patterns for the two NIC formats
+                    $pattern1 = '/^\d{9}[VX]$/i';  // Format: 9 digits followed by 'V' or 'X'
+                    $pattern2 = '/^\d{12}$/';       // Format: 12 digits
+
+                    // Check if the NIC number matches either pattern
+                    if (!preg_match($pattern1, $nic) && !preg_match($pattern2, $nic)) {
                         $data['NIC_err'] = 'Invalid NIC number';
                     }
                 }
+
+                
+
+
 
 
                 // Validate Email
@@ -545,7 +395,7 @@
                     $data['Uname_err'] = 'Please enter your email';
                 } else{
                     // Check for duplicates
-                    if($this->userModel->findUserByUname($data['Uname'])){
+                    if($this->adminModel->findUserByUname($data['Uname'])){
                         $data['Uname_err'] = 'Another account already has this email';
                     }
                 }
@@ -588,7 +438,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['DOB_err'])&& empty($data['SLMC_err'])&& empty($data['Char_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['DOB_err'])&& empty($data['SLMC_err'])&& empty($data['NIC_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 
@@ -603,6 +453,7 @@
                     $this->view('admin/add_doctor', $data);
                 }
 
+
             }else{
                 // Get data
                 $data = [
@@ -615,7 +466,6 @@
                     'Spec' => '',
                     'SLMC' => '',
                     'Avail' => '',
-                    'Charges' => '',
                     'Uname' => '',
                     'Pass' => '',
                     'C_pass' => '',
@@ -625,7 +475,6 @@
                     'C_num_err' => '',
                     'DOB_err' => '',
                     'SLMC_err' => '',
-                    'Char_err' => '',
                     'NIC_err' => ''
                 ];
 
@@ -653,11 +502,6 @@
             // Validate Test Name
             if(empty($data['T_name'])){
                 $data['T_name_err'] = 'Please enter test name';
-            }else{
-                // Check for duplicate test names
-                if($this->testModel->findTestByName($data['T_name'])){
-                    $data['T_name_err'] = 'Test already exists';
-                }
             }
 
             // Validate Test Type
@@ -693,7 +537,9 @@
         }
         }
 
-        public function edit_test() {
+        public function update_test() {
+            
+
              //check for POST request
              if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 // Sanitize POST array
@@ -711,12 +557,6 @@
                 // Validate Test Name
                 if(empty($data['T_name'])){
                     $data['Test_Name_err'] = 'Please enter test name';
-                }else{
-                    // Check for duplicate test names
-                    $existing_test = $this->testModel->findTestByName($data['T_name']);
-                    if($existing_test && $data['T_type'] && $existing_test->Test_Type == $data['T_type']){
-                        $data['T_name_err'] = 'Test already exists';
-                    }
                 }
 
                 // Validate Test Type
@@ -725,7 +565,7 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['T_name_err']) && empty($data['T_type_err'])){
+                if(empty($data['Test_Name_err']) && empty($data['T_type_err'])){
                     // Register user
                     if($this->adminModel->update_test($data)){
                         redirect('admin/test_management');
@@ -734,7 +574,7 @@
                     }
                 } else {
                     // Load view with errors
-                    $this->view('admin/edit_test', $data);
+                    $this->view('admin/update_test', $data);
                 }
 
             }else{
@@ -745,17 +585,15 @@
                 $data = [
                     'ID' => $test_data->Test_ID,
                     'T_name' => $test_data->Test_Name,
-                    'T_type' => $test_data->Test_Type,
-                    'T_name_err' => '',
-                    'T_type_err' => ''
+                    'T_type' => $test_data->Test_Type
                 ];
                 
                 // Load view
-                $this->view('admin/edit_test', $data);
+                $this->view('admin/update_test', $data);
             }
 
             // Load view
-            $this->view('admin/edit_test', $data);
+            $this->view('admin/update_test', $data);
         }
     
         public function edit_hospital(){
@@ -771,11 +609,13 @@
                     'H_address' => trim($_POST['haddress']),
                     'Region' => trim($_POST['region']),
                     'H_charge' => trim($_POST['hcharge']),
+                    //'M_ID' => trim($_POST['managerid']),
                     'C_num' => trim($_POST['cnum']),
                     'H_name_err' => '',
                     'H_address_err' => '',
                     'Region_err' => '',
                     'H_charge_err' => '',
+                    'M_ID_err' => '',
                     'C_num_err' => ''
                 ];
 
@@ -797,11 +637,12 @@
                 // Validate Hospital Charge
                 if(empty($data['H_charge'])){
                     $data['H_charge_err'] = 'Please enter hospital charge';
-                }else{
-                    if($data['H_charge'] > 25000){
-                        $data['H_charge_err'] = 'Charge must be less than 25000';
-                    }
                 }
+
+                // Validate Manager ID
+                // if(empty($data['M_ID'])){
+                //     $data['M_ID_err'] = 'Please enter manager ID';
+                // }
 
                  // Validate Contact Number
                  if(empty($data['C_num'])){
@@ -810,12 +651,11 @@
                     // Remove any non-numeric characters from the input
                     $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
 
+                    // Check if the cleaned number is not exactly 10 digits long
                     if(strlen($cleaned_number) !== 10){
                         $data['C_num_err'] = 'Invalid Number';
                     } else {
-                        if(substr($cleaned_number, 0, 1) != '0'){
-                            $data['C_num_err'] = 'Invalid Number';
-                        }
+                        // Proceed with other validations if needed
                     }
                 }
 
@@ -858,16 +698,17 @@
                 // Load view
                 $this->view('admin/edit_hospital', $data);
             }
-        }
+         
+           }
            
-        public function remove_test(){
+           public function remove_test(){
             $test_id = $_GET['test_id'];
             if($this->adminModel->remove_test($test_id)){
                 redirect('admin/test_management');
             } else{
                 die("Couldn't remove the test! ");
             }    
-        }
+    }
 
         public function remove_doctor(){
             $doc_id = $_GET['doc_id'];
@@ -886,273 +727,5 @@
                 die("Couldn't remove the hospital! ");
             }    
         }
-
-        public function remove_reservation(){
-            $res_id = $_GET['res_id'];
-            if($this->doctorModel->delete_reservation($res_id)){
-                redirect('admin/doc_reservations');
-            } else{
-                die("Couldn't remove the reservation! ");
-            }    
-        }
-
-        public function edit_reservation(){
-            //check for POST request
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                // Sanitize POST array
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                //add test
-                $data = [
-                    'res_id' => $_POST['res_id'],
-                    'date' => $_POST['date'],
-                    'app_no' => $_POST['app_no'],
-                    'time' => $_POST['time']
-                ];
-
-                $data['start_time'] = substr($data['time'], 0, 8);
-                $data['end_time'] = substr($data['time'], 11, 8);
-                
-                if($this->adminModel->edit_reservation($data)){
-                    redirect('admin/doc_reservations');
-                }else{
-                    die("Couldn't edit the reservation! ");
-                }
-
-            }else{
-                
-                $res_id = $_GET['res_id'];
-
-                $reservation_data = $this->adminModel->reservation_data_fetch($res_id);
-                $schedule_data = $this->adminModel->get_schedule_days($reservation_data->Doctor_ID, $reservation_data->Hospital_ID);
-
-                $nextDates = array();
-
-
-                foreach ($schedule_data as $dayObj) {
-                    $dayOfWeek = $dayObj->Day_of_Week;
-                
-                    $today = new DateTime();
-                
-                    // Get the current day of the week (numeric representation, 0 for Sunday, 6 for Saturday)
-                    $currentDayOfWeek = $today->format('w');
-                
-                    $providedDayOfWeek = date('w', strtotime($dayOfWeek));
-                
-                    // Calculate the difference between the current day of the week and the provided day
-                    $difference = ($providedDayOfWeek - $currentDayOfWeek + 7) % 7;
-                
-                    // Modify the date based on the difference
-                    $nextDate = $today->modify("+$difference days");
-                   
-                    $nextDateFormatted = $nextDate->format('Y-m-d');
-
-                    if($nextDateFormatted != $reservation_data->Date){
-                        $nextDates[] = $nextDateFormatted;
-                    }
-                }
-                
-                
-                $data = [
-                    'res_id' => $reservation_data->Doc_Res_ID,
-                    'patient_name' => $reservation_data->First_Name. ' '. $reservation_data->Last_Name,
-                    'nic' => $reservation_data->NIC,
-                    'date' => $reservation_data->Date,
-                    'app_no' => $reservation_data->Appointment_No,
-                    'time' => $reservation_data->Start_Time. ' - '. $reservation_data->End_Time,
-                    'next_dates' => $nextDates,
-                    'hospital_id' => $reservation_data->Hospital_ID,
-                    'doctor_id' => $reservation_data->Doctor_ID
-                ];
-                
-                // Load view
-                $this->view('admin/edit_reservation', $data);
-            }
-        }
-
-        public function get_appointment_data(){
-            $hospital_id = $_POST['hospital_id'];
-            $doctor_id = $_POST['doctor_id'];
-            $date = $_POST['date'];
-            
-            $scheduleData = $this->scheduleModel->get_schedule_by_hospital_doctor($hospital_id, $doctor_id);
-
-    
-            $responseData = array();
-    
-            foreach ($scheduleData as $schedule) {
-                if ($schedule->Day_of_Week != date('D', strtotime($date))) {
-                    continue;
-                }
-
-                // Fetch booked slots for the current schedule
-                $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID, $date);
-    
-                $lastBookedAppointmentNumber = 0;
-    
-                // Determine the last booked appointment number
-                foreach ($bookedSlots as $bookedSlot) {
-                    $lastBookedAppointmentNumber = max($lastBookedAppointmentNumber, $bookedSlot->Appointment_No);
-                }
-    
-                // Generate time slots with 15-minute intervals
-                $startTime = strtotime($schedule->Time_Start);
-                $endTime = strtotime($schedule->Time_End);
-                $timeSlots = array();
-                while ($startTime < $endTime) {
-                    $timeSlots[] = array(
-                        'start_time' => date('H:i:s', $startTime),
-                        'end_time' => date('H:i:s', $startTime + 900),
-                    );
-                    $startTime += 900;
-                }
-                $nextAppointmentNumber = $lastBookedAppointmentNumber + 1; 
-    
-                $slotIndex = ceil($nextAppointmentNumber / 2); 
-    
-                if ($slotIndex <= count($timeSlots)) {
-                    $nextTimeSlot = $timeSlots[$slotIndex - 1]; 
-                } else {
-                    $nextTimeSlot = null;
-                }
-
-                $time = $nextTimeSlot['start_time']. ' - '. $nextTimeSlot['end_time'];
-    
-    
-                // Add data to responseData
-                $responseData[] = array(
-                    'time' => $time,
-                    'app_no' => $nextAppointmentNumber
-                );
-            }
-    
-            // Send JSON response with schedule data
-            echo json_encode($responseData);
-            
-        }
-
-        public function edit_test_reservation(){
-            $data = [];
-
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                // Sanitize POST array
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                //add test
-                $data = [
-                    'res_id' => $_POST['res_id'],
-                    'date' => $_POST['date'],
-                    'time' => $_POST['time'],
-                    'test_date_err' => ''
-                ];
-
-                $data['start_time'] = substr($data['time'], 0, 5). ':00';
-                $data['end_time'] = substr($data['time'], 8, 5). ':00';
-
-
-
-                // Validate Test Date
-                if(empty($data['date'])){
-                    $data['test_date_err'] = 'Please enter test date';
-                }else{
-                    $today = date('Y-m-d');
-                    if($data['date'] <= $today){
-                        $data['test_date_err'] = 'Test date must be after today';
-                    }
-                    if(date_diff(date_create($data['date']), date_create($today))->format('%a') > 30){
-                        $data['test_date_err'] = 'Test date must be within 30 days from today';
-                    }
-                }
-
-                if(empty($data['test_date_err'])){
-                    if($this->adminModel->edit_test_reservation($data)){
-                        redirect('admin/test_reservations');
-                    }else{
-                        die("Couldn't edit the reservation! ");
-                    }
-                }else{
-                    $reservation_data = $this->adminModel->test_reservation_data_fetch($data['res_id']);
-                    $data['patient_name'] = $reservation_data->First_Name. ' '. $reservation_data->Last_Name;
-                    $data['nic'] = $reservation_data->NIC;
-                    $data['hospital_id'] = $reservation_data->Hospital_ID;
-                    $this->view('admin/edit_test_reservation', $data);
-                }
-            }else{
-                    
-                $res_id = $_GET['res_id'];
-
-                $reservation_data = $this->adminModel->test_reservation_data_fetch($res_id);
-
-                // $nextDates = array();
-
-                // $Date = $reservation_data->Date;
-                // $Date = new DateTime($Date);
-
-                // for ($i=0; $i < 7; $i++) { 
-                //     $nextDate = $Date->modify("+1 day");
-                //     $nextDateFormatted = $nextDate->format('Y-m-d');
-                //     $nextDates[] = $nextDateFormatted;
-                // } 
-
-
-                $data = [
-                    'res_id' => $reservation_data->Test_Res_ID,
-                    'patient_name' => $reservation_data->First_Name. ' '. $reservation_data->Last_Name,
-                    'nic' => $reservation_data->NIC,
-                    'date' => $reservation_data->Date,
-                    'time' => $reservation_data->Start_Time. ' - '. $reservation_data->End_Time,
-                    'hospital_id' => $reservation_data->Hospital_ID,
-                    'test_id' => $reservation_data->Test_ID,
-                    'test_date_err' => '',
-                    // 'next_dates' => $nextDates
-                ];
-
-            }
-
-    
-                    
-            $this->view('admin/edit_test_reservation', $data);
-        }
-
-        public function get_reservation_times(){
-            $seleted_date = $_POST['date'];
-            $hospital_id = $_POST['hospital_id'];
-
-            $startTime1 = strtotime('9:00');
-            $endTime1 = strtotime('12:00');
-            $startTime2 = strtotime('13:00');
-            $endTime2 = strtotime('15:00');
-
-            $timeSlots = array();
-
-            // Loop to generate time slots
-            while ($startTime1 < $endTime1) {
-                $slotStart = date('H:i', $startTime1);
-                $startTime1 += (900); // Add 15 minutes
-                $slotEnd = date('H:i', $startTime1);
-                $timeSlots[] = array('start_time' => $slotStart, 'end_time' => $slotEnd);
-            }
-
-            while ($startTime2 < $endTime2) {
-                $slotStart = date('H:i', $startTime2);
-                $startTime2 += (900); // Add 15 minutes
-                $slotEnd = date('H:i', $startTime2);
-                $timeSlots[] = array('start_time' => $slotStart, 'end_time' => $slotEnd);
-            }
-
-
-            $bookedSlots = $this->testModel->fetch_booked_slots($hospital_id, $seleted_date);
-            
-            foreach ($bookedSlots as $bookedSlot) {
-                foreach ($timeSlots as $key => $timeSlot) {
-                    if ($timeSlot['start_time'] == $bookedSlot->Start_Time && $timeSlot['end_time'] == $bookedSlot->End_Time) {
-                            unset($timeSlots[$key]);
-                    }
-                }
-            }
-
-            // Send JSON response with schedule data
-            echo json_encode($timeSlots);
-        }
-
     }
+?>

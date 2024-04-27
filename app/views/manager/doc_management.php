@@ -87,6 +87,18 @@
                 <span>Reservations</span>
               </a>
             </li>
+            <li class="item">
+              <a href="../manager/Schedules" class="link flex">
+                <i class="uil uil-calender"></i>
+                <span>Schedules</span>
+              </a>
+            </li>
+          <li class="item">
+              <a href="../manager/room_management" class="link flex">
+                <i class="uil uil-house-user"></i>
+                <span>Room Management</span>
+              </a>
+            </li>
           </ul>
 
           <ul class="menu_item">
@@ -94,7 +106,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../manager/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>

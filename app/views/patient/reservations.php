@@ -1,4 +1,5 @@
 <?php 
+  session_start();
   if(($_SESSION['userType']) != 'Patient'){
     redirect("users/login");
   }
@@ -10,7 +11,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?>: Reservations</title>
+    <title><?php echo SITENAME; ?></title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -44,6 +45,12 @@
                 <span>Home</span>
               </a>
             </li>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="uil uil-info-circle"></i>
+                <span>About Us</span>
+              </a>
+            </li>
           </ul>
 
           <ul class="menu_item">
@@ -71,7 +78,7 @@
             <li class="item">
               <a href="../patient/medical_records" class="link flex">
                 <i class="uil uil-file-alt"></i>
-                <span>Medical History</span>
+                <span>Medical Records</span>
               </a>
             </li>
           </ul>
@@ -112,83 +119,90 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Doctor Reservations</h1>
-                <hr>
-                <?php if (empty($data['doc_reservations'])): ?>
-                  <br>
-                    <div class="error-msg">
-                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
-                        <p>No upcoming doctor reservations available</p>
-                    </div>
-                <?php else: ?>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Doctor</th>
-                            <th>Hospital</th>
+                            <th>Location</th>
                             <th>Date</th>
                             <th>Time</th>
-                            <th>Details</th>
-                            <th>Cancel</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                      <?php foreach($data['doc_reservations'] as $doc_reservation): ?>
-                          <tr>
-                              <td>Dr. <?php echo $doc_reservation->First_Name . ' ' . $doc_reservation->Last_Name; ?></td>
-                              <td><?php echo $doc_reservation->Hospital_Name; ?></td>
-                              <td><?php echo $doc_reservation->Date; ?></td>
-                              <td><?php echo $doc_reservation->Start_Time . ' - ' . $doc_reservation->End_Time; ?></td>
-                              <td><a href=''><button class='button'>Details</button></a></td>
-                              <td><button id="btn-cancel" class='button red doc-cancel-btn' data-doc-reservation-id="<?php echo $doc_reservation->Doc_Res_ID; ?>" <?php echo ($doc_reservation->allow_cancel == false ? 'disabled' : '') ?>>Cancel</button></td>
-                          </tr>
-                        <?php endforeach; ?>
+                        <tr>
+                            <td>Dr. M.S. Perera</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>Dr. M.S. Perera</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>Dr. M.S. Perera</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
                     </tbody>
                 </table>
-                <?php endif; ?>
             </div>
         </section>
         <br>
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Lab Tests Reservations</h1>
-                <hr>
-                <?php if (empty($data['test_reservations'])): ?>
-                  <br>
-                    <div class="error-msg">
-                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
-                        <p>No upcoming test reservations available</p>
-                    </div>
-                <?php else: ?>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Test Name</th>
-                            <th>Hospital</th>
+                            <th>Location</th>
                             <th>Date</th>
                             <th>Time</th>
-                            <th>Details</th>
-                            <th>Cancel</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($data['test_reservations'] as $test_reservation): ?>
-                            <tr>
-                                <td><?php echo $test_reservation->Test_Name; ?></td>
-                                <td><?php echo $test_reservation->Hospital_Name; ?></td>
-                                <td><?php echo $test_reservation->Date; ?></td>
-                                <td><?php echo $test_reservation->Start_Time . ' - ' . $test_reservation->End_Time; ?></td>
-                                <td><a href=''><button class='button'>Details</button></a></td>
-                                <td><button id="btn-cancel" class='button red test-cancel-btn' data-test-reservation-id="<?php echo $test_reservation->Test_Res_ID; ?>">Cancel</button></td>
-                            </tr>
-                        <?php endforeach; ?>
+                        <tr>
+                            <td>Lipid Profile</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>14:00 PM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>Lipid Profile</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>14:00 PM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>Lipid Profile</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>14:00 PM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
                     </tbody>
                 </table>
-                <?php endif; ?>
             </div>
         </section>
     </div>
-    <br><br>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="<?php echo URLROOT;?>/js/reservations.js" defer></script>
   </body>
 </html>

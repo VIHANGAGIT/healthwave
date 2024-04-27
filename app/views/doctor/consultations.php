@@ -9,52 +9,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?>: Past Consultations</title>
+    <title><?php echo SITENAME; ?></title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
-
-      <div class="popup-container-4 ">
-        <div class="popup-box-4">
-            <h1>Consultation Details</h1><br>
-            <hr>
-            <table style="width: 95%;">
-              
-              <tr>
-                <td class="popup-data">
-                  <br>
-                  <span class="category" >Patient Name: </span><span id="patient-name-popup-4"></span>
-                  <br>
-                  <span class="category">Gender: </span> <span id="patient-gender-popup-4"></span>
-                  <br>
-                  <span class="category">Age: </span> <span id="patient-age-popup-4"></span>
-                  <br>
-                </td>
-                <td class="popup-data">
-                  <span class="category">Blood Group: </span> <span id="patient-blood-popup-4"></span>
-                  <br>
-                  <span class="category">Allergies: </span> <span id="patient-allergies-popup-4"></span>
-                  <br>
-                  </td>
-              </tr>
-              <tr>
-                <td class="popup-data" colspan="2">
-                    <span class="category">Comments: </span> <span id="patient-comments-popup-4"></span>
-                </td>
-              </tr>
-              <!-- <tr>
-                <td class="popup-data" colspan="2">
-                    <br><a href=""><button class="close-btn btn" id="pay" >Prescription</button></a>
-                </td>
-              </tr> -->
-            </table>
-        </div>
-    </div>
-
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -82,6 +43,12 @@
                 <span>Home</span>
               </a>
             </li>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="uil uil-info-circle"></i>
+                <span>About Us</span>
+              </a>
+            </li>
           </ul>
 
           <ul class="menu_item">
@@ -101,8 +68,9 @@
                 <span>Past Consultations</span>
               </a>
             </li>
+          </ul>
 
-            <li class="item">
+          <li class="item">
               <a href="../doctor/ongoing_consults" class="link flex">
                 <i class="uil uil-stethoscope"></i>
                 <span>Ongoing Consultations</span>
@@ -143,60 +111,103 @@
     </nav>
 
     <div class="content">
+
+    <section class="table-wrap" >
+    <div class="content-search">
+          <div class="search">
+            <h2>Consulations Search</h2>
+              <form style="width: 100%;" method="POST">
+                <div class="fields">
+                  <table style="width: 95%;">
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Reservation ID</label>
+                            <input type="text" name="search_text" placeholder="Reservation ID">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-field">
+                        <label>Hospital Name</label>
+                          <select required>
+                              <option disabled selected>Select Hospital</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <input type="submit" class="button" value="Search" name="search" >
+                      </td>
+                    </tr>
+                    <tr>
+                      
+                      <td>
+                      <div class="input-field">
+                            <label>Date</label>
+                            <input type="date" name="search_text" placeholder="Date">
+                        </div>
+                      </td>
+                      <td>
+                        
+                      </td>
+                      <td>
+                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </form>
+              
+          </div>
+        </div>
+    </section><br>
         <section class="table-wrap" >
             <div class="table-container">
-              <h1>Past Consulations</h1>
-              <hr><br>
-              <?php if (empty($data['consultations'])): ?>
-                    <div class="error-msg">
-                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
-                        <p>No past consultation records available</p>
-                    </div>
-              <?php else: ?>
-              <table id="past-consults-table" class="table">
+                <h1>Past Consulations</h1>
+                <table class="table">
                     <thead>
                         <tr>
-                            
-                            <th style="text-align: center;">Reservation ID</th>
-                            <th style="text-align: center;">Patient Name</th>
-                            <th style="text-align: center;">Hospital</th>
-                            <th style="text-align: center;">Date</th>
-                            <th style="text-align: center;">Details</th>
-                            <th style="text-align: center;">Prescription</th>
+                            <th>Reservation ID</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Details</th>
+                            <!--<th>Prescription</th>-->
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($data['consultations'] as $consultation): ?>
-                                <tr>
-                                <td style="text-align: center;"><?php echo $consultation->Doc_Res_ID?></td>
-                                <td style="text-align: center;"><?php echo $consultation->First_Name. " " . $consultation->Last_Name?></td>
-                                <td style="text-align: center;"><?php echo $consultation->Hospital_Name?></td>
-                                <td style="text-align: center;"><?php echo $consultation->Date?></td>
-                                <td style="text-align: center;"><button class="button show-details-5" data-res-id="<?php echo $consultation->Doc_Res_ID; ?>">Details</button></td>
-                                <td><a href='view_prescription?id=<?php echo $consultation->Prescription_ID ?>' ><button class='button doc-cancel-btn'<?php echo ($consultation->Prescription_ID == null ? 'disabled' : '') ?> >Prescription</button></td>
-                                </tr>
-                        <?php endforeach; ?>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href='patient_details'><button class='button'>Details</button></a></td>
+                            <!--<td><a href=''><button class='button'>Prescription</button></a></td>-->
+                        </tr>
+                        <tr>
+                            <td>12224</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href='patient_details'><button class='button'>Details</button></a></td>
+                            <!--<td><a href=''><button class='button'>Prescription</button></a></td>-->
+                        </tr>
+                        <tr>
+                            <td>12225</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href='patient_details'><button class='button'>Details</button></a></td>
+                            <!--<td><a href=''><button class='button'>Prescription</button></a></td>-->
+                        </tr>
+                        
+                        
                     </tbody>
                 </table>
-                <?php endif; ?>
             </div>
         </section>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-    <script src="<?php echo URLROOT;?>/js/popup.js" defer></script>
-    <script>
-      $(document).ready(function() {
-          $('#past-consults-table').dataTable( {
-              "bPaginate": false,
-              "bFilter": false,
-              "bInfo": false,
-              "columnDefs": [
-                {"targets": [4,5], "orderable": false}, // Disable ordering on the last column
-              ]
-                    
-          } );
-      } );
-    </script> 
   </body>
 </html>

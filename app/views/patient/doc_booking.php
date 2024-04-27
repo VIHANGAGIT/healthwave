@@ -1,5 +1,5 @@
 <?php 
-  //session_start();
+  session_start();
   if(($_SESSION['userType']) != 'Patient'){
     redirect("users/login");
   }
@@ -11,7 +11,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?>: Doctor Booking</title>
+    <title><?php echo SITENAME; ?></title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -43,6 +43,12 @@
                 <span>Home</span>
               </a>
             </li>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="uil uil-info-circle"></i>
+                <span>About Us</span>
+              </a>
+            </li>
           </ul>
 
           <ul class="menu_item">
@@ -70,7 +76,7 @@
             <li class="item">
               <a href="../patient/medical_records" class="link flex">
                 <i class="uil uil-file-alt"></i>
-                <span>Medical History</span>
+                <span>Medical Records</span>
               </a>
             </li>
           </ul>
@@ -112,25 +118,25 @@
       <div class="content-search">
           <div class="search">
             <h2>Find Your Doctor</h2>
-              <form style="width: 100%;" method="POST" action="<?php echo URLROOT;?>/patient/doc_booking">
+              <form style="width: 100%;" method="POST">
                 <div class="fields">
                   <table style="width: 95%;">
                     <tr>
                       <td>
                         <div class="input-field">
                             <label>Doctor Name</label>
-                            <input type="text" name="doctor_name" placeholder="Enter Doctor Name" style="margin: 0%;">
+                            <input type="text" name="search_text" placeholder="Doctor Name">
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
-                            <label>Hospital Name</label>
-                            <select name="hospital_name">
-                                <option disabled selected>Select Hospital</option>
-                                <?php foreach ($data['hospitals'] as $hospital): ?>
-                                    <option value="<?php echo $hospital->Hospital_ID; ?>"><?php echo $hospital->Hospital_Name; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                          <label>Hospital Name</label>
+                          <select required>
+                              <option disabled selected>Select Hospital</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                              <option>Lanka Hospitals - Kiribathgoda</option>
+                          </select>
                         </div>
                       </td>
                       <td>
@@ -141,18 +147,17 @@
                       <td>
                         <div class="input-field">
                             <label>Specialization</label>
-                            <select name="specialization">
-                                <option disabled selected>Select Specialization</option>
-                                <?php foreach ($data['specializations'] as $specialization): ?>
-                                    <option value="<?php echo $specialization; ?>"><?php echo $specialization; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <input type="text" name="search_text" placeholder="Specialization">
                         </div>
                       </td>
                       <td>
+                      <div class="input-field">
+                            <label>Date</label>
+                            <input type="date" name="search_text" placeholder="Date">
+                        </div>
                       </td>
                       <td>
-                        <button class="button" style="background-color: red;" >Reset</button>
+                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
                       </td>
                     </tr>
                   </table>
@@ -160,39 +165,81 @@
               </form>
               
           </div>
-      </div>
+        </div>
+        <div class="detail-wrapper">
+          <div class='detail-card'>
+            <div class='detail-card-content'>
+                <p class="detail-title">Dr. W.P. Krishan Weerasinghe</p>
+                <p class='detail-comp'>Cardiologist</p>
+            </div>
+            <div class='detail-card-sub'>
+            <hr class="vertical-line">
+                <div class='detail-card-info'>
+                    <p>Available at :</p>
+                    <p class="detail-location" >4 locations</p>
+                </div>
+            </div>
+            <div class='detail-view'>
+              <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
+              <button class='button detail-btn' >Book Now</button>
+            </div>
+          </div>
+
+          <div class='detail-card'>
+            <div class='detail-card-content'>
+                <p class="detail-title">Dr. W.P. Krishan Weerasinghe</p>
+                <p class='detail-comp'>Cardiologist</p>
+            </div>
+            <div class='detail-card-sub'>
+            <hr class="vertical-line">
+                <div class='detail-card-info'>
+                    <p>Available at :</p>
+                    <p class="detail-location" >4 locations</p>
+                </div>
+            </div>
+            <div class='detail-view'>
+              <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
+              <button class='button detail-btn' >Book Now</button>
+            </div>
+          </div>
+
+          <div class='detail-card'>
+            <div class='detail-card-content'>
+                <p class="detail-title">Dr. W.P. Krishan Weerasinghe</p>
+                <p class='detail-comp'>Cardiologist</p>
+            </div>
+            <div class='detail-card-sub'>
+            <hr class="vertical-line">
+                <div class='detail-card-info'>
+                    <p>Available at :</p>
+                    <p class="detail-location" >4 locations</p>
+                </div>
+            </div>
+            <div class='detail-view'>
+              <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
+              <button class='button detail-btn' >Book Now</button>
+            </div>
+          </div>
+
+          <div class='detail-card'>
+            <div class='detail-card-content'>
+                <p class="detail-title">Dr. W.P. Krishan Weerasinghe</p>
+                <p class='detail-comp'>Cardiologist</p>
+            </div>
+            <div class='detail-card-sub'>
+            <hr class="vertical-line">
+                <div class='detail-card-info'>
+                    <p>Available at :</p>
+                    <p class="detail-location" >4 locations</p>
+                </div>
+            </div>
+            <div class='detail-view'>
+              <button class="button" style="width: 50px;"><i class="uil uil-user"></i></button>
+              <button class='button detail-btn' >Book Now</button>
+            </div>
+          </div>
+        </div>
         
-      <div class="detail-wrapper">
-          <?php if (empty($data['searchDoctors'])): ?>
-              <div class="error-msg">
-                  <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
-                  <p>Could not find results for your search query.</p>
-              </div>
-          <?php else: ?>
-              <?php foreach ($data['searchDoctors'] as $doctor): ?>
-                  <div class='detail-card'>
-                      <div class='detail-card-content'>
-                          <p class="detail-title"><?php echo $doctor->First_Name . " " .  $doctor->Last_Name; ?></p> 
-                          <p class='detail-comp'><?php echo $doctor->Specialization; ?></p>
-                      </div>
-                      <div class='detail-card-sub'>
-                          <hr class="vertical-line">
-                          <div class='detail-card-info'>
-                              <p>Available at :</p>
-                              <p class="detail-location">
-                                  <?php
-                                  $noOfHospitals = $data['no_of_hospitals'][$doctor->Doctor_ID]->NoOfHospitals;
-                                  echo $noOfHospitals . ($noOfHospitals == 1 ? ' Location' : ' Locations');
-                                  ?>
-                              </p>
-                          </div>
-                      </div>
-                      <div class='detail-view'>
-                          <a href="/healthwave/patient/doc_booking_details?doctor_id=<?php echo $doctor->Doctor_ID; ?>"><button class='button detail-btn' >Book Now</button></a>
-                      </div>
-                  </div>
-              <?php endforeach; ?>
-          <?php endif; ?>
-      </div>
+    </div>
   </body>
 </html>

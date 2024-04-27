@@ -1,4 +1,7 @@
-<?php
+<?php 
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
   if(($_SESSION['userType']) != 'Doctor'){
     redirect("users/login");
   }
@@ -31,7 +34,7 @@
    
 
    <!--sidebar-->
-   <nav class="sidebar">
+    <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
           <ul class="menu_item">
@@ -44,6 +47,12 @@
                 <span>Home</span>
               </a>
             </li>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="uil uil-info-circle"></i>
+                <span>About Us</span>
+              </a>
+            </li>
           </ul>
           
           <ul class="menu_item">
@@ -51,23 +60,15 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="../doctor/schedules" class="link flex">
-                  <i class="uil uil-calendar-alt"></i>
-                  <span>Schedules</span>
+              <a href="../doctor/reservations" class="link flex">
+                <i class="uil uil-calendar-alt"></i>
+                <span>Reservations</span>
               </a>
             </li>
             <li class="item">
               <a href="../doctor/consultations" class="link flex">
-              <i class="uil uil-history"></i>
-
-                <span>Past Consultations</span>
-              </a>
-            </li>
-
-            <li class="item">
-              <a href="../doctor/ongoing_consults" class="link flex">
                 <i class="uil uil-stethoscope"></i>
-                <span>Ongoing Consultations</span>
+                <span>Consultations</span>
               </a>
             </li>
           </ul>
@@ -104,42 +105,104 @@
       </div>
     </nav>
 
-    <div class="profile-content">
-      <div class="profile-card">
-        <div class="pr-image">
-          <img src="<?php echo URLROOT;?>/img/profile.png" alt="" class="prof-image">
-        </div>
-
-        <div class="profile-text">
-          <span class="profile-name"><?php echo $data['First_Name'] . ' ' . $data['Last_Name']?></span>
-          <span class="profile-role"><?php echo $_SESSION['userType'] ?> - <?php echo $data['Spec'] ?></span>
-        </div>
-
-        <div class="profile-details">
-          <span class="profile-detail"><strong>Gender: </strong><?php echo $data['Gender'] ?></span>
-          <span class="profile-detail"><strong>NIC: </strong> <?php echo $data['NIC'] ?></span>
-          <span class="profile-detail"><strong>Contact Number: </strong><?php echo $data['C_Num'] ?></span>
-          <span class="profile-detail"><strong>Email: </strong><?php echo $data['Email'] ?></span>
-        </div>
-
-          
-
-
-
-        <div class="profile-btns">
-          <a href='profile_update'><button class="profile-btn">Update</button></a>
-          <button class="profile-delete">Delete</button>
-        </div>
-
+    <div class="content">
         
-
-
-
-        
-      </div>
+        <section class="table-wrap" >
+            <div class="table-container">
+                <h1>Account Details
+                    <span class="dashboard-stat" style="font-size: 25px; justify-content: right;" >
+                        <a href='profile_update'><button class='button' style="width: auto;">Update Details</button></a>
+                    </span>
+                    <span class="dashboard-stat" style="font-size: 25px; justify-content: right;" >
+                        <a href='profile_delete'><button class='button red' style="width: auto;">Delete Account</button></a>
+                    </span>
+                </h1>
+                <table class="table-dashboard">
+                    <tr>
+                        <td class="profile-img">
+                            <img src="<?php echo URLROOT;?>/img/profile.png" alt="profile_img" />
+                        </td>
+                        <td>
+                            <table class="table-dashboard">
+                                <tbody class="profile" >
+                                    <tr>
+                                        <td>Name: <?php echo $data['First_Name'] . ' ' . $data['Last_Name']?></td>
+                                        <td>Gender: <?php echo $data['Gender'] ?></td>
+                                        <td>NIC: <?php echo $data['NIC'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contact Number: <?php echo $data['C_Num'] ?></td>
+                                        <td>Email: <?php echo $data['Email'] ?></td>
+                                        <td></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>SLMC Reg No: <?php echo $data['SLMC'] ?></td>
+                                        <td>Specialization: <?php echo $data['Spec'] ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        <br>
+        <section class="table-wrap" >
+            <div class="table-container">
+                <h1>Doctor Reservations</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dr. M.S. Perera</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <br>
+        <section class="table-wrap" >
+            <div class="table-container">
+                <h1>Lab Tests Reservations</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Test Name</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lipid Profile</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>14:00 PM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
-
-
-
   </body>
 </html>

@@ -1,6 +1,6 @@
 <?php 
   session_start();
-  if(($_SESSION['userType']) != 'Patient'){
+  if(($_SESSION['userType']) != 'Doctor'){
     redirect("users/login");
   }
 ?>
@@ -39,7 +39,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
               </a>
@@ -56,28 +56,16 @@
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
-            <li class="item">
-              <a href="../patient/doc_booking" class="link flex">
-                <i class="uil uil-stethoscope"></i>
-                <span>Doctor Booking</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="../patient/test_booking" class="link flex">
-                <i class="uil uil-heart-rate"></i>
-                <span>Lab Test Booking</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="../patient/reservations" class="link flex">
+            <li class="item active">
+              <a href="../doctor/reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
                 <span>Reservations</span>
               </a>
             </li>
-            <li class="item active">
-              <a href="../patient/medical_records" class="link flex">
-                <i class="uil uil-file-alt"></i>
-                <span>Medical Records</span>
+            <li class="item">
+              <a href="../doctor/consultations" class="link flex">
+                <i class="uil uil-stethoscope"></i>
+                <span>Consultations</span>
               </a>
             </li>
           </ul>
@@ -87,7 +75,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="../patient/profile" class="link flex">
+              <a href="../doctor/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -117,86 +105,82 @@
     <div class="content">
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Medical Records: Past Consultancies</h1>
+                <h1>Doctor Appointments Management</h1>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Doctor</th>
+                            <th>Reservation ID</th>
                             <th>Location</th>
                             <th>Date</th>
                             <th>Time</th>
-                            <th>Details</th>
-                            <th>Prescription</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Dr. M.S. Perera</td>
+                            <td>12223</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
                         </tr>
                         <tr>
-                            <td>Dr. M.S. Perera</td>
+                            <td>12223</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
                         </tr>
                         <tr>
-                            <td>Dr. M.S. Perera</td>
+                            <td>12223</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>10:30 AM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Prescription</button></a></td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <br>
-        <section class="table-wrap" >
-            <div class="table-container">
-                <h1>Medical Records: Lab Tests Results</h1>
-                <table class="table">
-                    <thead>
                         <tr>
-                            <th>Test Name</th>
-                            <th>Location</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Details</th>
-                            <th>Results</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Lipid Profile</td>
+                            <td>12223</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Results</button></a></td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
                         </tr>
                         <tr>
-                            <td>Lipid Profile</td>
+                            <td>12223</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Results</button></a></td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
                         </tr>
                         <tr>
-                            <td>Lipid Profile</td>
+                            <td>12223</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
-                            <td>14:00 PM</td>
-                            <td><a href=''><button class='button'>Details</button></a></td>
-                            <td><a href=''><button class='button'>Results</button></a></td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
                         </tr>
                     </tbody>
                 </table>

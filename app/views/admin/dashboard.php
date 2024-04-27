@@ -1,4 +1,5 @@
 <?php 
+  session_start();
   if(($_SESSION['userType']) != 'Admin'){
     redirect("users/login");
   }
@@ -34,7 +35,7 @@
    <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
-          <ul class="menu_item">
+        <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
@@ -44,11 +45,12 @@
                 <span>Home</span>
               </a>
             </li>
-          </ul>
-          <ul class="menu_item">
-            <div class="menu_title flex">
-              <span class="line"></span>
-            </div>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="uil uil-info-circle"></i>
+                <span>About Us</span>
+              </a>
+            </li>
             <li class="item active">
               <a href="../admin/dashboard" class="link flex">
                 <i class="uil uil-chart-line"></i>
@@ -75,31 +77,26 @@
             </li>
             <li class="item">
               <a href="../admin/hospital_management" class="link flex">
-                <i class="uil uil-hospital-square-sign"></i>
+                <i class="uil uil-stethoscope"></i>
                 <span>Hospital Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="../admin/doc_reservations" class="link flex">
+              <a href="../admin/reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
-                <span>Doctor Reservations</span>
+                <span>Reservations</span>
               </a>
             </li>
-            <li class="item">
-              <a href="../admin/test_reservations" class="link flex">
-                <i class="uil uil-calendar-alt"></i>
-                <span>Test Reservations</span>
-              </a>
-            </li>
-          </ul>
-          <ul class="menu_item">
-            <div class="menu_title flex">
-              <span class="line"></span>
-            </div>
             <li class="item">
               <a href="#" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="uil uil-bell"></i>
+                <span>Notifications</span>
               </a>
             </li>
           </ul>
