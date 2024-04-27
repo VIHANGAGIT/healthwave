@@ -369,7 +369,9 @@ class Doctors{
                 $this->db->query('SELECT Test_Name FROM test WHERE Test_ID = :test');
                 $this->db->bind(':test', $test);
                 $testName = $this->db->singleRow();
-                $test = $testName->Test_Name;
+                if ($testName) {
+                    $test = $testName->Test_Name;
+                }
             }
             $prescription->Test_Details = $testDetails;
         }

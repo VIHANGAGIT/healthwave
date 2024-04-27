@@ -1885,6 +1885,20 @@ table thead tr{
 
 }
 
+input.error{
+  border: 2px solid #ff0e0e;
+  background-color: var(--white-color);
+}
+
+.err-msg{
+  color: #ff0e0e;
+  font-size: 12px;
+}
+
+.prescription{
+  color: var(--grey-color-dark);
+}
+
 /*.prescription  button {
   margin-top: -30px;
   margin-bottom: 30px;

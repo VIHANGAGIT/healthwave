@@ -154,7 +154,7 @@ $html = ob_get_clean();
 // Decode drug details JSON string
 $drugDetails = $data['Drugs'];
 $testDetails = $data['Tests'];
-if (!empty($testDetails)) {
+if (!empty($drugDetails)) {
     // Begin drug details table HTML
     $drugTableHtml = '<div style="display: flex; justify-content: center;">';
     $drugTableHtml .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<table cellpadding="5" cellspacing="0" border="1" style="width: 90%;  margin: auto; text-align: center;">';
@@ -195,13 +195,17 @@ if (!empty($testDetails)) {
     }
 
     $testNamesHtml .= '</p>'; // End of paragraph
-    $testNamesHtml .= '<p>';
-    $testNamesHtml .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refarrals: ' . $data['Referral'];   
-    $testNamesHtml .= '</p>'; // End of paragraph
+     // End of paragraph
 
     // Append the test names HTML to the existing HTML content
     $html .= $testNamesHtml;
 }
+
+$refarralHtml = '<p>';
+$refarralHtml .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refarrals: ' . $data['Referral'];   
+$refarralHtml .= '</p>';
+
+$html .= $refarralHtml;
 
 // Output the HTML content with drug details table to the PDF
 $pdf->writeHTML($html, true, false, true, false, '');
