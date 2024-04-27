@@ -1,5 +1,7 @@
 <?php 
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
   if(($_SESSION['userType']) != 'Lab Assistant'){
     redirect("users/login");
   }
@@ -39,7 +41,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="" class="link flex">
+              <a href="../users/landing" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
               </a>
@@ -82,7 +84,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../lab/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
@@ -112,7 +114,7 @@
     <div class="content">
         <div class="content-search">
           <div class="search">
-            <h2 style="color: black;">Lab Test Search</h2>
+          <h2>Lab Test Search<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href=''></a></span></h2>
               <form style="width: 100%;" method="POST">
                 <div class="fields">
                   <table style="width: 95%;" >
@@ -142,7 +144,24 @@
             <div class='detail-card'>
                 <div class='detail-card-content'>
                     <p class="detail-title">Complete Blood Count (CBC) </p>
-                    <p class='detail-comp'>Res ID: 12322  |  Patient: L.A. Peter Parker </p>
+                    <p class='detail-comp'>Res ID: 12322  |  Patient: Morgan Stark </p>
+                </div>
+                <div class='detail-card-sub'>
+                <hr class="vertical-line">
+                    <div class='detail-card-info'>
+                        <p>Status :</p>
+                        <p class="detail-location" >Results Pending</p>
+                    </div>
+                </div>
+                <div class='detail-view'>
+                <button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button>
+                <button class='button complete-btn' >Completed</button>
+                </div>
+            </div>
+            <div class='detail-card'>
+                <div class='detail-card-content'>
+                    <p class="detail-title">Urine FR</p>
+                    <p class='detail-comp'>Res ID: 12325  |  Patient: B.H. Allen </p>
                     <!--div class='detail-details'
                         <p><i class='uil uil-calendar-alt'></i>hh</p>
                         <p><i class='uil uil-clock'></i>gg</p>
@@ -158,7 +177,7 @@
                 </div>
                 <div class='detail-view'>
                 <button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button>
-                <button class='button detail-btn' >Completed</button>
+                <button class='button complete-btn' >Completed</button>
                 </div>
             </div>
             <div class='detail-card'>
@@ -180,7 +199,7 @@
                 </div>
                 <div class='detail-view'>
                 <button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button>
-                <button class='button detail-btn' >Completed</button>
+                <button class='button complete-btn' >Completed</button>
                 </div>
             </div>
             <div class='detail-card'>
@@ -202,29 +221,7 @@
                 </div>
                 <div class='detail-view'>
                 <button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button>
-                <button class='button detail-btn' >Completed</button>
-                </div>
-            </div>
-            <div class='detail-card'>
-                <div class='detail-card-content'>
-                    <p class="detail-title">Complete Blood Count (CBC) </p>
-                    <p class='detail-comp'>Res ID: 12322  |  Patient: L.A. Peter Parker </p>
-                    <!--div class='detail-details'
-                        <p><i class='uil uil-calendar-alt'></i>hh</p>
-                        <p><i class='uil uil-clock'></i>gg</p>
-                        
-                    </-div-->
-                </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" >Results Pending</p>
-                    </div>
-                </div>
-                <div class='detail-view'>
-                <button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button>
-                <button class='button detail-btn' >Completed</button>
+                <button class='button complete-btn' >Completed</button>
                 </div>
             </div>
         </div>

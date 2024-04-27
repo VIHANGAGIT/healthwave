@@ -1,6 +1,8 @@
 <?php
     class Users extends Controller{ 
-        public function __construct(){
+        private $userModel;
+
+        public function __construct() {
             $this->userModel = $this->model('user');
         }
 
@@ -247,7 +249,6 @@
         }
 
         public function register_hospital_staff(){
-
             // Check for POST request
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -258,6 +259,7 @@
                 $data = [
                     'F_name' => trim($_POST['fname']),
                     'L_name' => trim($_POST['lname']),
+                    'Hospital_ID' => trim($_POST['Hospital_ID']),
                     'Gender' => trim($_POST['gender']),
                     'NIC' => trim($_POST['nic']),
                     'C_num' => $_POST['cnum'],
@@ -267,6 +269,7 @@
                     'Uname' => trim($_POST['email']),
                     'Pass' => trim($_POST['pass']),
                     'C_pass' => trim($_POST['cpass']),
+                    'Staff_ID' => trim($_POST['Staff_ID']),
                     'Uname_err' => '',
                     'Pass_err' => '',
                     'C_pass_err' => ''
@@ -329,7 +332,7 @@
                     if($this->userModel->register_hospital_staff($data)){
                         redirect('users/login');
                     } else{
-                        die("Couldn't register the doctor! ");
+                        die("Couldn't register the staff member! ");
                     }
                 } else {
                     // Load view
@@ -342,6 +345,7 @@
                 $data = [
                     'F_name' => '',
                     'L_name' => '',
+                    'Hospital_ID' => '',
                     'Gender' => '',
                     'DOB' => '',
                     'NIC' => '',
@@ -351,16 +355,15 @@
                     'Uname' => '',
                     'Pass' => '',
                     'C_pass' => '',
+                    'Staff_ID' => '',
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => '',
-                    'hospitalNames' => $this->userModel->getHospitalNames()
+                    'C_pass_err' => ''
                 ];
-                
-                // Load the view with the fetched data
+
+                // Load view
                 $this->view('users/register_hospital_staff', $data);
             }
-            
         }
 
         public function login(){
@@ -445,7 +448,13 @@
                 case 'Doctor':
                     $_SESSION['userID'] = $userData->Doctor_ID;
                     break;
-                case 'Hospital_Staff':
+                case 'Manager':
+                    $_SESSION['userID'] = $userData->HS_ID;
+                    break;
+                case 'Pharmacist':
+                    $_SESSION['userID'] = $userData->HS_ID;
+                    break;
+                case 'Lab Assistant':
                     $_SESSION['userID'] = $userData->HS_ID;
                     break;
                 case 'Admin':
@@ -474,8 +483,49 @@
             session_start();
             // Remove session variables
             session_unset();
+            // Destroy session
             session_destroy();
+            // Redirect to login page
             redirect('users/login');
         }
+
+        public function landing(){
+            $data=[];
+            $this->view('pages/landing', $data);
+        }
+
+        public function about_patient_management(){
+            $data=[];
+            $this->view('pages/about_patient_management', $data);
+        }
+
+        public function about_doctor_mgt(){
+            $data=[];
+            $this->view('pages/about_doctor_mgt', $data);
+        }
+
+        public function about_hospital_mgt(){
+            $data=[];
+            $this->view('pages/about_hospital_mgt', $data);
+        }
+
+        public function about_pharmacy_mgt(){
+            $data=[];
+            $this->view('pages/about_pharmacy_mgt', $data);
+        }
+
+        public function terms_and_cond(){
+            $data=[];
+            $this->view('pages/terms_and_cond', $data);
+        }
+
+        public function about_us(){
+            $data=[];
+            $this->view('pages/about_us', $data);
+        }
+
+
+
+
 
     }

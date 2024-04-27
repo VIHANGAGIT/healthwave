@@ -23,5 +23,9 @@
             ];
             $this->view('pages/about', $data);
         }
+
+        
+
+
     }
 ?>

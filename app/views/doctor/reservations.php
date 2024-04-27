@@ -109,20 +109,78 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Hospital Name</th>
+                            <th>Reservation ID</th>
+                            <th>Location</th>
                             <th>Date</th>
-                            <th>Session Time</th>
-                            <th># of Appointments</th>
-                            <th>View</th>
+                            <th>Time</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td>12223</td>
                             <td>Lanka Hospitals - Kiribathgoda</td>
                             <td>2023/10/12</td>
                             <td>10:30 AM</td>
-                            <td>8</td>
-                            <td><a href=''><button class='button'>View</button></a></td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
+                        </tr>
+                        <tr>
+                            <td>12223</td>
+                            <td>Lanka Hospitals - Kiribathgoda</td>
+                            <td>2023/10/12</td>
+                            <td>10:30 AM</td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
+                            <td><a href=''><button class='button red'>Delete</button></a></td>
                         </tr>
                     </tbody>
                 </table>

@@ -2,7 +2,7 @@
     // Database params
     define('DB_HOST', 'localhost');
     define('DB_USER', 'root');
-    define('DB_PASS', 'GrpProject00');
+    define('DB_PASS', 'root');
     define('DB_NAME', 'healthwave');
 
 
@@ -14,10 +14,12 @@
     define('APPROOT', dirname(dirname(__FILE__)));
 
     // URL root
-    define('URLROOT', 'http://localhost/healthwave');
+    define('URLROOT', 'http://localhost:8888/healthwave');
+
 
     // Site name
     define('SITENAME', 'HealthWave');
 
     // App version
     define('VERSION', '1.0.0');
+?>

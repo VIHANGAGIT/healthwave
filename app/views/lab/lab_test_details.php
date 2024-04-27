@@ -17,11 +17,9 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
-    <script src="<?php echo URLROOT;?>/js/tablesort.js"></script>
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -36,10 +34,10 @@
    
 
    <!--sidebar-->
-   <nav class="sidebar">
+    <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
-        <ul class="menu_item">
+          <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
@@ -61,13 +59,13 @@
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
-            <li class="item">
+            <li class="item active">
               <a href="../lab/test_appt_management" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
                 <span>Reservations</span>
               </a>
             </li>
-            <li class="item active">
+            <li class="item">
               <a href="../lab/test_management" class="link flex">
                 <i class="uil uil-heart-rate"></i>
                 <span>Test Management</span>
@@ -112,71 +110,74 @@
         </div>
       </div>
     </nav>
-
-<!--Search box-->
-    <div class="content">
-    <div class="content-search">
-        <div class="search">
-          <h2>Lab Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='../lab/add_lab_test'><button class='button'>Add Lab Test</button></a></span></h2>
-              <form style="width: 100%;" method="POST">
-                <div class="fields">
-                  <table style="width: 95%;" >
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                            <label>Test ID</label>
-                            <input type="text" name="search_text" placeholder="Test ID">
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-field">
-                            <label>Test Name</label>
-                            <input type="text" name="search_text" placeholder="Test Name">
-                        </div>
-                      </td>
-                      <td>
-                        <input type="submit" class="button" value="Search" name="search" >
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </form>
-          </div>
-          
+<!--page heading-->
+    <div class = "content">
+      <section class = "table-wrap">
+        <div class = "table-container">
+          <h1>Appointment Details 
+          </h1>  
         </div>
+      </section>
+      <br>
 
-        <br>
 
-        <!--test list table-->
-        
-        <section class="table-wrap" >
-            <div class="table-container">
-                <table class="table table-sort">
-                    <thead>
-                        <tr>
-                            <th>Test ID</th>
-                            <th>Test Name</th>
-                            <th>Type</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($data['tests'] as $test): ?>
+<!--test details table-->
+      
+      <section class = "table-wrap">
+      <div class = "table-container">
+        <table class = "table">
+          <thead>
+            <tr>
+              <th> Test_Res_ID </th>
+              <th> Test Name </th>
+              <th> Test Type </th>
+              <th> Price </th>
+              <th> Time </th>
+              <th> Edit </th>
+              <th> Remove </th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <?php foreach ($data['reservations'] as $reservations): ?>
                       <tr>
-                            <td style="text-align: center;"><?php echo $test->Test_ID?></td>
-                            <td style="text-align: center;"><?php echo $test->Test_Name?></td>
-                            <td style="text-align: center;"><?php echo $test->Test_Type?></td>
-                            <td style="text-align: center;"><?php echo $test->Price?></td>
+                            <td style="text-align: center;"><?php echo $reservations->Test_Res_ID;?></td>
+                            <td style="text-align: center;"><?php echo $reservations->Test_Name;?></td>
+                            <td style="text-align: center;"><?php echo $reservations->Test_Type;?></td>
+                            <td style="text-align: center;"><?php echo $reservations->Price;?></td>
+                            <td style="text-align: center;"><?php echo $reservations->Start_Time. "-".$reservations->End_Time;?></td>
+                            <td><a href=''><button class='button'>Edit</button></a></td>
                             <td><a href=''><button class='button red'>Remove</button></a></td>
+                            <!--<td><a href='lab_test_details'><button class='button'>View</button></a></td>-->
+                    
                         </tr>
-                    <?php endforeach;?>     
-                    </tbody>
-                </table>
-                
-                
-            </div>
-        </section>
+                    <?php endforeach;?>  
+            <!--<tr>
+              <td> 2 </td>
+              <td> Urine Test </td>
+              <td> Rs.300</td>
+              <td> 1.30 p.m </td>
+              <td><a href=''><button class='button'>Edit</button></a></td>
+              <td><a href=''><button class='button red'>Remove</button></a></td>
+            </tr>
+            <tr>
+              <td> 3 </td>
+              <td> Iodine test </td>
+              <td> Rs.500 </td>
+              <td> 1.40 p.m </td>
+              <td><a href=''><button class='button'>Edit</button></a></td>
+              <td><a href=''><button class='button red'>Remove</button></a></td>
+            </tr>-->
+          </tbody>
+        </table>
+      </div>
+      </section>
+
     </div>
+
+    
+
+
+
   </body>
 </html>

@@ -17,11 +17,9 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
-    <script src="<?php echo URLROOT;?>/js/tablesort.js"></script>
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -36,10 +34,10 @@
    
 
    <!--sidebar-->
-   <nav class="sidebar">
+    <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
-        <ul class="menu_item">
+          <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
@@ -67,7 +65,7 @@
                 <span>Reservations</span>
               </a>
             </li>
-            <li class="item active">
+            <li class="item">
               <a href="../lab/test_management" class="link flex">
                 <i class="uil uil-heart-rate"></i>
                 <span>Test Management</span>
@@ -85,7 +83,7 @@
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
-            <li class="item">
+            <li class="item active">
               <a href="../lab/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
@@ -113,70 +111,45 @@
       </div>
     </nav>
 
-<!--Search box-->
-    <div class="content">
-    <div class="content-search">
-        <div class="search">
-          <h2>Lab Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='../lab/add_lab_test'><button class='button'>Add Lab Test</button></a></span></h2>
-              <form style="width: 100%;" method="POST">
-                <div class="fields">
-                  <table style="width: 95%;" >
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                            <label>Test ID</label>
-                            <input type="text" name="search_text" placeholder="Test ID">
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-field">
-                            <label>Test Name</label>
-                            <input type="text" name="search_text" placeholder="Test Name">
-                        </div>
-                      </td>
-                      <td>
-                        <input type="submit" class="button" value="Search" name="search" >
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </form>
-          </div>
-          
+    <div class="profile-content">
+      <div class="profile-card">
+        <div class="pr-image">
+          <img src="<?php echo URLROOT;?>/img/pro-img.webp" alt="" class="prof-image">
         </div>
 
-        <br>
+        <div class="profile-text">
+          <span class="profile-name"><?php echo $data['First_Name'] . ' ' . $data['Last_Name']?></span>
+          <span class="profile-role"><?php echo $_SESSION['userType'] ?></span>
+        </div>
 
-        <!--test list table-->
+        <div class="profile-details">
+          <span class="profile-detail"><strong>Gender: </strong><?php echo $data['Gender'] ?></span>
+          <span class="profile-detail"><strong>NIC: </strong> <?php echo $data['NIC'] ?></span>
+          <span class="profile-detail"><strong>Contact Number: </strong><?php echo $data['C_Num'] ?></span>
+          <span class="profile-detail"><strong>Email: </strong><?php echo $data['Email'] ?></span>
+          <span class="profile-detail"><strong>Hospital: </strong><?php echo $data['Hospital'] ?></span>
+          <span class="profile-detail"><strong>Hospital ID: </strong><?php echo $data['Hospital_ID'] ?></span>
+        </div>
+
+          
+
+
+
+        <div class="profile-btns">
+        <a href='profile_update'><button class="profile-btn">Update</button></a>
+        <a href='profile_delete'><button class='profile-delete' style="width: auto;">Delete Account</button></a>
+          <!--<button class="profile-delete">Delete</button>-->
+        </div>
+
         
-        <section class="table-wrap" >
-            <div class="table-container">
-                <table class="table table-sort">
-                    <thead>
-                        <tr>
-                            <th>Test ID</th>
-                            <th>Test Name</th>
-                            <th>Type</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($data['tests'] as $test): ?>
-                      <tr>
-                            <td style="text-align: center;"><?php echo $test->Test_ID?></td>
-                            <td style="text-align: center;"><?php echo $test->Test_Name?></td>
-                            <td style="text-align: center;"><?php echo $test->Test_Type?></td>
-                            <td style="text-align: center;"><?php echo $test->Price?></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                    <?php endforeach;?>     
-                    </tbody>
-                </table>
-                
-                
-            </div>
-        </section>
+
+
+
+        
+      </div>
     </div>
+
+
+
   </body>
 </html>

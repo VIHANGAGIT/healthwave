@@ -65,13 +65,9 @@
                         <div class="input-field">
                             <label>Hospital*</label>
                             <select name="hospital" required>
-                                <option selected value="<?php echo $data['Hospital'] ?>">
-                                    <?php echo ($data['Hospital'] == '') ? 'Select hospital' : $data['Hospital'] ?>
-                                </option>
-
-                                <?php foreach ($data['hospitalNames'] as $hospital) {
-                                    echo '<option value="' . $hospital->Hospital_Name . '">' . $hospital->Hospital_Name . '</option>';
-                                } ?>
+                                <option selected value="<?php echo $data['Hospital'] ?>" > <?php echo ($data['Hospital'] == '') ? 'Select hospital' : $data['Hospital'] ?></option>
+                                <option value="Asiri Hospitals - Kirula Rd">Asiri Hospitals - Kirula Rd.</option>
+                                <option value="Lanka Hospitals - Nugegoda">Lanka Hospitals - Nugegoda</option>
                             </select>
                         </div>
                         <div class="input-field">
