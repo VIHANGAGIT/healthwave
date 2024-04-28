@@ -464,10 +464,16 @@
                 $end_time = $data['end_hour'] . ':' . $data['end_min'] . ':00';
             }
 
-            if($data['start_hour'] >= $data['end_hour']){
+            if($data['start_hour'] > $data['end_hour']){
                 $data['Time_End_err'] = 'Invalid time';
                 $data['Time_Start_err'] = 'Invalid time';
             }
+            
+            if ($data['start_hour'] == $data['end_hour']) {
+                $data['Time_End_err'] = 'Time slot should be at least 1 hour';
+                $data['Time_Start_err'] = 'Time slot should be at least 1 hour';
+            }
+
 
             if($room_schedule){
                 if(empty($data['Time_Start_err']) && empty($data['Time_End_err']) && empty($data['Day_err']) && empty($data['Room_err'])){
@@ -539,6 +545,154 @@
             ];
             $this->view('manager/add_schedule', $data);
 
+        }
+    }
+
+    public function edit_schedule(){
+        
+        
+        $schedule_id = $_GET['id'];
+        $schedule = $this->managerModel->get_schedule($schedule_id);
+
+        $rooms = $this->managerModel->get_rooms_hospital($schedule->Hospital_ID);
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST array
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $data = [
+                'rooms' => $rooms,
+                'Doctor_ID' => $schedule->First_Name . ' ' . $schedule->Last_Name,
+                'Room_ID' => $_POST['room'],
+                'Room_Name' => $schedule->Room_Name,
+                'Day' => $_POST['day'],
+                'start_hour' => $_POST['start_hour'],
+                'start_min' => $_POST['start_min'],
+                'end_hour' => $_POST['end_hour'],
+                'end_min' => $_POST['end_min'],
+                'Room_err' => '',
+                'Day_err' => '',
+                'Time_Start_err' => '',
+                'Time_End_err' => ''
+            ];
+
+            // Validate Doctor ID
+            if (empty($data['Doctor_ID'])) {
+                $data['Doctor_ID_err'] = 'Please select a doctor';
+            }else{
+                $doctor_schedule = $this->managerModel->doctor_schedule_hospital($schedule->Doctor_ID);
+            }
+
+            // Validate Room ID
+            if (empty($data['Room_ID'])) {
+                $data['Room_ID_err'] = 'Please select a room';
+            }else{
+                $room_schedule = $this->managerModel->get_schedule_by_hospital_room($schedule->Hospital_ID, $data['Room_ID']);
+            }
+
+            // Validate Date
+            if (empty($data['Day'])) {
+                $data['Day_err'] = 'Please select a date';
+            }
+
+            // Validate Time Start
+            if (empty($data['start_hour']) || empty($data['start_min'])) {
+                $data['Time_Start_err'] = 'Please select a start time';
+            }else{
+                $start_time = $data['start_hour'] . ':' . $data['start_min'] . ':00';
+            }
+
+            // Validate Time End
+            if (empty($data['end_hour']) || empty($data['end_min'])) {
+                $data['Time_End_err'] = 'Please select an end time';
+            }else{
+                $end_time = $data['end_hour'] . ':' . $data['end_min'] . ':00';
+            }
+
+            if($data['start_hour'] > $data['end_hour']){
+                $data['Time_End_err'] = 'Invalid time';
+                $data['Time_Start_err'] = 'Invalid time';
+            }
+
+            if ($data['start_hour'] == $data['end_hour']) {
+                $data['Time_End_err'] = 'Time slot should be at least 1 hour';
+                $data['Time_Start_err'] = 'Time slot should be at least 1 hour';
+            }
+
+            if($room_schedule){
+                if(empty($data['Time_Start_err']) && empty($data['Time_End_err']) && empty($data['Day_err']) && empty($data['Room_err'])){
+                    $day = $data['Day'];
+                    foreach($room_schedule as $sch){
+                        if($sch->Schedule_ID != $schedule_id && $sch->Day_of_Week == $day){
+                            if($start_time >= $sch->Time_Start && $start_time <= $sch->Time_End){
+                                $data['Time_Start_err'] = 'Room Unavailable on this time slot';
+                                $data['Time_End_err'] = 'Room Unavailable on this time slot';
+                                $data['Room_err'] = 'Room Unavailable on this time slot';
+                            }elseif($end_time >= $sch->Time_Start && $end_time <= $sch->Time_End){
+                                $data['Time_Start_err'] = 'Room Unavailable on this time slot';
+                                $data['Time_End_err'] = 'Room Unavailable on this time slot';
+                                $data['Room_err'] = 'Room Unavailable on this time slot';
+                            }
+                        }
+                    }
+                }
+            }
+
+            if($doctor_schedule){
+                if(empty($data['Time_Start_err']) && empty($data['Time_End_err']) && empty($data['Day_err']) && empty($data['Room_err'])){
+                    $day = $data['Day'];
+                    foreach($doctor_schedule as $sch){
+                        if($sch->Schedule_ID != $schedule_id && $sch->Day_of_Week == $day){
+                            if($schedule->Hospital_ID == $sch->Hospital_ID){
+                                $data['Day_err'] = 'Doctor already has a schedule on this day';
+                            }else{
+                                if($start_time >= $sch->Time_Start && $start_time <= $sch->Time_End){
+                                    $data['Time_Start_err'] = 'Doctor unavailable on this time slot';
+                                }
+                                if($end_time >= $sch->Time_Start && $end_time <= $sch->Time_End){
+                                    $data['Time_End_err'] = 'Doctor unavailable on this time slot';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(empty($data['Time_Start_err']) && empty($data['Time_End_err']) && empty($data['Day_err']) && empty($data['Room_err'])){
+                $data['Hospital_ID'] = $schedule->Hospital_ID;
+                $data['Schedule_ID'] = $schedule_id;
+                $data['Time_Start'] = $start_time;
+                $data['Time_End'] = $end_time;
+                if($this->managerModel->edit_schedule($data)){
+                    redirect('manager/schedule_management');
+                }else{
+                    die('Something went wrong');
+                }
+            }else{
+                $this->view('manager/edit_schedule', $data);
+            }
+            
+        }else{
+            $start_hour = date('H', strtotime($schedule->Time_Start));
+            $start_min = date('i', strtotime($schedule->Time_Start));
+            $end_hour = date('H', strtotime($schedule->Time_End));
+            $end_min = date('i', strtotime($schedule->Time_End));
+            $data = [
+                'rooms' => $rooms,
+                'Doctor_ID' => $schedule->First_Name . ' ' . $schedule->Last_Name,
+                'Room_ID' => $schedule->Room_ID,
+                'Room_Name' => $schedule->Room_Name,
+                'Day' => $schedule->Day_of_Week,
+                'start_hour' => $start_hour,
+                'start_min' => $start_min,
+                'end_hour' => $end_hour,
+                'end_min' => $end_min ,
+                'Room_err' => '',
+                'Day_err' => '',
+                'Time_Start_err' => '',
+                'Time_End_err' => ''
+            ];
+            $this->view('manager/edit_schedule', $data);
         }
     }
     

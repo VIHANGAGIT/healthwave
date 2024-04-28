@@ -258,6 +258,42 @@
                 return false;
             }
         }
+
+        public function get_schedule($schedule_id){
+            $this->db->query('SELECT schedule.*, doctor.First_Name, doctor.Last_Name, room.Room_Name FROM schedule 
+            INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
+            INNER JOIN room ON schedule.Room_ID = room.Room_ID
+            WHERE Schedule_ID = :schedule_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':schedule_id', $schedule_id);
+            $schedule = $this->db->singleRow();
+
+            // Execute query
+            if($this->db->execute()){
+                return $schedule;
+            } else{
+                return false;
+            }
+        }
+
+        public function edit_schedule($data){
+            $this->db->query('UPDATE schedule SET Room_ID = :room_id, Day_of_Week = :day, Time_Start = :start, Time_End = :end WHERE Schedule_ID = :schedule_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':room_id', $data['Room_ID']);
+            $this->db->bind(':day', $data['Day']);
+            $this->db->bind(':start', $data['Time_Start']);
+            $this->db->bind(':end', $data['Time_End']);
+            $this->db->bind(':schedule_id', $data['Schedule_ID']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
         
         
     }
