@@ -14,6 +14,11 @@
         public function index(){
             $data = [];
 
+            $patients = $this->adminModel->get_patients();
+            $doctors = $this->adminModel->get_doctors();
+            $hospitals = $this->adminModel->get_hospitals();
+
+
             $statistic = $this->adminModel->get_statistic();
             $statistic['total_reservations'] = $statistic['total_doc_reservations'] + $statistic['total_test_reservations'];
             $statistic['total_upcoming'] = $statistic['total_upcoming_doc_reservations'] + $statistic['total_upcoming_test_reservations'];
@@ -51,10 +56,166 @@
             $data = [
                 'statistic' => $statistic,
                 'months' => $months,
-                'reservationsCount' => $reservationsCount
+                'reservationsCount' => $reservationsCount,
+                'patients' => $patients,
+                'doctors' => $doctors,
+                'hospitals' => $hospitals
             ];
+            
 
-            $this->view('admin/dashboard', $data);
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+
+                // Get search parameters from the form
+                $report = isset($_POST['report_name']) ? $_POST['report_name'] : null;
+                $doctor_ID = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
+                $hospital_ID = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+                $patient_ID = isset($_POST['specialization']) ? $_POST['specialization'] : null;
+                $no_of_days = isset($_POST['no_of_days']) ? $_POST['no_of_days'] : null;
+
+                $selectedPeriod = intval($no_of_days); // Get the selected time period as an integer
+
+                // Get the current date
+                $currentDate = date('Y-m-d');
+
+                // Calculate the date based on the selected period
+                $calculatedDate = date('Y-m-d', strtotime("-$selectedPeriod days", strtotime($currentDate)));
+
+                if($report = "doc"){
+                    $data['doc_report'] = $this->adminModel->report_doc_appointments($doctor_ID, $hospital_ID, $patient_ID, $calculatedDate);
+                    foreach ($data['doc_report'] as $key => $appointment) {
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+                    $data['test_report'] = '';
+                    $data['payment_report'] = '';
+                    $this->view('admin/dashboard', $data);
+                }elseif($report = "test"){
+                    $data['test_report'] = $this->adminModel->report_test_appointments($hospital_ID, $patient_ID, $calculatedDate);
+                    foreach ($data['test_report'] as $key => $appointment) {
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+                    $data['doc_report'] = '';
+                    $data['payment_report'] = '';
+
+                    $this->view('admin/dashboard', $data);
+                }elseif($report = "payment"){
+                    $data['payment_report'] = $this->adminModel->report_payment_details($doctor_ID, $hospital_ID, $patient_ID, $calculatedDate);
+                    $data['doc_report'] = '';
+                    $data['test_report'] = '';
+                    $this->view('admin/dashboard', $data);
+                    
+                }else{
+                    $this->view('admin/dashboard', $data);
+                }
+        
+        
+            }else{
+                $this->view('admin/dashboard', $data);
+            }
+
+            
+
+        }
+
+        public function dashboard(){
+            $data = [];
+
+            $patients = $this->adminModel->get_patients();
+            $doctors = $this->adminModel->get_doctors();
+            $hospitals = $this->adminModel->get_hospitals();
+
+
+            $statistic = $this->adminModel->get_statistic();
+            $statistic['total_reservations'] = $statistic['total_doc_reservations'] + $statistic['total_test_reservations'];
+            $statistic['total_upcoming'] = $statistic['total_upcoming_doc_reservations'] + $statistic['total_upcoming_test_reservations'];
+
+            // Initialize an array to store the total reservations for each month
+            $monthlyReservations = [];
+
+            // Loop through the data to calculate the total reservations for each month
+            foreach ($statistic['total_res_date'] as $item) {
+                $date = new DateTime($item->total_reservations_dates);
+
+                $monthYear = $date->format('Y-m');
+
+                // Check if the month already exists in the array
+                if (array_key_exists($monthYear, $monthlyReservations)) {
+                    // Increment the count for the existing month
+                    $monthlyReservations[$monthYear]++;
+                } else {
+                    // Initialize the count for a new month
+                    $monthlyReservations[$monthYear] = 1;
+                }
+            }
+
+            // Prepare the data for JavaScript
+            $months = [];
+            $reservationsCount = [];
+            foreach ($monthlyReservations as $monthYear => $count) {
+                $months[] = date('F Y', strtotime($monthYear)); // Format the month for display
+                $reservationsCount[] = $count;
+            }
+
+            $months = implode("', '", $months);
+            $reservationsCount = implode(', ', $reservationsCount);
+
+            $data = [
+                'statistic' => $statistic,
+                'months' => $months,
+                'reservationsCount' => $reservationsCount,
+                'patients' => $patients,
+                'doctors' => $doctors,
+                'hospitals' => $hospitals
+            ];
+            
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+
+                // Get search parameters from the form
+                $report = isset($_POST['report_name']) ? $_POST['report_name'] : null;
+                $doctor_ID = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
+                $hospital_ID = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+                $patient_ID = isset($_POST['specialization']) ? $_POST['specialization'] : null;
+                $no_of_days = isset($_POST['no_of_days']) ? $_POST['no_of_days'] : null;
+
+                $selectedPeriod = intval($no_of_days); // Get the selected time period as an integer
+
+                // Get the current date
+                $currentDate = date('Y-m-d');
+
+                // Calculate the date based on the selected period
+                $calculatedDate = date('Y-m-d', strtotime("-$selectedPeriod days", strtotime($currentDate)));
+
+                if($report == "doc"){
+                    $data['doc_report'] = $this->adminModel->report_doc_appointments($doctor_ID, $hospital_ID, $patient_ID, $calculatedDate);
+                    foreach ($data['doc_report'] as $key => $appointment) {
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+                    $data['test_report'] = '';
+                    $data['payment_report'] = '';
+                    $this->view('admin/dashboard', $data);
+                }elseif($report == "test"){
+                    $data['test_report'] = $this->adminModel->report_test_appointments($hospital_ID, $patient_ID, $calculatedDate);
+                    foreach ($data['test_report'] as $key => $appointment) {
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+                    $data['doc_report'] = '';
+                    $data['payment_report'] = '';
+
+                    $this->view('admin/dashboard', $data);
+                }else{
+                    $this->view('admin/dashboard', $data);
+                }
+        
+        
+            }else{
+                $this->view('admin/dashboard', $data);
+            }
+
+            
 
         }
 

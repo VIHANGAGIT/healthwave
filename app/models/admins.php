@@ -220,7 +220,7 @@
         public function get_appointments_hospital($hospital_id){
             $this->db->query('SELECT doctor_reservation.Doc_Res_ID FROM doctor_reservation 
             INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
-            WHERE schedule.Hospital_ID = :hospital_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.End_Time >= CURTIME()');
+            WHERE schedule.Hospital_ID = :hospital_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.Status = "Pending"');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':hospital_id', $hospital_id);
@@ -236,7 +236,7 @@
 
         public function get_appointments_test($test_id){
             $this->db->query('SELECT Test_Res_ID FROM test_reservation 
-            WHERE Test_ID = :test_id AND Date >= CURDATE() AND End_Time >= CURTIME()');
+            WHERE Test_ID = :test_id AND ((Date >= CURDATE() AND Status = "Pending") OR (Date < CURDATE() AND Status = "Collected"))');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':test_id', $test_id);
@@ -621,4 +621,135 @@
 
             return $row;
         }
+
+        public function get_patients(){
+            $this->db->query('SELECT Patient_ID, First_Name, Last_Name, NIC FROM patient');
+            $patients = $this->db->resultSet();
+
+            // Check if any rows were returned
+            if ($this->db->rowCount() > 0) {
+                return $patients;
+            } else {
+                return false;
+            }
+        }
+
+        public function get_doctors(){
+            $this->db->query('SELECT Doctor_ID, First_Name, Last_Name, Specialization FROM doctor');
+            $doctors = $this->db->resultSet();
+
+            // Check if any rows were returned
+            if ($this->db->rowCount() > 0) {
+                return $doctors;
+            } else {
+                return false;
+            }
+        }
+
+        public function get_hospitals(){
+            $this->db->query('SELECT Hospital_ID, Hospital_Name FROM hospital');
+            $hospitals = $this->db->resultSet();
+
+            // Check if any rows were returned
+            if ($this->db->rowCount() > 0) {
+                return $hospitals;
+            } else {
+                return false;
+            }
+        }
+
+
+        public function report_doc_appointments($doctor_ID, $hospital_ID, $patient_ID, $calculatedDate) {
+            $sql = 'SELECT doctor_reservation.Doc_Res_ID, doctor_reservation.Date, doctor_reservation.Start_Time, doctor_reservation.End_Time, patient.First_Name, patient.Last_Name, patient.NIC, hospital.Hospital_Name, doctor.First_Name as Doc_First_Name, doctor.Last_Name as Doc_Last_Name FROM doctor_reservation 
+            INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+            INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
+            WHERE 1';
+        
+            // Check if doctor_ID is specified
+            if ($doctor_ID != null) {
+                $sql .= ' AND schedule.Doctor_ID = :doc_id';
+            }
+        
+            // Check if hospital_ID is specified
+            if ($hospital_ID != null) {
+                $sql .= ' AND schedule.Hospital_ID = :hospital_id';
+            }
+        
+            // Check if patient_ID is specified
+            if ($patient_ID != null) {
+                $sql .= ' AND patient.Patient_ID = :patient_id';
+            }
+        
+            // Add date condition
+            $sql .= ' AND doctor_reservation.Date >= :date';
+        
+            // Prepare the query
+            $this->db->query($sql);
+        
+            // Binding parameters for the prepared statement
+            if ($doctor_ID != null) {
+                $this->db->bind(':doc_id', $doctor_ID);
+            }
+            if ($hospital_ID != null) {
+                $this->db->bind(':hospital_id', $hospital_ID);
+            }
+            if ($patient_ID != null) {
+                $this->db->bind(':patient_id', $patient_ID);
+            }
+            $this->db->bind(':date', $calculatedDate);
+        
+            $appointments = $this->db->resultSet();
+        
+            if ($this->db->rowCount() > 0) {
+                return $appointments;
+            } else {
+                return false;
+            }
+        }
+        
+
+        public function report_test_appointments($hospital_ID, $patient_ID, $calculatedDate) {
+            $sql = 'SELECT test_reservation.Test_Res_ID, test_reservation.Date, test_reservation.Start_Time, test_reservation.End_Time, patient.First_Name, patient.Last_Name, patient.NIC, hospital.Hospital_Name, test.Test_Name FROM test_reservation 
+            INNER JOIN patient ON test_reservation.Patient_ID = patient.Patient_ID
+            INNER JOIN test ON test_reservation.Test_ID = test.Test_ID
+            INNER JOIN hospital ON test_reservation.Hospital_ID = hospital.Hospital_ID
+            WHERE 1';
+        
+            // Check if hospital_ID is specified
+            if ($hospital_ID != null) {
+                $sql .= ' AND test_reservation.Hospital_ID = :hospital_id';
+            }
+        
+            // Check if patient_ID is specified
+            if ($patient_ID != null) {
+                $sql .= ' AND patient.Patient_ID = :patient_id';
+            }
+        
+            // Add date condition
+            $sql .= ' AND test_reservation.Date >= :date';
+        
+            // Prepare the query
+            $this->db->query($sql);
+        
+            // Binding parameters for the prepared statement
+            if ($hospital_ID != null) {
+                $this->db->bind(':hospital_id', $hospital_ID);
+            }
+            if ($patient_ID != null) {
+                $this->db->bind(':patient_id', $patient_ID);
+            }
+            $this->db->bind(':date', $calculatedDate);
+        
+            $appointments = $this->db->resultSet();
+        
+            if ($this->db->rowCount() > 0) {
+                return $appointments;
+            } else {
+                return false;
+            }
+        }
+        
+
     }        

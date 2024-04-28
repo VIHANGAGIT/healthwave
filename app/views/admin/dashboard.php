@@ -153,6 +153,7 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Data Visualizations</h1>
+                <hr><br>
                 <table class="table-dashboard">
                     <tbody>
                         <tr>
@@ -177,6 +178,151 @@
             </div>
         </section>
         <br>
+        <section class="table-wrap" style="height: 330px;" >
+        <div class="content-search" style="height: 330px;">
+              <div class="search">
+                <h2>Report Filter</h2>
+                  <form style="width: 100%;" method="POST">
+                    <div class="fields">
+                      <table style="width: 95%;">
+                        <tr>
+                          <td colspan="2">
+                            <div class="input-field">
+                                <label>Report Type</label>
+                                <select name="report_name" >
+                                  <option disabled selected>Select Type of Report</option>
+                                  <option value="doc" >Appointment Booking Report</option>
+                                  <option value="test" >Test Booking Report</option>
+                                  <!-- <option value="payment" >Payment Report</option> -->
+                              </select>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="input-field">
+                                <label>Patient Name</label>
+                                <select name="patient_name" >
+                                  <option disabled selected>Select Patient Name</option>
+                                  <?php foreach ($data['patients'] as $patient): ?>
+                                    <option value="<?php echo $patient->Patient_ID; ?>"><?php echo $patient->First_Name . ' ' . $patient->Last_Name . ' - '. $patient->NIC; ?></option>
+                                  <?php endforeach; ?>
+                                </select>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-field">
+                              <label>Hospital Name</label>
+                              <select name="hospital_name" >
+                                <option disabled selected>Select Hospital</option>
+                                <?php foreach ($data['hospitals'] as $hospital): ?>
+                                  <option value="<?php echo $hospital->Hospital_ID; ?>"><?php echo $hospital->Hospital_Name; ?></option>
+                                <?php endforeach; ?> 
+                              </select>
+                            </div>
+                          </td>
+                          <td>
+                            <input type="submit" class="button" value="Generate" name="search" >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="input-field">
+                                <label>Doctor Name</label>
+                                <select name="doctor_name" >
+                                  <option disabled selected>Select Doctor Name</option>
+                                  <?php foreach ($data['doctors'] as $doctor): ?>
+                                    <option value="<?php echo $doctor->Doctor_ID?>"><?php echo $doctor->First_Name . ' ' . $doctor->Last_Name . ' - '. $doctor->Specialization; ?></option>
+                                  <?php endforeach; ?>
+                                </select>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-field">
+                                <label>Time Period</label>
+                                <select name="no_of_days" required>
+                                  <option value="7" selected>Last 7 days</option>
+                                  <option value="30" >Last 30 days</option>
+                                  <option value="90" >Last 90 days</option>
+                                </select>
+                            </div>
+                          </td>
+                          <td>
+                            <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </form>
+              </div>
+            </div>
+        </section><br>
+        <section class="table-wrap" >
+            <div class="table-container">
+            <h1>Reports</h1>
+            <hr><br>
+                <?php if (empty($data['doc_report']) && empty($data['test_report'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>Generate to get reports</p>
+                    </div>
+                <?php elseif(!empty($data['doc_report'])): ?>
+                <table  id="myTable" class="table">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">Res ID</th>
+                            <th style="text-align: center;">Patient Name</th>
+                            <th style="text-align: center;">Doctor Name</th>
+                            <th style="text-align: center;">Hospital Name</th>
+                            <th style="text-align: center;">Date</th>
+                            <th style="text-align: center;">Time Slot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($data['doc_report'] as $doc_report): ?>
+                      <tr>
+                        <td style="text-align: center;"><?php echo $doc_report->Doc_Res_ID; ?></td>
+                        <td style="text-align: center;"><?php echo $doc_report->First_Name . " " . $doc_report->Last_Name; ?></td>
+                        <td style="text-align: center;"><?php echo $doc_report->Doc_First_Name . ' ' . $doc_report->Doc_Last_Name; ?></td>
+                        <td style="text-align: center;"><?php echo $doc_report->Hospital_Name; ?></td>
+                        <td style="text-align: center;"><?php echo $doc_report->Date; ?></td>
+                        <td style="text-align: center;"><?php echo $doc_report->Start_Time . ' - ' . $doc_report->End_Time; ?></td>
+                      </td>
+
+                      </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php elseif(!empty($data['test_report'])): ?>
+                <table  id="myTable" class="table">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">Res ID</th>
+                            <th style="text-align: center;">Patient Name</th>
+                            <th style="text-align: center;">Test Name</th>
+                            <th style="text-align: center;">Hospital Name</th>
+                            <th style="text-align: center;">Date</th>
+                            <th style="text-align: center;">Time Slot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($data['test_report'] as $test_report): ?>
+                      <tr>
+                        <td style="text-align: center;"><?php echo $test_report->Test_Res_ID; ?></td>
+                        <td style="text-align: center;"><?php echo $test_report->First_Name . " " . $test_report->Last_Name; ?></td>
+                        <td style="text-align: center;"><?php echo $test_report->Test_Name; ?></td>
+                        <td style="text-align: center;"><?php echo $test_report->Hospital_Name; ?></td>
+                        <td style="text-align: center;"><?php echo $test_report->Date; ?></td>
+                        <td style="text-align: center;"><?php echo $test_report->Start_Time . ' - ' . $test_report->End_Time; ?></td>
+                      </td>
+
+                      </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php endif; ?>
+            </div>
+        </section><br>
     </div>
    
     <script>
