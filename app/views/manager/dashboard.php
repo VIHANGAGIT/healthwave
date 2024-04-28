@@ -123,64 +123,32 @@
     <div class="content">
     <section class="table-wrap" >
             <div class="table-container">
-                <h1>Hospital Statistics :<span class="dashboard-stat" style="font-size: 25px;" >HealthWave</span></h1>
+                <h1>Hospital Statistics :<span class="dashboard-stat" style="font-size: 25px;" ><?php echo $data['hospital']->Hospital_Name ?></span></h1>
                 <table class="table-dashboard">
                     <tbody>
                         <tr class="dashboard-row">
                             <td class="dashboard-content">
                                 <p class="dashboard-stat-title">Total Number<br>of Patients :</p>
-                                <p class="dashboard-stat"><?php echo $data['statistic']['total_patients'] ?></p>
+                                <p class="dashboard-stat"><?php echo $data['patient_count'] ?></p>
                             </td>
                             
                             <td class="dashboard-content">
                                 <p class="dashboard-stat-title">Total Number<br>of Doctors :</h2>
-                                <p class="dashboard-stat"><?php echo $data['statistic']['total_doctors'] ?></p>
+                                <p class="dashboard-stat"><?php echo $data['doctors_count'] ?></p>
                             </td>
                             <td class="dashboard-content">
-                                <p class="dashboard-stat-title">Total Number<br>of Hospitals :</h2>
-                                <p class="dashboard-stat"><?php echo $data['statistic']['total_hospitals'] ?></p>
+                                <p class="dashboard-stat-title">Total Number of<br>Doctor Reservations :</h2>
+                                <p class="dashboard-stat"><?php echo $data['doc_res_count'] ?></p>
                             </td>
                             <td class="dashboard-content">
-                                <p class="dashboard-stat-title">Total Number<br>of Reservations :</h2>
-                                <p class="dashboard-stat"><?php echo $data['statistic']['total_reservations'] ?></p>
-                            </td>
-                            <td class="dashboard-content">
-                                <p class="dashboard-stat-title">Number of Upcoming<br> Reservations :</h2>
-                                <p class="dashboard-stat"><?php echo $data['statistic']['total_upcoming'] ?></p>
+                                <p class="dashboard-stat-title">Total Number of<br>Test Reservations :</h2>
+                                <p class="dashboard-stat"><?php echo $data['test_res_count'] ?></p>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section><br>
-        <section class="table-wrap" >
-            <div class="table-container">
-                <h1>Data Visualizations</h1>
-                <hr><br>
-                <table class="table-dashboard">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="visualization" >
-                                    <canvas id="myChart"></canvas>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="dashboard-types">
-                                    <h2>Other Visulaizations</h2><br>
-                                    <button class='button' style="width: 200px;" >Doctors by Spec.</button><br>
-                                    <button class='button' style="width: 200px;" >Patients by Month</button><br>
-                                    <button class='button' style="width: 200px;" >Lab Tests by Month</button><br>
-                                    <button class='button' style="width: 200px;" >Lab Tests by Type</button><br>
-                                    <button class='button' style="width: 200px;" >Earnings by Month</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <br>
         <section class="table-wrap" >
         <div class="content-search">
               <div class="search">
@@ -326,32 +294,7 @@
       } );
     </script> 
    
-    <script>
-      const ctx = document.getElementById('myChart');
-
-      // Extracted PHP data for JavaScript
-      const labels = ['<?php echo $data['months']; ?>'];
-      const data = [<?php echo $data['reservationsCount']; ?>];
-
-      new Chart(ctx, {
-          type: 'line',
-          data: {
-              labels: labels,
-              datasets: [{
-                  label: 'Total No of Doctor Reservations',
-                  data: data,
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
-          }
-      });
-  </script>
+  
       
   </body>
 </html>

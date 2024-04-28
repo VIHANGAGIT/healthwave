@@ -561,6 +561,86 @@
                 return false;
             }
         }
+
+        public function get_patients($hospital_id){
+            $this->db->query('SELECT DISTINCT patient.Patient_ID, patient.First_Name, patient.Last_Name, NIC FROM patient
+            INNER JOIN doctor_reservation ON patient.Patient_ID = doctor_reservation.Patient_ID 
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+            WHERE hospital.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $doc_patients = $this->db->resultSet();
+
+            $this->db->query('SELECT DISTINCT patient.Patient_ID, patient.First_Name, patient.Last_Name, NIC FROM patient INNER JOIN test_reservation ON patient.Patient_ID = test_reservation.Patient_ID
+            INNER JOIN hospital_test ON test_reservation.Test_ID = hospital_test.Test_ID
+            WHERE hospital_test.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $test_patients = $this->db->resultSet();
+
+            $row['doc_patients'] = $doc_patients;
+            $row['test_patients'] = $test_patients;
+
+            // Execute query
+            if($this->db->execute()){
+                return $row;
+            } else{
+                return false;
+            }   
+        }
+
+        public function get_doctors($hospital_id){
+            $this->db->query('SELECT DISTINCT doctor.Doctor_ID, doctor.First_Name, doctor.Last_Name, Specialization FROM doctor 
+            INNER JOIN schedule ON doctor.Doctor_ID = schedule.Doctor_ID
+            INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+            WHERE hospital.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            // Execute the query and fetch the count
+            $doctor_count = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $doctor_count;
+            } else{
+                return false;
+            }   
+        }
+
+        public function get_statistic($hospital_id){
+            $this->db->query('SELECT doctor_reservation.Date as doc_res_date FROM doctor_reservation 
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+            WHERE hospital.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            // Execute the query and fetch the count
+            $doc_res = $this->db->resultSet();
+
+            $this->db->query('SELECT test_reservation.Date as test_res_date FROM test_reservation 
+            INNER JOIN hospital_test ON test_reservation.Test_ID = hospital_test.Test_ID
+            WHERE hospital_test.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            // Execute the query and fetch the count
+            $test_res = $this->db->resultSet();
+
+            $row['doc_res_date'] = $doc_res;
+            $row['test_res_date'] = $test_res;
+
+            // Execute query
+            if($this->db->execute()){
+                return $row;
+            } else{
+                return false;
+            }   
+        }
         
         
     }

@@ -215,8 +215,6 @@
                 $this->view('admin/dashboard', $data);
             }
 
-            
-
         }
 
         public function profile(){

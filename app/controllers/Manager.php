@@ -10,6 +10,7 @@
             $this->managerModel = $this->model('managers');
             $this->testModel = $this->model('tests');
             $this->doctorModel = $this->model('doctors');
+            $this->adminModel = $this->model('admins');
         }
         public function index(){
             
@@ -17,6 +18,102 @@
             $data = [];
             
             $this->view('manager/dashboard', $data);
+        }
+
+        public function dashboard(){
+            $data = [
+                'ID' => $_SESSION['userID']
+            ];
+    
+            $hospital_data = $this->managerModel->hospital_data_fetch($data['ID']);
+            $hospital_id = $hospital_data->Hospital_ID;
+
+            $patientRows = $this->managerModel->get_patients($hospital_id);
+            $doc_patients = $patientRows['doc_patients'];
+            $test_patients = $patientRows['test_patients'];
+
+            $doc_patient_ids = array_column($doc_patients, 'Patient_ID');
+            $test_patient_ids = array_column($test_patients, 'Patient_ID');
+
+            $doc_patient_ids_count = count($doc_patient_ids);
+            $test_patient_ids_count = count($test_patient_ids);
+
+            // Merge the arrays of patient IDs to combine unique patient IDs
+            $combined_patient_ids = array_merge($doc_patient_ids, $test_patient_ids);
+
+            // Count the unique patient IDs
+            $unique_patient_count = count(array_unique($combined_patient_ids));
+
+            $doctors_count = $this->managerModel->get_doctors($hospital_id);
+            $doctors_count = count($doctors_count);
+
+            $doctors = $this->managerModel->get_doctors($hospital_id);
+            $patients = $this->managerModel->get_patients($hospital_id);
+
+            $patients_array = array_merge($patients['doc_patients'], $patients['test_patients']);
+
+            $unique_patient_array = [];
+
+            foreach ($patients_array as $patient) {
+                if (!in_array($patient, $unique_patient_array)) {
+                    $unique_patient_array[] = $patient;
+                }
+            }
+
+
+
+            $data = [
+                'doctors' => $doctors,
+                'patients' => $unique_patient_array,
+                'patient_count' => $unique_patient_count,
+                'doctors_count' => $doctors_count,
+                'doc_res_count' => $doc_patient_ids_count,
+                'test_res_count' => $test_patient_ids_count,
+                'hospital' => $hospital_data
+            ];
+            
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+
+                // Get search parameters from the form
+                $report = isset($_POST['report_name']) ? $_POST['report_name'] : null;
+                $doctor_ID = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
+                $patient_ID = isset($_POST['patient_name']) ? $_POST['patient_name'] : null;
+                $no_of_days = isset($_POST['no_of_days']) ? $_POST['no_of_days'] : null;
+
+                $selectedPeriod = intval($no_of_days); // Get the selected time period as an integer
+
+                // Get the current date
+                $currentDate = date('Y-m-d');
+
+                // Calculate the date based on the selected period
+                $calculatedDate = date('Y-m-d', strtotime("-$selectedPeriod days", strtotime($currentDate)));
+
+                if($report == "doc"){
+                    $data['doc_report'] = $this->adminModel->report_doc_appointments($doctor_ID, $hospital_id, $patient_ID, $calculatedDate);
+                    foreach ($data['doc_report'] as $key => $appointment) {
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+                    $data['test_report'] = '';
+                    $this->view('manager/dashboard', $data);
+                }elseif($report == "test"){
+                    $data['test_report'] = $this->adminModel->report_test_appointments($hospital_id, $patient_ID, $calculatedDate);
+                    foreach ($data['test_report'] as $key => $appointment) {
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+                    $data['doc_report'] = '';
+
+                    $this->view('manager/dashboard', $data);
+                }else{
+                    $this->view('manager/dashboard', $data);
+                }
+        
+        
+            }else{
+                $this->view('manager/dashboard', $data);
+            }
         }
 
         public function approvals(){
