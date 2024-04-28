@@ -176,7 +176,7 @@
                 $report = isset($_POST['report_name']) ? $_POST['report_name'] : null;
                 $doctor_ID = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
                 $hospital_ID = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
-                $patient_ID = isset($_POST['specialization']) ? $_POST['specialization'] : null;
+                $patient_ID = isset($_POST['patient_name']) ? $_POST['patient_name'] : null;
                 $no_of_days = isset($_POST['no_of_days']) ? $_POST['no_of_days'] : null;
 
                 $selectedPeriod = intval($no_of_days); // Get the selected time period as an integer

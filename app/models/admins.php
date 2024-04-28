@@ -718,12 +718,12 @@
             WHERE 1';
         
             // Check if hospital_ID is specified
-            if ($hospital_ID != null) {
+            if ($hospital_ID !== null) {
                 $sql .= ' AND test_reservation.Hospital_ID = :hospital_id';
             }
         
             // Check if patient_ID is specified
-            if ($patient_ID != null) {
+            if ($patient_ID !== null) {
                 $sql .= ' AND patient.Patient_ID = :patient_id';
             }
         
@@ -734,10 +734,10 @@
             $this->db->query($sql);
         
             // Binding parameters for the prepared statement
-            if ($hospital_ID != null) {
+            if ($hospital_ID !== null) {
                 $this->db->bind(':hospital_id', $hospital_ID);
             }
-            if ($patient_ID != null) {
+            if ($patient_ID !== null) {
                 $this->db->bind(':patient_id', $patient_ID);
             }
             $this->db->bind(':date', $calculatedDate);
@@ -750,6 +750,7 @@
                 return false;
             }
         }
+        
         
 
     }        
