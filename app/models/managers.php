@@ -166,6 +166,102 @@
             }
         }
 
+        public function approve_pharmacist($id){
+            $this->db->query('UPDATE hospital_staff SET Approval = 1 WHERE HS_ID = :id');
+            $this->db->bind(':id', $id);
+
+            // Execute query
+            if($this->db->execute()){
+                $this->db->query('SELECT First_Name, Last_Name FROM hospital_staff WHERE HS_ID = :id');
+                $this->db->bind(':id', $id);
+                $pharm = $this->db->singleRow();
+                return $pharm;
+            } else{
+                return false;
+            }
+        }
+
+        public function approve_lab($id){
+            $this->db->query('UPDATE hospital_staff SET Approval = 1 WHERE HS_ID = :id');
+            $this->db->bind(':id', $id);
+
+            // Execute query
+            if($this->db->execute()){
+                $this->db->query('SELECT First_Name, Last_Name FROM hospital_staff WHERE HS_ID = :id');
+                $this->db->bind(':id', $id);
+                $lab = $this->db->singleRow();
+                return $lab;
+            } else{
+                return false;
+            }
+        }
+        
+        public function decline_pharmacist($id){
+            $this->db->query('SELECT First_Name, Last_Name FROM hospital_staff WHERE HS_ID = :id');
+            $this->db->bind(':id', $id);
+
+            $pharm = $this->db->singleRow();
+
+            $this->db->query('DELETE FROM hospital_staff WHERE HS_ID = :id');
+
+            $this->db->bind(':id', $id);
+
+            // Execute query
+            if($this->db->execute()){
+                return $pharm;
+            } else{
+                return false;
+            }
+        }
+
+        public function decline_lab($id){
+            $this->db->query('SELECT First_Name, Last_Name FROM hospital_staff WHERE HS_ID = :id');
+            $this->db->bind(':id', $id);
+
+            $lab = $this->db->singleRow();
+
+            $this->db->query('DELETE FROM hospital_staff WHERE HS_ID = :id');
+
+            $this->db->bind(':id', $id);
+
+            // Execute query
+            if($this->db->execute()){
+                return $lab;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_pending_labs($hospital_id){
+            $this->db->query('SELECT * FROM hospital_staff WHERE Hospital_ID = :hospital_id AND Approval = 0 AND Role = "Lab Assistant"');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $labs = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $labs;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_pending_pharmacists($hospital_id){
+            $this->db->query('SELECT * FROM hospital_staff WHERE Hospital_ID = :hospital_id AND Approval = 0 AND Role = "Pharmacist"');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $pharm = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $pharm;
+            } else{
+                return false;
+            }
+        }
+
         public function get_schedule_hospital($hospital_id){
             $this->db->query('SELECT schedule.*, doctor.First_Name, doctor.Last_Name, doctor.Specialization, room.Room_Name FROM schedule
             INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
