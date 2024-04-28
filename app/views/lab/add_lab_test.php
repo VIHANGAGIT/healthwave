@@ -77,6 +77,12 @@
                 <span>Results Upload</span>
               </a>
             </li>
+            <li class="item">
+              <a href="../lab/completed_tests" class="link flex">
+              <i class="uil uil-file-check-alt"></i>
+                <span>Completed Tests</span>
+              </a>
+            </li>
           </ul>
 
           <ul class="menu_item">

@@ -22,14 +22,14 @@
             $this->view('lab/test_management', $data);
         }*/
 
-        public function test_result_upload(){
+        /*public function test_result_upload(){
             $data = [];
             $this->view('lab/test_result_upload', $data);
-        }
+        }*/
 
-        /*public function profile(){
+        /*public function completed_tests(){
             $data = [];
-            $this->view('lab/profile', $data);
+            $this->view('lab/completed_tests', $data);
         }*/
 
        /* public function lab_test_details(){
@@ -203,6 +203,9 @@
             // Pass the test details to the view
             $this->view("lab/test_management", $data);
         }
+
+
+
 
         /*public function add_lab_test() {
             // Check for POST request
@@ -490,6 +493,203 @@
                 return;
             }
         }
+
+        /*public function updateReservationStatus() {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // Get the reservation ID from the form submission
+                $Test_Res_ID = $_POST['Test_Res_ID'] ?? null;
+                
+                // Check if reservation ID is provided
+                if (!$Test_Res_ID) {
+                    echo "Reservation ID is missing.";
+                    return;
+                }
+                
+                // Call a model method to update the reservation status
+                $updated = $this->labModel->updateReservationStatus($Test_Res_ID);
+                
+                if ($updated) {
+                    // Redirect to a success page or handle success case
+                    header("Location: /lab/lab_test_details");
+                    exit;
+                } else {
+                    // Handle failure case
+                    echo "Failed to update reservation status.";
+                    return;
+                }
+            } else {
+                // Handle non-POST requests
+                echo "Invalid request method.";
+                return;
+            }
+        }*/
+
+        public function updateStatus(){
+            // Check if the user is logged in
+            if (!isset($_SESSION['userID'])) {
+                // Redirect or handle the case where the user is not logged in
+                // For example:
+                header("Location: /login");
+                exit;
+            }
+        
+            // Get the logged-in user's ID
+            $user_id = $_SESSION['userID'];
+
+            // Get the Patient_ID and Date from the URL parameters
+            $patient_id = $_GET['patient_id'] ?? null;
+            $date = $_GET['date'] ?? null;
+        
+            // Check if both Patient_ID and Date are provided
+            if (!$patient_id || !$date) {
+                // Handle the case where the required parameters are missing
+                echo "Patient ID or date is missing.";
+                return;
+            }
+        
+            // Get the Test_Res_ID and new status from the POST data
+            $test_res_id = $_POST['test_res_id'] ?? null;
+            $new_status = $_POST['new_status'] ?? null;;
+        
+            // Check if both Test_Res_ID and new status are provided
+            if (!$test_res_id || !$new_status) {
+                // Handle the case where the required parameters are missing
+                echo "Test reservation ID or new status is missing.";
+                return;
+            }
+        
+            // Call the model function to update the status
+            $update_status = $this->labModel->updateReservationStatus($test_res_id, $new_status, $patient_id, $date);
+        
+            // Check if the status is updated successfully
+            if ($update_status) {
+                // Redirect the user back to the lab_test_details page
+                header("Location:/lab/lab_test_details?patient_id={$patient_id}&date={$date}");
+                exit;
+            } else {
+                // Handle case where status update fails
+                echo "Failed to update status.";
+                return;
+            }
+        }
+
+
+        public function test_result_upload(){
+            // Check if the user is logged in
+            if (!isset($_SESSION['userID'])) {
+                // Redirect or handle the case where the user is not logged in
+                // For example:
+                header("Location: /login");
+                exit;
+            }
+            
+            // Get the logged-in user's ID
+            $user_id = $_SESSION['userID'];
+        
+            // Fetch lab data
+            $lab_data = $this->labModel->pending_test_data_fetch($user_id);
+        
+            // Check if data is fetched successfully
+            if ($lab_data) {
+                // Prepare data to pass to the view
+                $data = [
+                    'reservations' => $lab_data
+                ];
+        
+                // Pass the test details to the view
+                $this->view("lab/test_result_upload", $data);
+            } else {
+                // Handle case where no data is fetched
+                echo "No reservation data found.";
+                return;
+            }
+        }
+
+        public function completed_tests(){
+            // Check if the user is logged in
+            if (!isset($_SESSION['userID'])) {
+                // Redirect or handle the case where the user is not logged in
+                // For example:
+                header("Location: /login");
+                exit;
+            }
+            
+            // Get the logged-in user's ID
+            $user_id = $_SESSION['userID'];
+        
+            // Fetch lab data
+            $lab_data = $this->labModel->completed_test_data_fetch($user_id);
+        
+            // Check if data is fetched successfully
+            if ($lab_data) {
+                // Prepare data to pass to the view
+                $data = [
+                    'reservations' => $lab_data
+                ];
+        
+                // Pass the test details to the view
+                $this->view("lab/completed_tests", $data);
+            } else {
+                // Handle case where no data is fetched
+                echo "No reservation data found.";
+                return;
+            }
+        }
+
+        /*public function test_management(){
+            
+            $data = [
+                'ID' => $_SESSION['userID']
+            ];
+    
+            $hospital_data = $this->labModel->lab_data_fetch($data['ID']);
+            $hospital_id = $hospital_data->Hospital_ID;
+            
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+                // Get search parameters from the form
+                $T_Name = isset($_POST['T_Name']) ? $_POST['T_Name'] : null;
+                $T_ID = isset($_POST['T_ID']) ? $_POST['T_ID'] : null;
+                $T_Type = isset($_POST['T_Type']) ? $_POST['T_Type'] : null;
+        
+                // Perform the search based on the parameters
+                $tests = $this->labModel->search_tests_with_id_hospital($T_Name, $T_ID, $T_Type, $hospital_id);
+        
+            } else {
+                $tests = $this->labModel->labassistant_labtest_data_fetch($hospital_id);
+    
+            }
+    
+            $types = [];
+    
+            if($tests){
+                foreach ($tests as $test) {
+                    if (!in_array($test->Test_Type, $types)) {
+                        $types[] = $test->Test_Type;
+                    }
+                    if($this->labModel->get_appointments_test_hospital($test->Test_ID, $hospital_id)){
+                        $test->Cancel = 'Not allowed';
+                    }else{
+                        $test->Cancel = 'Allowed';
+                    }
+                }
+            }
+            $data = [
+                'tests' => $tests,
+                'types' => $types
+            ];
+            $this->view('lab/test_management', $data);
+        }*/
+
+
+        public function upload_file(){
+            $data = [];
+            $this->view('lab/upload_file', $data);
+        }
+
+
+
+
+        
         
 
 

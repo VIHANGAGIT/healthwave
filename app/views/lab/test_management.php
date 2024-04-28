@@ -79,6 +79,12 @@
                 <span>Results Upload</span>
               </a>
             </li>
+            <li class="item">
+              <a href="../lab/completed_tests" class="link flex">
+              <i class="uil uil-file-check-alt"></i>
+                <span>Completed Tests</span>
+              </a>
+            </li>
           </ul>
 
           <ul class="menu_item">
@@ -114,10 +120,11 @@
     </nav>
 
 <!--Search box-->
-    <div class="content">
-    <div class="content-search">
+<div class="content">
+    <section class="table-wrap" >
+      <div class="content-search">
         <div class="search">
-          <h2>Lab Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='../lab/add_lab_test'><button class='button'>Add Lab Test</button></a></span></h2>
+          <h2>Test Search</h2>
               <form style="width: 100%;" method="POST">
                 <div class="fields">
                   <table style="width: 95%;" >
@@ -125,32 +132,51 @@
                       <td>
                         <div class="input-field">
                             <label>Test ID</label>
-                            <input type="text" name="search_text" placeholder="Test ID">
+                            <input type="text" name="T_ID" placeholder="Enter Test ID" style="margin: 0%;" >
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
                             <label>Test Name</label>
-                            <input type="text" name="search_text" placeholder="Test Name">
+                            <input type="text" name="T_Name" placeholder="Enter Test Name" style="margin: 0%;" >
                         </div>
                       </td>
                       <td>
                         <input type="submit" class="button" value="Search" name="search" >
                       </td>
                     </tr>
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                          <label>Test Type</label>
+                          <select name="T_Type" required>
+                              <option disabled selected>Select Test Type</option>
+                              <?php foreach($data['types'] as $testType) : ?>
+                                  <option value="<?php echo $testType; ?>"><?php echo $testType; ?></option>
+                              <?php endforeach; ?>
+                              </select>
+                        </div>
+                      </td>
+                      <td>
+                      </td>
+                      <td>
+                        <button class="button" style="background-color: red;" onclick="window.location.reload()" >Reset</button></a>
+                      </td>
+                    </tr>
                   </table>
+                  <br>
                 </div>
               </form>
           </div>
-          
         </div>
-
+        </section>
         <br>
 
         <!--test list table-->
         
         <section class="table-wrap" >
             <div class="table-container">
+            <h1>Add Reservation<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='../lab/add_lab_test'><button class='button' style="button-size: auto">Add</button></a></span></h1>
                 <table class="table table-sort">
                     <thead>
                         <tr>

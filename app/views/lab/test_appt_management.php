@@ -76,6 +76,12 @@
                 <span>Results Upload</span>
               </a>
             </li>
+            <li class="item">
+              <a href="../lab/completed_tests" class="link flex">
+              <i class="uil uil-file-check-alt"></i>
+                <span>Completed Tests</span>
+              </a>
+            </li>
           </ul>
 
           <ul class="menu_item">
@@ -113,7 +119,7 @@
     <div class="content">
     <div class="content-search">
           <div class="search">
-          <h2>Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ></span></h2>
+          <h2>Test Reservation Search<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ></span></h2>
               <form style="width: 100%;" method="POST">
                 <div class="fields">
                   <table style="width: 95%;" >
@@ -143,6 +149,7 @@
         <br>
         <section class="table-wrap" >
             <div class="table-container">
+            <h2>Add Reservation<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='../lab/add_lab_test'><button class='button' style="button-size: auto">Add</button></a></span></h2>
                 <!--<h1>Test Appointments Management</h1>-->
                 <table class="table">
                     <thead>
@@ -159,29 +166,9 @@
                             <td style="text-align: center;"><?php echo $reservations->Patient_ID;?></td>
                             <td style="text-align: center;"><?php echo $reservations->First_Name. " ".$reservations->Last_Name;?></td>
                             <td style="text-align: center;"><?php echo $reservations->Date;?></td>
-                            <!--<td><a href='lab_test_details'><button class='button'>View</button></a></td>-->
                             <td><a href='lab_test_details?patient_id=<?php echo $reservations->Patient_ID ?>&date=<?php echo $reservations->Date ?>'><button class='button'>View</button></a></td>
                         </tr>
                     <?php endforeach;?>  
-                        <!--<tr>
-                            <td>002</td>
-                            <td>B.H. Allen</td>
-                            <td>Urine FR </td>
-                            <td>2023/10/12</td>
-                            <td>10:40 AM</td>
-                            <td><a href='lab_test_details'><button class='button'>View</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>003</td>
-                            <td>S.G. Rogers</td>
-                            <td>Dengue Antigen</td>
-                            <td>2023/10/12</td>
-                            <td>10:55 AM</td>
-                            <td><a href='lab_test_details'><button class='button'>View</button></a></td>
-                            <td><a href=''><button class='button red'>Delete</button></a></td>
-                        </tr>-->
-                        
                     </tbody>
                 </table>
             </div>

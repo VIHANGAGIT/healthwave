@@ -120,7 +120,7 @@
                 <a href="#">Payment</a>
                 <a href="../users/terms_and_cond">Terms Of Use</a>
             </div>
-            <div class="footer-box">
+            <!--<div class="footer-box">
                 <h2>Newsletter</h2>
                 <p>Get all discount news with Email Newsletter</p>
                 <form action="">
@@ -129,7 +129,7 @@
                     <i class='bx bx-arrow-back bx-rotate-180' ></i>
 
                 </form>
-            </div>
+            </div>-->
         </section>
         <br>
 

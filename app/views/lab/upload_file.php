@@ -1,4 +1,4 @@
-<?php 
+?php 
   if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -6,6 +6,7 @@
     redirect("users/login");
   }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,10 +34,10 @@
    
 
    <!--sidebar-->
-   <nav class="sidebar">
+    <nav class="sidebar">
       <div class="menu_container">
         <div class="menu_items">
-        <ul class="menu_item">
+          <ul class="menu_item">
             <div class="menu_title flex">
               <span class="line"></span>
             </div>
@@ -83,7 +84,6 @@
               </a>
             </li>
           </ul>
-          </ul>
 
           <ul class="menu_item">
             <div class="menu_title flex">
@@ -117,72 +117,21 @@
       </div>
     </nav>
 
-    <div class="content">
-        <div class="content-search">
-          <div class="search">
-          <h2>Lab Test Search<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href=''></a></span></h2>
-              <form style="width: 100%;" method="POST">
-                <div class="fields">
-                  <table style="width: 95%;" >
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                            <label>Reservation ID</label>
-                            <input type="text" name="search_text" placeholder="Reservation ID">
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-field">
-                            <label>Patient ID</label>
-                            <input type="text" name="search_text" placeholder="Patient ID">
-                        </div>
-                      </td>
-                      <td>
-                        <input type="submit" class="button" value="Search" name="search" >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                      <div class="input-field">
-                            <label>Test Name</label>
-                            <input type="text" name="search_text" placeholder="Test Name">
-                        </div>
-                      </td>
-                      <td>
-                      </td>
-                      <td>
-                        <button class="button" style="background-color: red;" onclick="window.location.reload()" >Reset</button></a>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </form>
-          </div>
+
+        <div class="wrapper">
+            <header>Upload Test</header>
+                <form action="#">
+                <input class="file-input" type="file" name="file" hidden>
+                <i class="uil uil-upload"></i>
+                <p>Browse File to Upload</p>
+                </form>
+                <section class="progress-area"></section>
+                <section class="uploaded-area"></section>
         </div>
-        <div class="detail-wrapper">
 
-            <?php foreach ($data['reservations'] as $reservations): ?>
-              <div class='detail-card'>
-                <div class='detail-card-content'>
-                  <p class="detail-title"><?php echo $reservations->Test_Name;?></p>
-                  <p class='detail-comp'><?php echo $reservations->Test_Res_ID;?>  | <?php echo $reservations->First_Name. " ".$reservations->Last_Name;?> </p>
-                </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" ><?php echo $reservations->Status;?></p>
-                    </div>
-                </div>
-                <div class='detail-view'>
-                <a href='upload_file?test_id=<?php echo $reservations->Test_Res_ID ?>'><button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button></a>
-                <button class='button complete-btn' >Completed</button>
-                </div>
+        <script src="script.js"></script>
 
-              </div>
 
-            <?php endforeach;?>  
-        
-    </div>
+
   </body>
 </html>

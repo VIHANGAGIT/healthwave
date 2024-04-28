@@ -77,6 +77,12 @@
                 <span>Results Upload</span>
               </a>
             </li>
+            <li class="item">
+              <a href="../lab/completed_tests" class="link flex">
+              <i class="uil uil-file-check-alt"></i>
+                <span>Completed Tests</span>
+              </a>
+            </li>
           </ul>
 
           <ul class="menu_item">
@@ -133,12 +139,11 @@
               <th> Test Type </th>
               <th> Price </th>
               <th> Time </th>
-              <th> Edit </th>
-              <th> Remove </th>
+              <th> Status </th>
+              <!--<th> Remove </th>-->
             </tr>
           </thead>
           <tbody>
-
             <?php foreach ($data['reservations'] as $reservations): ?>
                       <tr>
                             <td style="text-align: center;"><?php echo $reservations->Test_Res_ID;?></td>
@@ -146,28 +151,19 @@
                             <td style="text-align: center;"><?php echo $reservations->Test_Type;?></td>
                             <td style="text-align: center;"><?php echo $reservations->Price;?></td>
                             <td style="text-align: center;"><?php echo $reservations->Start_Time. "-".$reservations->End_Time;?></td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                            <!--<td><a href='lab_test_details'><button class='button'>View</button></a></td>-->
+                            <td>
+                                <!-- Add a button to trigger the status update -->
+                                <form action="<?php echo URLROOT; ?>lab/lab_test_details?patient_id=<?php echo $reservations->Patient_ID ?>&date=<?php echo $reservations->Date ?>" method="POST">
+                                    <input type="hidden" name="test_res_id" value="<?php echo $reservations->Test_Res_ID;?>">
+                                    <!-- Set the new status directly to 'Completed' -->
+                                    <input type="hidden" name="new_status" value="Collected">
+                                    <button type="submit">Collected</button>
+                                </form>
+                            </td>
+                          
                     
                         </tr>
-                    <?php endforeach;?>  
-            <!--<tr>
-              <td> 2 </td>
-              <td> Urine Test </td>
-              <td> Rs.300</td>
-              <td> 1.30 p.m </td>
-              <td><a href=''><button class='button'>Edit</button></a></td>
-              <td><a href=''><button class='button red'>Remove</button></a></td>
-            </tr>
-            <tr>
-              <td> 3 </td>
-              <td> Iodine test </td>
-              <td> Rs.500 </td>
-              <td> 1.40 p.m </td>
-              <td><a href=''><button class='button'>Edit</button></a></td>
-              <td><a href=''><button class='button red'>Remove</button></a></td>
-            </tr>-->
+            <?php endforeach;?>  
           </tbody>
         </table>
       </div>

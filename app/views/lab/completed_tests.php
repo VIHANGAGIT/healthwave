@@ -6,6 +6,7 @@
     redirect("users/login");
   }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,9 +17,11 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
+    <script src="<?php echo URLROOT;?>/js/tablesort.js"></script>
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
@@ -70,19 +73,18 @@
                 <span>Test Management</span>
               </a>
             </li>
-            <li class="item active">
+            <li class="item">
               <a href="../lab/test_result_upload" class="link flex">
                 <i class="uil uil-upload"></i>
                 <span>Results Upload</span>
               </a>
             </li>
-            <li class="item">
+            <li class="item active">
               <a href="../lab/completed_tests" class="link flex">
               <i class="uil uil-file-check-alt"></i>
                 <span>Completed Tests</span>
               </a>
             </li>
-          </ul>
           </ul>
 
           <ul class="menu_item">
@@ -117,18 +119,19 @@
       </div>
     </nav>
 
+<!--Search box-->
     <div class="content">
-        <div class="content-search">
-          <div class="search">
-          <h2>Lab Test Search<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href=''></a></span></h2>
+    <div class="content-search">
+        <div class="search">
+          <h2>Completed Tests<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ></span></h2>
               <form style="width: 100%;" method="POST">
                 <div class="fields">
                   <table style="width: 95%;" >
                     <tr>
                       <td>
                         <div class="input-field">
-                            <label>Reservation ID</label>
-                            <input type="text" name="search_text" placeholder="Reservation ID">
+                            <label>Test ID</label>
+                            <input type="text" name="search_text" placeholder="Test ID">
                         </div>
                       </td>
                       <td>
@@ -141,48 +144,48 @@
                         <input type="submit" class="button" value="Search" name="search" >
                       </td>
                     </tr>
-                    <tr>
-                      <td>
-                      <div class="input-field">
-                            <label>Test Name</label>
-                            <input type="text" name="search_text" placeholder="Test Name">
-                        </div>
-                      </td>
-                      <td>
-                      </td>
-                      <td>
-                        <button class="button" style="background-color: red;" onclick="window.location.reload()" >Reset</button></a>
-                      </td>
-                    </tr>
                   </table>
                 </div>
               </form>
           </div>
+          
         </div>
-        <div class="detail-wrapper">
 
-            <?php foreach ($data['reservations'] as $reservations): ?>
-              <div class='detail-card'>
-                <div class='detail-card-content'>
-                  <p class="detail-title"><?php echo $reservations->Test_Name;?></p>
-                  <p class='detail-comp'><?php echo $reservations->Test_Res_ID;?>  | <?php echo $reservations->First_Name. " ".$reservations->Last_Name;?> </p>
-                </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" ><?php echo $reservations->Status;?></p>
-                    </div>
-                </div>
-                <div class='detail-view'>
-                <a href='upload_file?test_id=<?php echo $reservations->Test_Res_ID ?>'><button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button></a>
-                <button class='button complete-btn' >Completed</button>
-                </div>
+        <br>
 
-              </div>
-
-            <?php endforeach;?>  
+        <!--test list table-->
         
+        <section class="table-wrap" >
+            <div class="table-container">
+                <table class="table table-sort">
+                    <thead>
+                        <tr>
+                            <th>Test ID</th>
+                            <th>Patient ID</th>
+                            <th>Patient Name</th>
+                            <th>Test Name</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($data['reservations'] as $reservations): ?>
+                      <tr>
+                            <td style="text-align: center;"><?php echo $reservations->Test_Res_ID?></td>
+                            <td style="text-align: center;"><?php echo $reservations->Patient_ID?></td>
+                            <td style="text-align: center;"><?php echo $reservations->First_Name. " ".$reservations->Last_Name;?></td>
+                            <td style="text-align: center;"><?php echo $reservations->Test_Name?></td>
+                            <td style="text-align: center;"><?php echo $reservations->Date?></td>
+                            <td style="text-align: center;"><?php echo $reservations->Status?></td>
+                            <!--<td><a href=''><button class='button red'>Remove</button></a></td>-->
+                        </tr>
+                    <?php endforeach;?>     
+                    </tbody>
+                </table>
+                
+                
+            </div>
+        </section>
     </div>
   </body>
 </html>
