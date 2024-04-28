@@ -120,35 +120,6 @@
     </nav>
 
     <div class="content">
-    <section class="table-wrap" >
-        <div class="table-container">
-          <div class="search">
-            <h1>Search Schedules</h1>
-           
-              <form style="width: 100%;" method="POST">
-                <div class="fields">
-                  <table style="width: 95%;">
-                   <tr>
-                    <td>
-                      <div class="input-field">
-                            <label>Date</label>
-                            <input type="date" name="search_text" placeholder="Date">
-                        </div>
-                      </td>
-                      <td>
-                        <input type="submit" class="button" value="Search" name="Search" >
-                      </td>
-                      <td>
-                        <a href=""><button class="button" style="background-color: red;" >Reset</button></a>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </form>
-            </div>
-        </div>
-        </section></br>
-            
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Schedule Management<span class="dashboard-stat" style="font-size: 25px; justify-content:right;" ><a href='add_schedule'><button class='button'>Add</button></a></span></h1>
@@ -181,8 +152,12 @@
                                 <td style="text-align: center;"><?php echo $schedule->Room_Name; ?></td>
                                 <td style="text-align: center;"><?php echo $schedule->Day_of_Week; ?></td>
                                 <td style="text-align: center;"><?php echo $schedule->Time_Start . ' - ' . $schedule->Time_End; ?></td>
-                                <td style="text-align: center;"><a href="<?php echo URLROOT; ?>/manager/edit_schedule?id=<?php echo $schedule->Schedule_ID; ?>"><button class='button'>Edit</button></a></td>
-                                <td style="text-align: center;"><a href="<?php echo URLROOT; ?>/manager/remove_schedule?id=<?php echo $schedule->Schedule_ID; ?>"><button class='button red remove'>Remove</button></a></td>
+                                <td style="text-align: center;"><a href="edit_schedule?id=<?php echo $schedule->Schedule_ID; ?>"><button class='button'>Edit</button></a></td>
+                                <td style="text-align: center;">
+                                <a href="remove_schedule?id=<?php echo $schedule->Schedule_ID; ?>" onclick="confirmRemove(event)" >
+                                <button class='button red remove' <?php echo ($schedule->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
+                                </a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                        </tbody>
@@ -200,10 +175,24 @@
                 "bFilter": false, // Disable search/filtering
                 "bInfo": false, // Disable info text
                 "columnDefs": [
-                    { "targets": [5, 6], "orderable": false }
+                    { "targets": [6, 7], "orderable": false }
                 ]
             });
         });
+    </script>
+    <script>
+        function confirmRemove(event) {
+            event.preventDefault(); // Prevent the default action of the link
+            
+            // Display a confirmation dialog
+            if (window.confirm('Are you sure you want to remove?')) {
+                // If confirmed, proceed with the removal action
+                window.location.href = event.target.closest('a').href;
+            } else {
+                // If not confirmed, do nothing
+                return false;
+            }
+        }
     </script>
   </body>
   </html>

@@ -294,6 +294,177 @@
                 return false;
             }
         }
+
+        public function get_appointments_schedule_hospital($schedule_id, $hospital_id){
+            $this->db->query('SELECT doctor_reservation.Appointment_No FROM doctor_reservation 
+            Inner JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            WHERE schedule.Schedule_ID = :schedule_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.Status = "Pending" AND schedule.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':schedule_id', $schedule_id);
+            $this->db->bind(':hospital_id', $hospital_id);
+            $appointments = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $appointments;
+            } else{
+                return false;
+            }
+        }
+
+        public function remove_schedule($schedule_id){
+            $this->db->query('DELETE FROM schedule WHERE Schedule_ID = :schedule_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':schedule_id', $schedule_id);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_room_hospital($hospital_id){
+            $this->db->query('SELECT * FROM room 
+            INNER JOIN hospital ON room.Hospital_ID = hospital.Hospital_ID
+            WHERE room.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $rooms = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $rooms;
+            } else{
+                return false;
+            }   
+        }
+
+        public function add_room($data){
+            $this->db->query('INSERT INTO room (Room_Name, Hospital_ID) VALUES (:room_name, :hospital_id)');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':room_name', $data['Room_Name']);
+            $this->db->bind(':hospital_id', $data['Hospital_ID']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function remove_room($room_id, $hospital_id){
+            $this->db->query('DELETE FROM room WHERE Room_ID = :room_id AND Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':room_id', $room_id);
+            $this->db->bind(':hospital_id', $hospital_id);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_doctor_hospital($hospital_id){
+            $this->db->query('SELECT DISTINCT doctor.* FROM doctor 
+            INNER JOIN schedule ON schedule.Doctor_ID = doctor.Doctor_ID
+            INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+            WHERE schedule.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $doctors = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $doctors;
+            } else{
+                return false;
+            }   
+        }
+
+        public function add_doctor($data){
+            $this->db->query('INSERT INTO doctor (First_Name, Last_Name, Gender, NIC, Contact_No, SLMC_Reg_No, Specialization, Approval, Charges, Username, Password) VALUES (:F_name, :L_name, :Gender, :NIC, :C_num, :SLMC, :Spec, :Approval, :Charges, :Uname, :Pass)');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':F_name', $data['F_name']);
+            $this->db->bind(':L_name', $data['L_name']);
+            $this->db->bind(':Gender', $data['Gender']);
+            $this->db->bind(':NIC', $data['NIC']);
+            $this->db->bind(':C_num', $data['C_num']);
+            $this->db->bind(':SLMC', $data['SLMC']);
+            $this->db->bind(':Spec', $data['Spec']);
+            $this->db->bind(':Approval', 0);
+            $this->db->bind(':Charges', $data['Charges']);
+            $this->db->bind(':Uname', $data['Uname']);
+            $this->db->bind(':Pass', $data['Pass']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function remove_doctor($doctor_id, $hospital_id){
+            $this->db->query('DELETE FROM doctor WHERE Doctor_ID = :doctor_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':doctor_id', $doctor_id);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_appointments_doctor_hospital($doctor_id, $hospital_id){
+            $this->db->query('SELECT doctor_reservation.Doc_Res_ID FROM doctor_reservation 
+            Inner JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            WHERE schedule.Doctor_ID = :doctor_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.Status = "Pending" AND schedule.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':doctor_id', $doctor_id);
+            $this->db->bind(':hospital_id', $hospital_id);
+            $appointments = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $appointments;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_appointments_room_hospital($room_id, $hospital_id){
+            $this->db->query('SELECT doctor_reservation.Appointment_No FROM doctor_reservation 
+            Inner JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            WHERE schedule.Room_ID = :room_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.Status = "Pending" AND schedule.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':room_id', $room_id);
+            $this->db->bind(':hospital_id', $hospital_id);
+            $appointments = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $appointments;
+            } else{
+                return false;
+            }
+        }
         
         
     }

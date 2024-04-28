@@ -9,6 +9,7 @@
             $this->userModel = $this->model('user');
             $this->managerModel = $this->model('managers');
             $this->testModel = $this->model('tests');
+            $this->doctorModel = $this->model('doctors');
         }
         public function index(){
             
@@ -24,10 +25,207 @@
         }
 
         public function doc_management(){
-            $data = [];
+            $data = [
+                'ID' => $_SESSION['userID']
+            ];
+    
+            $hospital_data = $this->managerModel->hospital_data_fetch($data['ID']);
+            $hospital_id = $hospital_data->Hospital_ID;
+
+            $doctors = $this->managerModel->get_doctor_hospital($hospital_id);
+
+            foreach($doctors as $doctor){
+                if($this->managerModel->get_appointments_doctor_hospital($doctor->Doctor_ID, $hospital_id)){
+                    $doctor->Cancel = 'Not allowed';
+                }else{
+                    $doctor->Cancel = 'Allowed';
+                }
+            }
+
+
+            $data = [
+                'doctors' => $doctors
+            ];
+
             $this->view('manager/doc_management', $data);
         }
 
+        public function add_doctor(){
+            // Check for POST request
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+                // Sanitize strings
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                // Register user
+                $data = [
+                    'F_name' => trim($_POST['fname']),
+                    'L_name' => trim($_POST['lname']),
+                    'Gender' => trim($_POST['gender']),
+                    'NIC' => trim($_POST['nic']),
+                    'C_num' => $_POST['cnum'],
+                    'Spec' => $_POST['spec'],
+                    'SLMC' => $_POST['slmc'],
+                    'Charges' => $_POST['charges'],
+                    'Uname' => trim($_POST['email']),
+                    'Pass' => trim($_POST['pass']),
+                    'C_pass' => trim($_POST['cpass']),
+                    'Uname_err' => '',
+                    'Pass_err' => '',
+                    'C_pass_err' => '',
+                    'C_num_err' => '',
+                    'SLMC_err' => '',
+                    'Char_err' => '',
+                    'NIC_err' => ''
+                ];
+                // Validate Contact Number
+                if(empty($data['C_num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_num']);
+
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
+                    }
+                }
+
+                if (empty($data['SLMC'])) {
+                    $data['SLMC_err'] = 'Please enter SLMC registration number';
+                } else {
+                    $slmc = $data['SLMC'];
+                    if (strlen($slmc) < 4 || strlen($slmc) > 5) {
+                        $data['SLMC_err'] = 'SLMC registration number must be between 4 and 5 digits';
+                    }
+                    if($this->doctorModel->findDoctorBySLMC($slmc)){
+                        $data['SLMC_err'] = 'Another doctor already has this SLMC';
+                    }
+                }
+
+                if (empty($data['Charges'])) {
+                    $data['Char_err'] = 'Please enter charges';
+                } else {
+                    $charge = $data['Charges'];
+                    if ($charge > 25000 ) {
+                        $data['Char_err'] = 'Charges must be less than 25000';
+                    }
+                }
+
+                if (empty($data['NIC'])) {
+                    $data['NIC_err'] = 'Please enter NIC number';
+                } else {
+                    $nic = $data['NIC'];
+                    if (strlen($nic)!=10 && strlen($nic)!=12){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                    if (strlen($nic) == 10){
+                        $lastChar = strtoupper(substr($nic, 9, 1)); // Get the last character and convert to uppercase
+
+                        if ($lastChar !== 'V') {
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                        if(!is_numeric(substr($nic, 0, 9))){
+                            $data['NIC_err'] = 'Invalid NIC number';
+                        }
+                    }
+                    // }
+                    if (strlen($nic) == 12 && !is_numeric($nic)){
+                        $data['NIC_err'] = 'Invalid NIC number';
+                    }
+                }
+
+
+                // Validate Email
+                if(empty($data['Uname'])){
+                    $data['Uname_err'] = 'Please enter your email';
+                } else{
+                    // Check for duplicates
+                    if($this->userModel->findUserByUname($data['Uname'])){
+                        $data['Uname_err'] = 'Another account already has this email';
+                    }
+                }
+
+                // Validate Password
+                $length = strlen($data['Pass']);
+                $uppercase = preg_match('@[A-Z]@', $data['Pass']);
+                $lowercase = preg_match('@[a-z]@', $data['Pass']);
+                $number = preg_match('@[0-9]@', $data['Pass']);
+                $spec = preg_match('@[^\w]@', $data['Pass']);
+
+                if(empty($data['Pass'])){
+                    $data['Pass_err'] = 'Please enter a password';
+                } else{
+                    if($length < 8){
+                        $data['Pass_err'] = 'Password must be atleast 8 characters';
+                    }
+                    if(!$uppercase){
+                        $data['Pass_err'] = 'Password must include atleast 1 uppercase character';
+                    }
+                    if(!$lowercase){
+                        $data['Pass_err'] = 'Password must include atleast 1 lowercase character';
+                    }
+                    if(!$number){
+                        $data['Pass_err'] = 'Password must include atleast 1 number';
+                    }
+                    if(!$spec){
+                        $data['Pass_err'] = 'Password must include atleast 1 special character';
+                    }
+
+                } 
+
+                // Validate Confirm Password
+                if(empty($data['C_pass'])){
+                    $data['C_pass_err'] = 'Please confirm password';
+                } else{
+                    if($data['Pass'] != $data['C_pass']){
+                        $data['C_pass_err'] = 'Confirm password does not match with password';
+                    }
+                }
+
+                // Check whether errors are empty
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['SLMC_err'])&& empty($data['Char_err'])){
+                    // Hashing password
+                    $data['Pass'] = hash('sha256',$data['Pass']);
+
+                    // Register user
+                    if($this->managerModel->add_doctor($data)){
+                        redirect('manager/doc_management');
+                    } else{
+                        die("Couldn't register the doctor! ");
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('manager/add_doctor', $data);
+                }
+
+            }else{
+                // Get data
+                $data = [
+                    'F_name' => '',
+                    'L_name' => '',
+                    'Gender' => '',
+                    'NIC' => '',
+                    'C_num' => '',
+                    'Spec' => '',
+                    'SLMC' => '',
+                    'Charges' => '',
+                    'Uname' => '',
+                    'Pass' => '',
+                    'C_pass' => '',
+                    'Uname_err' => '',
+                    'Pass_err' => '',
+                    'C_pass_err' => '',
+                    'C_num_err' => '',
+                    'SLMC_err' => '',
+                    'Char_err' => '',
+                    'NIC_err' => ''
+                ];
+
+                // Load view
+                $this->view('manager/add_doctor', $data);
+            }
+        }
 
 
         public function reservations(){
@@ -49,7 +247,14 @@
             foreach($schedule as $sch){
                 $sch->Time_Start = date('H:i', strtotime($sch->Time_Start));
                 $sch->Time_End = date('H:i', strtotime($sch->Time_End));
+
+                if($this->managerModel->get_appointments_schedule_hospital($sch->Schedule_ID, $hospital_id)){
+                    $sch->Cancel = 'Not allowed';
+                }else{
+                    $sch->Cancel = 'Allowed';
+                }
             }
+
 
             $data = [
                 'schedules' => $schedule
@@ -60,14 +265,97 @@
         }
 
         public function room_management(){
-            $data = [];
+            $data = [
+                'ID' => $_SESSION['userID']
+            ];
+    
+            $hospital_data = $this->managerModel->hospital_data_fetch($data['ID']);
+            $hospital_id = $hospital_data->Hospital_ID;
+
+            $rooms = $this->managerModel->get_room_hospital($hospital_id);
+
+            foreach($rooms as $room){
+
+                if($this->managerModel->get_appointments_room_hospital($room->Room_ID, $hospital_id)){
+                    $room->Cancel = 'Not allowed';
+                }else{
+                    $room->Cancel = 'Allowed';
+                }
+            }
+
+
+            $data = [
+                'rooms' => $rooms
+            ];
+
             $this->view('manager/room_management', $data);
         }
 
-        public function addschedules(){
-            $data = [];
-            $this->view('manager/addschedules', $data);
+        public function add_room(){
+            $data = [
+                'ID' => $_SESSION['userID']
+            ];
+    
+            $hospital_data = $this->managerModel->hospital_data_fetch($data['ID']);
+            $hospital_id = $hospital_data->Hospital_ID;
+
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Sanitize POST array
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                $data = [
+                    'Room_Name' => trim($_POST['room_name']),
+                    'Hospital_ID' => $hospital_id,
+                    'Room_Name_err' => ''
+                ];
+
+                // Validate Room Name
+                if(empty($data['Room_Name'])){
+                    $data['Room_Name_err'] = 'Please enter room name';
+                }if (strlen($data['Room_Name']) > 50) {
+                    $data['Room_Name_err'] = 'Room name should be less than 50 characters';
+                }
+
+                // Check whether errors are empty
+                if(empty($data['Room_Name_err'])){
+                    // Register user
+                    if($this->managerModel->add_room($data)){
+                        redirect('manager/room_management');
+                    } else{
+                        die("Couldn't register the room! ");
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('manager/add_room', $data);
+                }
+
+            $this->view('manager/add_room', $data);
+            }
+
+            $data=[
+                'Room_Name' => '',
+                'Room_Name_err' => ''
+            ];
+
+            $this->view('manager/add_room', $data);
         }
+
+        public function remove_room(){
+            $data = [
+                'ID' => $_SESSION['userID']
+            ];
+    
+            $hospital_data = $this->managerModel->hospital_data_fetch($data['ID']);
+            $hospital_id = $hospital_data->Hospital_ID;
+
+            if($this->managerModel->remove_room($_GET['id'], $hospital_id)){
+                redirect('manager/room_management');
+            } else{
+                die("Couldn't delete the room! ");
+            }
+        }
+
+
 
         public function profile(){
             session_start();
@@ -693,6 +981,15 @@
                 'Time_End_err' => ''
             ];
             $this->view('manager/edit_schedule', $data);
+        }
+    }
+
+    public function remove_schedule(){
+        $schedule_id = $_GET['id'];
+        if($this->managerModel->remove_schedule($schedule_id)){
+            redirect('manager/schedule_management');
+        } else{
+            die("Couldn't delete the schedule! ");
         }
     }
     
