@@ -63,7 +63,7 @@
 
         public function get_appointments_test_hospital($test_id, $hospital_id){
             $this->db->query('SELECT Test_Res_ID FROM test_reservation 
-            WHERE Test_ID = :test_id AND Date >= CURDATE() AND End_Time >= CURTIME() AND Status = "Pending" AND Hospital_ID = :hospital_id');
+            WHERE Test_ID = :test_id AND Date >= CURDATE() AND Status = "Pending" AND Hospital_ID = :hospital_id');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':test_id', $test_id);
@@ -182,6 +182,81 @@
             } else{
                 return false;
             }   
+        }
+
+        public function get_all_doctors(){
+            $this->db->query('SELECT * FROM doctor WHERE Approval = 1');
+
+            $doctors = $this->db->resultSet();
+
+            if($this->db->execute()){
+                return $doctors;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_rooms_hospital($hospital_id){
+            $this->db->query('SELECT * FROM room WHERE Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $rooms = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $rooms;
+            } else{
+                return false;
+            }   
+        }
+
+        public function doctor_schedule_hospital($doctor_id){
+            $this->db->query('SELECT * FROM schedule WHERE Doctor_ID = :doctor_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':doctor_id', $doctor_id);
+            $schedules = $this->db->resultSet();
+
+            if($this->db->execute()){
+                return $schedules;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_schedule_by_hospital_room($hospital_id, $room_id){
+            $this->db->query('SELECT * FROM schedule WHERE Hospital_ID = :hospital_id AND Room_ID = :room_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $this->db->bind(':room_id', $room_id);
+            $schedule = $this->db->resultSet();
+
+            if($this->db->execute()){
+                return $schedule;
+            } else{
+                return false;
+            }
+        }
+
+        public function add_schedule($data){
+            $this->db->query('INSERT INTO schedule (Doctor_ID, Hospital_ID, Room_ID, Day_of_Week, Time_Start, Time_End) VALUES (:doctor_id, :hospital_id, :room_id, :day, :start, :end)');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':doctor_id', $data['Doctor_ID']);
+            $this->db->bind(':hospital_id', $data['Hospital_ID']);
+            $this->db->bind(':room_id', $data['Room_ID']);
+            $this->db->bind(':day', $data['Day']);
+            $this->db->bind(':start', $data['Time_Start']);
+            $this->db->bind(':end', $data['Time_End']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
         }
         
         

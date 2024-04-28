@@ -48,7 +48,7 @@
                         <span class="btnText">Back</span>
                     </button>
                 <button class="submit">
-                    <span class="btnText">Add</span>
+                    <span class="btnText">Submit</span>
                 </button>
             </div>
         </div>

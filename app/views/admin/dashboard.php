@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
@@ -324,6 +325,17 @@
             </div>
         </section><br>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#myTable').dataTable( {
+              "bPaginate": false,
+              "bFilter": false,
+              "bInfo": false
+          } );
+      } );
+    </script> 
    
     <script>
       const ctx = document.getElementById('myChart');

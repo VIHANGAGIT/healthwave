@@ -121,7 +121,7 @@
 
     <div class="content">
     <section class="table-wrap" >
-    <div class="table-container">
+        <div class="table-container">
           <div class="search">
             <h1>Search Schedules</h1>
            
@@ -147,13 +147,12 @@
               </form>
             </div>
         </div>
-    </section></br>
+        </section></br>
             
         <section class="table-wrap" >
-        <div class="table-container">
-        <div class="search">
-        <h1>Schedule Management<span class="dashboard-stat" style="font-size: 25px; justify-content:right;" ><a href='add_schedules'><button class='button'>Add</button></a></span></h1>
-        <hr><br>
+            <div class="table-container">
+                <h1>Schedule Management<span class="dashboard-stat" style="font-size: 25px; justify-content:right;" ><a href='add_schedule'><button class='button'>Add</button></a></span></h1>
+                <hr><br>
                 <?php if (empty($data['schedules'])): ?>
                     <div class="error-msg">
                         <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
@@ -163,9 +162,10 @@
                 <table class="table" id="schedule-table">
                     <thead>
                         <tr>
+                            <th style="text-align: center;">Schedule ID</th>
                             <th style="text-align: center;">Doctor Name</th>
                             <th style="text-align: center;">Specialization</th>
-                            <th style="text-align: center;">Room Name</th>
+                            <th style="text-align: center;">Room</th>
                             <th style="text-align: center;">Day of Week</th>
                             <th style="text-align: center;">Time Slot</th>
                             <th style="text-align: center;">Edit</th>
@@ -175,6 +175,7 @@
                     <tbody>
                         <?php foreach ($data['schedules'] as $schedule) : ?>
                             <tr>
+                                <td style="text-align: center;"><?php echo $schedule->Schedule_ID; ?></td>
                                 <td style="text-align: center;"><?php echo $schedule->First_Name . ' ' . $schedule->Last_Name; ?></td>
                                 <td style="text-align: center;"><?php echo $schedule->Specialization; ?></td>
                                 <td style="text-align: center;"><?php echo $schedule->Room_Name; ?></td>
