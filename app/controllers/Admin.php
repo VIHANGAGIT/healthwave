@@ -13,8 +13,49 @@
         }
         public function index(){
             $data = [];
-            
+
+            $statistic = $this->adminModel->get_statistic();
+            $statistic['total_reservations'] = $statistic['total_doc_reservations'] + $statistic['total_test_reservations'];
+            $statistic['total_upcoming'] = $statistic['total_upcoming_doc_reservations'] + $statistic['total_upcoming_test_reservations'];
+
+            // Initialize an array to store the total reservations for each month
+            $monthlyReservations = [];
+
+            // Loop through the data to calculate the total reservations for each month
+            foreach ($statistic['total_res_date'] as $item) {
+                $date = new DateTime($item->total_reservations_dates);
+
+                $monthYear = $date->format('Y-m');
+
+                // Check if the month already exists in the array
+                if (array_key_exists($monthYear, $monthlyReservations)) {
+                    // Increment the count for the existing month
+                    $monthlyReservations[$monthYear]++;
+                } else {
+                    // Initialize the count for a new month
+                    $monthlyReservations[$monthYear] = 1;
+                }
+            }
+
+            // Prepare the data for JavaScript
+            $months = [];
+            $reservationsCount = [];
+            foreach ($monthlyReservations as $monthYear => $count) {
+                $months[] = date('F Y', strtotime($monthYear)); // Format the month for display
+                $reservationsCount[] = $count;
+            }
+
+            $months = implode("', '", $months);
+            $reservationsCount = implode(', ', $reservationsCount);
+
+            $data = [
+                'statistic' => $statistic,
+                'months' => $months,
+                'reservationsCount' => $reservationsCount
+            ];
+
             $this->view('admin/dashboard', $data);
+
         }
 
         public function profile(){

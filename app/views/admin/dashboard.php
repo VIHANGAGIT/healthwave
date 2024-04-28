@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Admin Dashboard</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -126,20 +126,24 @@
                         <tr class="dashboard-row">
                             <td class="dashboard-content">
                                 <p class="dashboard-stat-title">Total Number<br>of Patients :</p>
-                                <p class="dashboard-stat">693</p>
+                                <p class="dashboard-stat"><?php echo $data['statistic']['total_patients'] ?></p>
                             </td>
                             
                             <td class="dashboard-content">
                                 <p class="dashboard-stat-title">Total Number<br>of Doctors :</h2>
-                                <p class="dashboard-stat">35</p>
+                                <p class="dashboard-stat"><?php echo $data['statistic']['total_doctors'] ?></p>
                             </td>
                             <td class="dashboard-content">
-                                <p class="dashboard-stat-title">Total Number<br>of Appointments :</h2>
-                                <p class="dashboard-stat">1822</p>
+                                <p class="dashboard-stat-title">Total Number<br>of Hospitals :</h2>
+                                <p class="dashboard-stat"><?php echo $data['statistic']['total_hospitals'] ?></p>
                             </td>
                             <td class="dashboard-content">
-                                <p class="dashboard-stat-title">Avg. Appointments<br>per Month :</h2>
-                                <p class="dashboard-stat">184.5</p>
+                                <p class="dashboard-stat-title">Total Number<br>of Reservations :</h2>
+                                <p class="dashboard-stat"><?php echo $data['statistic']['total_reservations'] ?></p>
+                            </td>
+                            <td class="dashboard-content">
+                                <p class="dashboard-stat-title">Number of Upcoming<br> Reservations :</h2>
+                                <p class="dashboard-stat"><?php echo $data['statistic']['total_upcoming'] ?></p>
                             </td>
                         </tr>
                     </tbody>
@@ -172,28 +176,38 @@
                 </table>
             </div>
         </section>
+        <br>
     </div>
+   
     <script>
-        const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('myChart');
 
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    // Extracted PHP data for JavaScript
+    const labels = ['<?php echo $data['months']; ?>'];
+    const data = [<?php echo $data['reservationsCount']; ?>];
+
+    console.log('labels:' + labels);
+    console.log(data);
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
             datasets: [{
-                label: 'No of Patients',
-                data: [156, 268, 123, 234, 268, 146],
+                label: 'Total No of Doctor Reservations',
+                data: data,
                 borderWidth: 1
             }]
-            },
-            options: {
+        },
+        options: {
             scales: {
                 y: {
-                beginAtZero: true
+                    beginAtZero: true
                 }
             }
-            }
-        });
-    </script>
+        }
+    });
+</script>
+
   </body>
 </html>

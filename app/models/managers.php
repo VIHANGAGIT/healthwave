@@ -165,6 +165,24 @@
                 return false;
             }
         }
+
+        public function get_schedule_hospital($hospital_id){
+            $this->db->query('SELECT schedule.*, doctor.First_Name, doctor.Last_Name, doctor.Specialization, room.Room_Name FROM schedule
+            INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
+            INNER JOIN room ON schedule.Room_ID = room.Room_ID
+            WHERE schedule.Hospital_ID = :hospital_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $schedules = $this->db->resultSet();
+
+            // Execute query
+            if($this->db->execute()){
+                return $schedules;
+            } else{
+                return false;
+            }   
+        }
         
         
     }

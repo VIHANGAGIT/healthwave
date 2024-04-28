@@ -35,9 +35,28 @@
             $this->view('manager/reservations', $data);
         }
 
-        public function schedules(){
-            $data = [];
-            $this->view('manager/schedules', $data);
+        public function schedule_management(){
+            
+            $data = [
+                'ID' => $_SESSION['userID']
+            ];
+    
+            $hospital_data = $this->managerModel->hospital_data_fetch($data['ID']);
+            $hospital_id = $hospital_data->Hospital_ID;
+
+            $schedule = $this->managerModel->get_schedule_hospital($hospital_id);
+
+            foreach($schedule as $sch){
+                $sch->Time_Start = date('H:i', strtotime($sch->Time_Start));
+                $sch->Time_End = date('H:i', strtotime($sch->Time_End));
+            }
+
+            $data = [
+                'schedules' => $schedule
+            ];
+
+
+            $this->view('manager/schedule_management', $data);
         }
 
         public function room_management(){

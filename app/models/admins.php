@@ -203,7 +203,7 @@
         public function get_appointments($doc_id){
             $this->db->query('SELECT doctor_reservation.Doc_Res_ID FROM doctor_reservation 
             INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
-            WHERE schedule.Doctor_ID = :doc_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.End_Time >= CURTIME()');
+            WHERE schedule.Doctor_ID = :doc_id AND doctor_reservation.Date >= CURDATE() AND doctor_reservation.Status = "Pending"');
 
             // Binding parameters for the prepaired statement
             $this->db->bind(':doc_id', $doc_id);
@@ -575,5 +575,50 @@
             } else{
                 return false;
             }
+        }
+
+        public function get_statistic(){
+            $this->db->query('SELECT COUNT(*) as total_doctors FROM doctor');
+            $total_doctors = $this->db->singleRow();
+            $row['total_doctors'] = $total_doctors->total_doctors;
+
+            $this->db->query('SELECT COUNT(*) as total_hospitals FROM hospital');
+            $total_hospitals = $this->db->singleRow();
+            $row['total_hospitals'] = $total_hospitals->total_hospitals;
+
+            $this->db->query('SELECT COUNT(*) as total_tests FROM test');
+            $total_tests = $this->db->singleRow();
+            $row['total_tests'] = $total_tests->total_tests;
+
+            $this->db->query('SELECT COUNT(*) as total_patients FROM patient');
+            $total_patients = $this->db->singleRow();
+            $row['total_patients'] = $total_patients->total_patients;
+
+            $this->db->query('SELECT COUNT(*) as total_reservations  FROM doctor_reservation');
+            $total_reservations = $this->db->singleRow();
+            $row['total_doc_reservations'] = $total_reservations->total_reservations;
+
+            $this->db->query('SELECT COUNT(*) as total_upcoming_doc_reservations FROM doctor_reservation WHERE Date >= CURDATE() AND Status = "Pending"');
+            $total_upcoming_doc_reservations = $this->db->singleRow();
+            $row['total_upcoming_doc_reservations'] = $total_upcoming_doc_reservations->total_upcoming_doc_reservations;
+
+            $this->db->query('SELECT COUNT(*) as total_test_reservations FROM test_reservation');
+            $total_test_reservations = $this->db->singleRow();
+            $row['total_test_reservations'] = $total_test_reservations->total_test_reservations;
+            
+            $this->db->query('SELECT COUNT(*) as total_upcoming_test_reservations FROM test_reservation WHERE Date >= CURDATE() AND Status = "Pending"');
+            $total_upcoming_test_reservations = $this->db->singleRow();
+            $row['total_upcoming_test_reservations'] = $total_upcoming_test_reservations->total_upcoming_test_reservations;
+
+            $this->db->query('SELECT Date as total_test_dates FROM test_reservation');
+            $total_test_reservations_date = $this->db->resultSet();
+            $row['total_test_res_date'] = $total_test_reservations_date;
+
+            $this->db->query('SELECT Date as total_reservations_dates  FROM doctor_reservation');
+            $total_reservations_date = $this->db->resultSet();
+            $row['total_res_date'] = $total_reservations_date;
+
+
+            return $row;
         }
     }        
