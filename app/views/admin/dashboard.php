@@ -180,34 +180,56 @@
     </div>
    
     <script>
+      const ctx = document.getElementById('myChart');
+
+      // Extracted PHP data for JavaScript
+      const labels = ['<?php echo $data['months']; ?>'];
+      const data = [<?php echo $data['reservationsCount']; ?>];
+
+      new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: 'Total No of Doctor Reservations',
+                  data: data,
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  </script>
+
+  <!-- <script>
     const ctx = document.getElementById('myChart');
+      const labels = ["January", "February", "March", "April", "May", "June", "July"];
+      const data = [65, 59, 80, 81, 56, 55, 40];
 
-    // Extracted PHP data for JavaScript
-    const labels = ['<?php echo $data['months']; ?>'];
-    const data = [<?php echo $data['reservationsCount']; ?>];
-
-    console.log('labels:' + labels);
-    console.log(data);
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Total No of Doctor Reservations',
-                data: data,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
+      new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: labels, // Changed to lowercase 'labels'
+              datasets: [{     // Added square brackets to make it an array
+                  label: 'Doctors by Specialization', // Changed to lowercase 'label'
+                  data: data,
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  </script> -->
 
   </body>
 </html>
