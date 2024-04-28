@@ -40,12 +40,6 @@
                         </div>
 
                         <div class="input-field">
-                            <label>Date of Birth*</label>
-                            <input type="date" placeholder="Enter birth date" name="dob" value="<?php echo $data['DOB'] ?>" class="<?php echo (!empty($data['DOB_err'])) ? 'error' : '' ?>" required>
-                            <span class="err-msg"><?php echo $data['DOB_err'] ?></span>
-                        </div>
-
-                        <div class="input-field">
                             <label>NIC Number*</label>
                             <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" class="<?php echo (!empty($data['NIC_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['NIC_err'] ?></span>
@@ -54,6 +48,8 @@
                             <label>Mobile Number*</label>
                             <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" class="<?php echo (!empty($data['C_num_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['C_num_err'] ?></span>
+                        </div>
+                        <div class="input-field">
                         </div>
                     </div>
                 </div>

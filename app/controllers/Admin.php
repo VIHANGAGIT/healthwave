@@ -637,10 +637,8 @@
                     'Gender' => trim($_POST['gender']),
                     'NIC' => trim($_POST['nic']),
                     'C_num' => $_POST['cnum'],
-                    'DOB' => $_POST['dob'],
                     'Spec' => $_POST['spec'],
                     'SLMC' => $_POST['slmc'],
-                    'Avail' => 1,
                     'Charges' => $_POST['charges'],
                     'Uname' => trim($_POST['email']),
                     'Pass' => trim($_POST['pass']),
@@ -649,7 +647,6 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => '',
                     'SLMC_err' => '',
                     'Char_err' => '',
                     'NIC_err' => ''
@@ -665,14 +662,6 @@
                     if(strlen($cleaned_number) !== 10){
                         $data['C_num_err'] = 'Invalid Number';
                     }
-                }
-
-                //validate date of birth
-                $dob = $data['DOB'];
-                $today = date("Y-m-d");
-                $diff = date_diff(date_create($dob), date_create($today));
-                if($diff->format('%y') < 18){
-                    $data['DOB_err'] = 'Doctor must be atleast 18 years old';
                 }
 
                 if (empty($data['SLMC'])) {
@@ -768,12 +757,47 @@
                 }
 
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['DOB_err'])&& empty($data['SLMC_err'])&& empty($data['Char_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])&& empty($data['C_num_err'])&& empty($data['SLMC_err'])&& empty($data['Char_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
 
                     // Register user
                     if($this->adminModel->add_doctor($data)){
+                        try {
+                            require_once APPROOT.'/helpers/Mail.php';
+                            $mail = new Mail();
+                    
+                            // Prepare the email details
+                            $to = $data['Uname'];
+                            $subject = 'Account Activation';
+                            $body = '<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #505050; background-color: #f9f9f9; margin: 0; padding: 0;">';
+                            $body .= '<div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">';
+                            $body .= '<h1 style="text-align: center; color: #4070f4;">Hello Dr. ' . $data['F_name'] . ' ' . $data['L_name'] . ',</h1>';
+                            $body .= '<p style="font-size: 16px; margin-bottom: 20px; text-align: center;">You have been as a Doctor to HealthWave system.</p>';
+                            $body .= '<div style="margin-bottom: 20px; text-align: center;">';
+                            $body .= '<p style="font-size: 14px; margin-bottom: 10px;">Username: ' .  $data['Uname'] . '</p>';
+                            $body .= '<p style="font-size: 14px; margin-bottom: 10px;">Temporary Password: ' .  $data['C_pass'] . '</p>';
+                            $body .= '</div>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">Please use the provided username and password to log in to your HealthWave account.</p>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">After logging in, we recommend changing your password for security reasons.</p>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">Thank you for joining HealthWave!</p>';
+                            $body .= '</div>';
+                            $body .= '</body></html>';
+
+                            // Send the email
+                            $result = $mail->send($to, $subject, $body);
+                    
+                            if ($result) {
+                                $response =  'Doctor Added. Email sent.';
+                            } else {
+                                $response = 'Failed to send email. Please contact support.';
+                            }
+                        } catch (Exception $e) {
+                            $response = 'An error occurred. Please try again later.';
+                            // Log the exception for debugging
+                            error_log($e->getMessage());
+                        }
+                        echo json_encode($response);
                         redirect('admin/doc_management');
                     } else{
                         die("Couldn't register the doctor! ");
@@ -789,12 +813,10 @@
                     'F_name' => '',
                     'L_name' => '',
                     'Gender' => '',
-                    'DOB' => '',
                     'NIC' => '',
                     'C_num' => '',
                     'Spec' => '',
                     'SLMC' => '',
-                    'Avail' => '',
                     'Charges' => '',
                     'Uname' => '',
                     'Pass' => '',
@@ -803,7 +825,6 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => '',
                     'SLMC_err' => '',
                     'Char_err' => '',
                     'NIC_err' => ''
