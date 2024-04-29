@@ -140,6 +140,7 @@
                                 //echo "<td><a href='../doctor/delete_reservation/".$schedule->Reservation_ID."'><button class='button'>Delete</button></a></td>";
                                 echo "</tr>";
                             }
+                            
                         ?>
                     </tbody>
                 </table>

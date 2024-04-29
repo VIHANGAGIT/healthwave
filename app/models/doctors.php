@@ -130,7 +130,7 @@ class Doctors{
             }
 
             $this->db->query('SELECT COUNT(doctor_reservation.Doc_Res_ID) AS NoOfReservations FROM doctor_reservation
-            WHERE doctor_reservation.Schedule_ID = :schedule_id AND doctor_reservation.Date = :Date');
+            WHERE doctor_reservation.Schedule_ID = :schedule_id AND doctor_reservation.Date = :Date AND doctor_reservation.Status = "Pending"');
 
             $this->db->bind(':schedule_id', $reservation->Schedule_ID);
             $this->db->bind(':Date', $reservation->Date);
