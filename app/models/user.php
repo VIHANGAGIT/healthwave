@@ -268,6 +268,40 @@
                 return false;
             }
         }
+
+        public function hospital_staff_data_fetch($id){
+            $this->db->query('SELECT hospital_staff.*, hospital.Hospital_Name FROM hospital_staff 
+            INNER JOIN hospital ON hospital_staff.Hospital_ID = hospital.Hospital_ID
+            WHERE HS_ID = :id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':id', $id);
+            $hospital_staffRow = $this->db->singleRow();
+
+            // Execute query
+            if($this->db->execute()){
+                return $hospital_staffRow;
+            } else{
+                return false;
+            }
+        }
+
+        public function hospital_staff_profile_update($data){
+            $this->db->query('UPDATE hospital_staff SET Contact_No = :C_num, Username = :Uname, Password = :Pass WHERE HS_ID = :HS_ID');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':C_num', $data['C_Num']);
+            $this->db->bind(':Uname', $data['Username']);
+            $this->db->bind(':Pass', $data['Pass']);
+            $this->db->bind(':HS_ID', $data['ID']);
+
+            // Execute query
+            if($this->db->execute()){
+                return true;
+            } else{
+                return false;
+            }
+        }
         
         
         private function closeDatabaseConnection()

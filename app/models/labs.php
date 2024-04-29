@@ -212,6 +212,7 @@
                             INNER JOIN patient ON test_reservation.Patient_ID = patient.Patient_ID 
                             INNER JOIN hospital_staff ON hospital_staff.Hospital_ID = test_reservation.Hospital_ID 
                             WHERE test_reservation.Hospital_ID = :hospital_id AND hospital_staff.HS_ID = :hs_id AND test_reservation.Date >= CURDATE()
+                            AND test_reservation.Status = "Pending"
                             GROUP BY test_reservation.Patient_ID, test_reservation.Date ORDER BY test_reservation.Date');
         
             // Binding parameters for the prepared statement
@@ -225,6 +226,74 @@
             if($reservationRows) {
                 return $reservationRows; 
             } else {
+                return false;
+            }
+        }
+
+        public function collected($test_res_id){
+            $this->db->query('UPDATE test_reservation SET Status = "Collected" WHERE Test_Res_ID = :test_res_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':test_res_id', $test_res_id);
+
+            // Execute query
+            if($this->db->execute()){
+                $this->db->query('INSERT INTO test_result (Test_Res_ID, Collected_Date, Collected_Time) VALUES (:test_res_id, CURDATE(), CURTIME())');
+
+                // Binding parameters for the prepaired statement
+                $this->db->bind(':test_res_id', $test_res_id);
+
+                // Execute query
+                if($this->db->execute()){
+                    return true;
+                } else{
+                    return false;
+                }
+            } else{
+                return false;
+            }
+        }
+
+        
+        public function upload_result($data){
+            $this->db->query('UPDATE test_reservation SET Status = "Completed" WHERE Test_Res_ID = :Test_Res_ID');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':Test_Res_ID', $data['Res_ID']);
+
+            // Execute query
+            if($this->db->execute()){
+                $this->db->query('UPDATE test_result SET Result = :Result WHERE Test_Res_ID = :Test_Res_ID');
+
+                // Binding parameters for the prepaired statement
+                $this->db->bind(':Result', $data['file']);
+                $this->db->bind(':Test_Res_ID', $data['Res_ID']);
+
+                // Execute query
+                if($this->db->execute()){
+                    return true;
+                } else{
+                    return false;
+                }
+            } else{
+                return false;
+            }
+        }
+
+        public function get_reservation_data($res_id){
+            $this->db->query('SELECT test_reservation.Test_ID, test.Test_Name, test.Test_Type, patient.Patient_ID, patient.First_Name, patient.Last_Name FROM test_reservation
+            INNER JOIN test ON test_reservation.Test_ID = test.Test_ID
+            INNER JOIN patient ON test_reservation.Patient_ID = patient.Patient_ID
+            WHERE test_reservation.Test_Res_ID = :res_id');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':res_id', $res_id);
+            $reservation = $this->db->singleRow();
+
+            // Execute query
+            if($this->db->execute()){
+                return $reservation;
+            } else{
                 return false;
             }
         }
@@ -308,7 +377,7 @@
                                 INNER JOIN test ON test.Test_ID = test_reservation.Test_ID
                                 WHERE test_reservation.Hospital_ID = :hospital_id 
                                 AND hospital_staff.HS_ID = :hs_id 
-                                AND test_reservation.Status = "Pending"
+                                AND test_reservation.Status = "Collected"
                                 GROUP BY 
                                 test_reservation.Test_Res_ID, 
                                 test.Test_Name ');
@@ -342,11 +411,12 @@
             $hospitalRow = $this->db->singleRow();
         
             // Prepare and execute the main query
-            $this->db->query('SELECT test_reservation.Test_Res_ID,test.Test_Name, test_reservation.Status, test_reservation.Date, patient.Patient_ID ,patient.First_Name , patient.Last_Name
+            $this->db->query('SELECT test_reservation.Test_Res_ID,test.Test_Name, test_reservation.Status, test_result.Collected_Date, patient.Patient_ID ,patient.First_Name , patient.Last_Name, test_result.Result
                                 FROM test_reservation
                                 INNER JOIN patient ON test_reservation.Patient_ID = patient.Patient_ID 
                                 INNER JOIN hospital_staff ON hospital_staff.Hospital_ID = test_reservation.Hospital_ID 
                                 INNER JOIN test ON test.Test_ID = test_reservation.Test_ID
+                                INNER JOIN test_result ON test_reservation.Test_Res_ID = test_result.Test_Res_ID
                                 WHERE test_reservation.Hospital_ID = :hospital_id 
                                 AND hospital_staff.HS_ID = :hs_id 
                                 AND test_reservation.Status = "Completed"

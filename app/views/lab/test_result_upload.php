@@ -1,5 +1,4 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Lab Assistant'){
     redirect("users/login");
   }
@@ -39,15 +38,9 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="" class="link flex">
+              <a href="../users/landing" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
               </a>
             </li>
           </ul>
@@ -74,6 +67,12 @@
                 <span>Results Upload</span>
               </a>
             </li>
+            <li class="item">
+              <a href="../lab/completed_tests" class="link flex">
+              <i class="uil uil-file-check-alt"></i>
+                <span>Completed Tests</span>
+              </a>
+            </li>
           </ul>
           </ul>
 
@@ -82,18 +81,11 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../lab/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
             </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
-              </a>
-            </li>
-           
           </ul>
         </div>
 
@@ -112,7 +104,7 @@
     <div class="content">
         <div class="content-search">
           <div class="search">
-            <h2 style="color: black;">Lab Test Search</h2>
+            <h2>Lab Test Search<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href=''></a></span></h2>
               <form style="width: 100%;" method="POST">
                 <div class="fields">
                   <table style="width: 95%;" >
@@ -120,17 +112,30 @@
                       <td>
                         <div class="input-field">
                             <label>Reservation ID</label>
-                            <input type="text" name="search_text" placeholder="Reservation ID">
+                            <input type="text" name="search_text" placeholder="Reservation ID" style="margin: 0%;">
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
                             <label>Patient ID</label>
-                            <input type="text" name="search_text" placeholder="Patient ID">
+                            <input type="text" name="search_text" placeholder="Patient ID" style="margin: 0%;">
                         </div>
                       </td>
                       <td>
-                        <input type="submit" class="button" value="Search" name="search" >
+                        <input type="submit" class="button" value="Search" name="search">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      <div class="input-field">
+                            <label>Test Name</label>
+                            <input type="text" name="search_text" placeholder="Test Name" style="margin: 0%;">
+                        </div>
+                      </td>
+                      <td>
+                      </td>
+                      <td>
+                        <button class="button" style="background-color: red;" onclick="window.location.reload()" >Reset</button></a>
                       </td>
                     </tr>
                   </table>
@@ -139,96 +144,34 @@
           </div>
         </div>
         <div class="detail-wrapper">
-            <div class='detail-card'>
+         <?php if (empty($data['reservations'])): ?>
+              <div class="error-msg" style="border-color: #4070f4;">
+                  <div class="error-icon"><i class="uil uil-exclamation-circle" style="color: #4070f4;"></i></div>
+                  <p>No tests are pending results</p>
+              </div>
+          <?php else: ?>
+            <?php foreach ($data['reservations'] as $reservations): ?>
+              <div class='detail-card'>
                 <div class='detail-card-content'>
-                    <p class="detail-title">Complete Blood Count (CBC) </p>
-                    <p class='detail-comp'>Res ID: 12322  |  Patient: L.A. Peter Parker </p>
-                    <!--div class='detail-details'
-                        <p><i class='uil uil-calendar-alt'></i>hh</p>
-                        <p><i class='uil uil-clock'></i>gg</p>
-                        
-                    </-div-->
+                  <p class="detail-title"><?php echo $reservations->Test_Name;?></p>
+                  <p class='detail-comp'>Res ID: <?php echo $reservations->Test_Res_ID;?>  | Patient Name: <?php echo $reservations->First_Name. " ".$reservations->Last_Name;?> </p>
                 </div>
                 <div class='detail-card-sub'>
                 <hr class="vertical-line">
                     <div class='detail-card-info'>
                         <p>Status :</p>
-                        <p class="detail-location" >Results Pending</p>
+                        <p class="detail-location" ><?php echo $reservations->Status;?></p>
                     </div>
                 </div>
                 <div class='detail-view'>
-                <button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button>
-                <button class='button detail-btn' >Completed</button>
+                <a href='upload_file?test_id=<?php echo $reservations->Test_Res_ID ?>'><button class="button" style="width: 50px; margin-left: -15px; margin-right: 20px; margin-top: 18px;"><i class="uil uil-upload"></i></button></a>
+                <button class='button complete-btn' >Completed</button>
                 </div>
-            </div>
-            <div class='detail-card'>
-                <div class='detail-card-content'>
-                    <p class="detail-title">Complete Blood Count (CBC) </p>
-                    <p class='detail-comp'>Res ID: 12322  |  Patient: L.A. Peter Parker </p>
-                    <!--div class='detail-details'
-                        <p><i class='uil uil-calendar-alt'></i>hh</p>
-                        <p><i class='uil uil-clock'></i>gg</p>
-                        
-                    </-div-->
-                </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" >Results Pending</p>
-                    </div>
-                </div>
-                <div class='detail-view'>
-                <button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button>
-                <button class='button detail-btn' >Completed</button>
-                </div>
-            </div>
-            <div class='detail-card'>
-                <div class='detail-card-content'>
-                    <p class="detail-title">Complete Blood Count (CBC) </p>
-                    <p class='detail-comp'>Res ID: 12322  |  Patient: L.A. Peter Parker </p>
-                    <!--div class='detail-details'
-                        <p><i class='uil uil-calendar-alt'></i>hh</p>
-                        <p><i class='uil uil-clock'></i>gg</p>
-                        
-                    </-div-->
-                </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" >Results Pending</p>
-                    </div>
-                </div>
-                <div class='detail-view'>
-                <button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button>
-                <button class='button detail-btn' >Completed</button>
-                </div>
-            </div>
-            <div class='detail-card'>
-                <div class='detail-card-content'>
-                    <p class="detail-title">Complete Blood Count (CBC) </p>
-                    <p class='detail-comp'>Res ID: 12322  |  Patient: L.A. Peter Parker </p>
-                    <!--div class='detail-details'
-                        <p><i class='uil uil-calendar-alt'></i>hh</p>
-                        <p><i class='uil uil-clock'></i>gg</p>
-                        
-                    </-div-->
-                </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" >Results Pending</p>
-                    </div>
-                </div>
-                <div class='detail-view'>
-                <button class="button" style="width: 50px;"><i class="uil uil-upload"></i></button>
-                <button class='button detail-btn' >Completed</button>
-                </div>
-            </div>
-        </div>
-        
+
+              </div>
+
+            <?php endforeach;?>  
+          <?php endif; ?>
     </div>
   </body>
 </html>

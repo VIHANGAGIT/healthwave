@@ -1,15 +1,19 @@
 <?php 
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
   if(($_SESSION['userType']) != 'Lab Assistant'){
     redirect("users/login");
   }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?>: Test Reservations</title>
+    <title><?php echo SITENAME; ?>: Lab Test Details</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -41,6 +45,12 @@
               <a href="../users/landing" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="uil uil-info-circle"></i>
+                <span>About Us</span>
               </a>
             </li>
           </ul>
@@ -85,7 +95,13 @@
                 <span>Profile</span>
               </a>
             </li>
-            
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="uil uil-bell"></i>
+                <span>Notifications</span>
+              </a>
+            </li>
+           
           </ul>
         </div>
 
@@ -100,65 +116,45 @@
         </div>
       </div>
     </nav>
+<!--page heading-->
+    <div class = "content">
+<!--test details table-->
+      
+      <section class = "table-wrap">
+      <div class = "table-container">
+      <h1>Appointment Details</h1>
+      <hr><br>
+        <table class = "table">
+          <thead>
+            <tr>
+              <th> Res ID </th>
+              <th> Test Name </th>
+              <th> Test Type </th>
+              <th> Price </th>
+              <th> Time </th>
+              <th> Update Status </th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($data['reservations'] as $reservations): ?>
+                <tr>
+                    <td style="text-align: center;"><?php echo $reservations->Test_Res_ID;?></td>
+                    <td style="text-align: center;"><?php echo $reservations->Test_Name;?></td>
+                    <td style="text-align: center;"><?php echo $reservations->Test_Type;?></td>
+                    <td style="text-align: center;"><?php echo $reservations->Price;?></td>
+                    <td style="text-align: center;"><?php echo $reservations->Start_Time. " - ".$reservations->End_Time;?></td>
+                    <td style="text-align: center;">
+                    <a href='collected?test_id=<?php echo $reservations->Test_Res_ID; ?>' onclick="confirmCollected(event)">
+                        <button class='button'>Collected</button>
+                    </a>
+                    </td>
+                </tr>
+            <?php endforeach;?>  
+          </tbody>
+        </table>
+      </div>
+      </section>
 
-    <div class="content">
-    <div class="content-search">
-          <div class="search">
-          <h2>Test Reservation Search<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ></span></h2>
-              <form style="width: 100%;" method="POST">
-                <div class="fields">
-                  <table style="width: 95%;" >
-                    <tr>
-                      <td>
-                        <div class="input-field">
-                            <label>Patient ID</label>
-                            <input type="text" name="search_text" placeholder="Patient ID">
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-field">
-                            <label>Patient Name</label>
-                            <input type="text" name="search_text" placeholder="Patient Name">
-                        </div>
-                      </td>
-                      <td>
-                        <input type="submit" class="button" value="Search" name="search" >
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </form>
-          </div>
-          
-        </div>
-        <br>
-        <section class="table-wrap" >
-            <div class="table-container">
-            <h1>Add Reservation<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='../lab/add_lab_test'><button class='button'>Add</button></a></span></h1>
-              <hr><br>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Patient ID</th>
-                            <th>Patient Name</th>
-                            <th>Date</th>
-                            <th>View</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($data['reservations'] as $reservations): ?>
-                      <tr>
-                            <td style="text-align: center;"><?php echo $reservations->Patient_ID;?></td>
-                            <td style="text-align: center;"><?php echo $reservations->First_Name. " ".$reservations->Last_Name;?></td>
-                            <td style="text-align: center;"><?php echo $reservations->Date;?></td>
-                            <td><a href='lab_test_details?patient_id=<?php echo $reservations->Patient_ID ?>&date=<?php echo $reservations->Date ?>'><button class='button'>View</button></a></td>
-                        </tr>
-                    <?php endforeach;?>  
-                    </tbody>
-                </table>
-            </div>
-        </section>
     </div>
-
   </body>
 </html>

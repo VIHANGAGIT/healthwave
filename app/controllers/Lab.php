@@ -58,7 +58,7 @@
                 'Gender' => $lab_data->Gender,
                 'NIC' => $lab_data->NIC,
                 'C_Num' => $lab_data->Contact_No,
-                'Hospital' => $lab_data->Hospital,
+                'Hospital' => $lab_data->Hospital_Name,
                 'Role' => $lab_data->Role,
                 'Email' => $lab_data->Username,
                 'Password' => $lab_data->Password
@@ -74,24 +74,33 @@
                 $data = [
             
                         'ID' => $_SESSION['userID'],
-                        //'First_Name' => trim($_POST['fname']),
-                        //'Last_Name' => trim($_POST['lname']),
                         'First_Name' => $lab_data->First_Name,
                         'Last_Name' => $lab_data->Last_Name,
                         'Gender' => $lab_data->Gender,
-                        //'NIC' => trim($_POST['nic']),
                         'NIC' => $lab_data->NIC,
                         'C_Num' => trim($_POST['cnum']),
-                        'Hospital' => $lab_data->Hospital,
+                        'Hospital' => $lab_data->Hospital_Name,
                         'Role' => $lab_data->Role,
                         'Username' => trim($_POST['email']),
-                        /*'Staff_ID' => $lab_data->Staff_ID,*/
                         'Pass' => trim($_POST['pass']),
                         'C_pass' => trim($_POST['cpass']),
                         'Uname_err' => '',
                         'Pass_err' => '',
-                        'C_pass_err' => ''
+                        'C_pass_err' => '',
+                        'C_num_err' => ''
                 ];
+
+                if(empty($data['C_Num'])){
+                    $data['C_num_err'] = 'Please enter contact number';
+                } else {
+                    // Remove any non-numeric characters from the input
+                    $cleaned_number = preg_replace('/[^0-9]/', '', $data['C_Num']);
+
+                    // Check if the cleaned number is not exactly 10 digits long
+                    if(strlen($cleaned_number) !== 10){
+                        $data['C_num_err'] = 'Invalid Number';
+                    }
+                }
 
                 if(empty($data['Username'])){
                     $data['Uname_err'] = 'Please enter your email';
@@ -133,7 +142,7 @@
                 }
         
                 // Check whether errors are empty
-                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err'])){
+                if(empty($data['Uname_err']) && empty($data['Pass_err']) && empty($data['C_pass_err']) && empty($data['C_num_err'])){
                     // Hashing password
                     $data['Pass'] = hash('sha256',$data['Pass']);
         
@@ -157,12 +166,12 @@
                     'C_Num' => $lab_data->Contact_No,
                     'Role' => $lab_data->Role,
                     'Username' => $lab_data->Username,
-                    //'Staff_ID' => $lab_data->Staff_ID,
                     'Pass' => '',
                     'C_pass' => '',
                     'Uname_err' => '',
                     'Pass_err' => '',
-                    'C_pass_err' => ''
+                    'C_pass_err' => '',
+                    'C_num_err' => ''
                 ];
                 $this->view("lab/profile_update", $data);
             }
@@ -525,8 +534,6 @@
         public function lab_test_details(){
             // Check if the user is logged in
             if (!isset($_SESSION['userID'])) {
-                // Redirect or handle the case where the user is not logged in
-                // For example:
                 header("Location: /login");
                 exit;
             }
@@ -547,6 +554,13 @@
         
             // Fetch lab data
             $lab_data = $this->labModel->reservation_date_data_fetch($user_id, $patient_id, $date);
+
+            if($lab_data){
+                foreach($lab_data as $data){
+                    $data->Start_Time = date('H:i', strtotime($data->Start_Time));
+                    $data->End_Time = date('H:i', strtotime($data->End_Time));
+                }
+            }
         
             // Check if data is fetched successfully
             if ($lab_data) {
@@ -562,6 +576,17 @@
                 echo "No reservation data found.";
                 return;
             }
+        }
+
+        public function collected(){
+            $test_res_id = $_GET['test_id'];
+
+            if($this->labModel->collected($test_res_id)){
+                redirect('lab/test_appt_management');
+            }else{
+                die("Couldn't update the status! ");
+            }
+            
         }
 
         /*public function updateReservationStatus() {
@@ -645,6 +670,7 @@
 
 
         public function test_result_upload(){
+            $data = [];
             // Check if the user is logged in
             if (!isset($_SESSION['userID'])) {
                 // Redirect or handle the case where the user is not logged in
@@ -669,9 +695,7 @@
                 // Pass the test details to the view
                 $this->view("lab/test_result_upload", $data);
             } else {
-                // Handle case where no data is fetched
-                echo "No reservation data found.";
-                return;
+                $this->view("lab/test_result_upload", $data);
             }
         }
 
@@ -752,7 +776,80 @@
 
 
         public function upload_file(){
-            $data = [];
+
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    
+                $data = [
+                    'patientName' => $_POST['patientName'],
+                    'testName' => $_POST['testName'],
+                    'testType' => $_POST['testType'],
+                    'Res_ID' => $_POST['resId'],
+                    'file' => $_FILES['file'],
+                    'file_err' => ''
+                ];
+    
+                // Validate File
+                if (empty($_FILES['file']['name'])) {
+                    $data['file_err'] = 'Please select a file';
+                } else {
+                    // Check file type
+                    $file_name = $_FILES['file']['name'];
+                    $file_tmp = $_FILES['file']['tmp_name'];
+                    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+            
+                    $allowed_exts = array('pdf');
+            
+                    if (!in_array($file_ext, $allowed_exts)) {
+                        $data['file_err'] = 'File type not allowed. Please upload a PDF file.';
+                    }
+                }
+                
+            
+                // If file error is empty, proceed with upload
+                if (empty($data['file_err'])) {
+                    // Get the last name of the patient
+                    $first_name = explode(' ', $data['patientName'])[0];
+                    $last_name = explode(' ', $data['patientName'])[1];
+                    $res_id = $data['Res_ID'];
+                    // Sanitize patient name for file name generation
+                    $file_name = $first_name . '_' . $last_name . '_Results_' . $res_id . '.pdf';
+
+                    // Process file upload
+                    $file_destination = APPROOT . '/results_upload/' . $file_name;
+                
+                    if (move_uploaded_file($file_tmp, $file_destination)) {
+                        $data['file'] = $file_name;
+                
+                        if ($this->labModel->upload_result($data)) {
+                            redirect('lab/test_result_upload');
+                        } else {
+                            die("Couldn't register the test! ");
+                        }
+                    } else {
+                        // Error moving file
+                        $data['file_err'] = 'Error uploading the file. Please try again.';
+                    }
+                }
+                
+                // Load view with errors if any
+                $this->view('lab/upload_file', $data);
+    
+            }else{
+                // Assign the test data array
+                
+                $res_id = $_GET['test_id'];
+                $reservation_data = $this->labModel->get_reservation_data($res_id);
+                $data = [
+                    'patientName' => $reservation_data->First_Name . ' ' . $reservation_data->Last_Name,
+                    'testName' => $reservation_data->Test_Name,
+                    'testType' => $reservation_data->Test_Type,
+                    'Res_ID' => $res_id,
+                    'file_err' => ''
+                ];
+                // Load view
+                $this->view('lab/upload_file', $data);
+            }
+
             $this->view('lab/upload_file', $data);
         }
 
@@ -767,7 +864,3 @@
 
    
 }
-?>
-
-
-
