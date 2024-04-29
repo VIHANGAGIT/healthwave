@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="buttons">
-                    <button type="button" onclick="window.history.back()">
+                    <button type="button" onclick="window.location.href = 'test_reservations'">
                         <span class="btnText">Back</span>
                     </button>
                         

@@ -17,7 +17,7 @@
     <div class="container-signup" style="height: 350px; overflow: hidden;" >
         <header>Edit Test</header>
 
-        <form action="<?php echo URLROOT; ?>/admin/update_test" method="POST" style="height: 600px;">
+        <form action="<?php echo URLROOT; ?>/admin/edit_test" method="POST" style="height: 600px;">
             <div class="form first" >
                 <div class="details personal">
                     <span class="title">Test Details</span>
@@ -51,10 +51,9 @@
                 </div>
 
                     <div class="buttons">
-                    <button type="button" onclick="window.history.back()" style="width: calc(50% - 10px);">
+                        <button type="button" onclick="window.location.href = 'test_management'" style="width: calc(50% - 10px);">
                             <span class="btnText">Back</span>
                         </button>
-                        
                         <button class="sumbit" style="width: calc(50% - 10px);  margin-left: 15px;">
                             <span class="btnText">Submit</span>
                         </button>
