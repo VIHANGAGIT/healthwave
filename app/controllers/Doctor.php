@@ -194,6 +194,9 @@
                     $Age = date_diff(date_create($prescription->DOB), date_create('now'))->y;
                     $Doc_Name = $prescription->Doc_First_Name . ' ' . $prescription->Doc_Last_Name;
 
+                    $code_string = $prescription_id . $prescription->Diagnosis;
+                    $code = hash('sha256', $code_string); 
+
                     $data = [
                         'Prescription_ID' => $prescription_id,
                         'Name' => $Name,
@@ -212,6 +215,7 @@
                         'Contact_No' => $prescription->Contact_No,
                         'Specialization' => $prescription->Specialization,
                         'SLMC_Reg_No' => $prescription->SLMC_Reg_No,
+                        'Code' => $code
                     ];
 
 
@@ -249,6 +253,8 @@
             $Name = $prescription->First_Name . ' ' . $prescription->Last_Name;
             $Age = date_diff(date_create($prescription->DOB), date_create('now'))->y;
             $Doc_Name = $prescription->Doc_First_Name . ' ' . $prescription->Doc_Last_Name;
+            $code_string = $prescription_id . $prescription->Diagnosis;
+            $code = hash('sha256', $code_string); 
     
             $data = [
                 'Prescription_ID' => $prescription_id,
@@ -268,6 +274,7 @@
                 'Contact_No' => $prescription->Contact_No,
                 'Specialization' => $prescription->Specialization,
                 'SLMC_Reg_No' => $prescription->SLMC_Reg_No,
+                'Code' => $code
             ];
     
     
@@ -278,6 +285,59 @@
     
             }
         }
+
+        // if(empty($data['drug_err']) && empty($data['drug_min_err'])){
+        //     $consultationId = $this->doctorModel->add_consultation($resId, null, null);
+
+        //     $prescription_id = $this->doctorModel->add_prescription($consultationId, $diagnosis, $remarks, $referral, $drugDetails, $testDetails);
+
+        //     $prescription = $this->doctorModel->get_prescription_data($prescription_id);
+        //     $Name = $prescription->First_Name . ' ' . $prescription->Last_Name;
+        //     $Age = date_diff(date_create($prescription->DOB), date_create('now'))->y;
+        //     $Doc_Name = $prescription->Doc_First_Name . ' ' . $prescription->Doc_Last_Name;
+
+        //     $data = [
+        //         'Prescription_ID' => $prescription_id,
+        //         'Name' => $Name,
+        //         'Age' => $Age,
+        //         'Gender' => $prescription->Gender,
+        //         'NIC' => $prescription->NIC,
+        //         'Allergies' => $prescription->Allergies,
+        //         'Date' => $prescription->Date,
+        //         'Doc_Name' => $Doc_Name,
+        //         'Diagnosis' => $prescription->Diagnosis,
+        //         'Remarks' => $prescription->Comments,
+        //         'Referral' => $prescription->Referrals,
+        //         'Drugs' => $prescription->Drug_Details,
+        //         'Tests' => $prescription->Test_Details,
+        //         'Hospital_Name' => $prescription->Hospital_Name,
+        //         'Contact_No' => $prescription->Contact_No,
+        //         'Specialization' => $prescription->Specialization,
+        //         'SLMC_Reg_No' => $prescription->SLMC_Reg_No,
+        //     ];
+
+
+        //     try{
+        //         include_once APPROOT.'/helpers/generate_prescription.php';
+        //     }catch(Exception $e){
+        //         echo $e;
+
+        //     }
+        // }else{
+        //     $patient = $this->doctorModel->get_patient_details($patientId, 'patient');
+        //     $patient->Age = date_diff(date_create($patient->DOB), date_create('now'))->y;
+        //     $tests = $this->testModel->get_all_tests();
+        //     $durations = ['1 Day', '2 Days', '3 Days', '4 Days', '5 Days', '6 Days', '1 Week', '2 Weeks', '3 Weeks', '1 Month', '2 Months', '3 Months', '4 Months', '5 Months', '6 Months', '1 Year'];
+        //     $data = [
+        //         'patient' => $patient,
+        //         'tests' => $tests,
+        //         'durations' => $durations,
+        //         'res_id' => $resId,
+        //         'drug_err' => $data['drug_err'],
+        //         'drug_min_err' => $data['drug_min_err']
+        //     ];
+        //     $this->view('doctor/prescription', $data);
+        // }
 
         public function add_consultations(){
             $resId = $_POST['res_id'];

@@ -39,6 +39,63 @@
             $this->view('pages/about_us', $data);
         }
 
+        public function prescription_validate(){
+            
+            $id = $_GET['id'];
+
+            $prescription_data = $this->userModel->get_prescription_code();
+
+            $is_valid = false;
+
+            foreach($prescription_data as $prescription){
+                $hash = hash('sha256', $prescription->Prescription_ID.$prescription->Diagnosis);
+                if($hash == $id){
+                    $is_valid = true;
+                    $prescription_row = $this->userModel->get_prescription_data($prescription->Prescription_ID);
+                    $Name = $prescription_row->First_Name . ' ' . $prescription_row->Last_Name;
+                    $Age = date_diff(date_create($prescription_row->DOB), date_create('now'))->y;
+                    $Doc_Name = $prescription_row->Doc_First_Name . ' ' . $prescription_row->Doc_Last_Name;
+                    $prescription_id = $prescription_row->Prescription_ID;
+                    $code = $hash;
+            
+                    $data = [
+                        'Prescription_ID' => $prescription_id,
+                        'Name' => $Name,
+                        'Age' => $Age,
+                        'Gender' => $prescription_row->Gender,
+                        'NIC' => $prescription_row->NIC,
+                        'Allergies' => $prescription_row->Allergies,
+                        'Date' => $prescription_row->Date,
+                        'Doc_Name' => $Doc_Name,
+                        'Diagnosis' => $prescription_row->Diagnosis,
+                        'Remarks' => $prescription_row->Comments,
+                        'Referral' => $prescription_row->Referrals,
+                        'Drugs' => $prescription_row->Drug_Details,
+                        'Tests' => $prescription_row->Test_Details,
+                        'Hospital_Name' => $prescription_row->Hospital_Name,
+                        'Contact_No' => $prescription_row->Contact_No,
+                        'Specialization' => $prescription_row->Specialization,
+                        'SLMC_Reg_No' => $prescription_row->SLMC_Reg_No,
+                        'Code' => $code
+                    ];
+            
+            
+                    try{
+                        include_once APPROOT.'/helpers/generate_prescription.php';
+                    }catch(Exception $e){
+                        echo $e;
+                    }
+                    break;
+                }
+            }
+
+            if(!$is_valid){
+                redirect('pages/invalid_prescription');
+            }
+
+            
+        }
+
         public function register_patient(){
             // Check for POST request
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -687,7 +744,7 @@
             }elseif($_SESSION['userType'] == 'Lab Assistant'){
                 redirect('lab/test_appt_management');
             }elseif($_SESSION['userType'] == 'Pharmacist'){
-                redirect('pharmacist/prescription_view');
+                redirect('pharmacist/prescription');
             }else{
                 redirect('pages/index');
             }

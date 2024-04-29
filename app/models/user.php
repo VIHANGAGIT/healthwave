@@ -302,6 +302,57 @@
                 return false;
             }
         }
+
+        public function get_prescription_code(){
+            $this->db->query('SELECT Prescription_ID, Diagnosis FROM prescription');
+            $prescription_code = $this->db->resultSet();
+
+            if($this->db->execute()){
+                return $prescription_code;
+            } else{
+                return false;
+            }
+        }
+
+        public function get_prescription_data($id){
+            $this->db->query('SELECT prescription.*, patient.First_Name, patient.Last_Name, patient.Gender, patient.DOB, patient.Allergies, patient.NIC, doctor_reservation.Date, doctor_consultation.Comments, doctor.First_Name as Doc_First_Name, doctor.Last_Name as Doc_Last_Name, doctor.SLMC_Reg_No, doctor.Specialization, hospital.Hospital_Name, hospital.Contact_No FROM prescription 
+            INNER JOIN doctor_consultation ON prescription.Doc_Consult_ID = doctor_consultation.Doc_Consult_ID
+            INNER JOIN doctor_reservation ON doctor_consultation.Doc_Res_ID = doctor_reservation.Doc_Res_ID
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+            INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
+            INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
+            WHERE prescription.Prescription_ID = :id');
+            $this->db->bind(':id', $id);
+            $prescription = $this->db->singleRow();
+    
+            if ($prescription->Drug_Details != null) {
+                $drugDetails = json_decode($prescription->Drug_Details, true); 
+                
+                $prescription->Drug_Details = $drugDetails;
+            }
+    
+            if ($prescription->Test_Details != null) {
+                $testDetails = json_decode($prescription->Test_Details, true);
+                foreach ($testDetails as &$test) { // Use reference (&) to modify the array directly
+                    $this->db->query('SELECT Test_Name FROM test WHERE Test_ID = :test');
+                    $this->db->bind(':test', $test);
+                    $testName = $this->db->singleRow();
+                    if ($testName) {
+                        $test = $testName->Test_Name;
+                    }
+                }
+                $prescription->Test_Details = $testDetails;
+            }
+    
+    
+            if ($this->db->execute()) {
+                return $prescription;
+            } else {
+                return false;
+            }
+    
+        }
         
         
         private function closeDatabaseConnection()
