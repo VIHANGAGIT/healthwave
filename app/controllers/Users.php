@@ -5,6 +5,40 @@
             $this->doctorModel = $this->model('doctors');
         }
 
+        public function landing(){
+            $data=[];
+            $this->view('pages/landing', $data);
+        }
+        public function about_patient_management(){
+            $data=[];
+            $this->view('pages/about_patient_management', $data);
+        }
+
+        public function about_doctor_mgt(){
+            $data=[];
+            $this->view('pages/about_doctor_mgt', $data);
+        }
+
+        public function about_hospital_mgt(){
+            $data=[];
+            $this->view('pages/about_hospital_mgt', $data);
+        }
+
+        public function about_pharmacy_mgt(){
+            $data=[];
+            $this->view('pages/about_pharmacy_mgt', $data);
+        }
+
+        public function terms_and_cond(){
+            $data=[];
+            $this->view('pages/terms_and_cond', $data);
+        }
+
+        public function about_us(){
+            $data=[];
+            $this->view('pages/about_us', $data);
+        }
+
         public function register_patient(){
             // Check for POST request
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
