@@ -2,7 +2,7 @@
   if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-  if(($_SESSION['userType']) != 'Lab Assistant'){
+  if(($_SESSION['userType']) != 'Pharmacist'){
     redirect("users/login");
   }
 ?>
@@ -19,15 +19,15 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Lab Profile Update</title>
+   <title>Pharmacist Profile Update</title>
 </head>
 <body>
     <div class="container-signup" style="height: 600px; overflow: hidden;" >
 
         
-        <header>Lab Profile Update</header>
+        <header>Pharmacist Profile Update</header>
 
-        <form action="<?php echo URLROOT; ?>/lab/profile_update" method="POST" style="height: 600px;">
+        <form action="<?php echo URLROOT; ?>/pharmacist/profile_update" method="POST" style="height: 600px;">
             <div class="form first" >
                 <div class="details personal">
                     <span class="title">Personal Details</span>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="buttons">
                         <button type="reset" onclick="window.history.back()" >
-                            <span class="btnText">Clear</span>
+                            <span class="btnText">Back</span>
                         </button>
                         
                         <button class="sumbit">

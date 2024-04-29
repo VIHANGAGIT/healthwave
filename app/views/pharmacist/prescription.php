@@ -1,5 +1,4 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Pharmacist'){
     redirect("users/login");
   }
@@ -44,12 +43,6 @@
                 <span>Home</span>
               </a>
             </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
-              </a>
-            </li>
           </ul>
 
           <ul class="menu_item">
@@ -57,7 +50,7 @@
               <span class="line"></span>
             </div>
             <li class="item active">
-              <a href="../pharmacist/prescription_view" class="link flex">
+              <a href="../pharmacist/prescription" class="link flex">
                 <i class="uil uil-file-medical"></i>
                 <span>Prescription</span>
               </a>
@@ -69,15 +62,9 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../pharmacist/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
               </a>
             </li>
            
@@ -97,7 +84,7 @@
     </nav>
 
     <div class="content">
-        <div class="content-search">
+        <div class="content-search" style="height: 180px;">
           <div class="search">
             <h2 style="color: black;">Prescription Search</h2>
               <form style="width: 100%;" method="POST">
@@ -107,13 +94,13 @@
                       <td>
                         <div class="input-field">
                             <label>Prescription ID</label>
-                            <input type="text" name="search_text" placeholder="Reservation ID">
+                            <input type="text" name="pres_id" placeholder="Reservation ID" style="margin: 0%;" >
                         </div>
                       </td>
                       <td>
                         <div class="input-field">
-                            <label>Patient ID</label>
-                            <input type="text" name="search_text" placeholder="Patient ID">
+                            <label>Patient Name</label>
+                            <input type="text" name="patient_name" placeholder="Patient Name" style="margin: 0%;" >
                         </div>
                       </td>
                       <td>
@@ -126,23 +113,6 @@
           </div>
         </div>
         <div class="detail-wrapper">
-          <div class='detail-card'>
-                <div class='detail-card-content'>
-                    <p class="detail-title">Patient: L.A. Peter Parker</p>
-                    <p class='detail-comp'>Prescription ID: 12322  |  Doctor: M.S. Perera</p>
-                </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" >Not Claimed</p>
-                    </div>
-                </div>
-                <div class='detail-view'>
-                <button class="button" style="width: 50px;"><i class="uil uil-import"></i></button>
-                <button class='button detail-btn' >Completed</button>
-                </div>
-            </div>
             <?php if (empty($data['prescriptions'])): ?>
                 <div class="error-msg" style="border-color: #4070f4;">
                     <div class="error-icon"><i class="uil uil-exclamation-circle" style="color: #4070f4;"></i></div>
@@ -153,7 +123,7 @@
                 <div class='detail-card'>
                   <div class='detail-card-content'>
                     <p class="detail-title">Patient: <?php echo $prescription->First_Name . ' ' . $prescription->Last_Name;?></p>
-                    <p class='detail-comp'>Prescription ID: <?php echo $prescription->Prescription_ID;?>  | Doctor Name: <?php echo $prescription->Doc_First_Name. " ".$prescription->Doc_Last_Name;?> </p>
+                    <p class='detail-comp'>Pres ID: <?php echo $prescription->Prescription_ID;?>  | Doctor: <?php echo $prescription->Doc_First_Name. " ".$prescription->Doc_Last_Name;?> </p>
                   </div>
                   <div class='detail-card-sub'>
                   <hr class="vertical-line">
@@ -163,12 +133,10 @@
                       </div>
                   </div>
                   <div class='detail-view'>
-                  <a href='view_prescription?id=<?php echo $prescription->Prescription_ID ?>'><button class="button" style="width: 50px; margin-left: -15px; margin-right: 20px; margin-top: 18px;"><i class="uil uil-download"></i></button></a>
-                  <a href='complete_prescription?id=<?php echo $prescription->Prescription_ID ?>'><button class='button complete-btn' <?php echo  $prescription->Status == 'Not Claimed'  ? 'disabled' : '' ?> >Completed</button></a>
+                  <a href='view_prescription?id=<?php echo $prescription->Prescription_ID ?>'><button class="button" style="width: 50px; margin-right: -15px;  margin-top: 16px;"><i class="uil uil-import"></i></button></a>
+                  <a href='complete_prescription?id=<?php echo $prescription->Prescription_ID ?>'><button class='button detail-btn' style="width: 160px;" <?php echo  $prescription->Status != 'Not Claimed'  ? 'disabled' : '' ?> >Completed</button></a>
                   </div>
-
                 </div>
-
               <?php endforeach;?>  
             <?php endif; ?>
         </div>

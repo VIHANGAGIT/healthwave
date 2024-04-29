@@ -589,35 +589,6 @@
             
         }
 
-        /*public function updateReservationStatus() {
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                // Get the reservation ID from the form submission
-                $Test_Res_ID = $_POST['Test_Res_ID'] ?? null;
-                
-                // Check if reservation ID is provided
-                if (!$Test_Res_ID) {
-                    echo "Reservation ID is missing.";
-                    return;
-                }
-                
-                // Call a model method to update the reservation status
-                $updated = $this->labModel->updateReservationStatus($Test_Res_ID);
-                
-                if ($updated) {
-                    // Redirect to a success page or handle success case
-                    header("Location: /lab/lab_test_details");
-                    exit;
-                } else {
-                    // Handle failure case
-                    echo "Failed to update reservation status.";
-                    return;
-                }
-            } else {
-                // Handle non-POST requests
-                echo "Invalid request method.";
-                return;
-            }
-        }*/
 
         public function updateStatus(){
             // Check if the user is logged in
