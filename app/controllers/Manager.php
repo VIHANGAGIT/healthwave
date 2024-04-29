@@ -688,6 +688,7 @@
 
             // Register user
             $data = [
+                'Tests' => $test_names_types,
                 'T_ID' => $_POST['test_id'],
                 'T_price' => $_POST['test_price'],
                 'T_price_err' => ''
