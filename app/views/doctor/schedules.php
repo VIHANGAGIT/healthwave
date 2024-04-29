@@ -124,7 +124,6 @@
                             <th style="text-align: center;">Next Date</th>
                             <th style="text-align: center;">Session Time</th>
                             <th style="text-align: center;">No of Reservations</th>
-                            <th style="text-align: center;">Availability</th>
                             <!--<th>View</th>-->
                             <!--<th>Delete</th>-->
                         </tr>
@@ -137,7 +136,6 @@
                                 echo "<td style='text-align: center;'>".$schedule->Date."</td>";
                                 echo "<td style='text-align: center;'>".$schedule->Time_Start. " - " . $schedule->Time_End."</td>";
                                 echo "<td style='text-align: center;'>".$schedule->NoOfReservations."</td>";
-                                echo "<td style='text-align: center;'><a href=''><button class='button'>Availability</button></a></td>";
                                 //echo "<td><a href='../doctor/edit_reservation/".$schedule->Reservation_ID."'><button class='button'>View</button></a></td>";
                                 //echo "<td><a href='../doctor/delete_reservation/".$schedule->Reservation_ID."'><button class='button'>Delete</button></a></td>";
                                 echo "</tr>";
@@ -156,10 +154,7 @@
           $('#doc-schedule-table').dataTable( {
               "bPaginate": false,
               "bFilter": false,
-              "bInfo": false,
-              "columnDefs": [
-                  { "orderable": false, "targets": 5 }
-              ]
+              "bInfo": false
           } );
       } );
     </script> 

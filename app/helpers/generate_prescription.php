@@ -220,7 +220,7 @@ $style = array(
     'module_height' => 1 
 );
 
-$validation_url = "http://localhost/healthwave/prescription/validate?id=".$data['Prescription_ID'];
+$validation_url = "http://localhost/healthwave/users/prescription_validate?id=".$data['Code'];
 $pdf->write2DBarcode($validation_url, 'QRCODE,L', 145, 220, 50, 50, $style, 'N');
 
 

@@ -152,6 +152,8 @@ class Patient extends Controller
         $Name = $prescription->First_Name . ' ' . $prescription->Last_Name;
         $Age = date_diff(date_create($prescription->DOB), date_create('now'))->y;
         $Doc_Name = $prescription->Doc_First_Name . ' ' . $prescription->Doc_Last_Name;
+        $code_string = $prescription_id . $prescription->Diagnosis;
+        $code = hash('sha256', $code_string); 
 
         $data = [
             'Prescription_ID' => $prescription_id,
@@ -171,6 +173,7 @@ class Patient extends Controller
             'Contact_No' => $prescription->Contact_No,
             'Specialization' => $prescription->Specialization,
             'SLMC_Reg_No' => $prescription->SLMC_Reg_No,
+            'Code' => $code
         ];
 
 

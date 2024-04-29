@@ -37,7 +37,7 @@
                 $pres_data = $this->pharmacistModel->pending_prescription_data_fetch($hospital_id);
     
             }
-            
+
             // Check if data is fetched successfully
             if ($pres_data) {
                 // Prepare data to pass to the view
@@ -58,6 +58,8 @@
             $Name = $prescription->First_Name . ' ' . $prescription->Last_Name;
             $Age = date_diff(date_create($prescription->DOB), date_create('now'))->y;
             $Doc_Name = $prescription->Doc_First_Name . ' ' . $prescription->Doc_Last_Name;
+            $code_string = $prescription->Prescription_ID . $prescription->Diagnosis;
+            $code = hash('sha256', $code_string);
     
             $data = [
                 'Prescription_ID' => $prescription_id,
@@ -77,6 +79,7 @@
                 'Contact_No' => $prescription->Contact_No,
                 'Specialization' => $prescription->Specialization,
                 'SLMC_Reg_No' => $prescription->SLMC_Reg_No,
+                'Code' => $code
             ];
     
     
