@@ -95,15 +95,19 @@ class Patient extends Controller
         $types = [];
         $no_of_hospitals = [];
 
-        foreach ($tests as $test) {
-            if (!in_array($test->Test_Type, $types)) {
-                $types[] = $test->Test_Type;
+        if($tests){
+            foreach ($tests as $test) {
+                if (!in_array($test->Test_Type, $types)) {
+                    $types[] = $test->Test_Type;
+                }
             }
         }
-
-        foreach ($searchTests as $test) {
-            // Get the number of hospitals for the current doctor
-            $no_of_hospitals[$test->Test_ID] = $this->testModel->get_no_of_hospitals($test->Test_ID);
+        
+        if($searchTests){
+            foreach ($searchTests as $test) {
+                // Get the number of hospitals for the current doctor
+                $no_of_hospitals[$test->Test_ID] = $this->testModel->get_no_of_hospitals($test->Test_ID);
+            }
         }
 
         $data = [
@@ -307,7 +311,7 @@ class Patient extends Controller
 
         foreach ($scheduleData as $schedule) {
             // Fetch booked slots for the current schedule
-            $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID);
+            $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID, $formatted_date);
 
             // Initialize variables to track available slots and appointment number
             $availableSlots = array();
@@ -459,24 +463,20 @@ class Patient extends Controller
         }
     }
 
-    public function delete_test_reservation(){
+    public function cancel_test_reservation(){
         $Reservation_ID = $_POST['reservation_id'];
 
-        echo $Reservation_ID . 'kk';
-
-        if ($this->testModel->delete_reservation($Reservation_ID)) {
+        if ($this->testModel->cancel_reservation($Reservation_ID)) {
             echo json_encode('Reservation deleted successfully');
         } else {
             echo json_encode('Failed to delete reservation');
         }
     }
 
-    public function delete_doc_reservation(){
+    public function cancel_doc_reservation(){
         $Reservation_ID = $_POST['reservation_id'];
 
-        echo $Reservation_ID . 'kk';
-
-        if ($this->doctorModel->delete_reservation($Reservation_ID)) {
+        if ($this->doctorModel->cancel_reservation($Reservation_ID)) {
             echo json_encode('Reservation deleted successfully');
         } else {
             echo json_encode('Failed to delete reservation');
@@ -635,9 +635,6 @@ class Patient extends Controller
     public function profile_delete()
     {
         $data = [
-            'Uname' => $_SESSION['userEmail'],
-            'Name' => $_SESSION['userName'],
-            'Type' => $_SESSION['userType'],
             'ID' => $_SESSION['userID']
         ];
 
@@ -727,23 +724,24 @@ class Patient extends Controller
                 // Prepare the email details
                 $to = $data['Email'];
                 $subject = 'Reservation Confirmation'; 
-                $body = '<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: white; background-color: #4070f4; margin: 0; padding: 0;">';
-                $body .= '<br><br><div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 5px; color: #505050;">';
-                $body .= '<h1 style=" text-align: center;">Hello '. $mail_data->First_Name . ' ' .$mail_data->Last_Name .',</h1>';
-                $body .= '<p style="font-size: 16px; margin-bottom: 10px;">Your appointment has been confirmed.</p>';
+                $body = '<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #505050; background-color: #f9f9f9; margin: 0; padding: 0;">';
+                $body .= '<div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">';
+                $body .= '<h1 style="text-align: center; color: #4070f4;">Hello ' . $mail_data->First_Name . ' ' . $mail_data->Last_Name . ',</h1>';
+                $body .= '<p style="font-size: 16px; margin-bottom: 10px; text-align: center;">Your appointment has been confirmed.</p>';
                 $body .= '<div>';
-                $body .= '<p style="margin-bottom: 10px;"><strong>Appointment Details:</strong></p>';
+                $body .= '<p style="margin-bottom: 10px; text-align: center;"><strong>Appointment Details:</strong></p>';
                 $body .= '<ul style="list-style-type: none; padding: 0;">';
-                $body .= '<li style="margin-bottom: 10px;"><strong>Doctor Name:</strong> '. $mail_data->Doc_First_Name . ' ' .$mail_data->Doc_Last_Name .'</li>';
-                $body .= '<li style="margin-bottom: 10px;"><strong>Doctor Specialization:</strong> '. $mail_data->Specialization . '</li>';
-                $body .= '<li style="margin-bottom: 10px;"><strong>Hospital Name:</strong> '. $mail_data->Hospital_Name . '</li>';
-                $body .= '<li style="margin-bottom: 10px;"><strong>Room:</strong> '. $mail_data->Room_Name . '</li>';
-                $body .= '<li style="margin-bottom: 10px;"><strong>Appointment Number:</strong> '. $data['Appointment_No'] . '</li>';
-                $body .= '<li style="margin-bottom: 10px;"><strong>Appointment Time:</strong> '. $data['Start_Time'] . ' - ' .$data['End_Time'] .'</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Doctor Name:</strong> '. $mail_data->Doc_First_Name . ' ' .$mail_data->Doc_Last_Name .'</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Doctor Specialization:</strong> '. $mail_data->Specialization . '</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Hospital Name:</strong> '. $mail_data->Hospital_Name . '</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Room:</strong> '. $mail_data->Room_Name . '</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Appointment Number:</strong> '. $data['Appointment_No'] . '</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Date:</strong> '. $data['Selected_Date'] . '</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Appointment Time:</strong> '. $data['Start_Time'] . ' - ' .$data['End_Time'] .'</li>';
                 $body .= '</ul>';
                 $body .= '</div>';
-                $body .= '<p class="note" style="font-size: 14px;">Please arrive at least 10 minutes before your scheduled appointment time.</p>';
-                $body .= '<p class="note" style="font-size: 14px;">Thank you for choosing <b>HealthWave!</b></p>';
+                $body .= '<p class="note" style="font-size: 14px; text-align: center;">Please arrive at least 10 minutes before your scheduled appointment time.</p>';
+                $body .= '<p class="note" style="font-size: 14px; text-align: center;">Thank you for choosing <b>HealthWave!</b></p>';
                 $body .= '</div>';
                 $body .= '</body></html>';
         
@@ -784,11 +782,55 @@ class Patient extends Controller
             'Email' => $_POST['Email']
         ];
 
-        if ($this->testModel->add_reservation($data)) {
-            echo json_encode(array('message' => 'Reservation added successfully'));
+        $mail_data = $this->testModel->add_reservation($data);
+
+        if ($mail_data) {
+            try {
+                require_once APPROOT.'/helpers/Mail.php';
+                $mail = new Mail();
+        
+                // Prepare the email details
+                $to = $data['Email'];
+                $subject = 'Reservation Confirmation'; 
+                $body = '<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #505050; background-color: #f9f9f9; margin: 0; padding: 0;">';
+                $body .= '<div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">';
+                $body .= '<h1 style="text-align: center; color: #4070f4;">Hello ' . $mail_data->First_Name . ' ' . $mail_data->Last_Name . ',</h1>';
+                $body .= '<p style="font-size: 16px; margin-bottom: 10px; text-align: center;">Your test reservation has been confirmed.</p>';
+                $body .= '<div>';
+                $body .= '<p style="margin-bottom: 10px; text-align: center;"><strong>Appointment Details:</strong></p>';
+                $body .= '<ul style="list-style-type: none; padding: 0;">';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Test Name:</strong> '. $mail_data->Test_Name .'</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Test Type:</strong> '. $mail_data->Test_Type . '</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Hospital Name:</strong> '. $mail_data->Hospital_Name . '</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Date:</strong> '. $data['Selected_Date'] . '</li>';
+                $body .= '<li style="margin-bottom: 10px; text-align: center;"><strong>Appointment Time:</strong> '. $data['Start_Time'] . ' - ' .$data['End_Time'] .'</li>';
+                $body .= '</ul>';
+                $body .= '</div>';
+                $body .= '<p class="note" style="font-size: 14px; text-align: center;">Please arrive at least 10 minutes before your scheduled reservation time.</p>';
+                $body .= '<p class="note" style="font-size: 14px; text-align: center;">Thank you for choosing <b>HealthWave!</b></p>';
+                $body .= '</div>';
+                $body .= '</body></html>';
+        
+                // Send the email
+                $result = $mail->send($to, $subject, $body);
+        
+                if ($result) {
+                    $response = array('message' => 'Reservation added successfully. Confirmation email sent.');
+                } else {
+                    $response = array('message' => 'Failed to send confirmation email. Please contact support.');
+                }
+            } catch (Exception $e) {
+                $response = array('message' => 'An error occurred. Please try again later.');
+                // Log the exception for debugging
+                error_log($e->getMessage());
+            }
+            echo json_encode($response);
+
+
         } else {
             echo json_encode(array('message' => 'Failed to add reservation'));
         }
+        
 
     }
 

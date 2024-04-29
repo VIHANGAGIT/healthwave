@@ -5,7 +5,7 @@ $(document).ready(function() {
 
         if (confirmation) {
             $.ajax({
-                url: 'delete_test_reservation', 
+                url: 'cancel_test_reservation', 
                 type: 'POST',
                 data: { reservation_id: test_reservation_id },
                 success: function(response) {
@@ -25,7 +25,7 @@ $(document).ready(function() {
 
         if (confirmation) {
             $.ajax({
-                url: 'delete_doc_reservation', 
+                url: 'cancel_doc_reservation', 
                 type: 'POST',
                 data: { reservation_id: doc_reservation_id },
                 success: function(response) {

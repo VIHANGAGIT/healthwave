@@ -11,7 +11,7 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Hospital Staff Regisration</title>
+   <title><?php echo SITENAME; ?>: Hospital Staff Registration</title>
 </head>
 <body>
     <div class="container-signup" style="height: 720px;" >
@@ -43,12 +43,12 @@
                         </div>
                         <div class="input-field">
                             <label>NIC Number*</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" class="<?php echo (!empty($data['NIC_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['NIC_err']; ?></span>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
-                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
+                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" class="<?php echo (!empty($data['C_num_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['C_num_err']; ?></span>
                         </div>
                         <div class="input-field">
@@ -69,7 +69,7 @@
                                 </option>
 
                                 <?php foreach ($data['hospitalNames'] as $hospital) {
-                                    echo '<option value="' . $hospital->Hospital_Name . '">' . $hospital->Hospital_Name . '</option>';
+                                    echo '<option value="' . $hospital->Hospital_ID . '">' . $hospital->Hospital_Name . '</option>';
                                 } ?>
                             </select>
                         </div>
@@ -134,7 +134,7 @@
                 
             </div>
         </form>
-</div>
+    </div>
 
     <script src="<?php echo URLROOT; ?>/js/signup.js"></script>
 </body>

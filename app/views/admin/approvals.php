@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Approvals</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -74,14 +74,20 @@
             </li>
             <li class="item">
               <a href="../admin/hospital_management" class="link flex">
-                <i class="uil uil-stethoscope"></i>
+                <i class="uil uil-hospital-square-sign"></i>
                 <span>Hospital Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="../admin/reservations" class="link flex">
+              <a href="../admin/doc_reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+                <span>Doctor Reservations</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="../admin/test_reservations" class="link flex">
+                <i class="uil uil-calendar-alt"></i>
+                <span>Test Reservations</span>
               </a>
             </li>
           </ul>
@@ -93,12 +99,6 @@
               <a href="#" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
               </a>
             </li>
           </ul>
@@ -120,90 +120,106 @@
         <section class="table-wrap" >
             <div class="table-container">
                 <h1>Doctor Approvals</h1>
+                <hr><br>
+                <?php if (empty($data['doctors'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No pending approvals at the moment</p>
+                    </div>
+                <?php else: ?>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Specialization</th>
-                            <th>NIC</th>
                             <th>SLMC Reg No</th>
+                            <th>NIC</th>
+                            <th>Contact No</th>
                             <th>Approve</th>
                             <th>Decline</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Gastroenterologist</td>
-                            <td>892382331v</td>
-                            <td>No.12/2, Jaya Rd., Colombo</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Gastroenterologist</td>
-                            <td>892382331v</td>
-                            <td>No.12/2, Jaya Rd., Colombo</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. M.S. Perera</td>
-                            <td>Gastroenterologist</td>
-                            <td>892382331v</td>
-                            <td>No.12/2, Jaya Rd., Colombo</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
+                        <?php foreach ($data['doctors'] as $doctor) : ?>
+                            <tr>
+                                <td><?php echo $doctor->First_Name . ' ' . $doctor->Last_Name; ?></td>
+                                <td><?php echo $doctor->Specialization; ?></td>
+                                <td><?php echo $doctor->SLMC_Reg_No; ?></td>
+                                <td><?php echo $doctor->NIC; ?></td>
+                                <td><?php echo $doctor->Contact_No; ?></td>
+                                <td><button class='button' onclick="confirmApproval('<?php echo URLROOT; ?>/admin/approve?id=<?php echo $doctor->Doctor_ID; ?>&email=<?php echo $doctor->Username; ?>&type=doctor')">Approve</button></td>
+                                <td><button class='button red remove' onclick="confirmDecline('<?php echo URLROOT; ?>/admin/decline?id=<?php echo $doctor->Doctor_ID; ?>&email=<?php echo $doctor->Username; ?>&type=doctor')">Decline</button></td>
+
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
         <br>
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Hospital Approvals</h1>
+                <h1>Hospital Manager Approvals</h1>
+                <hr><br>
+                <?php if (empty($data['managers'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No pending approvals at the moment</p>
+                    </div>
+                <?php else: ?>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Registration No</th>
-                            <th>Address</th>
-                            <th>Region</th>
+                            <th>Hospital</th>
+                            <th>Hospital Region</th>
+                            <th>NIC</th>
+                            <th>Contact No</th>
+                            <th>Current Manager</th>
                             <th>Approve</th>
                             <th>Decline</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Asiri Hospitals - Panadura</td>
-                            <td>AS0832</td>
-                            <td>No.12/2, Jaya Rd., Panadura</td>
-                            <td>Kalutara</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Asiri Hospitals - Panadura</td>
-                            <td>AS0832</td>
-                            <td>No.12/2, Jaya Rd., Panadura</td>
-                            <td>Kalutara</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>Asiri Hospitals - Panadura</td>
-                            <td>AS0832</td>
-                            <td>No.12/2, Jaya Rd., Panadura</td>
-                            <td>Kalutara</td>
-                            <td><a href=''><button class='button'>Approve</button></a></td>
-                            <td><a href=''><button class='button red'>Decline</button></a></td>
-                        </tr>
+                        <?php foreach ($data['managers'] as $manager) : ?>
+                            <tr>
+                                <td><?php echo $manager->First_Name . ' ' . $manager->Last_Name; ?></td>
+                                <td><?php echo $manager->Hospital_Name; ?></td>
+                                <td><?php echo $manager->Region; ?></td>
+                                <td><?php echo $manager->NIC; ?></td>
+                                <td><?php echo $manager->Contact_No; ?></td>
+                                <td><?php echo empty($manager->Current_Manager) ? 'No' : 'Yes' ?></td>
+                                <td><button class='button' onclick="confirmApproval('<?php echo URLROOT; ?>/admin/approve?id=<?php echo $manager->HS_ID; ?>&email=<?php echo $manager->Username; ?>&type=manager&current=<?php echo $manager->Current_Manager; ?>')">Approve</button></td>
+                                <td><button class='button red remove' onclick="confirmDecline('<?php echo URLROOT; ?>/admin/decline?id=<?php echo $manager->HS_ID; ?>&email=<?php echo $manager->Username; ?>&type=manager')">Decline</button></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
     </div>
+    <script>
+        function confirmApproval(approvalUrl) {
+            if (confirm("Are you sure you want to approve?")) {
+                window.location.href = approvalUrl;
+                // Show success alert
+                setTimeout(function() {
+                    alert("Approval successful!");
+                }, 500);
+            }
+        }
+
+        function confirmDecline(declineUrl) {
+          if (confirm("Are you sure you want to decline?")) {
+              window.location.href = declineUrl;
+              // Show success alert
+              setTimeout(function() {
+                  alert("Decline successful!");
+              }, 500); // Delay the alert
+          }
+        }
+    </script>
   </body>
 </html>

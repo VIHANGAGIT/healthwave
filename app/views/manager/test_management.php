@@ -1,20 +1,19 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Manager'){
     redirect("users/login");
   }
 ?>
 <!DOCTYPE html>
-<!-- Coding by CodingNepal || www.codingnepalweb.com -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Hospital Test Management</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
@@ -43,12 +42,6 @@
               <a href="#" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
               </a>
             </li>
           </ul>
@@ -87,6 +80,18 @@
                 <span>Reservations</span>
               </a>
             </li>
+            <li class="item">
+              <a href="../manager/schedule_management" class="link flex">
+                <i class="uil uil-calender"></i>
+                <span>Schedule Management</span>
+              </a>
+            </li>
+          <li class="item">
+              <a href="../manager/room_management" class="link flex">
+                <i class="uil uil-house-user"></i>
+                <span>Room Management</span>
+              </a>
+            </li>
           </ul>
 
           <ul class="menu_item">
@@ -94,18 +99,11 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../manager/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
             </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
-              </a>
-            </li>
-           
           </ul>
         </div>
 
@@ -121,90 +119,129 @@
       </div>
     </nav>
 
+    <!--Search box-->
     <div class="content">
+    <section class="table-wrap" >
+      <div class="content-search">
+        <div class="search">
+          <h2>Test Search</h2>
+              <form style="width: 100%;" method="POST">
+                <div class="fields">
+                  <table style="width: 95%;" >
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                            <label>Test ID</label>
+                            <input type="text" name="T_ID" placeholder="Enter Test ID" style="margin: 0%;" >
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-field">
+                            <label>Test Name</label>
+                            <input type="text" name="T_Name" placeholder="Enter Test Name" style="margin: 0%;" >
+                        </div>
+                      </td>
+                      <td>
+                        <input type="submit" class="button" value="Search" name="search" >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="input-field">
+                          <label>Test Type</label>
+                          <select name="T_Type" required>
+                              <option disabled selected>Select Test Type</option>
+                              <?php foreach($data['types'] as $testType) : ?>
+                                  <option value="<?php echo $testType; ?>"><?php echo $testType; ?></option>
+                              <?php endforeach; ?>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                      </td>
+                      <td>
+                        <button class="button" style="background-color: red;" onclick="window.location.reload()" >Reset</button></a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </form>
+          </div>
+        </div>
+        </section><br>
+
+        <!--test list table-->
+        
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Lab Test Management</h1>
-                <table class="table">
+            <h1>Lab Test Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_test'><button class='button'>Add Test</button></a></span></h1>
+              <hr><br>
+                <?php if (empty($data['tests'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No tests are available</p>
+                    </div>
+                <?php else: ?>
+                <table id="hospital-test-table" class="table table-sort">
                     <thead>
                         <tr>
-                            <th>Test ID</th>
-                            <th>Test Name</th>
-                            <th>Type</th>
-                            <th>Price</th>
-                            <th>Edit</th>
-                            <th>Remove</th>
+                            <th style="text-align: center;">Test ID</th>
+                            <th style="text-align: center;">Test Name</th>
+                            <th style="text-align: center;">Type</th>
+                            <th style="text-align: center;">Price (LKR)</th>
+                            <th style="text-align: center;">Edit</th>
+                            <th style="text-align: center;">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
+                    <?php foreach ($data['tests'] as $test): ?>
+                      <tr>
+                            <td style="text-align: center;"><?php echo $test->Test_ID?></td>
+                            <td style="text-align: center;"><?php echo $test->Test_Name?></td>
+                            <td style="text-align: center;"><?php echo $test->Test_Type?></td>
+                            <td style="text-align: center;"><?php echo $test->Price?>.00</td>
+                            <td style="text-align: center;"><a href="edit_test?test_id=<?php echo $test->Test_ID; ?>"><button class="button">Edit</button></a></td>
+                            <td style="text-align: center;">
+                            <a href='remove_test?test_id=<?php echo $test->Test_ID; ?>' onclick="confirmRemove(event)">
+                                <button class='button red remove' <?php echo ($test->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
+                            </a>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>T112</td>
-                            <td>Complete Blood Count (CBC)</td>
-                            <td>Blood Test</td>
-                            <td>Rs. 1500.00</td>
-                            <td><a href=''><button class='button'>Edit</button></a></td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
+                    <?php endforeach;?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
     </div>
+    <br>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#hospital-test-table').dataTable({
+                "bPaginate": false, // Disable pagination
+                "bFilter": false, // Disable search/filtering
+                "bInfo": false, // Disable info text
+                "columnDefs": [
+                    { "targets": [4, 5], "orderable": false }
+                ]
+            });
+        });
+    </script>
+    <script>
+        function confirmRemove(event) {
+            event.preventDefault(); // Prevent the default action of the link
+            
+            // Display a confirmation dialog
+            if (window.confirm('Are you sure you want to remove?')) {
+                // If confirmed, proceed with the removal action
+                window.location.href = event.target.closest('a').href;
+            } else {
+                // If not confirmed, do nothing
+                return false;
+            }
+        }
+    </script>
   </body>
 </html>

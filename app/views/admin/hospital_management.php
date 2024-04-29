@@ -76,14 +76,20 @@
             </li>
             <li class="item active">
               <a href="../admin/hospital_management" class="link flex">
-                <i class="uil uil-stethoscope"></i>
+                <i class="uil uil-hospital-square-sign"></i>
                 <span>Hospital Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="../admin/reservations" class="link flex">
+              <a href="../admin/doc_reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+                <span>Doctor Reservations</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="../admin/test_reservations" class="link flex">
+                <i class="uil uil-calendar-alt"></i>
+                <span>Test Reservations</span>
               </a>
             </li>
           </ul>
@@ -95,12 +101,6 @@
               <a href="#" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
               </a>
             </li>
           </ul>
@@ -198,7 +198,7 @@
                             <td style="text-align: center;"><a href='edit_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>'><button class='button'>Edit</button></a></td>
                             <td style="text-align: center;">
                             <a href='remove_hospital?hospital_id=<?php echo $hospital->Hospital_ID; ?>' onclick="confirmRemove(event)">
-                                <button class='button red' <?php echo ($hospital->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
+                                <button class='button red remove' <?php echo ($hospital->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
                             </a>
                             </td>
                         </tr>

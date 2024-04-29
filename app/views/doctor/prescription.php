@@ -170,7 +170,7 @@
                             <td colspan="2">
                                 <div class="form-group diagnosis">
                                     <label for="diagnosis">Diagnosis</label>
-                                    <input type="text" id="diagnosis" name="diagnosis" placeholder="Enter Diagnosis" maxlength="100">
+                                    <input type="text" id="diagnosis" name="diagnosis" placeholder="Enter Diagnosis" maxlength="100" required>
                                 </div>
                             </td>
                         </tr>
@@ -180,35 +180,47 @@
                                     <div id="treatment-row"  class="treatment-row">
                                         <div class="form-group">
                                             <label>Drug Name</label>
-                                            <input type="text" name="drug_name[]" placeholder="Enter drug name">
+                                            <input type="text" name="drug_name[]" placeholder="Enter drug name" class="<?php echo (!empty($data['drug_err']) || !empty($data['drug_min_err'])) ? 'error' : '' ?>" >
+                                            <span class="err-msg"><?php echo $data['drug_err']; ?></span>
+                                            <span class="err-msg"><?php echo $data['drug_min_err']; ?></span>
                                         </div>
                                         <div class="form-group">
                                             <label>Amount</label>
-                                            <input type="text" name="amount[]" placeholder="Enter amount" onkeypress="return isNumberKey(event)">
-                                        </div>
+                                            <input type="text" name="amount[]" placeholder="Enter amount" onkeypress="return isNumberKey(event)" class="<?php echo (!empty($data['drug_err']) || !empty($data['drug_min_err'])) ? 'error' : '' ?>" >
+                                            <span class="err-msg"><?php echo $data['drug_err']; ?></span>
+                                            <span class="err-msg"><?php echo $data['drug_min_err']; ?></span>
+                                          </div>
                                         <div class="form-group">
                                             <label>Unit</label>
-                                            <select name="amount_unit[]">
-                                            <option value="mg">mcg</option>
+                                            <select name="amount_unit[]" class="<?php echo (!empty($data['drug_err']) || !empty($data['drug_min_err'])) ? 'error' : '' ?>">
+                                              <option selected value="">Select Unit</option>
+                                                <option value="mcg">mcg</option>
                                                 <option value="mg">mg</option>
                                                 <option value="g">g</option>
                                                 <option value="ml">ml</option>
                                                 <option value="tsp">tsp</option>
-                                                <option value="tsp">tablet</option>
+                                                <option value="tab">tablet</option>
                                             </select>
+                                            <span class="err-msg"><?php echo $data['drug_err']; ?></span>
+                                            <span class="err-msg"><?php echo $data['drug_min_err']; ?></span>
                                         </div>
                                         <div class="form-group">
                                             <label>Frequency</label>
-                                            <input type="text" name="frequency[]" id="frequency_input_0" placeholder="Enter frequency" onkeyup="suggestFrequency(this, 0)">
+                                            <input type="text" name="frequency[]" id="frequency_input_0" placeholder="Enter frequency" onkeyup="suggestFrequency(this, 0)" class="<?php echo (!empty($data['drug_err']) || !empty($data['drug_min_err'])) ? 'error' : '' ?>"  >
                                             <div id="frequency_suggestions_0" class="suggestions"></div>
+                                            <span class="err-msg"><?php echo $data['drug_err']; ?></span>
+                                            <span class="err-msg"><?php echo $data['drug_min_err']; ?></span>
                                         </div>
                                         <div class="form-group">
                                             <label>Duration</label>
-                                            <select name="duration[]">
+                                            <select name="duration[]" class="<?php echo (!empty($data['drug_err']) || !empty($data['drug_min_err'])) ? 'error' : '' ?>">
+                                              <option selected value="">Select Duration</option>
                                               <?php foreach ($data['durations'] as $duration): ?>
                                                 <option value="<?php echo $duration; ?>"><?php echo $duration; ?></option>
                                               <?php endforeach; ?>
                                             </select>
+                                            <span class="err-msg"><?php echo $data['drug_err']; ?></span>
+                                            <span class="err-msg"><?php echo $data['drug_min_err']; ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -218,12 +230,13 @@
                                 </div>
                                 <div class="form-group tests" id="tests-container"> <!-- Correct ID here -->
                                     <label for="tests">Recommended Tests</label>
-                                    <select name="tests[]" id="tests"> 
-                                    <option value="">Select a test</option>
+                                    <select name="tests[]" id="tests" class="<?php echo (!empty($data['drug_min_err'])) ? 'error' : '' ?>"> 
+                                    <option selected value="">Select a test</option>
                                     <?php foreach ($data['tests'] as $test): ?>
                                         <option value="<?php echo $test->Test_ID; ?>"><?php echo $test->Test_Name; ?></option>
                                     <?php endforeach; ?>
                                     </select>
+                                    <span class="err-msg"><?php echo $data['drug_min_err']; ?></span>
                                 </div>
                                 
                                 <div class="button-container">
@@ -233,7 +246,7 @@
                                 
                                 <div class="form-group remarks">
                                     <label for="remarks">Remarks</label>
-                                    <textarea id="remarks" name="remarks" placeholder=" Enter remarks" rows="4"></textarea>
+                                    <textarea id="remarks" name="remarks" placeholder=" Enter remarks" rows="4" required></textarea>
                                 </div>
 
                                 <div class="form-group referals">

@@ -33,12 +33,12 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>First Name*</label>
-                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['First_Name'] ?>" required disabled>
+                            <input type="text" placeholder="Enter your first name" name="fname" value="<?php echo $data['First_Name'] ?>" required readonly>
                         </div>
 
                         <div class="input-field">
                             <label>Last Name*</label>
-                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['Last_Name'] ?>" required disabled>
+                            <input type="text" placeholder="Enter your last name" name="lname" value="<?php echo $data['Last_Name'] ?>" required readonly>
                         </div>
 
                         <div class="input-field">
@@ -57,7 +57,7 @@
 
                         <div class="input-field">
                             <label>NIC Number</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required disabled>
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required readonly>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>

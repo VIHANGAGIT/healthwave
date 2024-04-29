@@ -11,7 +11,7 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>Doctor Regisration</title>
+   <title><?php echo SITENAME;?>: Doctor Registration</title>
 </head>
 <body>
     <div class="container-signup" style="height: 720px;" >
@@ -42,17 +42,17 @@
                             </select>
                         </div>
 
-                          <div class="input-field">
+                        <div class="input-field">
                             <label>NIC Number*</label>
-                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" required>
+                            <input type="text" placeholder="Enter your NIC number" name="nic" value="<?php echo $data['NIC'] ?>" class="<?php echo (!empty($data['NIC_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['NIC_err']; ?></span>
                         </div>
                         <div class="input-field">
                             <label>Mobile Number*</label>
-                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" required>
+                            <input type="number" placeholder="Enter your mobile number" name="cnum" value="<?php echo $data['C_num'] ?>" class="<?php echo (!empty($data['C_num_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['C_num_err']; ?></span>
                         </div>
-                         <div class="input-field">
+                        <div class="input-field">
                             <input type="hidden" placeholder="" name="" value="<?php //echo $data['DOB'] ?>">
                         </div>
                     </div>
@@ -83,12 +83,12 @@
 
                         <div class="input-field">
                             <label>SLMC Regisration Number*</label>
-                            <input type="number" placeholder="Enter SLMC Regisration Number" name="slmc" value="<?php echo $data['SLMC'] ?>" required>
+                            <input type="number" placeholder="Enter SLMC Regisration Number" name="slmc" value="<?php echo $data['SLMC'] ?>" class="<?php echo (!empty($data['SLMC_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['SLMC_err']; ?></span>
                         </div>
                         <div class="input-field">
                             <label>Charges*</label>
-                            <input type="number" step="0.01" placeholder="Enter Doctor Charges" name="charges" value="<?php echo $data['Charges'] ?>" required>
+                            <input type="number" step="0.01" placeholder="Enter Doctor Charges" name="charges" value="<?php echo $data['Charges'] ?>" class="<?php echo (!empty($data['Char_err'])) ? 'error' : '' ?>" required>
                             <span class="err-msg"><?php echo $data['Char_err']; ?></span>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                 
             </div>
         </form>
-</div>
+    </div>
 
     <script src="<?php echo URLROOT; ?>/js/signup.js"></script>
 </body>

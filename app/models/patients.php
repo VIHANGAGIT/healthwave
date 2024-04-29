@@ -154,7 +154,7 @@
             $this->db->query("SELECT test_reservation.*, test.Test_Name, test.Test_Type, hospital.Hospital_Name FROM test_reservation
             INNER JOIN test ON test_reservation.Test_ID = test.Test_ID
             INNER JOIN hospital ON test_reservation.Hospital_ID = hospital.Hospital_ID
-            WHERE test_reservation.Patient_ID = :patient_id
+            WHERE test_reservation.Patient_ID = :patient_id AND test_reservation.Status = 'Pending'
             AND CONCAT(test_reservation.Date, ' ', test_reservation.End_Time) > CURRENT_TIMESTAMP() ORDER BY test_reservation.Date, test_reservation.Start_Time ASC");
             
             $this->db->bind(':patient_id', $patient_id);
@@ -200,7 +200,7 @@
             $this->db->query("SELECT test_reservation.*, test.Test_Name, test.Test_Type, hospital.Hospital_Name FROM test_reservation
             INNER JOIN test ON test_reservation.Test_ID = test.Test_ID
             INNER JOIN hospital ON test_reservation.Hospital_ID = hospital.Hospital_ID
-            WHERE test_reservation.Patient_ID = :patient_id
+            WHERE test_reservation.Patient_ID = :patient_id AND (test_reservation.Status = 'Completed' OR test_reservation.Status = 'Collected')
             AND CONCAT(test_reservation.Date, ' ', test_reservation.End_Time) < CURRENT_TIMESTAMP() ORDER BY test_reservation.Date, test_reservation.Start_Time ASC");
             
             $this->db->bind(':patient_id', $patient_id);

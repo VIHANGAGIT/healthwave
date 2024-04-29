@@ -109,6 +109,12 @@
             <div class="table-container">
                 <h1>Doctor Schedule Management</h1>
                 <hr><br>
+                <?php if (empty($data['schedule'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No schedules available</p>
+                    </div>
+                <?php else: ?>
                 <table class="table" id="doc-schedule-table">
                     <thead>
                         <tr>
@@ -124,8 +130,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                            foreach ($data['schedule'] as $schedule) {
+                        <?php foreach ($data['schedule'] as $schedule) {
                                 echo "<tr>";
                                 echo "<td style='text-align: center;'>".$schedule->Hospital_Name."</td>";
                                 echo "<td style='text-align: center;'>".$schedule->Room_Name."</td>";
@@ -140,6 +145,7 @@
                         ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
     </div>

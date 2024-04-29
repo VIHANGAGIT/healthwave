@@ -7,7 +7,7 @@ class Doctors{
     }
 
     public function getAllDoctors(){
-        $this->db->query('SELECT * FROM doctor');
+        $this->db->query('SELECT * FROM doctor WHERE Approval = 1');
 
         $doctors = $this->db->resultSet();
         return $doctors;
@@ -79,6 +79,18 @@ class Doctors{
 
     public function delete_reservation($id){
         $this->db->query('DELETE FROM doctor_reservation WHERE Doc_Res_ID = :id');
+
+        $this->db->bind(':id', $id);
+
+        if($this->db->execute()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public function cancel_reservation($id){
+        $this->db->query('UPDATE doctor_reservation SET Status = "Cancelled" WHERE Doc_Res_ID = :id');
 
         $this->db->bind(':id', $id);
 
@@ -357,7 +369,9 @@ class Doctors{
                 $this->db->query('SELECT Test_Name FROM test WHERE Test_ID = :test');
                 $this->db->bind(':test', $test);
                 $testName = $this->db->singleRow();
-                $test = $testName->Test_Name;
+                if ($testName) {
+                    $test = $testName->Test_Name;
+                }
             }
             $prescription->Test_Details = $testDetails;
         }

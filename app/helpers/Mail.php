@@ -20,8 +20,8 @@ class Mail
         $this->mail->isSMTP();
         $this->mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
         $this->mail->SMTPAuth = true;
-        $this->mail->Username = 'services.healthwave@gmail.com'; // SMTP username
-        $this->mail->Password = 'bvfq fqdl sfrx gmoj'; // SMTP password
+        $this->mail->Username = 'healthwave.services@gmail.com'; // SMTP username
+        $this->mail->Password = 'yhhi mivm ncqb qztv'; // SMTP password
         $this->mail->SMTPSecure = 'tls';
         $this->mail->Port = 587; // TCP port to connect to
     }

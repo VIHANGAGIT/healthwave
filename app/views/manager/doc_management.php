@@ -1,20 +1,19 @@
 <?php 
-  session_start();
   if(($_SESSION['userType']) != 'Manager'){
     redirect("users/login");
   }
 ?>
 <!DOCTYPE html>
-<!-- Coding by CodingNepal || www.codingnepalweb.com -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Doctor Management</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <script src="<?php echo URLROOT;?>/js/light_mode.js" defer></script>
   </head>
   <body>
@@ -43,12 +42,6 @@
               <a href="#" class="link flex">
                 <i class="uil uil-estate"></i>
                 <span>Home</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
               </a>
             </li>
           </ul>
@@ -87,6 +80,18 @@
                 <span>Reservations</span>
               </a>
             </li>
+            <li class="item">
+              <a href="../manager/schedule_management" class="link flex">
+                <i class="uil uil-calender"></i>
+                <span>Schedule Management</span>
+              </a>
+            </li>
+          <li class="item">
+              <a href="../manager/room_management" class="link flex">
+                <i class="uil uil-house-user"></i>
+                <span>Room Management</span>
+              </a>
+            </li>
           </ul>
 
           <ul class="menu_item">
@@ -94,18 +99,11 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a href="#" class="link flex">
+              <a href="../manager/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
               </a>
             </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
-              </a>
-            </li>
-           
           </ul>
         </div>
 
@@ -121,81 +119,70 @@
       </div>
     </nav>
 
+    <!--Search box-->
     <div class="content">
+        
         <section class="table-wrap" >
             <div class="table-container">
-                <h1>Doctor Management</h1>
-                <table class="table">
+            <h1>Doctor Management<span class="dashboard-stat" style="font-size: 25px; justify-content: right;" ><a href='add_doctor'><button class='button'>Add</button></a></span></h1>
+              <hr><br>
+                <?php if (empty($data['doctors'])): ?>
+                    <div class="error-msg">
+                        <div class="error-icon"><i class="uil uil-exclamation-circle"></i></div>
+                        <p>No doctors are available</p>
+                    </div>
+                <?php else: ?>
+                <table id="hospital-test-table" class="table table-sort">
                     <thead>
                         <tr>
-                            <th>Doctor Name</th>
-                            <th>Specialization</th>
-                            <th>NIC</th>
-                            <th>SLMC Reg No</th>
-                            <th>Remove</th>
+                            <th style="text-align: center;">Doctor ID</th>
+                            <th style="text-align: center;">Doctor Name</th>
+                            <th style="text-align: center;">Spacialization</th>
+                            <th style="text-align: center;">NIC</th>
+                            <th style="text-align: center;">Contact No</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
-                        <tr>
-                            <td>H.A. Weerasinghe</td>
-                            <td>Cardiology</td>
-                            <td>902983481v</td>
-                            <td>SLMC 9882</td>
-                            <td><a href=''><button class='button red'>Remove</button></a></td>
-                        </tr>
+                        <?php foreach ($data['doctors'] as $doctor) : ?>
+                            <tr>
+                                <td style="text-align: center;"><?php echo $doctor->Doctor_ID; ?></td>
+                                <td style="text-align: center;"><?php echo $doctor->First_Name . ' ' . $doctor->Last_Name; ?></td>
+                                <td style="text-align: center;"><?php echo $doctor->Specialization; ?></td>
+                                <td style="text-align: center;"><?php echo $doctor->NIC; ?></td>
+                                <td style="text-align: center;"><?php echo $doctor->Contact_No; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php endif; ?>
             </div>
         </section>
     </div>
+    <br>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#hospital-test-table').dataTable({
+                "bPaginate": false, // Disable pagination
+                "bFilter": false, // Disable search/filtering
+                "bInfo": false
+            });
+        });
+    </script>
+    <script>
+        function confirmRemove(event) {
+            event.preventDefault(); // Prevent the default action of the link
+            
+            // Display a confirmation dialog
+            if (window.confirm('Are you sure you want to remove?')) {
+                // If confirmed, proceed with the removal action
+                window.location.href = event.target.closest('a').href;
+            } else {
+                // If not confirmed, do nothing
+                return false;
+            }
+        }
+    </script>
   </body>
 </html>

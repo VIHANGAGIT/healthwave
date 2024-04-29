@@ -2,6 +2,41 @@
     class Users extends Controller{ 
         public function __construct(){
             $this->userModel = $this->model('user');
+            $this->doctorModel = $this->model('doctors');
+        }
+
+        public function landing(){
+            $data=[];
+            $this->view('pages/landing', $data);
+        }
+        public function about_patient_management(){
+            $data=[];
+            $this->view('pages/about_patient_management', $data);
+        }
+
+        public function about_doctor_mgt(){
+            $data=[];
+            $this->view('pages/about_doctor_mgt', $data);
+        }
+
+        public function about_hospital_mgt(){
+            $data=[];
+            $this->view('pages/about_hospital_mgt', $data);
+        }
+
+        public function about_pharmacy_mgt(){
+            $data=[];
+            $this->view('pages/about_pharmacy_mgt', $data);
+        }
+
+        public function terms_and_cond(){
+            $data=[];
+            $this->view('pages/terms_and_cond', $data);
+        }
+
+        public function about_us(){
+            $data=[];
+            $this->view('pages/about_us', $data);
         }
 
         public function register_patient(){
@@ -92,10 +127,9 @@
                 if(empty($data['Height'])){
                     $data['Height_err'] = 'Please enter your height';
                 } else{
-                    // Check if height is within a reasonable range (e.g., between 50 cm and 300 cm)
                     $height = intval($data['Height']); // Convert to integer for comparison
-                    if($height < 50 || $height > 300){
-                        $data['Height_err'] = 'Height should be between 50 cm and 300 cm';
+                    if($height < 50 || $height > 250){
+                        $data['Height_err'] = 'Should be between 50 cm and 250 cm';
                     }
                 }
 
@@ -103,10 +137,9 @@
                 if(empty($data['Weight'])){
                     $data['Weight_err'] = 'Please enter your weight';
                 } else{
-                    // Check if weight is within a reasonable range (e.g., between 10 kg and 500 kg)
                     $weight = intval($data['Weight']); // Convert to integer for comparison
-                    if($weight < 20 || $weight > 500){
-                        $data['Weight_err'] = 'Weight should be between 20 kg and 500 kg';
+                    if($weight < 20 || $weight > 250){
+                        $data['Weight_err'] = 'Should be between 20 kg and 250 kg';
                     }
                 }
 
@@ -225,7 +258,7 @@
                     'Spec' => $_POST['spec'],
                     'SLMC' => $_POST['slmc'],
                     'Charges' => $_POST['charges'],
-                    'Avail' => 1,
+                    'Approval' => 0,
                     'Uname' => trim($_POST['email']),
                     'Pass' => trim($_POST['pass']),
                     'C_pass' => trim($_POST['cpass']),
@@ -269,7 +302,6 @@
                             $data['NIC_err'] = 'Invalid NIC number';
                         }
                     }
-                    // }
                     if (strlen($nic) == 12 && !is_numeric($nic)){
                         $data['NIC_err'] = 'Invalid NIC number';
                     }
@@ -282,8 +314,11 @@
                     if (strlen($slmc) < 4 || strlen($slmc) > 5) {
                         $data['SLMC_err'] = 'SLMC registration number must be between 4 and 5 digits';
                     }
+                    if($this->doctorModel->findDoctorBySLMC($slmc)){
+                        $data['SLMC_err'] = 'Another doctor already has this SLMC';
+                    }
                 }
-
+                
                 //validate charges
                 if (empty($data['Charges'])) {
                     $data['Char_err'] = 'Please enter charges';
@@ -293,7 +328,7 @@
                         $data['Char_err'] = 'Charges must be less than 25000';
                     }
                 }
-         
+
                 // Validate Email
                 if(empty($data['Uname'])){
                     $data['Uname_err'] = 'Please enter your email';
@@ -369,7 +404,7 @@
                     'Spec' => '',
                     'SLMC' => '',
                     'Charges' => '',
-                    'Avail' => '',
+                    'Approval' => '',
                     'Uname' => '',
                     'Pass' => '',
                     'C_pass' => '',
@@ -461,7 +496,7 @@
                         $data['C_num_err'] = 'Invalid Number';
                     }
                 }
-                
+
                 // Validate Password
                 $length = strlen($data['Pass']);
                 $uppercase = preg_match('@[A-Z]@', $data['Pass']);
@@ -573,8 +608,11 @@
 
                 // Look for Email
                 if(!empty($data['Uname'])){
-                    if($this->userModel->findUserByUname($data['Uname'])){
-                        // Email found and can proceed to next function
+                    $uname = $this->userModel->findUserByUname($data['Uname']);
+                    if($uname){
+                        if($uname->Approval == 0){
+                            $data['Uname_err'] = 'Your account is not approved yet';
+                        }
                     } else{
                         $data['Uname_err'] = 'No user found for this email';
                     }

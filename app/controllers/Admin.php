@@ -9,11 +9,212 @@
             $this->doctorModel = $this->model('doctors');
             $this->testModel = $this->model('tests');
             $this->hospitalModel = $this->model('hospitals');
+            $this->scheduleModel = $this->model('schedules');
         }
         public function index(){
             $data = [];
+
+            $patients = $this->adminModel->get_patients();
+            $doctors = $this->adminModel->get_doctors();
+            $hospitals = $this->adminModel->get_hospitals();
+
+
+            $statistic = $this->adminModel->get_statistic();
+            $statistic['total_reservations'] = $statistic['total_doc_reservations'] + $statistic['total_test_reservations'];
+            $statistic['total_upcoming'] = $statistic['total_upcoming_doc_reservations'] + $statistic['total_upcoming_test_reservations'];
+
+            // Initialize an array to store the total reservations for each month
+            $monthlyReservations = [];
+
+            // Loop through the data to calculate the total reservations for each month
+            foreach ($statistic['total_res_date'] as $item) {
+                $date = new DateTime($item->total_reservations_dates);
+
+                $monthYear = $date->format('Y-m');
+
+                // Check if the month already exists in the array
+                if (array_key_exists($monthYear, $monthlyReservations)) {
+                    // Increment the count for the existing month
+                    $monthlyReservations[$monthYear]++;
+                } else {
+                    // Initialize the count for a new month
+                    $monthlyReservations[$monthYear] = 1;
+                }
+            }
+
+            // Prepare the data for JavaScript
+            $months = [];
+            $reservationsCount = [];
+            foreach ($monthlyReservations as $monthYear => $count) {
+                $months[] = date('F Y', strtotime($monthYear)); // Format the month for display
+                $reservationsCount[] = $count;
+            }
+
+            $months = implode("', '", $months);
+            $reservationsCount = implode(', ', $reservationsCount);
+
+            $data = [
+                'statistic' => $statistic,
+                'months' => $months,
+                'reservationsCount' => $reservationsCount,
+                'patients' => $patients,
+                'doctors' => $doctors,
+                'hospitals' => $hospitals
+            ];
             
-            $this->view('admin/dashboard', $data);
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+
+                // Get search parameters from the form
+                $report = isset($_POST['report_name']) ? $_POST['report_name'] : null;
+                $doctor_ID = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
+                $hospital_ID = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+                $patient_ID = isset($_POST['specialization']) ? $_POST['specialization'] : null;
+                $no_of_days = isset($_POST['no_of_days']) ? $_POST['no_of_days'] : null;
+
+                $selectedPeriod = intval($no_of_days); // Get the selected time period as an integer
+
+                // Get the current date
+                $currentDate = date('Y-m-d');
+
+                // Calculate the date based on the selected period
+                $calculatedDate = date('Y-m-d', strtotime("-$selectedPeriod days", strtotime($currentDate)));
+
+                if($report = "doc"){
+                    $data['doc_report'] = $this->adminModel->report_doc_appointments($doctor_ID, $hospital_ID, $patient_ID, $calculatedDate);
+                    foreach ($data['doc_report'] as $key => $appointment) {
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+                    $data['test_report'] = '';
+                    $data['payment_report'] = '';
+                    $this->view('admin/dashboard', $data);
+                }elseif($report = "test"){
+                    $data['test_report'] = $this->adminModel->report_test_appointments($hospital_ID, $patient_ID, $calculatedDate);
+                    foreach ($data['test_report'] as $key => $appointment) {
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+                    $data['doc_report'] = '';
+                    $data['payment_report'] = '';
+
+                    $this->view('admin/dashboard', $data);
+                }elseif($report = "payment"){
+                    $data['payment_report'] = $this->adminModel->report_payment_details($doctor_ID, $hospital_ID, $patient_ID, $calculatedDate);
+                    $data['doc_report'] = '';
+                    $data['test_report'] = '';
+                    $this->view('admin/dashboard', $data);
+                    
+                }else{
+                    $this->view('admin/dashboard', $data);
+                }
+        
+        
+            }else{
+                $this->view('admin/dashboard', $data);
+            }
+
+            
+
+        }
+
+        public function dashboard(){
+            $data = [];
+
+            $patients = $this->adminModel->get_patients();
+            $doctors = $this->adminModel->get_doctors();
+            $hospitals = $this->adminModel->get_hospitals();
+
+
+            $statistic = $this->adminModel->get_statistic();
+            $statistic['total_reservations'] = $statistic['total_doc_reservations'] + $statistic['total_test_reservations'];
+            $statistic['total_upcoming'] = $statistic['total_upcoming_doc_reservations'] + $statistic['total_upcoming_test_reservations'];
+
+            // Initialize an array to store the total reservations for each month
+            $monthlyReservations = [];
+
+            // Loop through the data to calculate the total reservations for each month
+            foreach ($statistic['total_res_date'] as $item) {
+                $date = new DateTime($item->total_reservations_dates);
+
+                $monthYear = $date->format('Y-m');
+
+                // Check if the month already exists in the array
+                if (array_key_exists($monthYear, $monthlyReservations)) {
+                    // Increment the count for the existing month
+                    $monthlyReservations[$monthYear]++;
+                } else {
+                    // Initialize the count for a new month
+                    $monthlyReservations[$monthYear] = 1;
+                }
+            }
+
+            // Prepare the data for JavaScript
+            $months = [];
+            $reservationsCount = [];
+            foreach ($monthlyReservations as $monthYear => $count) {
+                $months[] = date('F Y', strtotime($monthYear)); // Format the month for display
+                $reservationsCount[] = $count;
+            }
+
+            $months = implode("', '", $months);
+            $reservationsCount = implode(', ', $reservationsCount);
+
+            $data = [
+                'statistic' => $statistic,
+                'months' => $months,
+                'reservationsCount' => $reservationsCount,
+                'patients' => $patients,
+                'doctors' => $doctors,
+                'hospitals' => $hospitals
+            ];
+            
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+
+                // Get search parameters from the form
+                $report = isset($_POST['report_name']) ? $_POST['report_name'] : null;
+                $doctor_ID = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
+                $hospital_ID = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+                $patient_ID = isset($_POST['patient_name']) ? $_POST['patient_name'] : null;
+                $no_of_days = isset($_POST['no_of_days']) ? $_POST['no_of_days'] : null;
+
+                $selectedPeriod = intval($no_of_days); // Get the selected time period as an integer
+
+                // Get the current date
+                $currentDate = date('Y-m-d');
+
+                // Calculate the date based on the selected period
+                $calculatedDate = date('Y-m-d', strtotime("-$selectedPeriod days", strtotime($currentDate)));
+
+                if($report == "doc"){
+                    $data['doc_report'] = $this->adminModel->report_doc_appointments($doctor_ID, $hospital_ID, $patient_ID, $calculatedDate);
+                    foreach ($data['doc_report'] as $key => $appointment) {
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+                    $data['test_report'] = '';
+                    $data['payment_report'] = '';
+                    $this->view('admin/dashboard', $data);
+                }elseif($report == "test"){
+                    $data['test_report'] = $this->adminModel->report_test_appointments($hospital_ID, $patient_ID, $calculatedDate);
+                    foreach ($data['test_report'] as $key => $appointment) {
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+                    $data['doc_report'] = '';
+                    $data['payment_report'] = '';
+
+                    $this->view('admin/dashboard', $data);
+                }else{
+                    $this->view('admin/dashboard', $data);
+                }
+        
+        
+            }else{
+                $this->view('admin/dashboard', $data);
+            }
+
         }
 
         public function profile(){
@@ -157,8 +358,145 @@
         }
         public function approvals(){
             $data = [];
+            $doctors = $this->adminModel->get_pending_doctors();
+            $managers = $this->adminModel->get_pending_managers();
+
+
+            if($managers){
+                foreach ($managers as $manager) {
+                    $current = $this->adminModel->get_current_manager($manager->Hospital_ID);
+                    if($current){
+                        $manager->Current_Manager = $current->currentID;
+                    }else{
+                        $manager->Current_Manager = '';
+                    }
+                }
+            }
+            
+
+            $data = [
+                'doctors' => $doctors,
+                'managers' => $managers
+            ];
             $this->view('admin/approvals', $data);
         }
+
+        public function approve(){
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                if (isset($_GET['id']) && isset($_GET['email']) && isset($_GET['type'])) {
+                    $id = $_GET['id'];
+                    $Email = $_GET['email'];
+                    $type = $_GET['type'];
+                    if ($type == 'doctor') {
+                        $mail_data = $this->adminModel->approve_doctor($id);
+                        $text = 'your appointments';
+                        $role = '<b>Doctor</b>';
+                    } else {
+                        $current = $_GET['current'];
+                        if ($current != null) {
+                            $this->adminModel->remove_current_manager($current);
+                        }
+                        $mail_data = $this->adminModel->approve_manager($id);
+                        $text = 'the hospital details';
+                        $role = '<b>Hospital Manager</b>';
+                    }
+                    if ($mail_data) {
+                        try {
+                            require_once APPROOT.'/helpers/Mail.php';
+                            $mail = new Mail();
+                    
+                            // Prepare the email details
+                            $to = $Email;
+                            $subject = 'Account Approval Confirmation';
+                            $body = '<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #505050; background-color: #f9f9f9; margin: 0; padding: 0;">';
+                            $body .= '<div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">';
+                            $body .= '<h1 style="text-align: center; color: #4070f4;">Hello ' . $mail_data->First_Name . ' ' . $mail_data->Last_Name . ',</h1>';
+                            $body .= '<p style="font-size: 16px; margin-bottom: 20px; text-align: center;">Your HealthWave account as a '.$role.' has been approved.</p>';
+                            $body .= '<div style="margin-bottom: 20px;">';
+                            $body .= '</div>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">You can now log in to your HealthWave account and start managing '. $text .'</p>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">Thank you for joining HealthWave!</p>';
+                            $body .= '</div>';
+                            $body .= '</body></html>';
+
+                            // Send the email
+                            $result = $mail->send($to, $subject, $body);
+                    
+                            if ($result) {
+                                $response =  'Approved. Email sent.';
+                            } else {
+                                $response = 'Failed to send email. Please contact support.';
+                            }
+                        } catch (Exception $e) {
+                            $response = 'An error occurred. Please try again later.';
+                            // Log the exception for debugging
+                            error_log($e->getMessage());
+                        }
+                        echo json_encode($response);
+                        redirect('admin/approvals');
+                    } else {
+                        die('Something went wrong');
+                    }
+                }
+            }
+        }
+
+        public function decline(){
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                if (isset($_GET['id']) && isset($_GET['email']) && isset($_GET['type'])){
+                    $id = $_GET['id'];
+                    $Email = $_GET['email'];
+                    $type = $_GET['type'];
+                    if ($type == 'doctor') {
+                        $mail_data = $this->adminModel->decline_doctor($id);
+                        $role = '<b>Doctor</b>';
+                    } else {
+                        $mail_data = $this->adminModel->decline_manager($id);
+                        $role = '<b>Hospital Manager</b>';
+                    }
+                    if ($mail_data) {
+                        try {
+                            require_once APPROOT.'/helpers/Mail.php';
+                            $mail = new Mail();
+                        
+                            // Prepare the email details
+                            $to = $Email;
+                            $subject = 'Account Declined';
+                            $body = '<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #505050; background-color: #f9f9f9; margin: 0; padding: 0;">';
+                            $body .= '<div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">';
+                            $body .= '<h1 style="text-align: center; color: #f44336;">Hello ' . $mail_data->First_Name . ' ' . $mail_data->Last_Name . ',</h1>';
+                            $body .= '<p style="font-size: 16px; margin-bottom: 20px; text-align: center;">We regret to inform you that your HealthWave account as a '.$role.' has been declined.</p>';
+                            $body .= '<div style="margin-bottom: 20px;">';
+                            $body .= '</div>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">If you believe this is a mistake or have any questions, please contact support.</p>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">Thank you for considering HealthWave.</p>';
+                            $body .= '</div>';
+                            $body .= '</body></html>';
+                        
+                            // Send the email
+                            $result = $mail->send($to, $subject, $body);
+                        
+                            if ($result) {
+                                $response = 'Declined. Email sent.';
+                            } else {
+                                $response = 'Failed to send email. Please contact support.';
+                            }
+                        } catch (Exception $e) {
+                            $response = 'An error occurred. Please try again later.';
+                            // Log the exception for debugging
+                            error_log($e->getMessage());
+                        }
+                        
+                        echo json_encode($response);
+                        redirect('admin/approvals');
+                    } else {
+                        die('Something went wrong');
+                    }
+                }
+            }
+        }
+
+        
 
         public function doc_management(){
             $data = [];
@@ -200,9 +538,39 @@
         }
 
         public function test_management(){
-            $tests = $this->adminModel->getTests();
+
+            $data = [];
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+                // Get search parameters from the form
+                $T_Name = isset($_POST['T_Name']) ? $_POST['T_Name'] : null;
+                $T_ID = isset($_POST['T_ID']) ? $_POST['T_ID'] : null;
+                $T_Type = isset($_POST['T_Type']) ? $_POST['T_Type'] : null;
+        
+                // Perform the search based on the parameters
+                $tests = $this->testModel->search_tests_with_id($T_Name, $T_ID, $T_Type);
+        
+            } else {
+                $tests = $this->testModel->get_all_tests();
+
+            }
+
+            $types = [];
+
+            if($tests){
+                foreach ($tests as $test) {
+                    if (!in_array($test->Test_Type, $types)) {
+                        $types[] = $test->Test_Type;
+                    }
+                    if($this->adminModel->get_appointments_test($test->Test_ID)){
+                        $test->Cancel = 'Not allowed';
+                    }else{
+                        $test->Cancel = 'Allowed';
+                    }
+                }
+            }
             $data = [
-                'tests' => $tests
+                'tests' => $tests,
+                'types' => $types
             ];
             $this->view('admin/test_management', $data);
         }
@@ -240,42 +608,74 @@
                 'regions' => $regions
             ];
             $this->view('admin/hospital_management', $data);
-
-            // if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-            //     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-            //     $data = [
-            //         'H_name' => $_POST['H_name'],
-            //         'H_ID' => $_POST['H_ID'],
-            //         'Region' => trim($_POST['H_region']),
-            //         'hospitals' => ''
-            //     ];
-
-            //     if(empty($data['H_name']) && empty($data['H_ID']) && empty($data['Region'])){
-            //         $data['hospitals'] = $this->adminModel->getHospitals();
-            //         $this->view('admin/hospital_management', $data);
-            //     }else{
-            //         $data['hospitals'] = $this->adminModel->searchHospitals($data);
-            //         $this->view('admin/hospital_management', $data);
-            //     }
-
-            // }else{
             
-            //     $data = [
-            //     'hospitals' => $this->adminModel->getHospitals(),
-            //     'H_ID' => '',
-            //     'H_name' => '',
-            //     'Region' => ''
-
-            //     ];
-            //     $this->view('admin/hospital_management', $data);
-            // }
         }
 
-        public function reservations(){
+        public function doc_reservations(){
             $data = [];
-            $this->view('admin/reservations', $data);
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if(isset($_POST['app_search'])){
+                    // Get search parameters from the form
+                    $patient_name = isset($_POST['patient_name']) ? $_POST['patient_name'] : null;
+                    $doctor_name = isset($_POST['doctor_name']) ? $_POST['doctor_name'] : null;
+                    $hospital_name = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+                    $date = isset($_POST['date']) ? $_POST['date'] : null;
+
+                    // Perform the search based on the parameters
+                    $doc_appointments = $this->adminModel->search_doc_appointments($patient_name, $doctor_name, $hospital_name, $date);
+
+                    foreach ($doc_appointments as $key => $appointment) {
+                        if ($appointment->Date == date('Y-m-d') && $appointment->Time_End < date('H:i:s')) {
+                            unset($doc_appointments[$key]);
+                        }
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+
+                    $data = [
+                        'doc_appointments' => $doc_appointments
+                    ];
+                    $this->view('admin/doc_reservations', $data);
+
+                 }
+                
+            } else {
+                $this->view('admin/doc_reservations', $data);
+            }
+            $this->view('admin/doc_reservations', $data);
+        }
+
+        public function test_reservations(){
+            $data = [];
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if(isset($_POST['test_search'])){
+                    // Get search parameters from the form
+                    $patient_name = isset($_POST['patient_name']) ? $_POST['patient_name'] : null;
+                    $test_name = isset($_POST['test_name']) ? $_POST['test_name'] : null;
+                    $hospital_name = isset($_POST['hospital_name']) ? $_POST['hospital_name'] : null;
+                    $date = isset($_POST['date']) ? $_POST['date'] : null;
+            
+                    // Perform the search based on the parameters
+                    $test_appointments = $this->adminModel->search_test_appointments($patient_name, $test_name, $hospital_name, $date);
+
+                    foreach ($test_appointments as $key => $appointment) {
+                        if ($appointment->Date == date('Y-m-d') && $appointment->Start_Time > date('H:i:s')) {
+                            unset($test_appointments[$key]);
+                        }
+                        $appointment->Start_Time = date('H:i', strtotime($appointment->Start_Time));
+                        $appointment->End_Time = date('H:i', strtotime($appointment->End_Time));
+                    }
+
+                    $data = [
+                        'test_appointments' => $test_appointments
+                    ];
+                    $this->view('admin/test_reservations', $data);
+                }
+                
+            } else {
+                $this->view('admin/test_reservations', $data);
+            }
+            $this->view('admin/test_reservations', $data);
         }
 
         public function add_hospital(){
@@ -396,10 +796,8 @@
                     'Gender' => trim($_POST['gender']),
                     'NIC' => trim($_POST['nic']),
                     'C_num' => $_POST['cnum'],
-                    // 'DOB' => $_POST['dob'],
                     'Spec' => $_POST['spec'],
                     'SLMC' => $_POST['slmc'],
-                    'Avail' => 1,
                     'Charges' => $_POST['charges'],
                     'Uname' => trim($_POST['email']),
                     'Pass' => trim($_POST['pass']),
@@ -408,7 +806,6 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => '',
                     'SLMC_err' => '',
                     'Char_err' => '',
                     'NIC_err' => ''
@@ -425,14 +822,6 @@
                         $data['C_num_err'] = 'Invalid Number';
                     }
                 }
-
-                //validate date of birth
-                // $dob = $data['DOB'];
-                // $today = date("Y-m-d");
-                // $diff = date_diff(date_create($dob), date_create($today));
-                // if($diff->format('%y') < 18){
-                //     $data['DOB_err'] = 'Doctor must be atleast 18 years old';
-                // }
 
                 if (empty($data['SLMC'])) {
                     $data['SLMC_err'] = 'Please enter SLMC registration number';
@@ -533,6 +922,41 @@
 
                     // Register user
                     if($this->adminModel->add_doctor($data)){
+                        try {
+                            require_once APPROOT.'/helpers/Mail.php';
+                            $mail = new Mail();
+                    
+                            // Prepare the email details
+                            $to = $data['Uname'];
+                            $subject = 'Account Activation';
+                            $body = '<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #505050; background-color: #f9f9f9; margin: 0; padding: 0;">';
+                            $body .= '<div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">';
+                            $body .= '<h1 style="text-align: center; color: #4070f4;">Hello Dr. ' . $data['F_name'] . ' ' . $data['L_name'] . ',</h1>';
+                            $body .= '<p style="font-size: 16px; margin-bottom: 20px; text-align: center;">You have been as a Doctor to HealthWave system.</p>';
+                            $body .= '<div style="margin-bottom: 20px; text-align: center;">';
+                            $body .= '<p style="font-size: 14px; margin-bottom: 10px;">Username: ' .  $data['Uname'] . '</p>';
+                            $body .= '<p style="font-size: 14px; margin-bottom: 10px;">Temporary Password: ' .  $data['C_pass'] . '</p>';
+                            $body .= '</div>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">Please use the provided username and password to log in to your HealthWave account.</p>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">After logging in, we recommend changing your password for security reasons.</p>';
+                            $body .= '<p class="note" style="font-size: 14px; margin-bottom: 10px; text-align: center;">Thank you for joining HealthWave!</p>';
+                            $body .= '</div>';
+                            $body .= '</body></html>';
+
+                            // Send the email
+                            $result = $mail->send($to, $subject, $body);
+                    
+                            if ($result) {
+                                $response =  'Doctor Added. Email sent.';
+                            } else {
+                                $response = 'Failed to send email. Please contact support.';
+                            }
+                        } catch (Exception $e) {
+                            $response = 'An error occurred. Please try again later.';
+                            // Log the exception for debugging
+                            error_log($e->getMessage());
+                        }
+                        echo json_encode($response);
                         redirect('admin/doc_management');
                     } else{
                         die("Couldn't register the doctor! ");
@@ -548,12 +972,10 @@
                     'F_name' => '',
                     'L_name' => '',
                     'Gender' => '',
-                    // 'DOB' => '',
                     'NIC' => '',
                     'C_num' => '',
                     'Spec' => '',
                     'SLMC' => '',
-                    'Avail' => '',
                     'Charges' => '',
                     'Uname' => '',
                     'Pass' => '',
@@ -562,7 +984,6 @@
                     'Pass_err' => '',
                     'C_pass_err' => '',
                     'C_num_err' => '',
-                    'DOB_err' => '',
                     'SLMC_err' => '',
                     'Char_err' => '',
                     'NIC_err' => ''
@@ -577,59 +998,59 @@
            // Check for POST request
            if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-            // Sanitize strings
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                // Sanitize strings
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            // Register user
-            $data = [
-                'T_name' => trim($_POST['testname']),
-                'T_type' => trim($_POST['testtype']),
-                'T_name_err' => '',
-                'T_type_err' => ''
-
-              ];
-
-            // Validate Test Name
-            if(empty($data['T_name'])){
-                $data['T_name_err'] = 'Please enter test name';
-            }else{
-                // Check for duplicate test names
-                if($this->testModel->findTestByName($data['T_name'])){
-                    $data['T_name_err'] = 'Test already exists';
-                }
-            }
-
-            // Validate Test Type
-            if(empty($data['T_type'])){
-                $data['T_type_err'] = 'Please enter test type';
-            }
-
-            // Check whether errors are empty
-            if(empty($data['T_name_err']) && empty($data['T_type_err'])){
                 // Register user
-                if($this->adminModel->add_test($data)){
-                    redirect('admin/test_management');
-                } else{
-                    die("Couldn't register the test! ");
+                $data = [
+                    'T_name' => trim($_POST['testname']),
+                    'T_type' => trim($_POST['testtype']),
+                    'T_name_err' => '',
+                    'T_type_err' => ''
+
+                ];
+
+                // Validate Test Name
+                if(empty($data['T_name'])){
+                    $data['T_name_err'] = 'Please enter test name';
+                }else{
+                    // Check for duplicate test names
+                    if($this->testModel->findTestByName($data['T_name'])){
+                        $data['T_name_err'] = 'Test already exists';
+                    }
                 }
-            } else {
-                // Load view with errors
+
+                // Validate Test Type
+                if(empty($data['T_type'])){
+                    $data['T_type_err'] = 'Please enter test type';
+                }
+
+                // Check whether errors are empty
+                if(empty($data['T_name_err']) && empty($data['T_type_err'])){
+                    // Register user
+                    if($this->adminModel->add_test($data)){
+                        redirect('admin/test_management');
+                    } else{
+                        die("Couldn't register the test! ");
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('admin/add_test', $data);
+                }
+                $this->view('admin/add_test', $data);
+
+            }else{
+                // Get data
+                $data = [
+                    'T_name' => '',
+                    'T_type' => '',
+                    'T_name_err' => '',
+                    'T_type_err' => ''
+                ];
+
+                // Load view
                 $this->view('admin/add_test', $data);
             }
-            $this->view('admin/add_test', $data);
-
-        }else{
-            // Get data
-            $data = [
-                'T_name' => '',
-                'T_type' => '',
-                'T_name_err' => '',
-                'T_type_err' => ''
-            ];
-
-            // Load view
-            $this->view('admin/add_test', $data);
-        }
         }
 
         public function edit_test() {
@@ -826,13 +1247,272 @@
             }    
         }
 
-        public function edit_appointments(){
-            $data = [];
-            $this->view('admin/edit_appointments', $data);
+        public function remove_reservation(){
+            $res_id = $_GET['res_id'];
+            if($this->doctorModel->delete_reservation($res_id)){
+                redirect('admin/doc_reservations');
+            } else{
+                die("Couldn't remove the reservation! ");
+            }    
         }
 
-        public function edit_test_appointments(){
-            $data = [];
-            $this->view('admin/edit_test_appointments', $data);
+        public function edit_reservation(){
+            //check for POST request
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Sanitize POST array
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                //add test
+                $data = [
+                    'res_id' => $_POST['res_id'],
+                    'date' => $_POST['date'],
+                    'app_no' => $_POST['app_no'],
+                    'time' => $_POST['time']
+                ];
+
+                $data['start_time'] = substr($data['time'], 0, 8);
+                $data['end_time'] = substr($data['time'], 11, 8);
+                
+                if($this->adminModel->edit_reservation($data)){
+                    redirect('admin/doc_reservations');
+                }else{
+                    die("Couldn't edit the reservation! ");
+                }
+
+            }else{
+                
+                $res_id = $_GET['res_id'];
+
+                $reservation_data = $this->adminModel->reservation_data_fetch($res_id);
+                $schedule_data = $this->adminModel->get_schedule_days($reservation_data->Doctor_ID, $reservation_data->Hospital_ID);
+
+                $nextDates = array();
+
+
+                foreach ($schedule_data as $dayObj) {
+                    $dayOfWeek = $dayObj->Day_of_Week;
+                
+                    $today = new DateTime();
+                
+                    // Get the current day of the week (numeric representation, 0 for Sunday, 6 for Saturday)
+                    $currentDayOfWeek = $today->format('w');
+                
+                    $providedDayOfWeek = date('w', strtotime($dayOfWeek));
+                
+                    // Calculate the difference between the current day of the week and the provided day
+                    $difference = ($providedDayOfWeek - $currentDayOfWeek + 7) % 7;
+                
+                    // Modify the date based on the difference
+                    $nextDate = $today->modify("+$difference days");
+                   
+                    $nextDateFormatted = $nextDate->format('Y-m-d');
+
+                    if($nextDateFormatted != $reservation_data->Date){
+                        $nextDates[] = $nextDateFormatted;
+                    }
+                }
+                
+                
+                $data = [
+                    'res_id' => $reservation_data->Doc_Res_ID,
+                    'patient_name' => $reservation_data->First_Name. ' '. $reservation_data->Last_Name,
+                    'nic' => $reservation_data->NIC,
+                    'date' => $reservation_data->Date,
+                    'app_no' => $reservation_data->Appointment_No,
+                    'time' => $reservation_data->Start_Time. ' - '. $reservation_data->End_Time,
+                    'next_dates' => $nextDates,
+                    'hospital_id' => $reservation_data->Hospital_ID,
+                    'doctor_id' => $reservation_data->Doctor_ID
+                ];
+                
+                // Load view
+                $this->view('admin/edit_reservation', $data);
+            }
         }
+
+        public function get_appointment_data(){
+            $hospital_id = $_POST['hospital_id'];
+            $doctor_id = $_POST['doctor_id'];
+            $date = $_POST['date'];
+            
+            $scheduleData = $this->scheduleModel->get_schedule_by_hospital_doctor($hospital_id, $doctor_id);
+
+    
+            $responseData = array();
+    
+            foreach ($scheduleData as $schedule) {
+                if ($schedule->Day_of_Week != date('D', strtotime($date))) {
+                    continue;
+                }
+
+                // Fetch booked slots for the current schedule
+                $bookedSlots = $this->scheduleModel->fetch_booked_slots($schedule->Schedule_ID, $date);
+    
+                $lastBookedAppointmentNumber = 0;
+    
+                // Determine the last booked appointment number
+                foreach ($bookedSlots as $bookedSlot) {
+                    $lastBookedAppointmentNumber = max($lastBookedAppointmentNumber, $bookedSlot->Appointment_No);
+                }
+    
+                // Generate time slots with 15-minute intervals
+                $startTime = strtotime($schedule->Time_Start);
+                $endTime = strtotime($schedule->Time_End);
+                $timeSlots = array();
+                while ($startTime < $endTime) {
+                    $timeSlots[] = array(
+                        'start_time' => date('H:i:s', $startTime),
+                        'end_time' => date('H:i:s', $startTime + 900),
+                    );
+                    $startTime += 900;
+                }
+                $nextAppointmentNumber = $lastBookedAppointmentNumber + 1; 
+    
+                $slotIndex = ceil($nextAppointmentNumber / 2); 
+    
+                if ($slotIndex <= count($timeSlots)) {
+                    $nextTimeSlot = $timeSlots[$slotIndex - 1]; 
+                } else {
+                    $nextTimeSlot = null;
+                }
+
+                $time = $nextTimeSlot['start_time']. ' - '. $nextTimeSlot['end_time'];
+    
+    
+                // Add data to responseData
+                $responseData[] = array(
+                    'time' => $time,
+                    'app_no' => $nextAppointmentNumber
+                );
+            }
+    
+            // Send JSON response with schedule data
+            echo json_encode($responseData);
+            
+        }
+
+        public function edit_test_reservation(){
+            $data = [];
+
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Sanitize POST array
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                //add test
+                $data = [
+                    'res_id' => $_POST['res_id'],
+                    'date' => $_POST['date'],
+                    'time' => $_POST['time'],
+                    'test_date_err' => ''
+                ];
+
+                $data['start_time'] = substr($data['time'], 0, 5). ':00';
+                $data['end_time'] = substr($data['time'], 8, 5). ':00';
+
+
+
+                // Validate Test Date
+                if(empty($data['date'])){
+                    $data['test_date_err'] = 'Please enter test date';
+                }else{
+                    $today = date('Y-m-d');
+                    if($data['date'] <= $today){
+                        $data['test_date_err'] = 'Test date must be after today';
+                    }
+                    if(date_diff(date_create($data['date']), date_create($today))->format('%a') > 30){
+                        $data['test_date_err'] = 'Test date must be within 30 days from today';
+                    }
+                }
+
+                if(empty($data['test_date_err'])){
+                    if($this->adminModel->edit_test_reservation($data)){
+                        redirect('admin/test_reservations');
+                    }else{
+                        die("Couldn't edit the reservation! ");
+                    }
+                }else{
+                    $reservation_data = $this->adminModel->test_reservation_data_fetch($data['res_id']);
+                    $data['patient_name'] = $reservation_data->First_Name. ' '. $reservation_data->Last_Name;
+                    $data['nic'] = $reservation_data->NIC;
+                    $data['hospital_id'] = $reservation_data->Hospital_ID;
+                    $this->view('admin/edit_test_reservation', $data);
+                }
+            }else{
+                    
+                $res_id = $_GET['res_id'];
+
+                $reservation_data = $this->adminModel->test_reservation_data_fetch($res_id);
+
+                // $nextDates = array();
+
+                // $Date = $reservation_data->Date;
+                // $Date = new DateTime($Date);
+
+                // for ($i=0; $i < 7; $i++) { 
+                //     $nextDate = $Date->modify("+1 day");
+                //     $nextDateFormatted = $nextDate->format('Y-m-d');
+                //     $nextDates[] = $nextDateFormatted;
+                // } 
+
+
+                $data = [
+                    'res_id' => $reservation_data->Test_Res_ID,
+                    'patient_name' => $reservation_data->First_Name. ' '. $reservation_data->Last_Name,
+                    'nic' => $reservation_data->NIC,
+                    'date' => $reservation_data->Date,
+                    'time' => $reservation_data->Start_Time. ' - '. $reservation_data->End_Time,
+                    'hospital_id' => $reservation_data->Hospital_ID,
+                    'test_id' => $reservation_data->Test_ID,
+                    'test_date_err' => '',
+                    // 'next_dates' => $nextDates
+                ];
+
+            }
+
+    
+                    
+            $this->view('admin/edit_test_reservation', $data);
+        }
+
+        public function get_reservation_times(){
+            $seleted_date = $_POST['date'];
+            $hospital_id = $_POST['hospital_id'];
+
+            $startTime1 = strtotime('9:00');
+            $endTime1 = strtotime('12:00');
+            $startTime2 = strtotime('13:00');
+            $endTime2 = strtotime('15:00');
+
+            $timeSlots = array();
+
+            // Loop to generate time slots
+            while ($startTime1 < $endTime1) {
+                $slotStart = date('H:i', $startTime1);
+                $startTime1 += (900); // Add 15 minutes
+                $slotEnd = date('H:i', $startTime1);
+                $timeSlots[] = array('start_time' => $slotStart, 'end_time' => $slotEnd);
+            }
+
+            while ($startTime2 < $endTime2) {
+                $slotStart = date('H:i', $startTime2);
+                $startTime2 += (900); // Add 15 minutes
+                $slotEnd = date('H:i', $startTime2);
+                $timeSlots[] = array('start_time' => $slotStart, 'end_time' => $slotEnd);
+            }
+
+
+            $bookedSlots = $this->testModel->fetch_booked_slots($hospital_id, $seleted_date);
+            
+            foreach ($bookedSlots as $bookedSlot) {
+                foreach ($timeSlots as $key => $timeSlot) {
+                    if ($timeSlot['start_time'] == $bookedSlot->Start_Time && $timeSlot['end_time'] == $bookedSlot->End_Time) {
+                            unset($timeSlots[$key]);
+                    }
+                }
+            }
+
+            // Send JSON response with schedule data
+            echo json_encode($timeSlots);
+        }
+
     }

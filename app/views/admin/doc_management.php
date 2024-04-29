@@ -76,14 +76,20 @@
             </li>
             <li class="item">
               <a href="../admin/hospital_management" class="link flex">
-                <i class="uil uil-stethoscope"></i>
+                <i class="uil uil-hospital-square-sign"></i>
                 <span>Hospital Management</span>
               </a>
             </li>
             <li class="item">
-              <a href="../admin/reservations" class="link flex">
+              <a href="../admin/doc_reservations" class="link flex">
                 <i class="uil uil-calendar-alt"></i>
-                <span>Reservations</span>
+                <span>Doctor Reservations</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="../admin/test_reservations" class="link flex">
+                <i class="uil uil-calendar-alt"></i>
+                <span>Test Reservations</span>
               </a>
             </li>
           </ul>
@@ -95,12 +101,6 @@
               <a href="../admin/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
               </a>
             </li>
           </ul>
@@ -161,7 +161,7 @@
                             </div>
                           </td>
                           <td>
-                          <div class="input-field">
+                            <div class="input-field">
                             </div>
                           </td>
                           <td>
@@ -171,7 +171,6 @@
                       </table>
                     </div>
                   </form>
-                  
               </div>
             </div>
         </section><br>
@@ -206,7 +205,7 @@
                         <td style="text-align: center;"><?php echo $doctor->SLMC_Reg_No; ?></td>
                         <td style="text-align: center;">
                         <a href="#" onclick="confirmRemove('<?php echo $doctor->Doctor_ID; ?>')">
-                          <button class='button red' <?php echo ($doctor->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
+                          <button class='button red remove' <?php echo ($doctor->Cancel == 'Not allowed') ? 'disabled' : '' ?> >Remove</button>
                         </a>
                       </td>
 

@@ -86,13 +86,6 @@
                 <span>Profile</span>
               </a>
             </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
-              </a>
-            </li>
-           
           </ul>
         </div>
 
