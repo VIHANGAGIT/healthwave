@@ -8,6 +8,11 @@
             //$users = $this->userModel->getUsers();
             $data = [];
             
-            $this->view('pharmacist/prescription_view', $data);
+            $this->view('pharmacist/prescription', $data);
+        }
+
+        public function prescription(){
+            $data = [];
+            $this->view('pharmacist/prescription', $data);
         }
     }

@@ -10,7 +10,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo SITENAME; ?>: Prescription View</title>
     <link rel="stylesheet" href="<?php echo URLROOT;?>/css/style2.css" />
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -126,15 +126,10 @@
           </div>
         </div>
         <div class="detail-wrapper">
-        <div class='detail-card'>
+          <div class='detail-card'>
                 <div class='detail-card-content'>
                     <p class="detail-title">Patient: L.A. Peter Parker</p>
                     <p class='detail-comp'>Prescription ID: 12322  |  Doctor: M.S. Perera</p>
-                    <!--div class='detail-details'
-                        <p><i class='uil uil-calendar-alt'></i>hh</p>
-                        <p><i class='uil uil-clock'></i>gg</p>
-                        
-                    </-div-->
                 </div>
                 <div class='detail-card-sub'>
                 <hr class="vertical-line">
@@ -148,72 +143,34 @@
                 <button class='button detail-btn' >Completed</button>
                 </div>
             </div>
-            <div class='detail-card'>
-                <div class='detail-card-content'>
-                    <p class="detail-title">Patient: L.A. Peter Parker</p>
-                    <p class='detail-comp'>Prescription ID: 12322  |  Doctor: M.S. Perera</p>
-                    <!--div class='detail-details'
-                        <p><i class='uil uil-calendar-alt'></i>hh</p>
-                        <p><i class='uil uil-clock'></i>gg</p>
-                        
-                    </-div-->
+            <?php if (empty($data['prescriptions'])): ?>
+                <div class="error-msg" style="border-color: #4070f4;">
+                    <div class="error-icon"><i class="uil uil-exclamation-circle" style="color: #4070f4;"></i></div>
+                    <p>No prescriptions to show</p>
                 </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" >Not Claimed</p>
-                    </div>
+            <?php else: ?>
+              <?php foreach ($data['prescriptions'] as $prescription): ?>
+                <div class='detail-card'>
+                  <div class='detail-card-content'>
+                    <p class="detail-title">Patient: <?php echo $prescription->First_Name . ' ' . $prescription->Last_Name;?></p>
+                    <p class='detail-comp'>Prescription ID: <?php echo $prescription->Prescription_ID;?>  | Doctor Name: <?php echo $prescription->Doc_First_Name. " ".$prescription->Doc_Last_Name;?> </p>
+                  </div>
+                  <div class='detail-card-sub'>
+                  <hr class="vertical-line">
+                      <div class='detail-card-info'>
+                          <p>Status :</p>
+                          <p class="detail-location" ><?php echo $prescription->Status;?></p>
+                      </div>
+                  </div>
+                  <div class='detail-view'>
+                  <a href='view_prescription?id=<?php echo $prescription->Prescription_ID ?>'><button class="button" style="width: 50px; margin-left: -15px; margin-right: 20px; margin-top: 18px;"><i class="uil uil-download"></i></button></a>
+                  <a href='complete_prescription?id=<?php echo $prescription->Prescription_ID ?>'><button class='button complete-btn' <?php echo  $prescription->Status == 'Not Claimed'  ? 'disabled' : '' ?> >Completed</button></a>
+                  </div>
+
                 </div>
-                <div class='detail-view'>
-                <button class="button" style="width: 50px;"><i class="uil uil-import"></i></button>
-                <button class='button detail-btn' >Completed</button>
-                </div>
-            </div>
-            <div class='detail-card'>
-                <div class='detail-card-content'>
-                    <p class="detail-title">Patient: L.A. Peter Parker</p>
-                    <p class='detail-comp'>Prescription ID: 12322  |  Doctor: M.S. Perera</p>
-                    <!--div class='detail-details'
-                        <p><i class='uil uil-calendar-alt'></i>hh</p>
-                        <p><i class='uil uil-clock'></i>gg</p>
-                        
-                    </-div-->
-                </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" >Not Claimed</p>
-                    </div>
-                </div>
-                <div class='detail-view'>
-                <button class="button" style="width: 50px;"><i class="uil uil-import"></i></button>
-                <button class='button detail-btn' >Completed</button>
-                </div>
-            </div>
-            <div class='detail-card'>
-                <div class='detail-card-content'>
-                    <p class="detail-title">Patient: L.A. Peter Parker</p>
-                    <p class='detail-comp'>Prescription ID: 12322  |  Doctor: M.S. Perera</p>
-                    <!--div class='detail-details'
-                        <p><i class='uil uil-calendar-alt'></i>hh</p>
-                        <p><i class='uil uil-clock'></i>gg</p>
-                        
-                    </-div-->
-                </div>
-                <div class='detail-card-sub'>
-                <hr class="vertical-line">
-                    <div class='detail-card-info'>
-                        <p>Status :</p>
-                        <p class="detail-location" >Not Claimed</p>
-                    </div>
-                </div>
-                <div class='detail-view'>
-                <button class="button" style="width: 50px;"><i class="uil uil-import"></i></button>
-                <button class='button detail-btn' >Completed</button>
-                </div>
-            </div>
+
+              <?php endforeach;?>  
+            <?php endif; ?>
         </div>
         
     </div>
