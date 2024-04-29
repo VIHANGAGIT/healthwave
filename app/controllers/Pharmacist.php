@@ -24,12 +24,20 @@
     
             $hospital_data = $this->pharmacistModel->hospital_data_fetch($data['ID']);
             $hospital_id = $hospital_data->Hospital_ID;
-        
-            // Fetch lab data
-            $pres_data = $this->pharmacistModel->pending_prescription_data_fetch($hospital_id);
 
-            // echo json_encode($pres_data);
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search'])) {
+                // Get search parameters from the form
+                $pres_id = isset($_POST['pres_id']) ? $_POST['pres_id'] : null;
+                $patient_name = isset($_POST['patient_name']) ? $_POST['patient_name'] : null;
         
+                // Perform the search based on the parameters
+                $pres_data = $this->pharmacistModel->search_prescription_with_id_hospital($pres_id, $patient_name, $hospital_id);
+        
+            } else {
+                $pres_data = $this->pharmacistModel->pending_prescription_data_fetch($hospital_id);
+    
+            }
+            
             // Check if data is fetched successfully
             if ($pres_data) {
                 // Prepare data to pass to the view
@@ -220,5 +228,7 @@
                 $this->view("pharmacist/profile_update", $data);
             }
         }
+
+
 
     }

@@ -94,7 +94,7 @@
                       <td>
                         <div class="input-field">
                             <label>Prescription ID</label>
-                            <input type="text" name="pres_id" placeholder="Reservation ID" style="margin: 0%;" >
+                            <input type="text" name="pres_id" placeholder="Prescription ID" style="margin: 0%;" >
                         </div>
                       </td>
                       <td>

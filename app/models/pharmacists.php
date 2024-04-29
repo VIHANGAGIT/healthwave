@@ -97,5 +97,30 @@ class Pharmacists{
         }
     }
 
+    public function search_prescription_with_id_hospital($pres_id, $patient_name, $hospital_id){
+        $this->db->query('SELECT prescription.*, patient.First_Name, patient.Last_Name, doctor.First_Name as Doc_First_Name, doctor.Last_Name as Doc_Last_Name FROM prescription
+        INNER JOIN doctor_consultation ON prescription.Doc_Consult_ID = doctor_consultation.Doc_Consult_ID
+        INNER JOIN doctor_reservation ON doctor_consultation.Doc_Res_ID = doctor_reservation.Doc_Res_ID
+        INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
+        INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+        INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
+        WHERE prescription.Prescription_ID LIKE :pres_id AND (patient.First_Name LIKE :patient_name OR patient.Last_Name LIKE :patient_name) AND schedule.Hospital_ID = :hospital_id');
+
+        $pres_id = $pres_id == '' ? '%' : $pres_id;
+        $patient_name = $patient_name == '' ? '%' : "%" . $patient_name . "%";
+       
+        $this->db->bind(':pres_id', $pres_id);
+        $this->db->bind(':patient_name', $patient_name);
+        $this->db->bind(':hospital_id', $hospital_id);
+
+        $prescriptions = $this->db->resultSet();
+        
+        if($this->db->execute()){
+            return $prescriptions;
+        } else{
+            return false;
+        }
+    }
+
 
 }
