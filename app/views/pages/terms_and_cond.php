@@ -113,9 +113,11 @@ All healthcare services channelled through HealthWave, including but not limited
         <div class="s1">
         <section class="services-data ">
             <div class="services-data-text">
-                <h1>Refund Policy</h1>
+                <h1>Refund and Cancellation Policy</h1>
                 <ul>
                     <li style="list-style-type: disc;">Refund is only applicable if the appointment was cancelled 24 hours prior to the booked time. Refunds are only calimable through the relevant hospital's administration. Therefore customer's must meet the hospital manager in person to claim the refunds.</li>
+                    <li style="list-style-type: disc;">Should the pertinent laboratory decline to perform any reserved tests subsequent to confirmation of booking, HealthWave shall not be held liable.</li>
+                
                 </ul>
                 
             </div>

@@ -113,7 +113,15 @@
                       <td>
                         <div class="input-field">
                             <label>Test Name</label>
-                            <input type="text" name="test_name" placeholder="Enter Test Name" style="margin: 0%;">
+                            <select name="hospital_name" id="test_name">
+                              <?php if(!empty($data['test_names'])): ?>
+                                  <?php foreach ($data['test_names'] as $name): ?>
+                                          <option value="<?php echo $name->Test_Name; ?>"><?php echo $name->Test_Name; ?></option>
+                                  <?php endforeach; ?>
+                             <?php else :?>
+                            <?php endif?>
+
+                            </select>
                         </div>
                       </td>
                       <td>
@@ -135,8 +143,10 @@
                       <td>
                         <div class="input-field">
                             <label>Test Type</label>
-                            <select name="test_type">
-                                <option disabled selected>Select Test Type</option>
+                            <select name="test_type" id="test_type" >
+                                <option selected disabled>select one</option>
+                                <!-- <option>Blood Test</option> -->
+                                 <!-- <option></option> -->
                                 <?php foreach ($data['types'] as $type): ?>
                                     <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
                                 <?php endforeach; ?>
@@ -187,6 +197,9 @@
               <?php endforeach; ?>
           <?php endif; ?>
         </div>
+
+        <!-- <script src="/js/code_check.js" defer></script> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
         
     </div>
   </body>
