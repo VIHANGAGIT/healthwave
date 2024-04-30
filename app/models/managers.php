@@ -42,6 +42,40 @@
                 return false;
             }
         }
+
+        public function get_reservations_hospital($hospital_id){
+            $this->db->query('SELECT doctor_reservation.Appointment_No, doctor_reservation.Doc_Res_ID, doctor_reservation.Date, doctor_reservation.Status, doctor_reservation.Patient_ID, doctor_reservation.Schedule_ID, patient.First_Name, patient.Last_Name, hospital.Hospital_Name, doctor.First_Name as Doc_First_Name, doctor.Last_Name as Doc_Last_Name FROM doctor_reservation 
+            INNER JOIN schedule ON doctor_reservation.Schedule_ID = schedule.Schedule_ID
+            INNER JOIN doctor ON schedule.Doctor_ID = doctor.Doctor_ID
+            INNER JOIN patient ON doctor_reservation.Patient_ID = patient.Patient_ID
+            INNER JOIN hospital ON schedule.Hospital_ID = hospital.Hospital_ID
+            WHERE schedule.Hospital_ID = :hospital_id ORDER BY doctor_reservation.Doc_Res_ID ASC');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $doc_reservations = $this->db->resultSet();
+
+            $this->db->query('SELECT test_reservation.Test_Res_ID, test_reservation.Date, test_reservation.Status, test_reservation.Patient_ID, test_reservation.Test_ID, patient.First_Name, patient.Last_Name, hospital.Hospital_Name, test.Test_Name, test.Test_Type, test_reservation.Start_Time, test_reservation.End_Time FROM test_reservation 
+            INNER JOIN hospital_test ON test_reservation.Test_ID = hospital_test.Test_ID
+            INNER JOIN test ON test_reservation.Test_ID = test.Test_ID
+            INNER JOIN patient ON test_reservation.Patient_ID = patient.Patient_ID
+            INNER JOIN hospital ON hospital_test.Hospital_ID = hospital.Hospital_ID
+            WHERE hospital_test.Hospital_ID = :hospital_id ORDER BY test_reservation.Test_Res_ID ASC');
+
+            // Binding parameters for the prepaired statement
+            $this->db->bind(':hospital_id', $hospital_id);
+            $test_reservations = $this->db->resultSet();
+
+            $row['doc_reservations'] = $doc_reservations;
+            $row['test_reservations'] = $test_reservations;
+
+            // Execute query
+            if($this->db->execute()){
+                return $row;
+            } else{
+                return false;
+            }   
+        }
     
 
         public function manager_labtest_data_fetch($id){

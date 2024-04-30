@@ -90,10 +90,15 @@
             }
 
             if(!$is_valid){
-                redirect('pages/invalid_prescription');
+                redirect('users/invalid_prescription');
             }
 
             
+        }
+
+        public function invalid_prescription(){
+            $data=[];
+            $this->view('pages/invalid_prescription', $data);
         }
 
         public function register_patient(){

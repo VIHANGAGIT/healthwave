@@ -185,8 +185,12 @@
                                 <td><?php echo $test_reservation->Hospital_Name; ?></td>
                                 <td><?php echo $test_reservation->Date; ?></td>
                                 <td><a href=''><button class='button'>Details</button></a></td>
-                                <td><button class='button test-cancel-btn' data-test-reservation-id="<?php echo $test_reservation->Test_Res_ID; ?>">Results</button></td>
-                            </tr>
+                                <td>
+                                <a href='<?php echo str_replace("\\", "/", APPROOT) . "/results_upload/" . $test_reservation->Result; ?>'>
+                                    <button class='button'>Results</button>
+                                </a>
+                            </td>
+                          </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>

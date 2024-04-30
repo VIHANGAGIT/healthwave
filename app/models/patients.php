@@ -197,9 +197,10 @@
         }
 
         public function get_past_test_reservations($patient_id){
-            $this->db->query("SELECT test_reservation.*, test.Test_Name, test.Test_Type, hospital.Hospital_Name FROM test_reservation
+            $this->db->query("SELECT test_reservation.*, test.Test_Name, test.Test_Type, hospital.Hospital_Name, test_result.Result FROM test_reservation
             INNER JOIN test ON test_reservation.Test_ID = test.Test_ID
             INNER JOIN hospital ON test_reservation.Hospital_ID = hospital.Hospital_ID
+            INNER JOIN test_result ON test_reservation.Test_Res_ID = test_result.Test_Res_ID
             WHERE test_reservation.Patient_ID = :patient_id AND (test_reservation.Status = 'Completed' OR test_reservation.Status = 'Collected')
             AND CONCAT(test_reservation.Date, ' ', test_reservation.End_Time) < CURRENT_TIMESTAMP() ORDER BY test_reservation.Date, test_reservation.Start_Time ASC");
             

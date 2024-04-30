@@ -339,7 +339,29 @@
 
 
         public function reservations(){
-            $data = [];
+            $data = [
+                'ID' => $_SESSION['userID']
+            ];
+    
+            $hospital_data = $this->managerModel->hospital_data_fetch($data['ID']);
+            $hospital_id = $hospital_data->Hospital_ID;
+
+            $reservations = $this->managerModel->get_reservations_hospital($hospital_id);
+
+            $doc_reservations = $reservations['doc_reservations'];
+            $test_reservations = $reservations['test_reservations'];
+
+            foreach($test_reservations as $test){
+                $test->Start_Time = date('H:i', strtotime($test->Start_Time));
+                $test->End_Time = date('H:i', strtotime($test->End_Time));
+            }
+
+            $data = [
+                'doc_reservations' => $doc_reservations,
+                'test_reservations' => $test_reservations
+            ];
+
+
             $this->view('manager/reservations', $data);
         }
 

@@ -47,12 +47,6 @@
                 <span>Home</span>
               </a>
             </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-info-circle"></i>
-                <span>About Us</span>
-              </a>
-            </li>
           </ul>
 
           <ul class="menu_item">
@@ -93,12 +87,6 @@
               <a href="../lab/profile" class="link flex">
                 <i class="uil uil-user"></i>
                 <span>Profile</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="uil uil-bell"></i>
-                <span>Notifications</span>
               </a>
             </li>
            

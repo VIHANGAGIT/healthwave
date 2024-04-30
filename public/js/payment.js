@@ -1,8 +1,39 @@
 
 $(document).ready(function () {
 
+    function validateEmail(email) {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    // Function to validate contact number
+    function validateContactNumber(contactNumber) {
+        var contactRegex = /^0\d{9}$/;
+        return contactRegex.test(contactNumber);
+    }
+
     $("#pay").click(function (event) {
       event.preventDefault();
+      var patientName = $("#patient-name").val();
+      var email = $("#patient-email").val();
+      var mobile = $("#patient-mobile").val();
+
+      // Validate email and contact number
+      var validEmail = validateEmail(email);
+      var validContactNumber = validateContactNumber(mobile);
+
+      if (!validEmail) {
+          $("#patient-email").focus();
+          alert("Please enter a valid email address.");
+          return;
+      }
+
+      if (!validContactNumber) {
+          $("#patient-mobile").focus();
+          alert("Please enter a valid contact number.");
+          return;
+      }
+
       var totalPrice = document.getElementById('price-value-total').textContent;
       totalPrice = parseFloat(totalPrice.replace(/[^0-9.]/g, '')).toFixed(2);
       var patientName = document.getElementById('patient-name').value;
@@ -131,4 +162,6 @@ $(document).ready(function () {
     };
   
 });
+
+
   
