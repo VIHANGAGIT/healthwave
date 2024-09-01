@@ -1,9 +1,9 @@
 <?php
     // Database params
     define('DB_HOST', 'localhost');
-    define('DB_USER', 'root');
-    define('DB_PASS', 'GrpProject00');
-    define('DB_NAME', 'healthwave');
+    define('DB_USER', // <<YOUR DB USERNAME>>);
+    define('DB_PASS', // <<YOUR DB PASS>>);
+    define('DB_NAME', // <<YOUR DB NAME>>);
 
 
     // App root
